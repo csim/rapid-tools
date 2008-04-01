@@ -1,0 +1,72 @@
+<project name="RapidTools" default="Rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
+
+	<property name="configuration" value="Debug" overwrite="false" />
+
+
+	<!-- *********** CCNET Targets ********************** -->
+	
+	<target name="ccnet-build" depends="init-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
+
+	<target name="post-ccnet-build">
+
+		<if test="${directory::exists(output.dir)}">
+			<zip zipfile="${zip.path}">
+				<fileset basedir="${output.dir}">
+					<include name="${project.name}*" />
+					<exclude name="RapidTools.SPDeploy.Installer\bin$(configurstion)\*.msi" />
+				</fileset>
+			</zip>
+
+			<copy todir="${drop.dir}" file="${zip.path}" />
+		</if>
+	
+	</target>
+
+
+	<!-- *********** Build Targets ********************** -->
+	
+	<target name="rebuild">
+		<msbuild target="Rebuild" project="${project.name}.sln">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
+	</target>
+
+	<target name="compilewsp">
+		<msbuild target="CompileWsp" project="${project.name}\${project.name}.csproj">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
+	</target>
+
+
+	<!-- *********** Initialization Targets ********************** -->
+
+	<target name="init">
+		<property name="project.name" value="${project::get-name()}" />
+	</target>
+
+	<target name="init-ccnet-build" depends="init">
+		<property name="configuration" value="Release" />
+
+		<if test="${not property::exists('CCNetLabel')}">
+			<fail message="ccnet.label not defined" />
+		</if>
+
+		<property name="ccnet.label" value="${CCNetLabel}" />
+
+		<property name="output.dir" value="${project.name}\bin\${configuration}" />
+		<property name="drop.dir" value="\\wa1crpbuild01\Drop\${project.name}\v${ccnet.label}" />
+		
+		<property name="zip.path" value="${output.dir}\${project.name}-${ccnet.label}.zip" />
+	</target>
+
+
+	<!-- *********** Utility Targets ********************** -->
+
+	<target name="schema">
+		<property name="schema.path" value="C:\Program Files\Microsoft Visual Studio 9.0\Xml\Schemas\NAnt.xsd" />
+		<delete file="${schema.path}" if="${file::exists(schema.path)}" />
+		<nantschema output="${schema.path}" target-ns="http://nant.sf.net/schemas/nant.xsd" />
+	</target>
+	
+
+</project>
