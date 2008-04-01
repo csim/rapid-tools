@@ -6,7 +6,7 @@
 
 	<PropertyGroup>
 
-		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy\v1</SPDeployBaseDir>
+		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy</SPDeployBaseDir>
 
 		<LocalDeployment>False</LocalDeployment>
 		<StsadmPath>C:\Program Files\Common Files\Microsoft Shared\web server extensions\12\BIN\stsadm.exe</StsadmPath>
@@ -16,7 +16,7 @@
 		<WspWorkingPath>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)</WspWorkingPath>
 		<WspIntermediateOutputPath>$(WspWorkingPath)$(WspFilename)</WspIntermediateOutputPath>
 
-		<PSExecPath>$(MSBuildExtensionsPath)\SPDeploy\v1\psexec.exe</PSExecPath>
+		<PSExecPath>$(MSBuildExtensionsPath)\SPDeploy\\psexec.exe</PSExecPath>
 		<GACUtilPath>C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\gacutil.exe</GACUtilPath>
 
 		<BaseRootFilesDir>$(MSBuildProjectDirectory)\RootFiles</BaseRootFilesDir>
