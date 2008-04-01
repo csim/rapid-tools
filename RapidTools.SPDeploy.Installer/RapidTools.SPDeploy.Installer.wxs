@@ -5,15 +5,15 @@
 <?define Property_UpgradeCode = "6BE372E2-8288-4af6-8416-0D44EB949D77" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
-    <Package InstallerVersion="200" Compressed="yes"/>
-		
-    <Upgrade Id="$(var.Property_UpgradeCode)">
-      <UpgradeVersion Minimum="$(var.Property_ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
-      <UpgradeVersion Minimum="0.9.0.0" IncludeMinimum="yes" Maximum="$(var.Property_ProductVersion)" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED" />
-    </Upgrade>
+	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
+		<Package InstallerVersion="200" Compressed="yes"/>
 
-    <CustomAction Id="CA_BlockOlderVersionInstall" Error="You cannot install an older version when a newer version is already installed." />
+		<Upgrade Id="$(var.Property_UpgradeCode)">
+			<UpgradeVersion Minimum="$(var.Property_ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+			<UpgradeVersion Minimum="0.9.0.0" IncludeMinimum="yes" Maximum="$(var.Property_ProductVersion)" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED" />
+		</Upgrade>
+
+		<CustomAction Id="CA_BlockOlderVersionInstall" Error="You cannot install an older version when a newer version is already installed." />
 		<CustomAction Id="CA_ErrVisualStudio2005NotInstalled" Error="Visual Studio is not installed." />
 		<CustomAction Id="CA_Devenv_Setup_VS_Install" Property="VS2005_IDE_INSTALLED" ExeCommand="/installvstemplates" Execute="deferred" Return="check" Impersonate="no"/>
 		<CustomAction Id="CA_Devenv_Setup_VS_Uninstall" Property="VS2005_IDE_INSTALLED" ExeCommand="/installvstemplates" Execute="deferred" Return="ignore" Impersonate="no"/>
@@ -22,73 +22,73 @@
 			<![CDATA[Privileged]]>
 		</Condition>
 
-    <Property Id="ALLUSERS">
-      <![CDATA[1]]>
-    </Property>
+		<Property Id="ALLUSERS">
+			<![CDATA[1]]>
+		</Property>
 
-    <Property Id="ARPHELPLINK" Value="http://www.ascentium.com/blog" />
-    <Property Id="ARPURLINFOABOUT" Value="http://www.ascentium.com" />   
+		<Property Id="ARPHELPLINK" Value="http://www.ascentium.com/blog" />
+		<Property Id="ARPURLINFOABOUT" Value="http://www.ascentium.com" />
 
-    <Media Id="1" Cabinet="SPDeploy.Installer.cab" EmbedCab="yes" />
+		<Media Id="1" Cabinet="SPDeploy.Installer.cab" EmbedCab="yes" />
 
-	  <Directory Id="TARGETDIR" Name="SourceDir">
-		  <Directory Id="ProgramFilesFolder" Name="Program Files">
-			  <Directory Id="MsBuildFolder" Name="MSBuild">
-				  <Directory Id="SPDeployFolder" Name="SPDeploy" />
-			  </Directory>
-			  <Directory Id="VS2005_ROOT_FOLDER"  Name="Visual Studio 8">
-				  <Directory Id="Common7" Name="Common7">
-					  <Directory Id="IDE" Name="IDE">
-						  <Directory Id="ProjectTemplates_VS"  Name="ProjectTemplates">
-							  <Directory Id="CSharpProjectTemplates_VS" Name="CSharp">
-								  <Directory Id="SPDeploy_Csharp_VS" Name="SPDeploy"/>
-							  </Directory>
-						  </Directory>
-					  </Directory>
-				  </Directory>
-			  </Directory>
-		  </Directory>
-	  </Directory>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="Program Files">
+				<Directory Id="MsBuildFolder" Name="MSBuild">
+					<Directory Id="SPDeployFolder" Name="SPDeploy" />
+				</Directory>
+				<Directory Id="VS2005_ROOT_FOLDER"  Name="Visual Studio 8">
+					<Directory Id="Common7" Name="Common7">
+						<Directory Id="IDE" Name="IDE">
+							<Directory Id="ProjectTemplates_VS"  Name="ProjectTemplates">
+								<Directory Id="CSharpProjectTemplates_VS" Name="CSharp">
+									<Directory Id="SPDeploy_Csharp_VS" Name="SPDeploy"/>
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
 
-    <DirectoryRef Id="SPDeployFolder">
-      <Component Id="SPDeploy_MSBuild" Guid="997DDAA7-430B-49aa-809B-A8B2F4678926" DiskId="1" Transitive="yes">
-        <File Id="pdh.dll_file"  Name="pdh.dll" Source="pdh.dll"/>
-        <File Id="psexec.exe_file"  Name="psexec.exe" Source="psexec.exe"/>
-        <File Id="Readme.txt_file"  Name="Readme.txt"  Source="Readme.txt"/>
-        <File Id="SPDeploy.targets_file"  Name="SPDeploy.targets"  Source="SPDeploy.targets"/>
-        <File Id="SPDeploy.vssettings_file"  Name="SPDeploy.vssettings"  Source="SPDeploy.vssettings"/>
-        <File Id="SPDeploy.Tasks.dll_file"  Name="RapidTools.SPDeploy.Tasks.dll"  Source="RapidTools.SPDeploy.Tasks.dll"/>
-        <File Id="SPDeploy.Tasks.pdb_file"  Name="RapidTools.SPDeploy.Tasks.pdb"  Source="RapidTools.SPDeploy.Tasks.pdb"/>
-      </Component>
-    </DirectoryRef>
-    
-    <DirectoryRef Id="SPDeploy_Csharp_VS">
-      <Component Id="SPDeploy_csharp.zip_VS" Guid="2173D1D4-AA81-4392-B4F8-95486F015897" DiskId="1" Transitive="yes">
-				<Condition>(VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED)</Condition>
-				<File Id="SPDeploy_Template.zip_VS"  Name="SPDeploy_Template.zip" KeyPath="yes" Source="SPDeploy_Template.zip"/>
-      </Component>
-    </DirectoryRef>
-		
-		<DirectoryRef Id="MsBuildFolder">
-			<Component Id="SPDeploy_Registry_SafeImports" Guid="001150EF-D039-45eb-A5D4-220D39A110D3" DiskId="1" Transitive="yes">
-				<Registry Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0\MSBuild\SafeImports" Action="write" Name="SPDeploy" Value="[SPDeployFolder]SPDeploy.Targets" Type="string" />				
-			</Component>			
+		<DirectoryRef Id="SPDeployFolder">
+			<Component Id="SPDeploy_MSBuild" Guid="997DDAA7-430B-49aa-809B-A8B2F4678926" DiskId="1" Transitive="yes">
+				<File Id="pdh.dll_file"  Name="pdh.dll" Source="pdh.dll"/>
+				<File Id="psexec.exe_file"  Name="psexec.exe" Source="psexec.exe"/>
+				<File Id="Readme.txt_file"  Name="Readme.txt"  Source="Readme.txt"/>
+				<File Id="SPDeploy.targets_file"  Name="SPDeploy.targets"  Source="SPDeploy.targets"/>
+				<File Id="SPDeploy.vssettings_file"  Name="SPDeploy.vssettings"  Source="SPDeploy.vssettings"/>
+				<File Id="SPDeploy.Tasks.dll_file"  Name="RapidTools.SPDeploy.Tasks.dll"  Source="RapidTools.SPDeploy.Tasks.dll"/>
+				<File Id="SPDeploy.Tasks.pdb_file"  Name="RapidTools.SPDeploy.Tasks.pdb"  Source="RapidTools.SPDeploy.Tasks.pdb"/>
+			</Component>
 		</DirectoryRef>
 
-    <Feature Id="ProductFeature" Title="SPDeploy" Level="1">
-      <ComponentRef Id="SPDeploy_csharp.zip_VS" />
-      <ComponentRef Id="SPDeploy_MSBuild"/>
-			<ComponentRef Id="SPDeploy_Registry_SafeImports"/>
-    </Feature>
+		<DirectoryRef Id="SPDeploy_Csharp_VS">
+			<Component Id="SPDeploy_csharp.zip_VS" Guid="2173D1D4-AA81-4392-B4F8-95486F015897" DiskId="1" Transitive="yes">
+				<Condition>(VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED)</Condition>
+				<File Id="SPDeploy_Template.zip_VS"  Name="SPDeploy_Template.zip" KeyPath="yes" Source="SPDeploy_Template.zip"/>
+			</Component>
+		</DirectoryRef>
 
-    <!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->
-    <!-- installation, repair and uninstall of this product.                                             -->
-    <InstallExecuteSequence>
-      <Custom Action="CA_BlockOlderVersionInstall" After="FindRelatedProducts">
-        <![CDATA[NEWERVERSIONDETECTED]]>
-      </Custom>
-      <RemoveExistingProducts After="InstallInitialize" />
-      <LaunchConditions After="AppSearch"/>
+		<DirectoryRef Id="MsBuildFolder">
+			<Component Id="SPDeploy_Registry_SafeImports" Guid="001150EF-D039-45eb-A5D4-220D39A110D3" DiskId="1" Transitive="yes">
+				<Registry Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0\MSBuild\SafeImports" Action="write" Name="SPDeploy" Value="[SPDeployFolder]SPDeploy.Targets" Type="string" />
+			</Component>
+		</DirectoryRef>
+
+		<Feature Id="ProductFeature" Title="SPDeploy" Level="1">
+			<ComponentRef Id="SPDeploy_csharp.zip_VS" />
+			<ComponentRef Id="SPDeploy_MSBuild"/>
+			<ComponentRef Id="SPDeploy_Registry_SafeImports"/>
+		</Feature>
+
+		<!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->
+		<!-- installation, repair and uninstall of this product.                                             -->
+		<InstallExecuteSequence>
+			<Custom Action="CA_BlockOlderVersionInstall" After="FindRelatedProducts">
+				<![CDATA[NEWERVERSIONDETECTED]]>
+			</Custom>
+			<RemoveExistingProducts After="InstallInitialize" />
+			<LaunchConditions After="AppSearch"/>
 
 			<!-- This custom action checks to make sure that at least one of the following conditions is met:             -->
 			<!--   1. Visual Studio 2005 is installed and the Visual Basic and/or Visual C# language tools are installed  -->
@@ -96,14 +96,14 @@
 			<!--   3. Visual C# 2005 Express Edition is installed                                                         -->
 			<Custom Action="CA_ErrVisualStudio2005NotInstalled" Before="CostInitialize">
 				<![CDATA[(NOT (VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED) AND NOT Installed)]]>
-			</Custom>			
+			</Custom>
 			<Custom Action="CA_Devenv_Setup_VS_Install" Before="InstallFinalize">
 				<![CDATA[VS2005_IDE_INSTALLED AND NOT REMOVE]]>
 			</Custom>
 			<Custom Action="CA_Devenv_Setup_VS_Uninstall" Before="CA_Devenv_Setup_VS_Install">
 				<![CDATA[VS2005_IDE_INSTALLED AND REMOVE]]>
-			</Custom>      
-    </InstallExecuteSequence>
+			</Custom>
+		</InstallExecuteSequence>
 
 		<InstallUISequence>
 			<Custom Action="CA_BlockOlderVersionInstall" After="FindRelatedProducts">
@@ -116,7 +116,7 @@
 
 		<Property Id="VS2005_ROOT_FOLDER" Secure="yes">
 			<RegistrySearch Id="SearchForVS2005RootPath" Root="HKLM" Key="Software\Microsoft\VisualStudio\SxS\VS7" Name="8.0" Type="raw" />
-		</Property>			
+		</Property>
 
 		<Property Id="VS2005_INSTALLED" Secure="yes">
 			<ComponentSearch Id="SearchForVsVertIntComponent" Guid="03F59C6A-202C-4403-9987-349896B7BC84" Type="file" />
@@ -132,16 +132,16 @@
 			<RegistrySearch Id="SearchForVCSProjectSystemUnderVSSetup" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\8.0\Projects\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}" Name="DefaultProjectExtension" Type="raw" />
 		</Property>
 
-    <UIRef Id="WixUI_Minimal"/>
+		<UIRef Id="WixUI_Minimal"/>
 
-    <UI>
-      <ProgressText Action="CA_Devenv_Setup_VS_Install" Template="[1]"><![CDATA[Registering with Visual Studio 2005]]></ProgressText>
+		<UI>
+			<ProgressText Action="CA_Devenv_Setup_VS_Install" Template="[1]"><![CDATA[Registering with Visual Studio 2005]]></ProgressText>
 			<ProgressText Action="CA_Devenv_Setup_VS_Uninstall" Template="[1]"><![CDATA[Removing from Visual Studio 2005]]></ProgressText>
-    </UI>
+		</UI>
 
-    <!--<WixVariable Id="WixUIBannerBmp" Value="..\Setup\bannrbmp.bmp" />
+		<!--<WixVariable Id="WixUIBannerBmp" Value="..\Setup\bannrbmp.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="..\Setup\dlgbmp.bmp" />
     <WixVariable Id="WixUILicenseRtf" Value="..\Setup\License.rtf" />-->
 
-    </Product>
+	</Product>
 </Wix>
