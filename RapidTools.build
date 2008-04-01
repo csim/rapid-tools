@@ -55,6 +55,7 @@
 
 		<property name="ccnet.label" value="${CCNetLabel}" />
 
+		<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
 		<property name="output.dir" value="${project.name}\bin\${configuration}" />
 		<property name="drop.dir" value="\\wa1crpbuild01\Drop\${project.name}\v${ccnet.label}" />
 		
