@@ -11,8 +11,8 @@
 
 		<if test="${directory::exists(output.dir)}">
 			<zip zipfile="${zip.path}">
-				<fileset basedir="${output.dir}">
-					<include name="${project.name}*" />
+				<fileset>
+					<include name="${output.dir}\${project.name}*" />
 					<exclude name="RapidTools.SPDeploy.Installer\bin$(configurstion)\*.msi" />
 				</fileset>
 			</zip>
@@ -59,7 +59,7 @@
 		<property name="output.dir" value="${project.name}\bin\${configuration}" />
 		<property name="drop.dir" value="\\wa1crpbuild01\Drop\${project.name}\v${ccnet.label}" />
 		
-		<property name="zip.path" value="${output.dir}\${project.name}-${ccnet.label}.zip" />
+		<property name="zip.path" value="${project.name}-${ccnet.label}.zip" />
 	</target>
 
 
