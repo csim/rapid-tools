@@ -5,7 +5,7 @@
 
 	<!-- *********** CCNET Targets ********************** -->
 	
-	<target name="ccnet-build" depends="init-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
+	<target name="ccnet-build" depends="init-ccnet-build, post-ccnet-build" />
 
 	<target name="post-ccnet-build">
 
@@ -19,7 +19,9 @@
 
 			<copy todir="${drop.dir}" file="${zip.path}" />
 		</if>
-	
+
+		<call target="cleansource" />
+
 	</target>
 
 
@@ -61,6 +63,18 @@
 
 
 	<!-- *********** Utility Targets ********************** -->
+
+	<target name="cleansource">
+		<delete>
+			<fileset basedir="${source.dir}">
+				<include name="**" />
+			</fileset>
+		</delete>
+
+		<foreach item="Folder" in="${source.dir}" property="idir">
+			<delete dir="${idir}" />
+		</foreach>
+	</target>
 
 	<target name="schema">
 		<property name="schema.path" value="C:\Program Files\Microsoft Visual Studio 9.0\Xml\Schemas\NAnt.xsd" />
