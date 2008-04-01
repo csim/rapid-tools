@@ -18,7 +18,7 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 Installation
 ============
 
-1. Install the msbuild extension. Copy the SPDeploy folder located in this zip file to your MSBuild extensions directory. For a standard installation this directory is located at c:\program files\msbuild.  The msbuild extension directory is located at <program files>\msbuild where <program files> is your default program files directory on your system drive. The final path to the SPDeploy targets file should be <program files>\msbuild\spdepoy\v1\spdeploy.targets
+1. Install the msbuild extension. Copy the SPDeploy folder located in this zip file to your MSBuild extensions directory. For a standard installation this directory is located at c:\program files\msbuild.  The msbuild extension directory is located at <program files>\msbuild where <program files> is your default program files directory on your system drive. The final path to the SPDeploy targets file should be <program files>\msbuild\spdepoy\spdeploy.targets
 
 2. Install the Visual Studio Project Template. Copy the SPDeploy_Template.zip file to your Visual Studio project template directory located at <My Documents>\Visual Studio 2005\Templates\ProjectTemplates
 
