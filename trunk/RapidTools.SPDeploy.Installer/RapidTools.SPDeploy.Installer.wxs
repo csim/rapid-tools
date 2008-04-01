@@ -26,7 +26,7 @@
 			<![CDATA[1]]>
 		</Property>
 
-		<Property Id="ARPHELPLINK" Value="http://www.ascentium.com/blog" />
+		<Property Id="ARPHELPLINK" Value="http://www.ascentium.com/blog/sp" />
 		<Property Id="ARPURLINFOABOUT" Value="http://www.ascentium.com" />
 
 		<Media Id="1" Cabinet="SPDeploy.Installer.cab" EmbedCab="yes" />
