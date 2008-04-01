@@ -29,6 +29,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_references", "_references"
 		_references\Microsoft.SharePoint.Security.dll = _references\Microsoft.SharePoint.Security.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{7B94E6F2-0EC6-43BA-B168-12A693930DB3}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		RapidTools.build = RapidTools.build
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
