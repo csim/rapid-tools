@@ -71,7 +71,7 @@
 		
 		<DirectoryRef Id="MsBuildFolder">
 			<Component Id="SPDeploy_Registry_SafeImports" Guid="001150EF-D039-45eb-A5D4-220D39A110D3" DiskId="1" Transitive="yes">
-				<Registry Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0\MSBuild\SafeImports" Action="write" Name="SPDeploy" Value="[SPDeploy_MSBuild_Dir]SPDeploy.Targets" Type="string" />				
+				<Registry Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0\MSBuild\SafeImports" Action="write" Name="SPDeploy" Value="[SPDeployFolder]SPDeploy.Targets" Type="string" />				
 			</Component>			
 		</DirectoryRef>
 
