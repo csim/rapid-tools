@@ -19,6 +19,16 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RapidTools.SPDeploy.Install
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_references", "_references", "{B747F8AA-C8A4-46ED-A143-FE3688453DE8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		_references\Microsoft.SharePoint.dll = _references\Microsoft.SharePoint.dll
+		_references\Microsoft.SharePoint.Security.dll = _references\Microsoft.SharePoint.Security.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
