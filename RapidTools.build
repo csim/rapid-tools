@@ -43,7 +43,7 @@
 			<copy todir="${zip.dir}" flatten="true">
 				<fileset>
 					<include name="${output.dir}\${project.name}*" />
-					<exclude name="RapidTools.SPDeploy.Installer\bin\$(configuration)\*.msi" />
+					<exclude name="RapidTools.SPDeploy.Installer\bin\${configuration}\*.msi" />
 				</fileset>
 			</copy>
 
