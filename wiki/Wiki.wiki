@@ -1,6 +1,8 @@
 [Wiki Wiki Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
-Rapid tools are all about making SharePoint application developers more productive. My philosophy is that a SharePoint project should adhear to the same guides lines and best practices as any other software development project. The Microsoft developer toolset and guidance are fall woefully short in this area and it is clear that another solution is necessary.
+Rapid Tools for SharePoint is a set of developer tools that are dedicated to making 
+
+[http://code.google.com/ http://code.google.com/images/code_sm.png]
 
 ===Features===
   * Enables the entire Software Development lifecycle on the SharePoint platform.
