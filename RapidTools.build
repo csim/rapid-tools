@@ -58,7 +58,7 @@
 	<target name="ccnet-publishbuild">
 
 		<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}" 
-			targetfilename="${gc.filename}" filename="${gc.filename}"
+			targetfilename="${gc.filename}" filename="${zip.path}"
 			summary="${gc.project.name} ${version} binaries" />
 
 	</target>
