@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 
-namespace RapidTools.SPDeploy.Tasks
+namespace Rapid.Tools.SPDeploy.Tasks
 {
 
 	public class CompileWsp : Task {

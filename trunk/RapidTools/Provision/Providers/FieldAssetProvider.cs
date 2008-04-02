@@ -9,10 +9,10 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
-using RapidTools.Utilities;
-using RapidTools.Provision;
+using Rapid.Tools.Utilities;
+using Rapid.Tools.Provision;
 
-namespace RapidTools.Provision.Providers
+namespace Rapid.Tools.Provision.Providers
 {
 	public class FieldAssetProvider : AssetProviderBase
 	{

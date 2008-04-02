@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.SharePoint;
 
-namespace RapidTools.Provision
+namespace Rapid.Tools.Provision
 {
 	public class RapidProvisionContext
 	{

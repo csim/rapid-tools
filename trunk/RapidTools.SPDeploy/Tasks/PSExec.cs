@@ -8,7 +8,7 @@ using System.Management;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace RapidTools.SPDeploy.Tasks
+namespace Rapid.Tools.SPDeploy.Tasks
 {
 	public class PSExec : Task {
 

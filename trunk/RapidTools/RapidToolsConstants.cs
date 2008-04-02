@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 
-namespace RapidTools
+namespace Rapid.Tools
 {
 	public struct RapidToolsConstants
 	{

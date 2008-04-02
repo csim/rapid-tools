@@ -60,14 +60,14 @@ For example:
 		<WspServerName>dev-clints-wss</WspServerName>
 
 		<WebApplicationUrl>http://$(WspServerName):88</WebApplicationUrl>
-		<WebApplicationOwnerEmail>clints@RapidTools.com</WebApplicationOwnerEmail>
+		<WebApplicationOwnerEmail>clints@Rapid.Tools.com</WebApplicationOwnerEmail>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(USERNAME) == 'johnl'">
 		<WspServerName>dev-johnl-wss</WspServerName>
 
 		<WebApplicationUrl>http://$(WspServerName):81</WebApplicationUrl>
-		<WebApplicationOwnerEmail>johnl@RapidTools.com</WebApplicationOwnerEmail>
+		<WebApplicationOwnerEmail>johnl@Rapid.Tools.com</WebApplicationOwnerEmail>
 	</PropertyGroup>
 
 
@@ -127,4 +127,4 @@ NOTES
 Feedback
 ========
 
-If you have comments, suggestions or requests please email me at clints@RapidTools.com
+If you have comments, suggestions or requests please email me at clints@Rapid.Tools.com

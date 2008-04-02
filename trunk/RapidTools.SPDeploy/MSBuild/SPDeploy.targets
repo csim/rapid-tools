@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-	<UsingTask TaskName="RapidTools.SPDeploy.Tasks.CompileWsp" AssemblyFile="$(SPDeployBaseDir)\RapidTools.SPDeploy.Tasks.dll" />
-	<UsingTask TaskName="RapidTools.SPDeploy.Tasks.Stsadm" AssemblyFile="$(SPDeployBaseDir)\RapidTools.SPDeploy.Tasks.dll" />
-	<UsingTask TaskName="RapidTools.SPDeploy.Tasks.PSExec" AssemblyFile="$(SPDeployBaseDir)\RapidTools.SPDeploy.Tasks.dll" />
+	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.CompileWsp" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
+	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.Stsadm" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
+	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.PSExec" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
 
 	<PropertyGroup>
 

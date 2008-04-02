@@ -3,9 +3,9 @@ using System.Xml;
 using System.Data;
 using System.Configuration;
 using Microsoft.SharePoint;
-using RapidTools.Provision;
+using Rapid.Tools.Provision;
 
-namespace RapidTools.Provision.Providers
+namespace Rapid.Tools.Provision.Providers
 {
 	public abstract class AssetProviderBase
 	{

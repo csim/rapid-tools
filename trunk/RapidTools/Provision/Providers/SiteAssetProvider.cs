@@ -12,9 +12,9 @@ using System.Security.Principal;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
-using RapidTools.Provision;
+using Rapid.Tools.Provision;
 
-namespace RapidTools.Provision.Providers
+namespace Rapid.Tools.Provision.Providers
 {
 	public class SiteAssetProvider : AssetProviderBase
 	{

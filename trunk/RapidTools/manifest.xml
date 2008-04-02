@@ -2,7 +2,7 @@
 <Solution SolutionId="{F4537604-2672-4a68-AD0A-77163E1301FB}" ResetWebServer="True" xmlns="http://schemas.microsoft.com/sharepoint/">
 
 	<Assemblies>
-		<Assembly DeploymentTarget="GlobalAssemblyCache" Location="RapidTools.dll" />
+		<Assembly DeploymentTarget="GlobalAssemblyCache" Location="Rapid.Tools.dll" />
 	</Assemblies>
 
 </Solution>
