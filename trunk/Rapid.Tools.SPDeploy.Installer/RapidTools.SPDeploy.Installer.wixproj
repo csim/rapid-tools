@@ -4,7 +4,7 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{d809f7ec-c59d-49ea-af5b-75a784efa6c4}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>RapidTools.SPDeploy</OutputName>
+    <OutputName>Rapid.Tools.SPDeploy</OutputName>
     <OutputType>Package</OutputType>
     <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
     <SccProjectName>
@@ -87,7 +87,7 @@
     </WixVariables>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="RapidTools.SPDeploy.Installer.wxs" />
+    <Compile Include="Rapid.Tools.SPDeploy.Installer.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll" />
@@ -95,7 +95,7 @@
     <WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixVSExtension.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="RapidTools.SPDeploy.Installer_en-us.wxl" />
+    <EmbeddedResource Include="Rapid.Tools.SPDeploy.Installer_en-us.wxl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets" />
   <!--
