@@ -67,7 +67,6 @@ WARNING: Importing these settings with override all external tools settings insi
 Remote debugging can be problematic and somewhat tricky as most people have found. Here is the technique that works for me.
 
   # Attach to the remote process. From your dev local machine inside Visual Studio go to Debug -> Attach to process. Change the qualifier field to your remote server name, pick ALL the w3wp.exe processes and click attach. At this point you may run into issues around firewalls, dcom, etc. See http://support.microsoft.com/kb/910448
-		
   # Ensure that your pdb symbols file has been loaded. 
 
 Open the modules window while in debug mode to ensure that the symbols for your assembly are loaded. This window is notoriously hard to find, here's how I do it: Right click on a toolbar and go to customize. In the left pane choose debug, then drag the modules icon from the right pane onto a toolbar. Close the customize dialog and click on the module icon. You will now have the modules window open and you can scroll to find your assembly.
@@ -80,13 +79,9 @@ In the modules window you should now see that the symbols for your assembly are 
 ==NOTES==
 
   * References to your project are compiled into WSP when the "Copy Local" attribute is turned on for the reference. To change this attribute, right click on your reference in visual studio and select properties. Then change the value of the "Copy Local" attribute.
-
   * Your development machine must be on the same domain as your SharePoint server.
-
   * makecab.exe must be in your DOS path for the wsp compilation to work. To make sure that makecab is in your path, open a command prompt and type makecab.exe
-
   * When loading an SPDeploy extended project you may receive a security warning stating that the project file has been customized. Choose "Load Project Normally". This is an issue that I am actively trying to resolve.
-
   * The SPDeploy project template is based on the ASP.net web application project type. You will need to have Visual Studio 2005 SP1 install so that this project type is available.
 
 
