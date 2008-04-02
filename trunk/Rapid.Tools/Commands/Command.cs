@@ -194,16 +194,16 @@ namespace Rapid.Tools.Commands {
 
 			XmlElement xappsettings = EnsureElement(xconfiguration, "appSettings");
 
-			XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Wcm.exceptions.sourceName", "key");
+			XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.sourceName", "key");
 			xsetting.SetAttribute("value", sourcename);
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Wcm.exceptions.logName", "key");
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.logName", "key");
 			xsetting.SetAttribute("value", logname);
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Wcm.exceptions.print", "key");
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.print", "key");
 			xsetting.SetAttribute("value", print.ToString());
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Wcm.exceptions.log", "key");
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.log", "key");
 			xsetting.SetAttribute("value", log.ToString());
 
 			xconfig.Save(webconfig);
