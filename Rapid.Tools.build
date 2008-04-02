@@ -37,6 +37,8 @@
 
 	<target name="ccnet-afterbuild">
 
+		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
+
 		<if test="${directory::exists(output.dir)}">
 			<copy todir="${zip.dir}" flatten="true">
 				<fileset>
@@ -44,8 +46,6 @@
 					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
 				</fileset>
 			</copy>
-
-			<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 
 			<zip zipfile="${zip.path}">
 				<fileset basedir="${zip.dir}">
