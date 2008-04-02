@@ -46,7 +46,7 @@ The SPDeploy.user file defines properties that are specific to your project and 
 You can also specify properties conditionally based on the executor's username. This allows for isolated and independant environments per developer.
 For example:
 
-[[[
+{{{
 	<PropertyGroup Condition="$(USERNAME) == 'clints'">
 		<WspServerName>dev-clints-wss</WspServerName>
 
