@@ -34,7 +34,6 @@
 		<AssemblyOutput Include="$(OutDir)$(TargetName)$(TargetExt);$(OutDir)$(TargetName).pdb" />
 		<!--<AssemblyOutput Include="$(OutputPath)$(TargetName)$(TargetExt);$(OutputPath)$(TargetName).pdb" />-->
 
-
 		<WspSourceRootFiles
 				Include="$(BaseRootFilesDir)\**"
 				Exclude="$(BaseRootFilesDir)\**\*.cs;$(BaseRootFilesDir)\**\*.tmp">
@@ -62,7 +61,7 @@
 	</ItemGroup>
 
 
-	<!-- **** These targets perform actions before or after the event specified int he target name -->
+	<!-- **** These targets perform actions before or after the event specified in the target name -->
 	<Target Name="BeforeCompileWsp"/>
 	<Target Name="AfterCompileWsp"/>
 
