@@ -2,10 +2,10 @@
 
 Rapid Tools for SharePoint is a set of developer tools that are dedicated to making SharePoint developers more productive.
 
-  # Enables the entire Software Development lifecycle on the SharePoint platform. 
-  # Enables isolated environments. You can choose to isolate your environments by developer and by use (such as test, qa, etc.)
+  * Enables the entire Software Development lifecycle on the SharePoint platform. 
+  * Enables isolated environments. You can choose to isolate your environments by developer and by use (such as test, qa, etc.)
 
 
-  # test1
-  # test2
-  # test2
+  * test1
+  * test2
+  * test2
