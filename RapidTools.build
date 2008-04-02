@@ -1,4 +1,4 @@
-<project name="RapidTools" default="Rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
+<project name="RapidTools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
 
 	<if test="${not property::exists('CCNetLabel')}">
 		<fail message="CCNetLabel not defined" />
@@ -7,7 +7,7 @@
 	
 	<property name="project.name" value="${project::get-name()}" />
 	<property name="nant.dir" value="${nant::get-base-directory()}" />
-	<property name="configuration" value="Release" overwrite="false" />
+	<property name="configuration" value="Debug" overwrite="false" />
 
 	<property name="gc.project.name" value="rapid-tools" />
 	
@@ -23,11 +23,10 @@
 
 	<!-- *********** CCNET Targets ********************** -->
 
-	<target name="ccnet-build" depends="ccnet-init, ccnet-afterbuild, ccnet-publishbuild" />
+	<target name="ccnet-build" depends="ccnet-init, rebuild, compilewsp, ccnet-afterbuild, ccnet-publishbuild" />
 
 
 	<target name="ccnet-init">
-
 
 	</target>
 
