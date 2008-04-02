@@ -7,8 +7,8 @@
 		<ProjectGuid>{F768713D-86A1-4557-ABFC-F843E615C7CC}</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>RapidTools.SPDeploy.Tasks</RootNamespace>
-		<AssemblyName>RapidTools.SPDeploy.Tasks</AssemblyName>
+		<RootNamespace>Rapid.Tools.SPDeploy.Tasks</RootNamespace>
+		<AssemblyName>Rapid.Tools.SPDeploy.Tasks</AssemblyName>
 		<SccProjectName>     </SccProjectName>
 		<SccLocalPath>     </SccLocalPath>
 		<SccAuxPath>     </SccAuxPath>
@@ -91,12 +91,12 @@
 			<Output TaskParameter="Include" ItemName="ZipTemplate" />
 		</CreateItem>
 
-		<CreateItem Include="..\RapidTools.SPDeploy.Installer\**\*.*" Exclude="..\RapidTools.SPDeploy.Installer\**\RapidTools.SPDeploy.Installer*.*;..\RapidTools.SPDeploy.Installer\**\*svn\**">
+		<CreateItem Include="..\Rapid.Tools.SPDeploy.Installer\**\*.*" Exclude="..\Rapid.Tools.SPDeploy.Installer\**\Rapid.Tools.SPDeploy.Installer*.*;..\Rapid.Tools.SPDeploy.Installer\**\*svn\**">
 			<Output TaskParameter="Include" ItemName="InstallerFiles" />
 		</CreateItem>
 		<Delete Files="@(InstallerFiles)" />
 		
-		<Copy SourceFiles="@(MSBuildContents)" DestinationFolder="..\RapidTools.SPDeploy.Installer" />
-		<Copy SourceFiles="@(ZipTemplate)" DestinationFolder="..\RapidTools.SPDeploy.Installer" />
+		<Copy SourceFiles="@(MSBuildContents)" DestinationFolder="..\Rapid.Tools.SPDeploy.Installer" />
+		<Copy SourceFiles="@(ZipTemplate)" DestinationFolder="..\Rapid.Tools.SPDeploy.Installer" />
 	</Target>
 </Project>

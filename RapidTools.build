@@ -1,4 +1,4 @@
-<project name="RapidTools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
+<project name="Rapid.Tools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
 	
 	<property name="project.name" value="${project::get-name()}" />
 	<property name="nant.dir" value="${nant::get-base-directory()}" />
