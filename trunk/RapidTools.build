@@ -47,6 +47,7 @@
 
 	<target name="ccnet-publishbuild">
 
+		<include buildfile="${directory::get-parent-directory(source.dir)}googlecode.build" />
 		<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 
 		<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}" 
