@@ -2,6 +2,5 @@
 
 Rapid Tools for SharePoint is a set of developer tools that are dedicated to making SharePoint developers more productive.
 
-===Features===
   # Enables the entire Software Development lifecycle on the SharePoint platform. Deploy your SharePoint project from source control to any environment with [SPDeploy] and the [Provisioning Provisioning Framework].
   # Enables isolated environments. You can choose to isolate your environments by developer and by use (such as test, qa, etc.)
