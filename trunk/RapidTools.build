@@ -2,9 +2,12 @@
 
 	<property name="configuration" value="Release" overwrite="false" />
 	<property name="project.name" value="${project::get-name()}" />
-	<property name="nant.dir" value="${nant::get-base-directory()}" />	
-	<property name="gc.project.name" value="rapid-tools" />
+	<property name="nant.dir" value="${nant::get-base-directory()}" />
 
+	<loadtasks assembly="${nant.dir}\NantGoogleCode.dll"  />
+
+	<property name="gc.project.name" value="rapid-tools" />
+	<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 
 
 	<!-- *********** CCNET Targets ********************** -->
@@ -45,11 +48,6 @@
 
 	<target name="ccnet-publishbuild">
 		
-		<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
-		<loadtasks assembly="${nant.dir}\NantGoogleCode.dll"  />
-
-		<include buildfile="${directory::get-parent-directory(source.dir)}googlecode.build" />
-
 		<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}" 
 			targetfilename="${gc.filename}" filename="${gc.filename}"
 			summary="${gc.project.name} ${version} binaries" />
