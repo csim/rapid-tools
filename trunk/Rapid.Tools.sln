@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools", "Rapid.Tools\
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidTools.SPDeploy", "Rapid.Tools.SPDeploy\RapidTools.SPDeploy.csproj", "{F768713D-86A1-4557-ABFC-F843E615C7CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy", "Rapid.Tools.SPDeploy\Rapid.Tools.SPDeploy.csproj", "{F768713D-86A1-4557-ABFC-F843E615C7CC}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
