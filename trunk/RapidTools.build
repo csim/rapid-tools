@@ -14,7 +14,9 @@
 
 	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
 	<property name="output.dir" value="${project.name}\bin\${configuration}" />
-	<property name="zip.path" value="${gc.project.name}-${version}.zip" />
+	
+	<property name="zip.dir" value="_zip" />
+	<property name="zip.path" value="${zip.dir}\${gc.project.name}-${version}.zip" />
 
 	<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
@@ -38,10 +40,16 @@
 	<target name="ccnet-afterbuild">
 
 		<if test="${directory::exists(output.dir)}">
-			<zip zipfile="${zip.path}">
+			<copy todir="${zip.dir}" flatten="true">
 				<fileset>
 					<include name="${output.dir}\${project.name}*" />
 					<exclude name="RapidTools.SPDeploy.Installer\bin\$(configuration)\*.msi" />
+				</fileset>
+			</copy>
+
+			<zip zipfile="${zip.path}">
+				<fileset basedir="${zip.dir}">
+					<include name="**" />
 				</fileset>
 			</zip>
 		</if>
