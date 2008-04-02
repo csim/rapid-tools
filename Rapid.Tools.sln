@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{7B94E6F2-0
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
+		Rapid.Tools.build = Rapid.Tools.build
 		_etc\RapidTools-Install.cmd = _etc\RapidTools-Install.cmd
 		_etc\RapidTools-Uninstall.cmd = _etc\RapidTools-Uninstall.cmd
-		RapidTools.build = RapidTools.build
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools", "Rapid.Tools\Rapid.Tools.csproj", "{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}"
