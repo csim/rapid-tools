@@ -7,7 +7,8 @@
 	
 	<property name="project.name" value="${project::get-name()}" />
 	<property name="nant.dir" value="${nant::get-base-directory()}" />
-	<property name="configuration" value="Debug" overwrite="false" />
+	
+	<property name="configuration" value="Release" overwrite="false" />
 
 	<property name="gc.project.name" value="rapid-tools" />
 	
@@ -48,7 +49,6 @@
 
 
 	<target name="ccnet-publishbuild">
-
 
 		<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 
