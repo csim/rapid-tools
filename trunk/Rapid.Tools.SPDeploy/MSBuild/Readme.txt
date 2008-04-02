@@ -127,4 +127,4 @@ NOTES
 Feedback
 ========
 
-If you have comments, suggestions or requests please email me at clints@Rapid.Tools.com
+If you have comments, suggestions or requests please email me at clints@ascentium.com
