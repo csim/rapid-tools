@@ -55,7 +55,6 @@
 		-->
 
 		<AddWspCommand>-o AddSolution -filename &quot;$(WspFilename)&quot;</AddWspCommand>
-
 		<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot;</DeployWspCommand>
 		<UpgradeWspCommand>-o UpgradeSolution -immediate -allowgacdeployment -allowcaspolicies -name &quot;$(WspFilename)&quot; -filename &quot;$(WspFilename)&quot;</UpgradeWspCommand>
 		<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot;</RetractWspCommand>
