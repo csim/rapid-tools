@@ -15,7 +15,8 @@
 	<property name="output.dir" value="${project.name}\bin\${configuration}" />
 	<property name="zip.path" value="${gc.project.name}-${version}.zip" />
 
-	<include buildfile="${directory::get-parent-directory(source.dir)}googlecode.build" />
+	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
+	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
 	
 	<loadtasks assembly="${nant.dir}\NantGoogleCode.dll"  />
 
