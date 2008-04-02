@@ -45,6 +45,8 @@
 				</fileset>
 			</copy>
 
+			<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
+
 			<zip zipfile="${zip.path}">
 				<fileset basedir="${zip.dir}">
 					<include name="**" />

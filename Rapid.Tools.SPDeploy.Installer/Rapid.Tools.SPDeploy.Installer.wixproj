@@ -15,7 +15,7 @@
     </SccAuxPath>
     <SccLocalPath>
     </SccLocalPath>
-    <Name>RapidTools.SPDeploy.Installer</Name>
+    <Name>Rapid.Tools.SPDeploy.Installer</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
