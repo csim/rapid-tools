@@ -1,3 +1,1 @@
 [Wiki Wiki Home] | [http://code.google.com/p/rapid-tools/w/list Index]
-
-Rapid Tools for SharePoint is a set of developer tools that are dedicated to making SharePoint developers more productive.
