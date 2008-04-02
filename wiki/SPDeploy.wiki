@@ -1,1 +1,112 @@
 [Wiki Wiki Home] | [http://code.google.com/p/rapid-tools/w/list Index]
+
+==Overview==
+
+SPDeploy extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio 2005. In addition, SPDeploy allows you to deploy your newly compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
+
+Benefits of wsp compilation and remote deployment:
+
+  # All source code is housed and maintained via source control. All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
+
+  # Provides single distibution file that can be deployed via standard SharePoint tools (stsadm). This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
+
+  # Allows multiple developers to work on a single project and deploy to a separate and distinct environment avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
+
+
+For more information on SharePoint Solution files see http://msdn2.microsoft.com/en-us/library/aa543214.aspx
+
+
+==Creating a Project==
+
+  # Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.
+
+  # Add user specific settings to SPDeploy.user. Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
+
+  # Setup manifest.xml GUID. Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
+
+  # Setup manifest.xml assembly. Inside the manifest.xml uncomment the assemblies element and add the name of your assembly to the Location attribute of the Assembly node. This will ensure your assembly is deployed to the GAC as a part of the wsp deployment.
+
+  # Strongly name your assembly. Right click on the project -> properties -> signing. Click "sign the assembly". Select a new key and give it a name.
+
+  # Build the project.
+
+  # Execute the CreateWebApplication target. See Executing SPDeploy below for more details.
+
+  # Execute the AddWsp target to add the wsp to your server.
+
+  # Execute the DeployWsp target. Your wsp file will now be deployed to the farm and all customization are available.
+
+  # Execute the CreateSite target. This will create a top-level site inside your web application.
+
+
+==About SPDeploy.user==
+
+The SPDeploy.user file defines properties that are specific to your project and to the developers working on your project. These properties are consumed by the SPDeploy msbuild extension. At minimum you must override the WspServerName and WebApplicationUrl properties but you can override any property you like.
+
+You can also specify properties conditionally based on the executor's username. This allows for isolated and independant environments per developer.
+For example:
+
+[[[
+	<PropertyGroup Condition="$(USERNAME) == 'clints'">
+		<WspServerName>dev-clints-wss</WspServerName>
+
+		<WebApplicationUrl>http://$(WspServerName):88</WebApplicationUrl>
+		<WebApplicationOwnerEmail>clints@Rapid.Tools.com</WebApplicationOwnerEmail>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(USERNAME) == 'johnl'">
+		<WspServerName>dev-johnl-wss</WspServerName>
+
+		<WebApplicationUrl>http://$(WspServerName):81</WebApplicationUrl>
+		<WebApplicationOwnerEmail>johnl@Rapid.Tools.com</WebApplicationOwnerEmail>
+	</PropertyGroup>
+}}}
+
+
+Executing SPDeploy
+==================
+
+Supported Targets: ComileWsp, AddWsp, DeployWsp, UpgradeWsp, RetractWsp, DeleteWsp, UpgradeIncremental, UpgradeIncrementalFiles, UpgradeIncrementalAssembly, CreateSite, DeleteSite, CreateWebApplication, DeleteWebApplication
+
+You can execute these targets via the command prompt from the project directory like so:
+msbuild /target:<target name> <project name>.csproj
+
+Where <target name> is the msbuild target such as AddWsp or DeployWsp and <project name> is your project's name.
+
+
+To add visual studio support for launching these targets import the included SPDeploy.vssettings file into visual studio by going to tools -> import/export settings. This will add external tools items that are located under the tools menu in visual studio. You can also customize this further by creating a toolbar or menubar for these tool items. 
+
+WARNING: Importing these settings with override all external tools settings inside visual studio.
+
+
+==Remote Debugging==
+
+Remote debugging can be problematic and somewhat tricky as most people have found. Here is the technique that works for me.
+
+  # Attach to the remote process. From your dev local machine inside Visual Studio go to Debug -> Attach to process. Change the qualifier field to your remote server name, pick ALL the w3wp.exe processes and click attach. At this point you may run into issues around firewalls, dcom, etc. See http://support.microsoft.com/kb/910448
+		
+  # Ensure that your pdb symbols file has been loaded. 
+
+Open the modules window while in debug mode to ensure that the symbols for your assembly are loaded. This window is notoriously hard to find, here's how I do it: Right click on a toolbar and go to customize. In the left pane choose debug, then drag the modules icon from the right pane onto a toolbar. Close the customize dialog and click on the module icon. You will now have the modules window open and you can scroll to find your assembly.
+
+If your assembly's symbols are not loaded, right click on the modules window and choose symbols settings. Now make sure that the spdeploy temporary folder is in the list, the spdeploy temporary folder is where spdeploy copies assemblies, PDBs and WSPs when deploying to your remote server. The temporary directory is located at \\<remote server name>\c$\_spdeploy\<project name>. Make sure this path is visible in the symbols setting dialog and that the checkbox next to it is checked. Now close the symbol settings dialog.
+
+In the modules window you should now see that the symbols for your assembly are loaded and your breakpoints are working.
+
+
+==NOTES==
+
+  * References to your project are compiled into WSP when the "Copy Local" attribute is turned on for the reference. To change this attribute, right click on your reference in visual studio and select properties. Then change the value of the "Copy Local" attribute.
+
+  * Your development machine must be on the same domain as your SharePoint server.
+
+  * makecab.exe must be in your DOS path for the wsp compilation to work. To make sure that makecab is in your path, open a command prompt and type makecab.exe
+
+  * When loading an SPDeploy extended project you may receive a security warning stating that the project file has been customized. Choose "Load Project Normally". This is an issue that I am actively trying to resolve.
+
+  * The SPDeploy project template is based on the ASP.net web application project type. You will need to have Visual Studio 2005 SP1 install so that this project type is available.
+
+
+==Feedback==
+
+If you have comments, suggestions or requests please email me at clints@ascentium.com
