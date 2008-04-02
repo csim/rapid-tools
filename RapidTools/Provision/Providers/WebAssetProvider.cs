@@ -11,9 +11,9 @@ using System.Web.UI.HtmlControls;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Navigation;
-using RapidTools.Provision;
+using Rapid.Tools.Provision;
 
-namespace RapidTools.Provision.Providers
+namespace Rapid.Tools.Provision.Providers
 {
 	public class WebAssetProvider : AssetProviderBase
 	{

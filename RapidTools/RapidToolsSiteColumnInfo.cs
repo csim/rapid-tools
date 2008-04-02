@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.SharePoint;
 
-namespace RapidTools
+namespace Rapid.Tools
 {
 	[Serializable]
 	[XmlRoot("SiteColumnInfo")]

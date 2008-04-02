@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RapidTools.SPDeploy.Tasks")]
+[assembly: AssemblyTitle("Rapid.Tools.SPDeploy.Tasks")]
 [assembly: AssemblyDescription("SPDeploy is part of the larger SPTools toolset used for development interaction with SharePoint 2007.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ascentium Corporation")]

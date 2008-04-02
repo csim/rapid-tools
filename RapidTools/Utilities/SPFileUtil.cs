@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.SharePoint;
 
-namespace RapidTools.Utilities
+namespace Rapid.Tools.Utilities
 {
 	public static class SPFileUtil
 	{

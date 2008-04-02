@@ -9,10 +9,10 @@ using System.Collections.Generic;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
-using RapidTools.Utilities;
-using RapidTools.Provision.Providers;
+using Rapid.Tools.Utilities;
+using Rapid.Tools.Provision.Providers;
 
-namespace RapidTools.Provision
+namespace Rapid.Tools.Provision
 {
 
 	public class RapidProvisionManager

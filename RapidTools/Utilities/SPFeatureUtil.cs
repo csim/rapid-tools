@@ -12,7 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
 
-namespace RapidTools.Utilities
+namespace Rapid.Tools.Utilities
 {
 	public static class SPFeatureUtil
 	{

@@ -10,7 +10,7 @@ using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System.Text.RegularExpressions;
 
-namespace RapidTools.SPDeploy.Tasks
+namespace Rapid.Tools.SPDeploy.Tasks
 {
 	public class Stsadm : Task {
 

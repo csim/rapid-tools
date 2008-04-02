@@ -5,7 +5,7 @@
 <?define Property_UpgradeCode = "6BE372E2-8288-4af6-8416-0D44EB949D77" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="RapidTools.SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
+	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="Rapid.Tools.SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
 		<Package InstallerVersion="200" Compressed="yes"/>
 
 		<Upgrade Id="$(var.Property_UpgradeCode)">
@@ -57,8 +57,8 @@
 				<File Id="Readme.txt_file"  Name="Readme.txt"  Source="Readme.txt"/>
 				<File Id="SPDeploy.targets_file"  Name="SPDeploy.targets"  Source="SPDeploy.targets"/>
 				<File Id="SPDeploy.vssettings_file"  Name="SPDeploy.vssettings"  Source="SPDeploy.vssettings"/>
-				<File Id="SPDeploy.Tasks.dll_file"  Name="RapidTools.SPDeploy.Tasks.dll"  Source="RapidTools.SPDeploy.Tasks.dll"/>
-				<File Id="SPDeploy.Tasks.pdb_file"  Name="RapidTools.SPDeploy.Tasks.pdb"  Source="RapidTools.SPDeploy.Tasks.pdb"/>
+				<File Id="SPDeploy.Tasks.dll_file"  Name="Rapid.Tools.SPDeploy.Tasks.dll"  Source="Rapid.Tools.SPDeploy.Tasks.dll"/>
+				<File Id="SPDeploy.Tasks.pdb_file"  Name="Rapid.Tools.SPDeploy.Tasks.pdb"  Source="Rapid.Tools.SPDeploy.Tasks.pdb"/>
 			</Component>
 		</DirectoryRef>
 

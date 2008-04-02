@@ -13,8 +13,9 @@ using Microsoft.SharePoint.WebControls;
 using Microsoft.SharePoint.WebPartPages;
 using System.Security;
 using System.Web.UI.WebControls.WebParts;
+using Rapid.Tools;
 
-namespace RapidTools.Utilities
+namespace Rapid.Tools.Utilities
 {
 	public static class SPXmlUtil
 	{
