@@ -1,57 +1,69 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+	<!-- ***** Global properties for all Developers ******************** -->
 	<PropertyGroup>
-		<WspServerName></WspServerName>
-
-		<WebApplicationUrl>http://$(WspServerName)</WebApplicationUrl>
-		<WebApplicationOwnerEmail></WebApplicationOwnerEmail>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(USERNAME) == ''">
-		<WspServerName></WspServerName>
-
-		<WebApplicationUrl>http://$(WspServerName)</WebApplicationUrl>
-		<WebApplicationOwnerEmail></WebApplicationOwnerEmail>
-	</PropertyGroup>
-
-
-	<!-- ***** Global properties for all users ******************** -->
-	<PropertyGroup>
-		
 		<LocalDeployment>False</LocalDeployment>
-		
-		<WspRemoteTempDir>\\$(WspServerName)\c$\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
-		<WspRemoteLocalTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteLocalTempDir>
+		<WebApplicationOwnerEmail>$(USERNAME)@ascentium.com</WebApplicationOwnerEmail>
+	</PropertyGroup>
 
-		<WssRootDir>\\$(WspServerName)\c$\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+	<!-- ***** Developer specific properties ******************** -->
+
+	<PropertyGroup Condition="'$(USERNAME)' == 'clints'">
+		<WspServerName>mordor.int.ascentium.com</WspServerName>
+		<LocalDeployment>True</LocalDeployment>
+	</PropertyGroup>
+
+
+	<!-- ***** Global properties for all Developers ******************** -->
+
+	<Choose>
+		<When Condition="'$(LocalDeployment)' == 'True'">
+			<PropertyGroup>
+				<WspRemoteTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
+				<WspRemoteLocalTempDir>$(WspRemoteTempDir)</WspRemoteLocalTempDir>
+				<WssRootDir>c:\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<WspRemoteTempDir>\\$(WspServerName)\c$\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
+				<WspRemoteLocalTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteLocalTempDir>
+				<WssRootDir>\\$(WspServerName)\c$\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
+
+	<PropertyGroup>
+
+		<IISResetCommand Condition="'$(IISResetCommand)' == ''">iisreset</IISResetCommand>
+
+		<WebApplicationUrl Condition="'$(WebApplicationPort)' == '80'">http://$(WspServerName)</WebApplicationUrl>
+		<WebApplicationUrl Condition="'$(WebApplicationPort)' != '80'">http://$(WspServerName):$(WebApplicationPort)</WebApplicationUrl>
+
 		<WssTemplateDir>$(WssRootDir)\Template</WssTemplateDir>
 
 		<WebApplicationOwnerLogin>$(USERDOMAIN)\$(USERNAME)</WebApplicationOwnerLogin>
 
-		<SiteTemplateID>sts#0</SiteTemplateID>
-
-		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(MSBuildProjectName)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;WSS_$(MSBuildProjectName)_$(USERNAME)&quot; -exclusivelyusentlm</CreateWebApplicationCommand>
+		<!--
+		**** These commands are not necessary because this project is set of framework components
+		
+		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(MSBuildProjectName)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;WSS_$(MSBuildProjectName)_$(USERNAME)&quot; -exclusivelyusentlm -allowanonymous</CreateWebApplicationCommand>
 		<DeleteWebApplicationCommand>-o UnextendVS -url &quot;$(WebApplicationUrl)&quot; -deletecontent -deleteiissites</DeleteWebApplicationCommand>
 
-		<CreateSiteCommand>-o CreateSite -url &quot;$(WebApplicationUrl)&quot; -sitetemplate $(SiteTemplateID) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
+		<CreateSiteCommand>-o CreateSite -sitetemplate rapid#0 -url $(WebApplicationUrl) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
 		<DeleteSiteCommand>-o DeleteSite -url &quot;$(WebApplicationUrl)&quot;</DeleteSiteCommand>
+		-->
 
 		<AddWspCommand>-o AddSolution -filename &quot;$(WspFilename)&quot;</AddWspCommand>
+
 		<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot;</DeployWspCommand>
 		<UpgradeWspCommand>-o UpgradeSolution -immediate -allowgacdeployment -allowcaspolicies -name &quot;$(WspFilename)&quot; -filename &quot;$(WspFilename)&quot;</UpgradeWspCommand>
 		<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot;</RetractWspCommand>
 		<DeleteWspCommand>-o DeleteSolution -name &quot;$(WspFilename)&quot;</DeleteWspCommand>
 
-		<!-- Use these commands for wsp files that have web application specific resources
-			<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot; -url $(WebApplicationUrl)</DeployWspCommand>
-			<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot; -url $(WebApplicationUrl)</RetractWspCommand>
-		-->
-
 		<ExecAdminJobsCommand>-o ExecAdmSvcJobs</ExecAdminJobsCommand>
 
-		<InstallAssemblyCommand>&quot;$(GACUtilPath)&quot; /nologo /if &quot;$(TargetName)$(TargetExt)&quot; </InstallAssemblyCommand>
-
-		<IISResetCommand>iisreset</IISResetCommand>
+		<InstallAssemblyCommand>&quot;$(GACUtilPath)&quot; /nologo /if &quot;$(TargetName)$(TargetExt)&quot;</InstallAssemblyCommand>
 
 	</PropertyGroup>
 
