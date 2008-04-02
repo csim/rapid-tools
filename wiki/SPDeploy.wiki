@@ -1,11 +1,9 @@
 [Wiki Wiki Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
 ==Overview==
-
 SPDeploy extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio 2005. In addition, SPDeploy allows you to deploy your newly compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
 
 Benefits of wsp compilation and remote deployment:
-
   # All source code is housed and maintained via source control. All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
   # Provides single distibution file that can be deployed via standard SharePoint tools (stsadm). This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
   # Allows multiple developers to work on a single project and deploy to a separate and distinct environment avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
@@ -15,7 +13,6 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 
 ==Creating a Project==
-
   # Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.
   # Add user specific settings to SPDeploy.user. Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
   # Setup manifest.xml GUID. Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
@@ -29,7 +26,6 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 
 ==About SPDeploy.user==
-
 The SPDeploy.user file defines properties that are specific to your project and to the developers working on your project. These properties are consumed by the SPDeploy msbuild extension. At minimum you must override the WspServerName and WebApplicationUrl properties but you can override any property you like.
 
 You can also specify properties conditionally based on the executor's username. This allows for isolated and independant environments per developer.
@@ -50,9 +46,7 @@ For example:
 }}}
 
 
-Executing SPDeploy
-==================
-
+==Executing SPDeploy==
 Supported Targets: ComileWsp, AddWsp, DeployWsp, UpgradeWsp, RetractWsp, DeleteWsp, UpgradeIncremental, UpgradeIncrementalFiles, UpgradeIncrementalAssembly, CreateSite, DeleteSite, CreateWebApplication, DeleteWebApplication
 
 You can execute these targets via the command prompt from the project directory like so:
