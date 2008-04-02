@@ -87,6 +87,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\SPDeploy\SPDeploy.targets" />
   <Target Name="AfterBuild">
+	  <CreateItem Include="../_etc/*.txt;../_etc/*.cmd;../_etc/*.wsp">
+		  <Output TaskParameter="Include" ItemName="EtcFiles" />
+	  </CreateItem>
+	  <Copy SourceFiles="@(EtcFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
