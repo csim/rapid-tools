@@ -46,15 +46,7 @@
 						]]>
 					</Field>
 				</File>
-
-				<RapidPage Url="fp/default.aspx" Overwrite="True"
-						Title="Home" SkinPath="/_catalogs/RapidPageSkins/Ascentium/Landing_Home.aspx" PublishingStartDate="2007-10-25T10:00:00" ExcludeFromAggregation="true">
-					<Field Name="FlashPath" Value="/fp/Ascentium_site_stripped.swf" />
-					<Field Name="FlashWidth" Value="944" />
-					<Field Name="FlashHeight" Value="450" />
-					<Field Name="FlashAlternateImagePath" Value="/fp/_assets/hero.gif" />
-				</RapidPage>
-
+				
 			</WebContent>
 
 			<WebContent Url="/web/web2-1/web3-1">
