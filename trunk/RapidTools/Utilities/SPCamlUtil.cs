@@ -16,29 +16,20 @@ namespace RapidTools.Utilities
 {
 	public static class SPCamlUtil
 	{
-
 		public static string GetComparison(string comparisonOperator, Guid fieldRefId, string valueType, string value)
 		{
-
-			return string.Format("<{0}><FieldRef ID=\"{1}\" /><Value Type=\"{2}\">{3}</Value></{0}>"
-				, comparisonOperator, fieldRefId, valueType, value);
-
+			return string.Format("<{0}><FieldRef ID=\"{1}\" /><Value Type=\"{2}\">{3}</Value></{0}>", comparisonOperator, fieldRefId, valueType, value);
 		}
 
 		public static string GetComparison(string comparisonOperator, string fieldRefName, string valueType, string value)
 		{
-
-			return string.Format("<{0}><FieldRef Name=\"{1}\" /><Value Type=\"{2}\">{3}</Value></{0}>"
-				, comparisonOperator, fieldRefName, valueType, value);
-
+			return string.Format("<{0}><FieldRef Name=\"{1}\" /><Value Type=\"{2}\">{3}</Value></{0}>", comparisonOperator, fieldRefName, valueType, value);
 		}
-
 
 		public static string AppendCondition(string previousConditions, string comparisonOperator, string additionalCondition)
 		{
 			return string.Format("<{1}>{2}{0}</{1}>", previousConditions, comparisonOperator, additionalCondition);
 		}
-
 
 		public static string GetIsNotNullComparison(string fieldRefName)
 		{
@@ -59,8 +50,6 @@ namespace RapidTools.Utilities
 		{
 			return string.Format("<IsNull><FieldRef ID=\"{0}\" /></IsNull>", fieldRefID);
 		}
-
-
 
 	}
 }
