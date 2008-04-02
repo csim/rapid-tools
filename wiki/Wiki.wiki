@@ -3,8 +3,6 @@
 Please report all issues to the [http://code.google.com/p/rapid-tools/issues/list Issue Tracker].
 
 ===Table of Contents===
-  * [Installation]
-  * Tools
-    * [SPDeploy]
-    * [Provisioning Provisioning Framework]
+  * [SPDeploy]
+  * [Provisioning Provisioning Framework]
   
