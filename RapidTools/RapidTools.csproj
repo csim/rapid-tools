@@ -31,23 +31,51 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SharePoint, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_references\Microsoft.SharePoint.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Security, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_references\Microsoft.SharePoint.Security.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provision\Providers\AssetContainer.cs" />
+    <Compile Include="Provision\Providers\AssetProviderBase.cs" />
+    <Compile Include="Provision\Providers\FieldAssetProvider.cs" />
+    <Compile Include="Provision\Providers\FileAssetProvider.cs" />
+    <Compile Include="Provision\Providers\IgnoreProvider.cs" />
+    <Compile Include="Provision\Providers\SiteAssetProvider.cs" />
+    <Compile Include="Provision\Providers\WebAssetProvider.cs" />
+    <Compile Include="Provision\Providers\WebContentProvider.cs" />
+    <Compile Include="Provision\RapidProvisionContext.cs" />
+    <Compile Include="Provision\RapidProvisionManager.cs" />
+    <Compile Include="RapidSiteColumnInfo.cs" />
+    <Compile Include="RapidToolsConstants.cs" />
+    <Compile Include="Utilities\SPExceptionUtil.cs" />
+    <Compile Include="Utilities\SPCamlUtil.cs" />
+    <Compile Include="Utilities\SPFeatureUtil.cs" />
+    <Compile Include="Utilities\SPFieldUtil.cs" />
+    <Compile Include="Utilities\SPFileUtil.cs" />
+    <Compile Include="Utilities\SPListUtil.cs" />
+    <Compile Include="Utilities\SPWebApplicationUtil.cs" />
+    <Compile Include="Utilities\SPXmlUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="manifest.xml" />
     <Content Include="Properties\SPDeploy.user" />
+    <Content Include="Provision\SampleManifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Receivers\" />
     <Folder Include="RootFiles\Config\" />
     <Folder Include="TemplateFiles\1033\XML\" />
     <Folder Include="TemplateFiles\ControlTemplates\" />

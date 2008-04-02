@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ProvisionManifest>
+
+	<AssetProviders>
+		<AssetProvider Name="Assets" Type="RapidTools.Provision.Providers.AssetContainer, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+		<AssetProvider Name="Webs" Type="RapidTools.Provision.Providers.AssetContainer, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+
+		<AssetProvider Name="Site" Type="RapidTools.Provision.Providers.SiteAssetProvider, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+		<AssetProvider Name="Web" Type="RapidTools.Provision.Providers.WebAssetProvider, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+		<AssetProvider Name="WebContent" Type="RapidTools.Provision.Providers.WebContentProvider, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+		<AssetProvider Name="File" Type="RapidTools.Provision.Providers.FileAssetProvider, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+		<AssetProvider Name="Field" Type="RapidTools.Provision.Providers.FieldAssetProvider, RapidWCM, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+	</AssetProviders>
+
+	<Assets>
+
+		<Site Title="Home" Url="/" TemplateID="sts#0" AnonymousState="On" Overwrite="True">
+
+			<Webs>
+				<Web Title="Web 1-1" Url="Web1" TemplateID="sts#0">
+					<Web Title="Web 2-1" Url="Web2-1" TemplateID="sts#0">
+						<Web Title="Web 3-1" Url="Web3-1" TemplateID="sts#0" />
+						<Web Title="Web 3-2" Url="Web3-2" TemplateID="sts#0" />
+						<Web Title="Web 3-3" Url="Web3-3" TemplateID="sts#0" />
+					</Web>
+					<Web Title="Web 2-2" Url="Web2-2" TemplateID="sts#0" />
+					<Web Title="Web 2-3" Url="Web2-3" TemplateID="sts#0" />
+				</Web>
+			</Webs>
+
+			<WebContent Url="/">
+
+				<File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True">
+					<Field Name="ContentTypeId" Type="Text"  Value="" />
+					<Field Name="Summary" Type="Text">
+						<![CDATA[asdf asf asfd]]>
+					</Field>
+				</File>
+
+				<File Url="Shared Documents/File2.txt" Path="Files\File2.txt" Title="file 1" Overwrite="True">
+					<Field Name="Title" Type="Text">
+						<![CDATA[
+							<test>
+								<t1></t1>
+							</test>
+						]]>
+					</Field>
+				</File>
+
+				<RapidPage Url="fp/default.aspx" Overwrite="True"
+						Title="Home" SkinPath="/_catalogs/RapidPageSkins/Ascentium/Landing_Home.aspx" PublishingStartDate="2007-10-25T10:00:00" ExcludeFromAggregation="true">
+					<Field Name="FlashPath" Value="/fp/Ascentium_site_stripped.swf" />
+					<Field Name="FlashWidth" Value="944" />
+					<Field Name="FlashHeight" Value="450" />
+					<Field Name="FlashAlternateImagePath" Value="/fp/_assets/hero.gif" />
+				</RapidPage>
+
+			</WebContent>
+
+			<WebContent Url="/web/web2-1/web3-1">
+
+				<File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True" />
+
+			</WebContent>
+
+		</Site>
+
+	</Assets>
+
+</ProvisionManifest>
