@@ -5,12 +5,14 @@ SPDeploy extends MSBuild to include targets that allow you to create a SharePoin
 
 Benefits of wsp compilation and remote deployment:
   # All source code is housed and maintained via source control. All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
-  # Provides single distibution file that can be deployed via standard SharePoint tools (stsadm). This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
+  # Provides single distribution file that can be deployed via standard SharePoint tools (stsadm). This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
   # Allows multiple developers to work on a single project and deploy to a separate and distinct environment avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
 
 
 For more information on SharePoint Solution files see http://msdn2.microsoft.com/en-us/library/aa543214.aspx
 
+==Installation==
+Find and execute the Rapid.Tools.SPDeploy.msi file in the Rapid.Tools distribution zip file. Distribution packages can be downloaded from the [http://code.google.com/p/rapid-tools/downloads/list downloads page]. Downloads marked as "Featured" are stable builds that are known good. Download all packages at your own risk :)
 
 ==Creating a Project==
   # Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.
