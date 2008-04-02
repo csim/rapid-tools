@@ -1,18 +1,20 @@
 [Wiki Wiki Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
+
 ==Overview==
 SPDeploy extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio 2005. In addition, SPDeploy allows you to deploy your newly compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
 
 Benefits of wsp compilation and remote deployment:
-  # All source code is housed and maintained via source control. All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
-  # Provides single distribution file that can be deployed via standard SharePoint tools (stsadm). This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
-  # Allows multiple developers to work on a single project and deploy to a separate and distinct environment avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
-
+  # *All source code is housed and maintained via source control.* All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
+  # *Provides single distribution file that can be deployed via standard SharePoint tools (stsadm).* This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
+  # *Allows multiple developers to work on a single project* and deploy to a separate and distinct environment avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
 
 For more information on SharePoint Solution files see http://msdn2.microsoft.com/en-us/library/aa543214.aspx
 
+
 ==Installation==
 Find and execute the Rapid.Tools.SPDeploy.msi file in the Rapid.Tools distribution zip file. Distribution packages can be downloaded from the [http://code.google.com/p/rapid-tools/downloads/list downloads page]. Downloads marked as "Featured" are stable builds that are known good. Download all packages at your own risk :)
+
 
 ==Creating a Project==
   # Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.
@@ -56,7 +58,6 @@ msbuild /target:<target name> <project name>.csproj
 
 Where <target name> is the msbuild target such as AddWsp or DeployWsp and <project name> is your project's name.
 
-
 To add visual studio support for launching these targets import the included SPDeploy.vssettings file into visual studio by going to tools -> import/export settings. This will add external tools items that are located under the tools menu in visual studio. You can also customize this further by creating a toolbar or menubar for these tool items. 
 
 WARNING: Importing these settings with override all external tools settings inside visual studio.
@@ -66,8 +67,8 @@ WARNING: Importing these settings with override all external tools settings insi
 
 Remote debugging can be problematic and somewhat tricky as most people have found. Here is the technique that works for me.
 
-  # Attach to the remote process. From your dev local machine inside Visual Studio go to Debug -> Attach to process. Change the qualifier field to your remote server name, pick ALL the w3wp.exe processes and click attach. At this point you may run into issues around firewalls, dcom, etc. See http://support.microsoft.com/kb/910448
-  # Ensure that your pdb symbols file has been loaded. 
+  # *Attach to the remote process.* From your dev local machine inside Visual Studio go to Debug -> Attach to process. Change the qualifier field to your remote server name, pick ALL the w3wp.exe processes and click attach. At this point you may run into issues around firewalls, dcom, etc. See http://support.microsoft.com/kb/910448
+  # *Ensure that your pdb symbols file has been loaded.* 
 
 Open the modules window while in debug mode to ensure that the symbols for your assembly are loaded. This window is notoriously hard to find, here's how I do it: Right click on a toolbar and go to customize. In the left pane choose debug, then drag the modules icon from the right pane onto a toolbar. Close the customize dialog and click on the module icon. You will now have the modules window open and you can scroll to find your assembly.
 
