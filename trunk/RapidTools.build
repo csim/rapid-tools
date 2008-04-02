@@ -1,22 +1,23 @@
 <project name="RapidTools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
+	
+	<property name="project.name" value="${project::get-name()}" />
+	<property name="nant.dir" value="${nant::get-base-directory()}" />
 
 	<if test="${not property::exists('CCNetLabel')}">
 		<fail message="CCNetLabel not defined" />
 	</if>
 	<property name="version" value="${CCNetLabel}" />
-	
-	<property name="project.name" value="${project::get-name()}" />
-	<property name="nant.dir" value="${nant::get-base-directory()}" />
-	
+
 	<property name="configuration" value="Release" overwrite="false" />
 
-	<property name="gc.project.name" value="rapid-tools" />
-	
 	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
 	<property name="output.dir" value="${project.name}\bin\${configuration}" />
 	<property name="zip.path" value="${gc.project.name}-${version}.zip" />
 
+	<property name="gc.project.name" value="rapid-tools" />
+	<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
+
 	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
 	
 	<loadtasks assembly="${nant.dir}\NantGoogleCode.dll"  />
@@ -49,8 +50,6 @@
 
 
 	<target name="ccnet-publishbuild">
-
-		<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 
 		<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}" 
 			targetfilename="${gc.filename}" filename="${gc.filename}"
