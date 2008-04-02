@@ -39,13 +39,13 @@ For example:
 <PropertyGroup Condition="$(USERNAME) == 'clints'">
     <WspServerName>dev-clints-wss</WspServerName>
     <WebApplicationUrl>http://$(WspServerName):88</WebApplicationUrl>
-    <WebApplicationOwnerEmail>clints@Rapid.Tools.com</WebApplicationOwnerEmail>
+    <WebApplicationOwnerEmail>clints@ascentium.com</WebApplicationOwnerEmail>
 </PropertyGroup>
 
 <PropertyGroup Condition="$(USERNAME) == 'johnl'">
     <WspServerName>dev-johnl-wss</WspServerName>
     <WebApplicationUrl>http://$(WspServerName):81</WebApplicationUrl>
-    <WebApplicationOwnerEmail>johnl@Rapid.Tools.com</WebApplicationOwnerEmail>
+    <WebApplicationOwnerEmail>johnl@ascentium.com</WebApplicationOwnerEmail>
 </PropertyGroup>
 }}}
 
