@@ -1,71 +1,64 @@
 <project name="RapidTools" default="Rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
 
-	<property name="configuration" value="Debug" overwrite="false" />
+	<property name="configuration" value="Release" overwrite="false" />
+	<property name="project.name" value="${project::get-name()}" />
+	<property name="nant.dir" value="${nant::get-base-directory()}" />	
+	<property name="gc.project.name" value="rapid-tools" />
+
 
 
 	<!-- *********** CCNET Targets ********************** -->
-	
-	<target name="ccnet-build" depends="init-ccnet-build, post-ccnet-build" />
 
-	<target name="post-ccnet-build">
+	<target name="ccnet-build" depends="ccnet-init, ccnet-afterbuild, ccnet-publishbuild" />
+
+	
+	<target name="ccnet-init">
+
+		<if test="${not property::exists('CCNetLabel')}">
+			<fail message="CCNetLabel not defined" />
+		</if>
+
+		<property name="version" value="${CCNetLabel}" />
+
+		<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
+		<property name="output.dir" value="${project.name}\bin\${configuration}" />
+		<property name="zip.path" value="${gc.project.name}-${version}.zip" />
+
+	</target>
+
+
+	<target name="ccnet-afterbuild">
 
 		<if test="${directory::exists(output.dir)}">
 			<zip zipfile="${zip.path}">
 				<fileset>
 					<include name="${output.dir}\${project.name}*" />
-					<exclude name="RapidTools.SPDeploy.Installer\bin$(configurstion)\*.msi" />
+					<exclude name="RapidTools.SPDeploy.Installer\bin$(configuration)\*.msi" />
 				</fileset>
 			</zip>
-
-			<copy todir="${drop.dir}" file="${zip.path}" />
 		</if>
 
-		<call target="cleansource" />
+		<call target="ccnet-cleansource" />
 
 	</target>
 
 
-	<!-- *********** Build Targets ********************** -->
-	
-	<target name="rebuild">
-		<msbuild target="Rebuild" project="${project.name}.sln">
-			<arg value="/property:Configuration=${configuration}" />
-		</msbuild>
-	</target>
-
-	<target name="compilewsp">
-		<msbuild target="CompileWsp" project="${project.name}\${project.name}.csproj">
-			<arg value="/property:Configuration=${configuration}" />
-		</msbuild>
-	</target>
-
-
-	<!-- *********** Initialization Targets ********************** -->
-
-	<target name="init">
-		<property name="project.name" value="${project::get-name()}" />
-	</target>
-
-	<target name="init-ccnet-build" depends="init">
-		<property name="configuration" value="Release" />
-
-		<if test="${not property::exists('CCNetLabel')}">
-			<fail message="ccnet.label not defined" />
-		</if>
-
-		<property name="ccnet.label" value="${CCNetLabel}" />
-
-		<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
-		<property name="output.dir" value="${project.name}\bin\${configuration}" />
-		<property name="drop.dir" value="\\wa1crpbuild01\Drop\${project.name}\v${ccnet.label}" />
+	<target name="ccnet-publishbuild">
 		
-		<property name="zip.path" value="${project.name}-${ccnet.label}.zip" />
+		<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
+		<loadtasks assembly="${nant.dir}\NantGoogleCode.dll"  />
+
+		<include buildfile="${directory::get-parent-directory(source.dir)}googlecode.build" />
+
+		<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}" 
+			targetfilename="${gc.filename}" filename="${gc.filename}"
+			summary="${gc.project.name} ${version} binaries" />
+
 	</target>
 
 
-	<!-- *********** Utility Targets ********************** -->
+	<target name="ccnet-cleansource">
 
-	<target name="cleansource">
 		<delete>
 			<fileset basedir="${source.dir}">
 				<include name="**" />
@@ -75,13 +68,37 @@
 		<foreach item="Folder" in="${source.dir}" property="idir">
 			<delete dir="${idir}" />
 		</foreach>
+		
 	</target>
 
-	<target name="schema">
-		<property name="schema.path" value="C:\Program Files\Microsoft Visual Studio 9.0\Xml\Schemas\NAnt.xsd" />
-		<delete file="${schema.path}" if="${file::exists(schema.path)}" />
-		<nantschema output="${schema.path}" target-ns="http://nant.sf.net/schemas/nant.xsd" />
+
+
+	<!-- *********** Build Targets ********************** -->
+	
+	<target name="rebuild">
+		<msbuild target="Rebuild" project="${project.name}.sln">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
 	</target>
 	
+
+	<target name="compilewsp">
+		<msbuild target="CompileWsp" project="${project.name}\${project.name}.csproj">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
+	</target>
+
+
+
+	<!-- *********** Utility Targets ********************** -->
+
+	<target name="schema">
+		<foreach item="String" in="C:\Program Files\Microsoft Visual Studio 8\Xml\Schemas\NAnt.xsd,C:\Program Files\Microsoft Visual Studio 9.0\Xml\Schemas\NAnt.xsd" delim="," property="idir">
+			<delete file="${idir}" if="${file::exists(idir)}" />
+			<nantschema output="${idir}" target-ns="http://nant.sf.net/schemas/nant.xsd" />
+		</foreach>
+	</target>
+
+
 
 </project>
