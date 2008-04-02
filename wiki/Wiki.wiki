@@ -2,7 +2,7 @@
 
 Rapid Tools for SharePoint is a set of developer tools that are dedicated to making 
 
-[http://code.google.com/ http://code.google.com/images/code_sm.png]
+http://code.google.com/images/code_sm.png
 
 ===Features===
   * Enables the entire Software Development lifecycle on the SharePoint platform.
