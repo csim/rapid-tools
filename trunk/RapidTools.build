@@ -26,7 +26,7 @@
 
 	<!-- *********** CCNET Targets ********************** -->
 
-	<target name="ccnet-build" depends="ccnet-init, rebuild, compilewsp, ccnet-afterbuild, ccnet-publishbuild" />
+	<target name="ccnet-build" depends="ccnet-init, rebuild, compilewsp, ccnet-afterbuild, ccnet-publishbuild, ccnet-cleansource" />
 
 
 	<target name="ccnet-init">
@@ -44,8 +44,6 @@
 				</fileset>
 			</zip>
 		</if>
-
-		<call target="ccnet-cleansource" />
 
 	</target>
 
