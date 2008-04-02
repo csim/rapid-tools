@@ -10,11 +10,12 @@
 
 	<property name="configuration" value="Release" overwrite="false" />
 
+	<property name="gc.project.name" value="rapid-tools" />
+
 	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
 	<property name="output.dir" value="${project.name}\bin\${configuration}" />
 	<property name="zip.path" value="${gc.project.name}-${version}.zip" />
 
-	<property name="gc.project.name" value="rapid-tools" />
 	<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
 
