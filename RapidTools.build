@@ -41,7 +41,7 @@
 			<zip zipfile="${zip.path}">
 				<fileset>
 					<include name="${output.dir}\${project.name}*" />
-					<exclude name="RapidTools.SPDeploy.Installer\bin$(configuration)\*.msi" />
+					<exclude name="RapidTools.SPDeploy.Installer\bin\$(configuration)\*.msi" />
 				</fileset>
 			</zip>
 		</if>
