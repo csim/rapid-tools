@@ -1,22 +1,53 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-	<!-- ***** Global properties for all Developers ******************** -->
 	<PropertyGroup>
 		<LocalDeployment>False</LocalDeployment>
+		<WebApplicationOwnerEmail>$(USERNAME)@nowhere.com</WebApplicationOwnerEmail>
+	</PropertyGroup>
+
+	<!-- *** Add a condition attribute to make this section user specifice. For example:  Condition="$(USERNAME) == 'johnd'" -->
+	<PropertyGroup>
+		<WspServerName></WspServerName>
 		<WebApplicationPort>80</WebApplicationPort>
-		<WebApplicationOwnerEmail>$(USERNAME)@ascentium.com</WebApplicationOwnerEmail>
+
+		<!-- *** The commands below commented out are optional override commmands 
+			  
+			  PSExecUsername - This command is used to pass credentials for 
+					           executing commands remotely. Especially helpful
+							   if you're developing OFF the domain.
+                               This should be in the format "DOMAIN\Username"													
+						
+			  PSExecPassword - Required if you pass in PSExecUsername 
+			  
+			  WebApplicationOwnerLogin - Allows you to specify what account will
+					                     be used in creating a SharePoint web
+										 application as the owner.
+			 
+			  WebApplicationDatabaseName - Allows you to specify the web app
+					                       database name for creating a SharePoint
+										   web application.
+			  
+			  WebApplicationDescription - Allows you to override the name of the 
+					                      SharePoint web application created. 
+			  
+			  WspRemoteTempDir - Allows you to specify the remote temporary directory
+					             on the remote server.
+			  
+			  WspRemoteLocalTempDir - Allows you to specify the local path on the remote
+					                  server for running commands. -->
+
+		<!--
+		<PSExecUsername></PSExecUsername>
+		<PSExecPassword></PSExecPassword>
+		<WebApplicationOwnerLogin></WebApplicationOwnerLogin>
+		<WebApplicationDatabaseName></WebApplicationDatabaseName>
+		<WebApplicationDescription></WebApplicationDescription>
+		-->
+
 	</PropertyGroup>
 
-	<!-- ***** Developer specific properties ******************** -->
 
-	<PropertyGroup Condition="'$(USERNAME)' == 'clints'">
-		<WspServerName>mordor.int.ascentium.com</WspServerName>
-		<WebApplicationPort>110</WebApplicationPort>
-		<LocalDeployment>True</LocalDeployment>
-	</PropertyGroup>
-
-
-	<!-- ***** Global properties for all Developers ******************** -->
+	<!-- *** Global properties for all users  -->
 
 	<Choose>
 		<When Condition="'$(LocalDeployment)' == 'True'">
@@ -44,12 +75,16 @@
 
 		<WssTemplateDir>$(WssRootDir)\Template</WssTemplateDir>
 
-		<WebApplicationOwnerLogin>$(USERDOMAIN)\$(USERNAME)</WebApplicationOwnerLogin>
+		<SiteTemplateID>sts#0</SiteTemplateID>
 
-		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(MSBuildProjectName)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;WSS_$(MSBuildProjectName)_$(USERNAME)&quot; -exclusivelyusentlm -allowanonymous</CreateWebApplicationCommand>
+		<WebApplicationOwnerLogin Condition="'$(WebApplicationOwnerLogin)'==''">$(USERDOMAIN)\$(USERNAME)</WebApplicationOwnerLogin>
+		<WebApplicationDatabaseName Condition="'$(WebApplicationDatabaseName)'==''">WSS_$(MSBuildProjectName)_$(USERNAME)</WebApplicationDatabaseName>
+		<WebApplicationDescription Condition="'$(WebApplicationDescription)'==''">$(MSBuildProjectName)</WebApplicationDescription>
+
+		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(WebApplicationDescription)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;$(WebApplicationDatabaseName)&quot; -exclusivelyusentlm</CreateWebApplicationCommand>
 		<DeleteWebApplicationCommand>-o UnextendVS -url &quot;$(WebApplicationUrl)&quot; -deletecontent -deleteiissites</DeleteWebApplicationCommand>
 
-		<CreateSiteCommand>-o CreateSite -sitetemplate rapid#0 -url $(WebApplicationUrl) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
+		<CreateSiteCommand>-o CreateSite -url &quot;$(WebApplicationUrl)&quot; -sitetemplate $(SiteTemplateID) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
 		<DeleteSiteCommand>-o DeleteSite -url &quot;$(WebApplicationUrl)&quot;</DeleteSiteCommand>
 
 		<AddWspCommand>-o AddSolution -filename &quot;$(WspFilename)&quot;</AddWspCommand>
@@ -58,14 +93,19 @@
 		<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot;</RetractWspCommand>
 		<DeleteWspCommand>-o DeleteSolution -name &quot;$(WspFilename)&quot;</DeleteWspCommand>
 
+		<!-- *** Use these commands for wsp files that have web application specific resources
+			<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot; -url $(WebApplicationUrl)</DeployWspCommand>
+			<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot; -url $(WebApplicationUrl)</RetractWspCommand>
+		-->
+
 		<ExecAdminJobsCommand>-o ExecAdmSvcJobs</ExecAdminJobsCommand>
 
-		<InstallAssemblyCommand>&quot;$(GACUtilPath)&quot; /nologo /if &quot;$(TargetName)$(TargetExt)&quot;</InstallAssemblyCommand>
+		<InstallAssemblyCommand>&quot;$(GACUtilPath)&quot; /nologo /if &quot;$(TargetName)$(TargetExt)&quot; </InstallAssemblyCommand>
 
 	</PropertyGroup>
 
 
-	<!-- **** Override these targets to perform actions before or after the indicated action
+	<!-- *** Override these targets to perform actions before or after the indicated action
 		
 	<Target Name="BeforeCompileWsp"/>
 	<Target Name="AfterCompileWsp"/>
