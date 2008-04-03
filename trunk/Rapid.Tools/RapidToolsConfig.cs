@@ -21,7 +21,7 @@ namespace Rapid.Tools
 			{
 				get
 				{
-					return Convert.ToBoolean(WebConfigurationManager.AppSettings["Rapid.Tools.exceptions.print"]);
+					return Convert.ToBoolean(WebConfigurationManager.AppSettings["Rapid.Tools.Exceptions.Print"]);
 				}
 			}
 
@@ -29,7 +29,7 @@ namespace Rapid.Tools
 			{
 				get
 				{
-					return Convert.ToBoolean(WebConfigurationManager.AppSettings["Rapid.Tools.exceptions.log"]);
+					return Convert.ToBoolean(WebConfigurationManager.AppSettings["Rapid.Tools.Exceptions.Log"]);
 				}
 			}
 

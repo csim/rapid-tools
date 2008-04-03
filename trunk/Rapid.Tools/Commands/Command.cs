@@ -16,10 +16,13 @@ using Microsoft.SharePoint.StsAdmin;
 using Microsoft.SharePoint.Administration;
 
 
-namespace Rapid.Tools.Commands {
-	public class Command : ISPStsadmCommand {
+namespace Rapid.Tools.Commands
+{
+	public class Command : ISPStsadmCommand
+	{
 
-		public struct CommandNames {
+		public struct CommandNames
+		{
 			public const string Import = "rapidtools-import";
 
 			public const string EnableExceptionHandling = "rapidtools-enableexceptionhandling";
@@ -29,20 +32,24 @@ namespace Rapid.Tools.Commands {
 		public const string SuccessMessage = "\nOperation completed successfully.";
 
 
-		public void PrintHeader() {
+		public void PrintHeader()
+		{
 			Console.WriteLine("Rapid Tools v1.0 (c) Ascentium Corporation");
 			Console.WriteLine("For more information contact Clint Simon (clints@ascentium.com)");
 		}
 
-		public string PrintHelpMessage(string command) {
+		public string PrintHelpMessage(string command)
+		{
 			string help = GetHelpMessage(command);
 			return string.Format("stsadm -o {0}\n\t{1}", command, help);
 		}
 
-		public string GetHelpMessage(string command) {
+		public string GetHelpMessage(string command)
+		{
 			StringBuilder help = new StringBuilder();
 
-			switch (command.ToLower()) {
+			switch (command.ToLower())
+			{
 
 			case CommandNames.Import:
 				help.AppendLine(" -url <SiteUrl>");
@@ -63,8 +70,10 @@ namespace Rapid.Tools.Commands {
 		}
 
 
-		public int Run(string command, StringDictionary args, out string output) {
-			if (args.ContainsKey("debug")) {
+		public int Run(string command, StringDictionary args, out string output)
+		{
+			if (args.ContainsKey("debug"))
+			{
 				System.Diagnostics.Debugger.Launch();
 				//Console.WriteLine("Pausing to attach debugger, press any key to continue.");
 				//Console.ReadKey(true);
@@ -76,8 +85,9 @@ namespace Rapid.Tools.Commands {
 
 			PrintHeader();
 
-			switch (command.ToLower()) {
-			
+			switch (command.ToLower())
+			{
+
 			case CommandNames.Import:
 				ret = Import(command, args, out output);
 				break;
@@ -98,15 +108,18 @@ namespace Rapid.Tools.Commands {
 		}
 
 
-		public int Import(string command, StringDictionary args, out string output) {
-			try {
+		public int Import(string command, StringDictionary args, out string output)
+		{
+			try
+			{
 
 				output = "";
 
 				bool valid = true;
 				valid = valid && args.ContainsKey("url");
 
-				if (!valid) {
+				if (!valid)
+				{
 					output = PrintHelpMessage(command);
 					return 0;
 				}
@@ -120,7 +133,9 @@ namespace Rapid.Tools.Commands {
 				ProvisionManager manager = new ProvisionManager(webapp, manifest);
 				manager.Import();
 
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				output = PrintHelpMessage(command);
 				output += "\n" + SPExceptionUtil.Format(ex);
 			}
@@ -128,14 +143,16 @@ namespace Rapid.Tools.Commands {
 			return 0;
 		}
 
-		public int EnableExceptionHandling(string command, StringDictionary args, out string output) {
+		public int EnableExceptionHandling(string command, StringDictionary args, out string output)
+		{
 
 			output = "";
 
 			bool valid = true;
 			valid = valid && args.ContainsKey("url");
 
-			if (!valid) {
+			if (!valid)
+			{
 				output = PrintHelpMessage(command);
 				return 0;
 			}
@@ -152,9 +169,11 @@ namespace Rapid.Tools.Commands {
 			string webconfig = "web.config";
 
 
-			try {
+			try
+			{
 
-				using (SPSite site = new SPSite(url)) {
+				using (SPSite site = new SPSite(url))
+				{
 
 					SPUrlZone zone = SPWebApplicationUtil.GetZone(site.Url);
 					SPWebApplication webapp = site.WebApplication;
@@ -166,22 +185,28 @@ namespace Rapid.Tools.Commands {
 					webconfig = string.Format(@"{0}\web.config", root);
 
 				}
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				SPExceptionUtil.Print(ex);
 			}
 
-			if (!File.Exists(webconfig)) {
+			if (!File.Exists(webconfig))
+			{
 				throw new Exception(string.Format("Unable to find web.config at {0}", webconfig));
 			}
 
 
-			try {
+			try
+			{
 
 				Type tglobal = typeof(RapidToolsApplication);
 				string contents = string.Format("<%@ Application Inherits=\"{0}, {1}\" %>", tglobal.FullName, tglobal.Assembly.FullName);
 				File.WriteAllText(globalasax, contents);
 
-			} catch (UnauthorizedAccessException) {
+			}
+			catch (UnauthorizedAccessException)
+			{
 				Console.WriteLine("Unable to write to {0}. To correct this problem delete the file at {0}.\n", globalasax);
 			}
 
@@ -194,16 +219,16 @@ namespace Rapid.Tools.Commands {
 
 			XmlElement xappsettings = EnsureElement(xconfiguration, "appSettings");
 
-			XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.sourceName", "key");
-			xsetting.SetAttribute("value", sourcename);
+			//XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.Exceptions.SourceName", "key");
+			//xsetting.SetAttribute("value", sourcename);
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.logName", "key");
-			xsetting.SetAttribute("value", logname);
+			//xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.logName", "key");
+			//xsetting.SetAttribute("value", logname);
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.print", "key");
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.Exceptions.Print", "key");
 			xsetting.SetAttribute("value", print.ToString());
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.log", "key");
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.Exceptions.Log", "key");
 			xsetting.SetAttribute("value", log.ToString());
 
 			xconfig.Save(webconfig);
@@ -211,14 +236,16 @@ namespace Rapid.Tools.Commands {
 			return 0;
 		}
 
-		public int DisableExceptionHandling(string command, StringDictionary args, out string output) {
+		public int DisableExceptionHandling(string command, StringDictionary args, out string output)
+		{
 
 			output = "";
 
 			bool valid = true;
 			valid = valid && args.ContainsKey("url");
 
-			if (!valid) {
+			if (!valid)
+			{
 				output = PrintHelpMessage(command);
 				return 0;
 			}
@@ -226,8 +253,10 @@ namespace Rapid.Tools.Commands {
 			string url = args["url"];
 			string globalasax = "global.asax";
 
-			try {
-				using (SPSite site = new SPSite(url)) {
+			try
+			{
+				using (SPSite site = new SPSite(url))
+				{
 
 					SPUrlZone zone = SPWebApplicationUtil.GetZone(site.Url);
 					SPWebApplication webapp = site.WebApplication;
@@ -238,45 +267,54 @@ namespace Rapid.Tools.Commands {
 					globalasax = string.Format(@"{0}\global.asax", root);
 
 				}
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				SPExceptionUtil.Print(ex);
 			}
 
-			try {
+			try
+			{
 
 				Type tglobal = typeof(Microsoft.SharePoint.ApplicationRuntime.SPHttpApplication);
 				string contents = string.Format("<%@ Application Inherits=\"{0}, {1}\" %>", tglobal.FullName, tglobal.Assembly.FullName);
 				File.WriteAllText(globalasax, contents);
 
-			} catch (UnauthorizedAccessException) {
+			}
+			catch (UnauthorizedAccessException)
+			{
 				Console.WriteLine("Unable to write to {0}. To correct this problem delete the file at {0}.\n", globalasax);
 			}
 
 			return 0;
 		}
 
-		private XmlElement EnsureElement(XmlElement parentElement, string newElementName) {
+		private XmlElement EnsureElement(XmlElement parentElement, string newElementName)
+		{
 
 			XmlElement xnew = (XmlElement)parentElement.SelectSingleNode(newElementName);
 
-			if (xnew == null) {
+			if (xnew == null)
+			{
 				xnew = parentElement.OwnerDocument.CreateElement(newElementName);
 				parentElement.AppendChild(xnew);
 			}
 
 			return xnew;
-
 		}
 
-		private XmlElement EnsureAddElement(XmlElement parentElement, string newElementName) {
+		private XmlElement EnsureAddElement(XmlElement parentElement, string newElementName)
+		{
 			return EnsureAddElement(parentElement, newElementName, "name");
 		}
 
-		private XmlElement EnsureAddElement(XmlElement parentElement, string newKey, string keyAttributeName) {
+		private XmlElement EnsureAddElement(XmlElement parentElement, string newKey, string keyAttributeName)
+		{
 
 			XmlElement xadd = (XmlElement)parentElement.SelectSingleNode(string.Format("add[@{0}='{1}']", keyAttributeName, newKey));
 
-			if (xadd == null) {
+			if (xadd == null)
+			{
 				xadd = parentElement.OwnerDocument.CreateElement("add");
 				parentElement.AppendChild(xadd);
 			}
