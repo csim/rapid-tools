@@ -1,4 +1,4 @@
-[Wiki Wiki Home] | [http://code.google.com/p/rapid-tools/w/list Index]
+[Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
 
 ===Overview===
