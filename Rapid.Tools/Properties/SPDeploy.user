@@ -11,7 +11,7 @@
 
 	<PropertyGroup Condition="'$(USERNAME)' == 'clints'">
 		<WspServerName>mordor.int.ascentium.com</WspServerName>
-		<WebApplicationPort>110</WebApplicationPort>
+		<WebApplicationPort>101</WebApplicationPort>
 		<LocalDeployment>True</LocalDeployment>
 	</PropertyGroup>
 
@@ -49,7 +49,7 @@
 		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(MSBuildProjectName)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;WSS_$(MSBuildProjectName)_$(USERNAME)&quot; -exclusivelyusentlm -allowanonymous</CreateWebApplicationCommand>
 		<DeleteWebApplicationCommand>-o UnextendVS -url &quot;$(WebApplicationUrl)&quot; -deletecontent -deleteiissites</DeleteWebApplicationCommand>
 
-		<CreateSiteCommand>-o CreateSite -sitetemplate rapid#0 -url $(WebApplicationUrl) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
+		<CreateSiteCommand>-o CreateSite -sitetemplate sts#0 -url $(WebApplicationUrl) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
 		<DeleteSiteCommand>-o DeleteSite -url &quot;$(WebApplicationUrl)&quot;</DeleteSiteCommand>
 
 		<AddWspCommand>-o AddSolution -filename &quot;$(WspFilename)&quot;</AddWspCommand>

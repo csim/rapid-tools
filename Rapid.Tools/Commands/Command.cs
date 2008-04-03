@@ -25,8 +25,8 @@ namespace Rapid.Tools.Commands
 		{
 			public const string Import = "rapidtools-import";
 
-			public const string EnableExceptionHandling = "rapidtools-enableexceptionhandling";
-			public const string DisableExceptionHandling = "rapidtools-disableexceptionhandling";
+			public const string EnableExceptionDisplay = "rapidtools-enableexceptiondisplay";
+			public const string DisableExceptionDisplay = "rapidtools-disableexceptiondisplay";
 		}
 
 		public const string SuccessMessage = "\nOperation completed successfully.";
@@ -56,12 +56,13 @@ namespace Rapid.Tools.Commands
 				help.AppendLine("\t -manifest <ProvisionManifestPath> Default: provision.xml");
 				break;
 
-			case CommandNames.EnableExceptionHandling:
-				help.AppendLine("[-print]");
-				help.AppendLine("\t[-log] (Application pool identity needs write access to the event log)");
+			case CommandNames.EnableExceptionDisplay:
+				help.AppendLine("[-printstack]");
+				help.AppendLine("\t[-endresponse]");
+				//help.AppendLine("\t[-log] (Application pool identity needs write access to the event log)");
 				break;
 
-			case CommandNames.DisableExceptionHandling:
+			case CommandNames.DisableExceptionDisplay:
 				break;
 
 			}
@@ -79,30 +80,38 @@ namespace Rapid.Tools.Commands
 				//Console.ReadKey(true);
 			}
 
-
 			int ret = 0;
 			output = "";
 
-			PrintHeader();
-
-			switch (command.ToLower())
+			try
 			{
 
-			case CommandNames.Import:
-				ret = Import(command, args, out output);
-				break;
+				PrintHeader();
 
-			case CommandNames.EnableExceptionHandling:
-				ret = EnableExceptionHandling(command, args, out output);
-				break;
+				switch (command.ToLower())
+				{
 
-			case CommandNames.DisableExceptionHandling:
-				ret = DisableExceptionHandling(command, args, out output);
-				break;
+				case CommandNames.Import:
+					ret = Import(command, args, out output);
+					break;
+
+				case CommandNames.EnableExceptionDisplay:
+					ret = EnableExceptionDisplay(command, args, out output);
+					break;
+
+				case CommandNames.DisableExceptionDisplay:
+					ret = DisableExceptionDisplay(command, args, out output);
+					break;
+
+				}
+
+				Console.WriteLine("");
 
 			}
-
-			Console.WriteLine("");
+			catch (Exception ex)
+			{
+				SPExceptionUtil.Print(ex);
+			}
 
 			return ret;
 		}
@@ -143,9 +152,8 @@ namespace Rapid.Tools.Commands
 			return 0;
 		}
 
-		public int EnableExceptionHandling(string command, StringDictionary args, out string output)
+		public int EnableExceptionDisplay(string command, StringDictionary args, out string output)
 		{
-
 			output = "";
 
 			bool valid = true;
@@ -162,19 +170,21 @@ namespace Rapid.Tools.Commands
 			string sourcename = args.ContainsKey("sourcename") ? args["sourcename"] : "Rapid";
 			string logname = args.ContainsKey("logname") ? args["logname"] : "Application";
 
-			bool print = args.ContainsKey("print");
+			string displayurl = args.ContainsKey("displayurl") ? args["displayurl"] : "/_layouts/rapidtools/error.aspx";
+
+			
+
+			bool printstack = args.ContainsKey("printstack");
 			bool log = args.ContainsKey("log");
+			bool endresponse = args.ContainsKey("endresponse");
 
 			string globalasax = "global.asax";
 			string webconfig = "web.config";
 
-
 			try
 			{
-
 				using (SPSite site = new SPSite(url))
 				{
-
 					SPUrlZone zone = SPWebApplicationUtil.GetZone(site.Url);
 					SPWebApplication webapp = site.WebApplication;
 					SPIisSettings settings = webapp.IisSettings[zone];
@@ -183,7 +193,6 @@ namespace Rapid.Tools.Commands
 
 					globalasax = string.Format(@"{0}\global.asax", root);
 					webconfig = string.Format(@"{0}\web.config", root);
-
 				}
 			}
 			catch (Exception ex)
@@ -191,52 +200,55 @@ namespace Rapid.Tools.Commands
 				SPExceptionUtil.Print(ex);
 			}
 
-			if (!File.Exists(webconfig))
-			{
-				throw new Exception(string.Format("Unable to find web.config at {0}", webconfig));
-			}
-
-
-			try
-			{
-
-				Type tglobal = typeof(RapidToolsApplication);
-				string contents = string.Format("<%@ Application Inherits=\"{0}, {1}\" %>", tglobal.FullName, tglobal.Assembly.FullName);
-				File.WriteAllText(globalasax, contents);
-
-			}
-			catch (UnauthorizedAccessException)
-			{
-				Console.WriteLine("Unable to write to {0}. To correct this problem delete the file at {0}.\n", globalasax);
-			}
-
+			if (!File.Exists(webconfig)) throw new Exception(string.Format("Unable to find web.config at {0}", webconfig));
 
 			XmlDocument xconfig = new XmlDocument();
 			xconfig.Load(webconfig);
 
 			XmlElement xconfiguration = (XmlElement)xconfig.SelectSingleNode("/configuration");
 			XmlElement xsystemweb = EnsureElement(xconfiguration, "system.web");
-
 			XmlElement xappsettings = EnsureElement(xconfiguration, "appSettings");
 
-			//XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.Exceptions.SourceName", "key");
+			XmlElement xsetting;
+
+			//XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.SourceName", "key");
 			//xsetting.SetAttribute("value", sourcename);
 
-			//xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.exceptions.logName", "key");
+			//xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.LogName", "key");
 			//xsetting.SetAttribute("value", logname);
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.Exceptions.Print", "key");
-			xsetting.SetAttribute("value", print.ToString());
+			//xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.Log", "key");
+			//xsetting.SetAttribute("value", log.ToString());
 
-			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.Exceptions.Log", "key");
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.PrintStack", "key");
+			xsetting.SetAttribute("value", printstack.ToString());
+
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.EndResponse", "key");
+			xsetting.SetAttribute("value", endresponse.ToString());			
+
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.Log", "key");
 			xsetting.SetAttribute("value", log.ToString());
 
+			xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.DisplayUrl", "key");
+			xsetting.SetAttribute("value", displayurl);
+
 			xconfig.Save(webconfig);
+
+			try
+			{
+				Type tglobal = typeof(RapidToolsApplication);
+				string contents = string.Format("<%@ Application Inherits=\"{0}, {1}\" %>", tglobal.FullName, tglobal.Assembly.FullName);
+				File.WriteAllText(globalasax, contents);
+			}
+			catch (UnauthorizedAccessException)
+			{
+				Console.WriteLine("Unable to write to {0}. To correct this problem delete the file at {0}.\n", globalasax);
+			}
 
 			return 0;
 		}
 
-		public int DisableExceptionHandling(string command, StringDictionary args, out string output)
+		public int DisableExceptionDisplay(string command, StringDictionary args, out string output)
 		{
 
 			output = "";
@@ -257,7 +269,6 @@ namespace Rapid.Tools.Commands
 			{
 				using (SPSite site = new SPSite(url))
 				{
-
 					SPUrlZone zone = SPWebApplicationUtil.GetZone(site.Url);
 					SPWebApplication webapp = site.WebApplication;
 					SPIisSettings settings = webapp.IisSettings[zone];
@@ -265,7 +276,6 @@ namespace Rapid.Tools.Commands
 					string root = settings.Path.ToString();
 
 					globalasax = string.Format(@"{0}\global.asax", root);
-
 				}
 			}
 			catch (Exception ex)
@@ -275,11 +285,9 @@ namespace Rapid.Tools.Commands
 
 			try
 			{
-
 				Type tglobal = typeof(Microsoft.SharePoint.ApplicationRuntime.SPHttpApplication);
 				string contents = string.Format("<%@ Application Inherits=\"{0}, {1}\" %>", tglobal.FullName, tglobal.Assembly.FullName);
 				File.WriteAllText(globalasax, contents);
-
 			}
 			catch (UnauthorizedAccessException)
 			{

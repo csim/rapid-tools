@@ -27,13 +27,16 @@ namespace Rapid.Tools
 
 			try
 			{
-
-				if (RapidToolsConfig.Exceptions.Print)
+				if (RapidToolsConfig.ExceptionDisplay.EndResponse)
+				{
 					SPExceptionUtil.Print(ex);
-
-				if (RapidToolsConfig.Exceptions.Print)
 					Response.End();
-
+				}
+				else
+				{
+					Context.Items[RapidToolsConfig.ExceptionDisplay.ContextKey] = ex;
+					Server.Transfer(RapidToolsConfig.ExceptionDisplay.DisplayUrl);
+				}
 			}
 			catch (System.Threading.ThreadAbortException)
 			{

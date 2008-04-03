@@ -16,6 +16,22 @@
 			<PropertyValue name="Create Guid.Unicode">false</PropertyValue>
 			<PropertyValue name="Create Guid.Package">{00000000-0000-0000-0000-000000000000}</PropertyValue>
 			<PropertyValue name="Create Guid.NameID">0</PropertyValue>
+
+
+			<PropertyValue name="Compile Wsp.Command">C:\Windows\Microsoft.NET\Framework\v2.0.50727\MSBuild.exe</PropertyValue>
+			<PropertyValue name="Compile Wsp.Arguments">/target:CompileWsp $(ProjectDir)$(ProjectFileName)</PropertyValue>
+			<PropertyValue name="Compile Wsp.InitialDirectory">$(ProjectDir)</PropertyValue>
+			<PropertyValue name="Compile Wsp.SourceKeyName"/>
+			<PropertyValue name="Compile Wsp.UseOutputWindow">false</PropertyValue>
+			<PropertyValue name="Compile Wsp.PromptForArguments">false</PropertyValue>
+			<PropertyValue name="Compile Wsp.CloseOnExit">false</PropertyValue>
+			<PropertyValue name="Compile Wsp.IsGUIapp">false</PropertyValue>
+			<PropertyValue name="Compile Wsp.SaveAllDocs">true</PropertyValue>
+			<PropertyValue name="Compile Wsp.UseTaskList">false</PropertyValue>
+			<PropertyValue name="Compile Wsp.Unicode">false</PropertyValue>
+			<PropertyValue name="Compile Wsp.Package">{00000000-0000-0000-0000-000000000000}</PropertyValue>
+			<PropertyValue name="Compile Wsp.NameID">0</PropertyValue>
+
 			<PropertyValue name="Add Wsp.Command">C:\Windows\Microsoft.NET\Framework\v2.0.50727\MSBuild.exe</PropertyValue>
 			<PropertyValue name="Add Wsp.Arguments">/target:AddWsp $(ProjectDir)$(ProjectFileName)</PropertyValue>
 			<PropertyValue name="Add Wsp.InitialDirectory">$(ProjectDir)</PropertyValue>
