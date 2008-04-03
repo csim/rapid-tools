@@ -13,6 +13,9 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 
 ===Installation===
+You must first uninstall any previous versions of SPDeploy. If you installed SPDeploy by way of the MSI installer, simply uninstall via the windows uninstall facility. If you installed a version on SPDeploy prior to the MSI installer, then you will need to delete the following from you system:
+  # the <program files>\MSBuild\SPDeploy directory
+  # and the <My Document>\Visual Studio 2008\Templates\ProjectTemplates\SPDeploy_Template.zip file.
 Find and execute the Rapid.Tools.SPDeploy.msi file in the Rapid.Tools distribution zip file. Distribution packages can be downloaded from the [http://code.google.com/p/rapid-tools/downloads/list downloads page]. Downloads marked as "Featured" are stable builds that are known good. Download all packages at your own risk :)
 
 
