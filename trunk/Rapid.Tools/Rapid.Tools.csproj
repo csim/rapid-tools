@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -61,6 +62,13 @@
     <Compile Include="RapidToolsApplication.cs" />
     <Compile Include="RapidToolsSiteColumnInfo.cs" />
     <Compile Include="RapidToolsConstants.cs" />
+    <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\SPExceptionUtil.cs" />
     <Compile Include="Utilities\SPCamlUtil.cs" />
     <Compile Include="Utilities\SPFeatureUtil.cs" />
@@ -75,6 +83,7 @@
     <Content Include="Properties\SPDeploy.user" />
     <Content Include="Provision\SampleManifest.xml" />
     <Content Include="RootFiles\Config\stsadmcommands.rapidtools.xml" />
+    <Content Include="TemplateFiles\Layouts\RapidTools\Error.aspx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\key.snk" />
@@ -83,7 +92,6 @@
     <Folder Include="TemplateFiles\1033\XML\" />
     <Folder Include="TemplateFiles\ControlTemplates\" />
     <Folder Include="TemplateFiles\Features\" />
-    <Folder Include="TemplateFiles\Layouts\" />
     <Folder Include="TemplateFiles\SiteTemplates\" />
     <Folder Include="TemplateFiles\XML\" />
   </ItemGroup>
