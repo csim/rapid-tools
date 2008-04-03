@@ -1,7 +1,9 @@
 [Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
-Rapid Tools for SharePoint is a set of developer tools that are dedicated to making SharePoint developers more productive. A custom application development project on the SharePoint platform should not be treated any differently than any other custom application development project. With [http://rapid-tools.googlecode.com Rapid Tools for SharePoint] application developers are now in full control of SharePoint development and deployment in a way that was not possible before.
+Rapid Tools for SharePoint is a set of developer tools that are dedicated to making SharePoint developers more productive. Rapid tools enables developers to build SharePoint custom applications using the full [http://en.wikipedia.org/wiki/Software_development_process Software Development Life cycle] (SDL). 
 
-==Features==
-  # Enables the entire Software Development life cycle on the SharePoint platform. Build and deploy your project from source control to any environment with [SPDeploy] and the [Provisioning Provisioning Framework].
-  # Enables isolated environments. You can choose to isolate your environments by developer and by use (such as Dev, Test, QA, etc.)
+Traditionally using the SDL with the SharePoint platform has been a painful and awkward process, but with [http://rapid-tools.googlecode.com Rapid Tools for SharePoint] application developers are now in full control of SharePoint development and deployment in a way that was not possible before.
+
+==Components==
+  # *[SPDeploy]*
+  # *[Provisioning Provisioning Framework]*
