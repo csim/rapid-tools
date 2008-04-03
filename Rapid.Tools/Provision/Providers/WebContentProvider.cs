@@ -17,12 +17,12 @@ namespace Rapid.Tools.Provision.Providers
 	public class WebContentProvider : AssetProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, RapidProvisionContext context)
+		public override void Import(XmlElement contextElement, ProvisionContext context)
 		{
 
 			if (context == null || context.Web == null) throw new Exception("Context is invalid.");
 
-			RapidProvisionContext icontext = new RapidProvisionContext();
+			ProvisionContext icontext = new ProvisionContext();
 
 			string url = GetAttribute(contextElement, "Url");
 
@@ -54,7 +54,7 @@ namespace Rapid.Tools.Provision.Providers
 
 		}
 
-		public override System.Xml.XmlElement Export(XmlElement contextElement, RapidProvisionContext context)
+		public override System.Xml.XmlElement Export(XmlElement contextElement, ProvisionContext context)
 		{
 
 			Manager.WriteMessage("Exporting...");

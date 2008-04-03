@@ -16,7 +16,7 @@ namespace Rapid.Tools.Provision.Providers
 	public class AssetContainer : AssetProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, RapidProvisionContext context)
+		public override void Import(XmlElement contextElement, ProvisionContext context)
 		{
 
 			Manager.WriteMessage("Importing...");
@@ -25,7 +25,7 @@ namespace Rapid.Tools.Provision.Providers
 
 		}
 
-		public override System.Xml.XmlElement Export(XmlElement contextElement, RapidProvisionContext context)
+		public override System.Xml.XmlElement Export(XmlElement contextElement, ProvisionContext context)
 		{
 
 			Manager.WriteMessage("Exporting...");

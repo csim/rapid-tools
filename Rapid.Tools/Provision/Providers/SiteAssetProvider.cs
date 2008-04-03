@@ -19,10 +19,10 @@ namespace Rapid.Tools.Provision.Providers
 	public class SiteAssetProvider : AssetProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, RapidProvisionContext context)
+		public override void Import(XmlElement contextElement, ProvisionContext context)
 		{
 
-			RapidProvisionContext icontext = new RapidProvisionContext();
+			ProvisionContext icontext = new ProvisionContext();
 
 			string url = GetAttribute(contextElement, "Url");
 			string title = GetAttribute(contextElement, "Title");
@@ -76,7 +76,7 @@ namespace Rapid.Tools.Provision.Providers
 
 		}
 
-		public override XmlElement Export(XmlElement contextElement, RapidProvisionContext context)
+		public override XmlElement Export(XmlElement contextElement, ProvisionContext context)
 		{
 
 			return null;

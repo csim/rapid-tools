@@ -5,14 +5,14 @@ using Microsoft.SharePoint;
 
 namespace Rapid.Tools.Provision
 {
-	public class RapidProvisionContext
+	public class ProvisionContext
 	{
 
 		private SPWeb _web;
 		private SPList _list;
 		private SPListItem _item;
 
-		public RapidProvisionContext()
+		public ProvisionContext()
 		{
 		}
 

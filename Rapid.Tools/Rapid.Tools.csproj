@@ -55,8 +55,8 @@
     <Compile Include="Provision\Providers\SiteAssetProvider.cs" />
     <Compile Include="Provision\Providers\WebAssetProvider.cs" />
     <Compile Include="Provision\Providers\WebContentProvider.cs" />
-    <Compile Include="Provision\RapidProvisionContext.cs" />
-    <Compile Include="Provision\RapidProvisionManager.cs" />
+    <Compile Include="Provision\ProvisionContext.cs" />
+    <Compile Include="Provision\ProvisionManager.cs" />
     <Compile Include="RapidToolsConfig.cs" />
     <Compile Include="RapidToolsApplication.cs" />
     <Compile Include="RapidToolsSiteColumnInfo.cs" />

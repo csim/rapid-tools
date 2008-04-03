@@ -117,7 +117,7 @@ namespace Rapid.Tools.Commands {
 				Uri uurl = new Uri(url);
 				SPWebApplication webapp = SPWebApplication.Lookup(uurl);
 
-				RapidProvisionManager manager = new RapidProvisionManager(webapp, manifest);
+				ProvisionManager manager = new ProvisionManager(webapp, manifest);
 				manager.Import();
 
 			} catch (Exception ex) {
