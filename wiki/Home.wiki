@@ -7,4 +7,4 @@ Traditionally using the SDL with the SharePoint platform has been a painful and 
 ==Components==
   # *[SPDeploy]* is a client side component that extends MSBuild to include targets that allow you to create a SharePoint? solution file (.wsp) from a standard C# class library project inside Visual Studio. In addition, SPDeploy allows you to deploy your compiled wsp file to a remote SharePoint? server. This allows you to develop locally and deploy to SharePoint? remotely.
   # *[Provisioning Provisioning Framework]*
-  # *[Exception-Handling Exception Handling Framework]*
+  # *[Exception_Handling Exception Handling Framework]*
