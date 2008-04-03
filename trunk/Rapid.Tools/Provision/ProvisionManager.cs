@@ -15,7 +15,7 @@ using Rapid.Tools.Provision.Providers;
 namespace Rapid.Tools.Provision
 {
 
-	public class RapidProvisionManager
+	public class ProvisionManager
 	{
 
 		public List<TextWriter> OutputListeners;
@@ -54,7 +54,7 @@ namespace Rapid.Tools.Provision
 		}
 
 
-		public RapidProvisionManager(SPWebApplication webApplication, string manifestPath)
+		public ProvisionManager(SPWebApplication webApplication, string manifestPath)
 		{
 			Initialize(webApplication, manifestPath);
 		}
@@ -136,7 +136,7 @@ namespace Rapid.Tools.Provision
 			ImportChildAssets(contextElement, null);
 		}
 
-		public void ImportChildAssets(XmlElement contextElement, RapidProvisionContext context)
+		public void ImportChildAssets(XmlElement contextElement, ProvisionContext context)
 		{
 			XmlElement element;
 
@@ -158,7 +158,7 @@ namespace Rapid.Tools.Provision
 			ImportAsset(assetElement, null);
 		}
 
-		public void ImportAsset(XmlElement assetElement, RapidProvisionContext context)
+		public void ImportAsset(XmlElement assetElement, ProvisionContext context)
 		{
 
 			if (assetElement == null) throw new ArgumentException("assetElement cannot be null.");

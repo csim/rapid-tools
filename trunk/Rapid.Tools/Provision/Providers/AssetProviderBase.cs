@@ -10,17 +10,17 @@ namespace Rapid.Tools.Provision.Providers
 	public abstract class AssetProviderBase
 	{
 
-		private RapidProvisionManager _manager;
+		private ProvisionManager _manager;
 
-		public RapidProvisionManager Manager
+		public ProvisionManager Manager
 		{
 			get { return _manager; }
 			set { _manager = value; }
 		}
 
-		public abstract void Import(XmlElement contextElement, RapidProvisionContext context);
+		public abstract void Import(XmlElement contextElement, ProvisionContext context);
 
-		public abstract XmlElement Export(XmlElement contextElement, RapidProvisionContext context);
+		public abstract XmlElement Export(XmlElement contextElement, ProvisionContext context);
 
 
 		/***** Utility Functions **********/

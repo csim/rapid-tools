@@ -16,12 +16,12 @@ namespace Rapid.Tools.Provision.Providers
 	public class IgnoreProvider : AssetProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, RapidProvisionContext context)
+		public override void Import(XmlElement contextElement, ProvisionContext context)
 		{
 			Manager.WriteMessage("Ignored.");
 		}
 
-		public override XmlElement Export(XmlElement contextElement, RapidProvisionContext context)
+		public override XmlElement Export(XmlElement contextElement, ProvisionContext context)
 		{
 			Manager.WriteMessage("Ignored.");
 			return null;
