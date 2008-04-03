@@ -95,7 +95,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 });
                 t.Start();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -273,7 +273,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                             node.ContextMenu = cm;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                     }
                 }
