@@ -30,3 +30,5 @@ http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay3.png
 
 ===Notes===
   * You can change the error page url by specifying the -errorurl argument when enabling exception display. This makes it possible for you to create a customized error page.
+  * Configuration settings for Exception display are written to the web.config file at the root of the SharePoint site instance. You can change these settings manually in the AppSettings section. All property keys are prefixed with Rapid.Tools.ExceptionDisplay
+  * Because settings for Exception Display are written to the web.config file directly, you will need to run your desired stsadm command on each frontend in your SharePoint farm.
