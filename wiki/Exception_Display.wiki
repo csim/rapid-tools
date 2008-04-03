@@ -9,19 +9,19 @@ Exception display with minimal detail:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url>*
 
-http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay1.png
+http://rapid-tools.googlecode.com/files/exceptiondisplay1.png
 
 Exception display with the stack trace included:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -printstack*
 
-http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay2.png
+http://rapid-tools.googlecode.com/files/exceptiondisplay2.png
 
 Exception display with stack trace and http response terminated. In this case no UI is rendered, only the formated exception is print to the http stream and the response is ended:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -endresponse*
 
-http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay3.png
+http://rapid-tools.googlecode.com/files/exceptiondisplay3.png
 
 
 ===Disabling Exception Display==
