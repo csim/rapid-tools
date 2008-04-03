@@ -2,7 +2,7 @@
 
 
 ===Overview===
-SPDeploy extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio 2005. In addition, SPDeploy allows you to deploy your newly compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
+SPDeploy is a client side that extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio. In addition, SPDeploy allows you to deploy your compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
 
 Benefits of wsp compilation and remote deployment:
   # *All source code is housed and maintained via source control.* All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
@@ -17,16 +17,16 @@ Find and execute the Rapid.Tools.SPDeploy.msi file in the Rapid.Tools distributi
 
 
 ===Creating a Project===
-  # Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.
-  # Add user specific settings to SPDeploy.user. Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
-  # Setup manifest.xml GUID. Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
-  # Setup manifest.xml assembly. Inside the manifest.xml uncomment the assemblies element and add the name of your assembly to the Location attribute of the Assembly node. This will ensure your assembly is deployed to the GAC as a part of the wsp deployment.
-  # Strongly name your assembly. Right click on the project -> properties -> signing. Click "sign the assembly". Select a new key and give it a name.
-  # Build the project.
-  # Execute the CreateWebApplication target. See Executing SPDeploy below for more details.
-  # Execute the AddWsp target to add the wsp to your server.
-  # Execute the DeployWsp target. Your wsp file will now be deployed to the farm and all customization are available.
-  # Execute the CreateSite target. This will create a top-level site inside your web application.
+  # *Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.*
+  # *Add user specific settings to SPDeploy.user.* Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
+  # *Setup manifest.xml GUID.* Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
+  # *Setup manifest.xml assembly.* Inside the manifest.xml uncomment the assemblies element and add the name of your assembly to the Location attribute of the Assembly node. This will ensure your assembly is deployed to the GAC as a part of the wsp deployment.
+  # *Strongly name your assembly.* Right click on the project -> properties -> signing. Click "sign the assembly". Select a new key and give it a name.
+  # *Build the project.*
+  # *Execute the CreateWebApplication target. See Executing SPDeploy below for more details.*
+  # *Execute the AddWsp target to add the wsp to your server.*
+  # *Execute the DeployWsp target.* Your wsp file will now be deployed to the farm and all customization are available.
+  # *Execute the CreateSite target.* This will create a top-level site inside your web application.
 
 
 ===About SPDeploy.user===
