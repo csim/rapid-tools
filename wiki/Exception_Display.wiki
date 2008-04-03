@@ -1,22 +1,32 @@
 [Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
 ===Overview==
+The exception display component allows you to avoid the ubiquitous "Unknown error" page. With this component you can specify various levels of exception detail from displaying a friendly error message to displaying the full stack trace and ending the http response.
 
-===Enabling Exception Display==
+===Enabling Exception Display===
 
-*stsadm -o rapidtools-enableexceptiondisplay -url <site url>*
+Exception display with minimal detail:
+
+*stsadm -o rapidtools-EnableExceptionDisplay -url <site url>*
 
 http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay1.png
 
+Exception display with the stack trace included:
 
-*stsadm -o rapidtools-enableexceptiondisplay -url <site url> -printstack*
+*stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -printstack*
 
 http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay2.png
 
+Exception display with stack trace and http response terminated. In this case no UI is rendered, only the formated exception is print to the http stream and the response is ended:
 
-*stsadm -o rapidtools-enableexceptiondisplay -url <site url> -endrespoinse*
+*stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -endresponse*
 
 http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay3.png
 
 
-===Enabling Exception Display==
+===Disabling Exception Display==
+
+*stsadm -o rapidtools-DisableExceptionDisplay -url <site url>*
+
+===Notes===
+  * You can change the error page url by specifying the -errorurl argument when enabling exception display. This makes it possible for you to create a customized error page.
