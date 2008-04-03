@@ -1,5 +1,22 @@
+[Home] | [http://code.google.com/p/rapid-tools/w/list Index]
+
+===Overview==
+
+===Enabling Exception Display==
+
+*stsadm -o rapidtools-enableexceptiondisplay -url <site url>*
+
 http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay1.png
+
+
+*stsadm -o rapidtools-enableexceptiondisplay -url <site url> -printstack*
 
 http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay2.png
 
+
+*stsadm -o rapidtools-enableexceptiondisplay -url <site url> -endrespoinse*
+
 http://www.ascentium.com/blog/sp/Gallery/exceptiondisplay3.png
+
+
+===Enabling Exception Display==
