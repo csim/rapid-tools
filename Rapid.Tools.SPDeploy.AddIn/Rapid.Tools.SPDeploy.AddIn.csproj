@@ -207,10 +207,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\Documents and Settings\george.olson\My Documents\Visual Studio 2005\Addins\Rapid.Tools.SPDeploy.AddIn - For Testing.AddIn">
-      <Link>Rapid.Tools.SPDeploy.AddIn - For Testing.AddIn</Link>
-    </Content>
-    <Content Include="Rapid.Tools.SPDeploy.AddIn.AddIn" />
+    <Content Include="Rapid.Tools.SPDeploy.AddIn" />
     <Content Include="Resources\Features\Ajaxification\feature.xml" />
     <Content Include="Resources\Features\WebParts\elements.xml" />
     <Content Include="Resources\Features\WebParts\feature.xml" />
