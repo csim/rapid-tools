@@ -139,9 +139,11 @@
 			<ProgressText Action="CA_Devenv_Setup_VS_Uninstall" Template="[1]"><![CDATA[Removing from Visual Studio 2005]]></ProgressText>
 		</UI>
 
-		<!--<WixVariable Id="WixUIBannerBmp" Value="..\Setup\bannrbmp.bmp" />
-    <WixVariable Id="WixUIDialogBmp" Value="..\Setup\dlgbmp.bmp" />
-    <WixVariable Id="WixUILicenseRtf" Value="..\Setup\License.rtf" />-->
+		<!--
+		<WixVariable Id="WixUIBannerBmp" Value="..\Setup\bannrbmp.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="..\Setup\dlgbmp.bmp" />
+		<WixVariable Id="WixUILicenseRtf" Value="..\Setup\License.rtf" />
+		-->
 
 	</Product>
 </Wix>
