@@ -11,6 +11,8 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Rapid.Tools.SPDeploy.AddIn</AssemblyName>
     <RootNamespace>Rapid.Tools.SPDeploy.AddIn</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Properties\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
