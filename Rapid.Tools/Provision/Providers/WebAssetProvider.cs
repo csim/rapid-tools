@@ -34,7 +34,9 @@ namespace Rapid.Tools.Provision.Providers
 			SPWeb iweb = pweb.Webs.Add(url, title, "", 1033, templateID, false, false);
 
 			if (!iweb.IsRootWeb) iweb.Navigation.UseShared = true;
-			//pweb.Navigation.TopNavigationBar.AddAsLast(new SPNavigationNode(iweb.Title, iweb.ServerRelativeUrl));
+			
+			if (pweb.Navigation != null && pweb.Navigation.TopNavigationBar != null)
+				pweb.Navigation.TopNavigationBar.AddAsLast(new SPNavigationNode(iweb.Title, iweb.ServerRelativeUrl));
 
 			Manager.WriteMessage(iweb.ServerRelativeUrl);
 
