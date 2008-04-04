@@ -37,4 +37,11 @@
       </Folder>
     </Project>
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>
+      Rapid.Tools.SPDeploy.AddIn, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=cbf190d294afa07a
+    </Assembly>
+    <FullClassName>Rapid.Tools.SPDeploy.AddIn.UI.Wizard.SPProjectWizard</FullClassName>
+  </WizardExtension>
 </VSTemplate>
