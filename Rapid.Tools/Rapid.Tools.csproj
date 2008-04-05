@@ -99,6 +99,7 @@
   <ItemGroup>
     <Folder Include="TemplateFiles\1033\XML\" />
     <Folder Include="TemplateFiles\ControlTemplates\" />
+    <Folder Include="TemplateFiles\Features\RapidTools_Lists\" />
     <Folder Include="TemplateFiles\SiteTemplates\" />
     <Folder Include="TemplateFiles\XML\" />
   </ItemGroup>
