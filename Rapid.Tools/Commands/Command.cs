@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 
 using Rapid.Tools.Utilities;
 using Rapid.Tools.Provision;
+using Rapid.Tools.Providers;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using Microsoft.SharePoint.StsAdmin;
@@ -27,6 +28,9 @@ namespace Rapid.Tools.Commands
 
 			public const string EnableExceptionDisplay = "rapidtools-enableexceptiondisplay";
 			public const string DisableExceptionDisplay = "rapidtools-disableexceptiondisplay";
+
+			public const string EnableUrlMapping = "rapidtools-enableurlmapping";
+			public const string DisableUrlMapping = "rapidtools-disableurlmapping";
 		}
 
 		public const string SuccessMessage = "\nOperation completed successfully.";
@@ -103,6 +107,14 @@ namespace Rapid.Tools.Commands
 					ret = DisableExceptionDisplay(command, args, out output);
 					break;
 
+				case CommandNames.EnableUrlMapping:
+					ret = EnableUrlMapping(command, args, out output);
+					break;
+
+				case CommandNames.DisableUrlMapping:
+					ret = DisableUrlMapping(command, args, out output);
+					break;
+
 				}
 
 				Console.WriteLine("");
@@ -152,6 +164,7 @@ namespace Rapid.Tools.Commands
 			return 0;
 		}
 
+		
 		public int EnableExceptionDisplay(string command, StringDictionary args, out string output)
 		{
 			output = "";
@@ -297,6 +310,132 @@ namespace Rapid.Tools.Commands
 			return 0;
 		}
 
+
+		public int EnableUrlMapping(string command, StringDictionary args, out string output)
+		{
+
+			output = "";
+
+			bool valid = true;
+			valid = valid && args.ContainsKey("url");
+
+			if (!valid)
+			{
+				output = PrintHelpMessage(command);
+				return 0;
+			}
+
+			string url = args["url"];
+			string webconfig = "web.config";
+
+			try
+			{
+				using (SPSite site = new SPSite(url))
+				{
+					SPUrlZone zone = SPWebApplicationUtil.GetZone(site.Url);
+					SPWebApplication webapp = site.WebApplication;
+					SPIisSettings settings = webapp.IisSettings[zone];
+
+					string root = settings.Path.ToString();
+
+					webconfig = string.Format(@"{0}\web.config", root);
+
+					SPFeatureUtil.ActivateFeature(site, RapidToolsConstants.Features.UrlMapID);
+				}
+			}
+			catch (Exception ex)
+			{
+				SPExceptionUtil.Print(ex);
+			}
+
+			if (!File.Exists(webconfig)) throw new Exception(string.Format("Unable to find web.config at {0}", webconfig));
+
+			XmlDocument xconfig = new XmlDocument();
+			xconfig.Load(webconfig);
+
+			XmlElement xconfiguration = (XmlElement)xconfig.SelectSingleNode("/configuration");
+			XmlElement xsystemweb = EnsureElement(xconfiguration, "system.web");
+			XmlElement xmodules = EnsureElement(xsystemweb, "httpModules");
+			
+			string moduleName = "RapidToolsUrlMap";
+
+			XmlElement xmodule = (XmlElement)xmodules.SelectSingleNode(string.Format("add[@name='{0}']", moduleName));
+			if (xmodule == null)
+			{
+				xmodule = xconfig.CreateElement("add");
+				xmodules.InsertAfter(xmodule, xmodules.ChildNodes[0]);
+			}
+
+			Type tmodule = typeof(UrlMapModule);
+			xmodule.SetAttribute("name", moduleName);
+			xmodule.SetAttribute("type", string.Format("{0}, {1}", tmodule.FullName, tmodule.Assembly.FullName));
+
+			xconfig.Save(webconfig);
+
+
+			return 0;
+		}
+
+		public int DisableUrlMapping(string command, StringDictionary args, out string output)
+		{
+
+			output = "";
+
+			bool valid = true;
+			valid = valid && args.ContainsKey("url");
+
+			if (!valid)
+			{
+				output = PrintHelpMessage(command);
+				return 0;
+			}
+
+			string url = args["url"];
+			string webconfig = "web.config";
+
+			try
+			{
+				using (SPSite site = new SPSite(url))
+				{
+					SPUrlZone zone = SPWebApplicationUtil.GetZone(site.Url);
+					SPWebApplication webapp = site.WebApplication;
+					SPIisSettings settings = webapp.IisSettings[zone];
+
+					string root = settings.Path.ToString();
+
+					webconfig = string.Format(@"{0}\web.config", root);
+					
+					SPFeatureUtil.DeactivateFeature(site, RapidToolsConstants.Features.UrlMapID);
+				}
+			}
+			catch (Exception ex)
+			{
+				SPExceptionUtil.Print(ex);
+			}
+
+			if (!File.Exists(webconfig)) throw new Exception(string.Format("Unable to find web.config at {0}", webconfig));
+
+			XmlDocument xconfig = new XmlDocument();
+			xconfig.Load(webconfig);
+
+			XmlElement xconfiguration = (XmlElement)xconfig.SelectSingleNode("/configuration");
+			XmlElement xsystemweb = EnsureElement(xconfiguration, "system.web");
+			XmlElement xmodules = EnsureElement(xsystemweb, "httpModules");
+
+			string moduleName = "RapidToolsUrlMap";
+
+			XmlElement xmodule = (XmlElement)xmodules.SelectSingleNode(string.Format("add[@name='{0}']", moduleName));
+			if (xmodule != null)
+			{
+				xmodule.ParentNode.RemoveChild(xmodule);
+			}
+
+			xconfig.Save(webconfig);
+
+
+			return 0;
+		}
+		
 		private XmlElement EnsureElement(XmlElement parentElement, string newElementName)
 		{
 
@@ -336,3 +475,4 @@ namespace Rapid.Tools.Commands
 
 	}
 }
+
