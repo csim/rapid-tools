@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\UrlMapModule.cs" />
     <Compile Include="Provision\Providers\AssetContainer.cs" />
     <Compile Include="Provision\Providers\AssetProviderBase.cs" />
     <Compile Include="Provision\Providers\FieldAssetProvider.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="RapidToolsApplication.cs" />
     <Compile Include="RapidToolsSiteColumnInfo.cs" />
     <Compile Include="RapidToolsConstants.cs" />
+    <Compile Include="Receivers\UrlMapReceiver.cs" />
     <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Error.aspx</DependentUpon>
@@ -83,6 +85,12 @@
     <Content Include="Properties\SPDeploy.user" />
     <Content Include="Provision\SampleManifest.xml" />
     <Content Include="RootFiles\Config\stsadmcommands.rapidtools.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\actions.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\columns.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\contenttypes.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\feature.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\lists.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\RapidToolsUrlMap\schema.xml" />
     <Content Include="TemplateFiles\Layouts\RapidTools\Error.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +99,6 @@
   <ItemGroup>
     <Folder Include="TemplateFiles\1033\XML\" />
     <Folder Include="TemplateFiles\ControlTemplates\" />
-    <Folder Include="TemplateFiles\Features\" />
     <Folder Include="TemplateFiles\SiteTemplates\" />
     <Folder Include="TemplateFiles\XML\" />
   </ItemGroup>

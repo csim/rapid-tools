@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+
+	<CustomAction
+		Id="Rapid.Wcm.UrlMappings"
+		Location="Microsoft.SharePoint.SiteSettings"
+		GroupId="Galleries"
+		Sequence="1000"
+		Title="Rapid Tools Url Mappings">
+		<UrlAction Url="/_catalogs/RapidToolsUrlMap/allitems.aspx" />
+	</CustomAction>
+
+</Elements>

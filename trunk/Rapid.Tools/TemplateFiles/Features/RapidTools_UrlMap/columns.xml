@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+
+	<Field ID="{285775BC-0D4A-4562-999C-B3AA435B53C1}"
+		Name="IncomingUrl"
+		DisplayName="Incoming Url"
+		StaticName="IncomingUrl"
+		SourceID="http://schemas.microsoft.com/sharepoint/v3"
+		Group="Rapid Columns"
+		Type="Text" />
+
+	<Field ID="{516C3624-1FA7-4ed7-9C30-CF2E6A5DC14A}"
+		Name="ResultUrl"
+		DisplayName="Result Url"
+		StaticName="ResultUrl"
+		SourceID="http://schemas.microsoft.com/sharepoint/v3"
+		Group="Rapid Columns"
+		Type="Text" />
+
+	<Field ID="{F6D1D72F-51A7-4cc3-8246-FC21A561D884}"
+		Name="Description"
+		DisplayName="Description"
+		StaticName="Description"
+		SourceID="http://schemas.microsoft.com/sharepoint/v3"
+		Group="Rapid Columns"
+		Type="Note" />
+
+	<Field ID="{E3EFF317-DCF8-4916-9ED9-D6BDC57E11F0}"
+		Name="RapidToolsActive"
+		DisplayName="Rapid Tools Active"
+		StaticName="RapidToolsActive"
+		SourceID="http://schemas.microsoft.com/sharepoint/v3"
+		Group="Rapid Columns"
+		Type="Boolean">
+		<Default>1</Default>
+	</Field>
+
+</Elements>
