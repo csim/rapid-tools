@@ -15,6 +15,8 @@ namespace Rapid.Tools
 		public static readonly string FeatureInstallPath = TemplateInstallPath + @"\Features";
 		public static readonly string LayoutsInstallPath = TemplateInstallPath + @"\Layouts";
 
+		public static readonly string ConfigurationPath = LayoutsInstallPath + @"\RapidTools\RapidTools.config";
+
 		public struct ContentTypes
 		{
 
