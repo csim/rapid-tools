@@ -7,15 +7,14 @@
 
 			<RemoveFieldRef ID="{fa564e0f-0c70-4ab9-b863-0177e6ddd247}" Name="Title" />
 
-			<FieldRef ID="{285775BC-0D4A-4562-999C-B3AA435B53C1}" Name="RapidText1" DisplayName="Incoming Url" Required="TRUE" />
-			<FieldRef ID="{516C3624-1FA7-4ed7-9C30-CF2E6A5DC14A}" Name="RapidText2" DisplayName="Result Url" Required="TRUE" />
+			<FieldRef ID="{285775BC-0D4A-4562-999C-B3AA435B53C1}" Name="IncomingUrl" DisplayName="Incoming Url" Required="TRUE" />
+			<FieldRef ID="{516C3624-1FA7-4ed7-9C30-CF2E6A5DC14A}" Name="ResultUrl" DisplayName="Result Url" Required="TRUE" />
 
-			<FieldRef ID="{F6D1D72F-51A7-4cc3-8246-FC21A561D884}" Name="RapidNote1" DisplayName="Description" />
+			<FieldRef ID="{F6D1D72F-51A7-4cc3-8246-FC21A561D884}" Name="RapidToolsDescription" DisplayName="Description" />
 
-			<FieldRef ID="{E3EFF317-DCF8-4916-9ED9-D6BDC57E11F0}" Name="RapidActive" DisplayName="Active" />
+			<FieldRef ID="{E3EFF317-DCF8-4916-9ED9-D6BDC57E11F0}" Name="RapidToolsActive" DisplayName="Active" />
 			
 		</FieldRefs>
 	</ContentType>
-
 
 </Elements>

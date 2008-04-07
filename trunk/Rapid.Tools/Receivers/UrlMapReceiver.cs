@@ -28,6 +28,8 @@ namespace Rapid.Tools.Receivers
 				SPSite site = (SPSite)properties.Feature.Parent;
 				SPWeb rweb = site.RootWeb;
 
+				SPFeatureUtil.ActivateFeature(site, RapidToolsConstants.Features.ListsID);
+
 				SPList urlmappings = EnsureUrlMappingList(site);
 
 			}

@@ -85,12 +85,13 @@
     <Content Include="Properties\SPDeploy.user" />
     <Content Include="Provision\SampleManifest.xml" />
     <Content Include="RootFiles\Config\stsadmcommands.rapidtools.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_Lists\feature.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_Lists\lists.xml" />
     <Content Include="TemplateFiles\Features\RapidTools_UrlMap\actions.xml" />
     <Content Include="TemplateFiles\Features\RapidTools_UrlMap\columns.xml" />
     <Content Include="TemplateFiles\Features\RapidTools_UrlMap\contenttypes.xml" />
     <Content Include="TemplateFiles\Features\RapidTools_UrlMap\feature.xml" />
-    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\lists.xml" />
-    <Content Include="TemplateFiles\Features\RapidTools_UrlMap\RapidToolsUrlMap\schema.xml" />
+    <Content Include="TemplateFiles\Features\RapidTools_Lists\RapidToolsUrlMap\schema.xml" />
     <Content Include="TemplateFiles\Layouts\RapidTools\Error.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +100,6 @@
   <ItemGroup>
     <Folder Include="TemplateFiles\1033\XML\" />
     <Folder Include="TemplateFiles\ControlTemplates\" />
-    <Folder Include="TemplateFiles\Features\RapidTools_Lists\" />
     <Folder Include="TemplateFiles\SiteTemplates\" />
     <Folder Include="TemplateFiles\XML\" />
   </ItemGroup>

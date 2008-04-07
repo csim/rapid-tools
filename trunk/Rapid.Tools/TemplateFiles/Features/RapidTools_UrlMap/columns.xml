@@ -18,9 +18,9 @@
 		Type="Text" />
 
 	<Field ID="{F6D1D72F-51A7-4cc3-8246-FC21A561D884}"
-		Name="Description"
+		Name="RapidToolsDescription"
 		DisplayName="Description"
-		StaticName="Description"
+		StaticName="RapidToolsDescription"
 		SourceID="http://schemas.microsoft.com/sharepoint/v3"
 		Group="Rapid Columns"
 		Type="Note" />

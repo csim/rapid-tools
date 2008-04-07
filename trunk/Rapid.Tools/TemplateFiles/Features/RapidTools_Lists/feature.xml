@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Feature Id="CEF6CC7E-2B1A-418e-BCCE-4C21CFAFCB9A" Title="Rapid Tools Lists" Scope="Site" Hidden="TRUE"  xmlns="http://schemas.microsoft.com/sharepoint/">
+
+	<ElementManifests>
+		<ElementManifest Location="lists.xml" />
+	</ElementManifests>
+	
+</Feature>

@@ -63,7 +63,8 @@ namespace Rapid.Tools.Providers
 			}
 			catch (Exception ex)
 			{
-				SPExceptionUtil.Print(ex);
+				// Ignore execptions so that the http stream is not polluted
+				//SPExceptionUtil.Print(ex);
 			}
 		}
 
@@ -77,7 +78,11 @@ namespace Rapid.Tools.Providers
 
 			using (SPSite site = new SPSite(sourceUrl))
 			{
-				SPList list = site.RootWeb.GetList(RapidToolsConstants.UrlMapList.Url);
+
+				bool lexists = SPListUtil.ListExists(site.RootWeb, RapidToolsConstants.UrlMapList.Url);
+				if (!lexists) return null;
+
+				SPList list = SPListUtil.GetList(site.RootWeb, RapidToolsConstants.UrlMapList.Url);
 
 				string query = "";
 
