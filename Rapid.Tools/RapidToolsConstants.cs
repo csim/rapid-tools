@@ -28,12 +28,13 @@ namespace Rapid.Tools
 		public struct Features
 		{
 			public static readonly Guid UrlMapID = new Guid("{0D09DF91-B297-40da-9E63-088E3B6C2AF7}");
+			public static readonly Guid ListsID = new Guid("{CEF6CC7E-2B1A-418e-BCCE-4C21CFAFCB9A}");
 		}
 
 		public struct UrlMapList
 		{
-			public static readonly int TemplateID = 752;
-			public static readonly Guid FeatureID = RapidToolsConstants.Features.UrlMapID;
+			public static readonly int TemplateID = 802;
+			public static readonly Guid FeatureID = RapidToolsConstants.Features.ListsID;
 			public static readonly string Url = "_catalogs/RapidToolsUrlMap";
 			public static readonly string Title = "Rapid Tools Url Map";
 			public static readonly string Description = "";

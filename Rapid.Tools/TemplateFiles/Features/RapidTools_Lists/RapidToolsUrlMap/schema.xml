@@ -1007,10 +1007,10 @@ ctx]]></HTML>
         <RowLimit>20</RowLimit>
         <ViewFields>
 			<FieldRef Name="Edit" />
-			<FieldRef Name="RapidActive" />
-			<FieldRef Name="RapidText1" />
-			<FieldRef Name="RapidText2" />
-			<FieldRef Name="RapidNote1" />
+			<FieldRef Name="RapidToolsActive" />
+			<FieldRef Name="IncomingUrl" />
+			<FieldRef Name="ResultUrl" />
+			<FieldRef Name="RapidToolsDescription" />
 		</ViewFields>
         <Query>
           <OrderBy>
@@ -2137,11 +2137,13 @@ ctx]]></HTML>
         </ViewEmpty>
         <Toolbar Type="Standard" />
         <ViewFields>
-			<FieldRef Name="Edit" />
-			<FieldRef Name="RapidActive" />
-			<FieldRef Name="RapidText1" />
-			<FieldRef Name="RapidText2" />
-			<FieldRef Name="RapidNote1" />
+			<ViewFields>
+				<FieldRef Name="Edit" />
+				<FieldRef Name="RapidToolsActive" />
+				<FieldRef Name="IncomingUrl" />
+				<FieldRef Name="ResultUrl" />
+				<FieldRef Name="RapidToolsDescription" />
+			</ViewFields>
 		</ViewFields>
 		<Query>
           <OrderBy>

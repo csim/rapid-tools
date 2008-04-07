@@ -4,7 +4,7 @@
 	<ListTemplate
 		Name="RapidToolsUrlMap"
 		Category="Custom Lists"
-		Type="752"
+		Type="802"
 		BaseType="0"
 		OnQuickLaunch="FALSE"
 		SecurityBits="11"
