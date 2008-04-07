@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\key.snk" />
+    <Content Include="TemplateFiles\Layouts\RapidTools\RapidTools.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TemplateFiles\1033\XML\" />
