@@ -48,9 +48,18 @@
     </LinkerSuppressSpecificWarnings>
     <SuppressValidation>False</SuppressValidation>
     <LinkerTreatWarningsAsErrors>False</LinkerTreatWarningsAsErrors>
-    <LinkerVerboseOutput>False</LinkerVerboseOutput>
+    <LinkerVerboseOutput>True</LinkerVerboseOutput>
     <WixVariables>
     </WixVariables>
+    <IncludeSearchPaths>
+    </IncludeSearchPaths>
+    <Pedantic>False</Pedantic>
+    <ShowSourceTrace>True</ShowSourceTrace>
+    <SuppressSchemaValidation>False</SuppressSchemaValidation>
+    <SuppressSpecificWarnings>
+    </SuppressSpecificWarnings>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <VerboseOutput>True</VerboseOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -88,6 +97,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Rapid.Tools.SPDeploy.Installer.wxs" />
+    <Compile Include="Rapid.Tools.SPDeploy.AddIn.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll" />
