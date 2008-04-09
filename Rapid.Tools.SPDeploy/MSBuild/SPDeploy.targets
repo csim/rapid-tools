@@ -36,7 +36,7 @@
 
 		<WspSourceRootFiles
 				Include="$(BaseRootFilesDir)\**"
-				Exclude="$(BaseRootFilesDir)\**\*.cs;$(BaseRootFilesDir)\**\*.tmp">
+				Exclude="$(BaseRootFilesDir)\**\*.cs;$(BaseRootFilesDir)\**\*svn\**;$(BaseRootFilesDir)\**\*.tmp">
 			<BaseDir>$(BaseRootFilesDir)</BaseDir>
 		</WspSourceRootFiles>
 

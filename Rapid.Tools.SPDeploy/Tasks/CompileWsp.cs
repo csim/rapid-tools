@@ -112,7 +112,7 @@ namespace Rapid.Tools.SPDeploy.Tasks
 			// Setup ddf file
 			_ddf = new StringBuilder();
 
-			_ddf.AppendFormat(";\n.OPTION EXPLICIT\n.set DiskDirectoryTemplate=CDROM\n.set CompressionType=MSZIP\n.set UniqueFiles=\"ON\"\n.set Cabinet=\"ON\"\n.set DiskDirectory1=\n.set CabinetNameTemplate=\"{0}\"\n.set MaxDiskSize=0\n", OutputPath);
+			_ddf.AppendFormat(";\n.OPTION EXPLICIT\n.set DiskDirectoryTemplate=CDROM\n.set CompressionType=MSZIP\n.set UniqueFiles=Off\n.set Cabinet=On\n.set DiskDirectory1=\n.set CabinetNameTemplate=\"{0}\"\n.set MaxDiskSize=0\n", OutputPath);
 			_ddf.AppendFormat("\"{0}\" \"Manifest.xml\"\n", tManifestPath);
 
 
