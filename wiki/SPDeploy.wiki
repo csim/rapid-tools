@@ -6,6 +6,7 @@ SPDeploy is a client side that extends MSBuild to include targets that allow you
 
 Benefits of wsp compilation and remote deployment:
 *All source code is housed and maintained via source control.* All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
+
 *Provides single distribution file that can be deployed via standard SharePoint tools (stsadm).* This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
 
 Allows multiple developers to work on a single project* and deploy to a separate and distinct environment avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
@@ -15,23 +16,23 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 ===Installation===
 You must first uninstall any previous versions of SPDeploy. If you installed SPDeploy by way of the MSI installer, simply uninstall via the windows uninstall facility. If you installed a version on SPDeploy prior to the MSI installer, then you will need to delete the following from you system:
-  # the <program files>\MSBuild\SPDeploy directory
-  # and the <My Document>\Visual Studio 2008\Templates\ProjectTemplates\SPDeploy_Template.zip file.
+  * the <program files>\MSBuild\SPDeploy directory
+  * and the <My Document>\Visual Studio 2008\Templates\ProjectTemplates\SPDeploy_Template.zip file.
 
 To install the a new version of SPDeploy, download a zip distribution from the [http://code.google.com/p/rapid-tools/downloads/list downloads page]. Then find and execute the Rapid.Tools.SPDeploy.msi file inside the distribution zip file. Distributions marked as "Featured" are stable builds that are known good. Download daily packages at your own risk :)
 
 
 ===Creating a Project===
-  # *Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.*
-  # *Add user specific settings to SPDeploy.user.* Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
-  # *Setup manifest.xml GUID.* Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
-  # *Setup manifest.xml assembly.* Inside the manifest.xml uncomment the assemblies element and add the name of your assembly to the Location attribute of the Assembly node. This will ensure your assembly is deployed to the GAC as a part of the wsp deployment.
-  # *Strongly name your assembly.* Right click on the project -> properties -> signing. Click "sign the assembly". Select a new key and give it a name.
-  # *Build the project.*
-  # *Execute the CreateWebApplication target. See Executing SPDeploy below for more details.*
-  # *Execute the AddWsp target to add the wsp to your server.*
-  # *Execute the DeployWsp target.* Your wsp file will now be deployed to the farm and all customization are available.
-  # *Execute the CreateSite target.* This will create a top-level site inside your web application.
+  * *Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.*
+  * *Add user specific settings to SPDeploy.user.* Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
+  * *Setup manifest.xml GUID.* Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
+  * *Setup manifest.xml assembly.* Inside the manifest.xml uncomment the assemblies element and add the name of your assembly to the Location attribute of the Assembly node. This will ensure your assembly is deployed to the GAC as a part of the wsp deployment.
+  * *Strongly name your assembly.* Right click on the project -> properties -> signing. Click "sign the assembly". Select a new key and give it a name.
+  * *Build the project.*
+  * *Execute the CreateWebApplication target. See Executing SPDeploy below for more details.*
+  * *Execute the AddWsp target to add the wsp to your server.*
+  * *Execute the DeployWsp target.* Your wsp file will now be deployed to the farm and all customization are available.
+  * *Execute the CreateSite target.* This will create a top-level site inside your web application.
 
 
 ===About SPDeploy.user===
@@ -71,8 +72,8 @@ WARNING: Importing these settings with override all external tools settings insi
 ===Remote Debugging===
 Remote debugging can be problematic and somewhat tricky as most people have found. Here is the technique that works for me.
 
-  # *Attach to the remote process.* From your dev local machine inside Visual Studio go to Debug -> Attach to process. Change the qualifier field to your remote server name, pick ALL the w3wp.exe processes and click attach. At this point you may run into issues around firewalls, dcom, etc. See http://support.microsoft.com/kb/910448
-  # *Ensure that your pdb symbols file has been loaded.* 
+  * *Attach to the remote process.* From your dev local machine inside Visual Studio go to Debug -> Attach to process. Change the qualifier field to your remote server name, pick ALL the w3wp.exe processes and click attach. At this point you may run into issues around firewalls, dcom, etc. See http://support.microsoft.com/kb/910448
+  * *Ensure that your pdb symbols file has been loaded.* 
 
 Open the modules window while in debug mode to ensure that the symbols for your assembly are loaded. This window is notoriously hard to find, here's how I do it: Right click on a toolbar and go to customize. In the left pane choose debug, then drag the modules icon from the right pane onto a toolbar. Close the customize dialog and click on the module icon. You will now have the modules window open and you can scroll to find your assembly.
 
