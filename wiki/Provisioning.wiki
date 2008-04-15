@@ -1,4 +1,5 @@
-[Home] | [http://code.google.com/p/rapid-tools/w/list Index]
+#labels Featured
+f[Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
 ===Overview===
 
