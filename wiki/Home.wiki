@@ -5,6 +5,8 @@ Rapid Tools for SharePoint is a set of developer tools that are dedicated to mak
 Traditionally using the SDL with the SharePoint platform has been a painful and awkward process, but with [http://rapid-tools.googlecode.com Rapid Tools for SharePoint] application developers are now in full control of SharePoint development and deployment in a way that was not possible before.
 
 ==Components==
-  # *[SPDeploy]* is a client side component that extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio. In addition, SPDeploy allows you to deploy your compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
-  # *[Provisioning Provisioning Framework]* is set of APIs that allow you provision a SharePoint assets including Site Collections, Sites, Pages and Files.
-  # *[Exception_Display Exception Display]* is a component allows you to control the SharePoint's unhandled exception behavior.
+*[SPDeploy]* is a client side component that extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio. In addition, SPDeploy allows you to deploy your compiled wsp file to a remote SharePoint server. This allows you to develop locally and deploy to SharePoint remotely.
+
+*[Provisioning Provisioning Framework]* is set of APIs that allow you provision a SharePoint assets including Site Collections, Sites, Pages and Files.
+
+*[Exception_Display Exception Display]* is a component allows you to control the SharePoint's unhandled exception behavior.
