@@ -37,8 +37,8 @@
       </Folder>
     </Project>
   </TemplateContent>
-  <WizardExtension>
+  <!--<WizardExtension>
     <Assembly>Rapid.Tools.SPDeploy.AddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e1843d016e92c6bf</Assembly>
     <FullClassName>Rapid.Tools.SPDeploy.AddIn.UI.Wizard.SPProjectWizard</FullClassName>
-  </WizardExtension>
+  </WizardExtension>-->
 </VSTemplate>
