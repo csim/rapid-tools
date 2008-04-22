@@ -10,19 +10,19 @@ Exception display with minimal detail:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url>*
 
-http://rapid-tools.googlecode.com/wiki/images/exceptiondisplay1.png
+http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay1.png
 
 Exception display with the stack trace included:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -printstack*
 
-http://rapid-tools.googlecode.com/wiki/images/exceptiondisplay2.png
+http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay2.png
 
 Exception display with stack trace and http response terminated. In this case no UI is rendered, only the formated exception is print to the http stream and the response is ended:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -endresponse*
 
-http://rapid-tools.googlecode.com/wiki/images/exceptiondisplay3.png
+http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay3.png
 
 
 ===Disabling Exception Display==
