@@ -4,6 +4,8 @@
 ===Overview==
 The exception display component allows you to avoid the ubiquitous "Unknown error" page. With this component you can specify various levels of exception detail from displaying a friendly error message to displaying the full stack trace and ending the http response.
 
+----
+
 ===Enabling Exception Display===
 
 Exception display with minimal detail:
@@ -14,16 +16,21 @@ http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay1.png
 
 Exception display with the stack trace included:
 
+----
+
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -printstack*
 
 http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay2.png
 
 Exception display with stack trace and http response terminated. In this case no UI is rendered, only the formated exception is print to the http stream and the response is ended:
 
+----
+
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -endresponse*
 
 http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay3.png
 
+----
 
 ===Disabling Exception Display==
 
