@@ -36,6 +36,8 @@ http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay3.png
 
 *stsadm -o rapidtools-DisableExceptionDisplay -url <site url>*
 
+----
+
 ===Notes===
   * You can change the error page url by specifying the -errorurl argument when enabling exception display. This makes it possible for you to create a customized error page.
   * Configuration settings for Exception display are written to the web.config file at the root of the SharePoint site instance. You can change these settings manually in the AppSettings section. All property keys are prefixed with Rapid.Tools.ExceptionDisplay
