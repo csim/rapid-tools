@@ -14,17 +14,17 @@ Exception display with minimal detail:
 
 http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay1.png
 
-Exception display with the stack trace included:
-
 ----
+
+Exception display with the stack trace included:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -printstack*
 
 http://rapid-tools.googlecode.com/svn/wiki/images/exceptiondisplay2.png
 
-Exception display with stack trace and http response terminated. In this case no UI is rendered, only the formated exception is print to the http stream and the response is ended:
-
 ----
+
+Exception display with stack trace and http response terminated. In this case no UI is rendered, only the formated exception is print to the http stream and the response is ended:
 
 *stsadm -o rapidtools-EnableExceptionDisplay -url <site url> -endresponse*
 
