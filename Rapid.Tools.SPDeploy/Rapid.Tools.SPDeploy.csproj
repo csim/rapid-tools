@@ -107,15 +107,5 @@
 		<Delete Files="@(DllFiles)" />
 
 
-		<CreateItem Include="..\Rapid.Tools.SPDeploy.Installer\**\*.*" Exclude="..\Rapid.Tools.SPDeploy.Installer\**\*.wixproj;..\Rapid.Tools.SPDeploy.Installer\**\*.wxs;..\Rapid.Tools.SPDeploy.Installer\**\*.wxl;..\Rapid.Tools.SPDeploy.Installer\**\*svn\**">
-			<Output TaskParameter="Include" ItemName="OldInstallerFiles" />
-		</CreateItem>
-		<Delete Files="@(OldInstallerFiles)" />
-
-		<CreateItem Include="$(OutputPath)*.zip;$(OutputPath)SPDeploy\**\*.*" Exclude="**\*svn\**">
-			<Output TaskParameter="Include" ItemName="InstallFiles" />
-		</CreateItem>
-		<Copy SourceFiles="@(InstallFiles)" DestinationFolder="..\Rapid.Tools.SPDeploy.Installer" />
-
 	</Target>
 </Project>

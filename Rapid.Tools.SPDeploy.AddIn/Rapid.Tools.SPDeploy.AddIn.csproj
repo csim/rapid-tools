@@ -210,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Rapid.Tools.SPDeploy.AddIn">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Features\Ajaxification\feature.xml" />
     <Content Include="Resources\Features\WebParts\elements.xml" />
@@ -236,9 +237,5 @@
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="AfterBuild">
-    <CreateItem Include="$(OutputPath)*.dll;$(OutputPath)*.pdb;*.addin" Exclude="**\*svn\**">
-      <Output TaskParameter="Include" ItemName="InstallFiles" />
-    </CreateItem>
-    <Copy SourceFiles="@(InstallFiles)" DestinationFolder="..\Rapid.Tools.SPDeploy.Installer" />
   </Target>
 </Project>

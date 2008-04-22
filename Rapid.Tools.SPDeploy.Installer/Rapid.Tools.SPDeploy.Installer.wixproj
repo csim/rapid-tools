@@ -113,7 +113,30 @@
 	Other similar extension points exist, see Wix.targets.
 	<Target Name="BeforeBuild">
 	</Target>
-	<Target Name="AfterBuild">
-	</Target>
 	-->
+
+	<Target Name="BeforeBuild">
+
+		<CreateItem Include="**\*.*" Exclude="**\*.wixproj;**\*.wxs;**\*.wxl;**\*svn\**">
+			<Output TaskParameter="Include" ItemName="OldInstallerFiles" />
+		</CreateItem>
+		<Delete Files="@(OldInstallerFiles)" />
+
+		<CreateItem Include="..\Rapid.Tools.SPDeploy\bin\$(Configuration)\*.zip;..\Rapid.Tools.SPDeploy\bin\$(Configuration)\SPDeploy\**\*.*" Exclude="**\*svn\**">
+			<Output TaskParameter="Include" ItemName="SPDeployCoreFiles" />
+		</CreateItem>
+		<Copy SourceFiles="@(SPDeployCoreFiles)" DestinationFolder="." />
+
+		<CreateItem Include="..\Rapid.Tools.SPDeploy.Addin\bin\*.dll;$(OutputPath)*.pdb;..\Rapid.Tools.SPDeploy.Addin\bin\*.addin" Exclude="**\*svn\**">
+			<Output TaskParameter="Include" ItemName="SPDeployAddInFiles" />
+		</CreateItem>
+		<Copy SourceFiles="@(SPDeployAddInFiles)" DestinationFolder="." />
+
+	</Target>
+
+	<Target Name="AfterBuild">
+
+
+	</Target>
+
 </Project>
