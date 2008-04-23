@@ -123,5 +123,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 
         public string projectName;
         public string machineName;
+
+        private void btnCancel_Click_1(object sender, EventArgs e)
+        {            
+            this.Close();
+        }
     }
 }

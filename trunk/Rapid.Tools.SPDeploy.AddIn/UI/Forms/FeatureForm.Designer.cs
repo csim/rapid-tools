@@ -46,10 +46,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.btnOk = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.ddlScope = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cbHidden = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cbActivate = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,14 +63,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.txtFeatureDescription.Location = new System.Drawing.Point(265, 171);
             this.txtFeatureDescription.Name = "txtFeatureDescription";
             this.txtFeatureDescription.Size = new System.Drawing.Size(235, 20);
-            this.txtFeatureDescription.TabIndex = 64;
+            this.txtFeatureDescription.TabIndex = 5;
             // 
             // txtFeatureFolder
             // 
             this.txtFeatureFolder.Location = new System.Drawing.Point(265, 143);
             this.txtFeatureFolder.Name = "txtFeatureFolder";
             this.txtFeatureFolder.Size = new System.Drawing.Size(235, 20);
-            this.txtFeatureFolder.TabIndex = 63;
+            this.txtFeatureFolder.TabIndex = 4;
             // 
             // label6
             // 
@@ -117,7 +113,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.txtFeatureTitle.Location = new System.Drawing.Point(265, 117);
             this.txtFeatureTitle.Name = "txtFeatureTitle";
             this.txtFeatureTitle.Size = new System.Drawing.Size(235, 20);
-            this.txtFeatureTitle.TabIndex = 58;
+            this.txtFeatureTitle.TabIndex = 3;
             // 
             // rbNewFeature
             // 
@@ -152,6 +148,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // cbFeatureTitle
             // 
             this.cbFeatureTitle.AllowDrop = true;
+            this.cbFeatureTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFeatureTitle.FormattingEnabled = true;
             this.cbFeatureTitle.Location = new System.Drawing.Point(265, 58);
             this.cbFeatureTitle.Name = "cbFeatureTitle";
@@ -180,7 +177,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.btnCancel.Location = new System.Drawing.Point(425, 258);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 67;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -190,7 +187,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.btnOk.Location = new System.Drawing.Point(327, 258);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 66;
+            this.btnOk.TabIndex = 7;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -206,6 +203,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // ddlScope
             // 
+            this.ddlScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlScope.FormattingEnabled = true;
             this.ddlScope.Items.AddRange(new object[] {
             "Farm",
@@ -215,53 +213,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.ddlScope.Location = new System.Drawing.Point(265, 198);
             this.ddlScope.Name = "ddlScope";
             this.ddlScope.Size = new System.Drawing.Size(235, 21);
-            this.ddlScope.TabIndex = 71;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(286, 226);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 13);
-            this.label10.TabIndex = 72;
-            this.label10.Text = "Hidden";
-            // 
-            // cbHidden
-            // 
-            this.cbHidden.AutoSize = true;
-            this.cbHidden.Location = new System.Drawing.Point(265, 225);
-            this.cbHidden.Name = "cbHidden";
-            this.cbHidden.Size = new System.Drawing.Size(15, 14);
-            this.cbHidden.TabIndex = 73;
-            this.cbHidden.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(380, 226);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 13);
-            this.label8.TabIndex = 75;
-            this.label8.Text = "Activate";
-            // 
-            // cbActivate
-            // 
-            this.cbActivate.AutoSize = true;
-            this.cbActivate.Location = new System.Drawing.Point(359, 225);
-            this.cbActivate.Name = "cbActivate";
-            this.cbActivate.Size = new System.Drawing.Size(15, 14);
-            this.cbActivate.TabIndex = 74;
-            this.cbActivate.UseVisualStyleBackColor = true;
+            this.ddlScope.TabIndex = 6;
             // 
             // FeatureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(524, 297);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.cbActivate);
-            this.Controls.Add(this.cbHidden);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.ddlScope);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCancel);
@@ -308,10 +266,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox ddlScope;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckBox cbHidden;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox cbActivate;
 
     }
 }
