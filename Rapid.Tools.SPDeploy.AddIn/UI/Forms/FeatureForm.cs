@@ -39,7 +39,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             FileLocation = FileLocation + "\\TemplateFiles\\Features";
 
             ddlScope.SelectedValue = "Web";
-            txtFeatureTitle.Enabled = txtFeatureFolder.Enabled = txtFeatureDescription.Enabled = cbActivate.Enabled = cbHidden.Enabled = ddlScope.Enabled = false;
+            txtFeatureTitle.Enabled = txtFeatureFolder.Enabled = txtFeatureDescription.Enabled = ddlScope.Enabled = false;
             rbNewFeature.Checked = true;
             DirectoryInfo di = new DirectoryInfo(FileLocation);
             foreach (FileInfo fi in di.GetFiles("feature.xml", SearchOption.AllDirectories))
@@ -81,8 +81,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
                 ProjectFiles.FeatureManifest.FeatureManifest fm = new ProjectFiles.FeatureManifest.FeatureManifest();
                 fm.Title = txtFeatureTitle.Text;
                 fm.Description = txtFeatureDescription.Text;
-                fm.Hidden = cbHidden.Checked;
-                fm.ActivateOnDefault = cbActivate.Checked;
                 fm.Scope = ddlScope.SelectedItem.ToString();
                 DirectoryInfo di = new DirectoryInfo(FileLocation);
                 di.CreateSubdirectory(txtFeatureFolder.Text);
@@ -94,7 +92,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 
         private void rbNewFeature_CheckedChanged(object sender, EventArgs e)
         {
-            txtFeatureTitle.Enabled = txtFeatureFolder.Enabled = txtFeatureDescription.Enabled = cbActivate.Enabled = cbHidden.Enabled = ddlScope.Enabled = rbNewFeature.Checked;
+            txtFeatureTitle.Enabled = txtFeatureFolder.Enabled = txtFeatureDescription.Enabled = ddlScope.Enabled = rbNewFeature.Checked;
             cbFeatureTitle.Enabled = rbExistingFeature.Checked;
         }
 
