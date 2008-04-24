@@ -70,42 +70,46 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="Template\manifest.xml">
+		<Content Include="Template\VS8\manifest.xml">
 		</Content>
-		<Content Include="Template\MyTemplate.vstemplate">
+		<Content Include="Template\VS8\MyTemplate.vstemplate">
 		</Content>
-		<Content Include="Template\Properties\AssemblyInfo.cs">
+		<Content Include="Template\VS8\Properties\AssemblyInfo.cs">
 		</Content>
-		<Content Include="Template\Properties\SPDeploy.user" />
-		<Content Include="Template\SPDeploy.csproj">
+		<Content Include="Template\VS8\Properties\SPDeploy.user" />
+		<Content Include="Template\VS8\SPDeploy.csproj">
 		</Content>
-		<Content Include="Template\__TemplateIcon.ico" />
+		<Content Include="Template\VS8\__TemplateIcon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Template\VS9\" />
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-
 	<Target Name="AfterBuild">
-		<RemoveDir Directories="$(OutputPath)\SPDeploy" />
-		
-		<CreateItem Include="Template\**" Exclude="**\*svn\**">
-			<Output TaskParameter="Include" ItemName="SPDeployTemplateFiles" />
-		</CreateItem>
-		<CreateItem Include="MSBuild\**" Exclude="**\*svn\**">
-			<Output TaskParameter="Include" ItemName="SPDeployMSBuildFiles" />
-		</CreateItem>
-		
-		
+		<CreateProperty Value="$(OutputPath)SPDeploy\">
+			<Output TaskParameter="Value" PropertyName="SPDeployOutputPath" />
+		</CreateProperty>
+		<RemoveDir Directories="$(SPDeployOutputPath)" Condition="Exists('$(SPDeployOutputPath)')" />
 		<CreateItem Include="$(OutputPath)*.dll;$(OutputPath)*.pdb;">
 			<Output TaskParameter="Include" ItemName="DllFiles" />
 		</CreateItem>
-		
-		<Zip Files="@(SPDeployTemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_Template.zip" WorkingDirectory="Template" />
-		<Copy SourceFiles="@(SPDeployMSBuildFiles)" DestinationFiles="@(SPDeployMSBuildFiles->'$(OutputPath)\SPDeploy\%(Filename)%(Extension)')" />
-		
-		
-		<Copy SourceFiles="@(DllFiles)" DestinationFolder="$(OutputPath)SPDeploy\" />
+		<Copy SourceFiles="@(DllFiles)" DestinationFolder="$(SPDeployOutputPath)" />
 		<Delete Files="@(DllFiles)" />
-
-
+		
+		<CreateItem Include="Template\VS8\**" Exclude="**\*svn\**">
+			<Output TaskParameter="Include" ItemName="VS8TemplateFiles" />
+		</CreateItem>
+		<Zip Files="@(VS8TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS8_Template.zip" WorkingDirectory="Template\VS8" />
+		
+		<CreateItem Include="Template\VS9\**" Exclude="**\*svn\**">
+			<Output TaskParameter="Include" ItemName="VS9TemplateFiles" />
+		</CreateItem>
+		<Zip Files="@(VS9TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS9_Template.zip" WorkingDirectory="Template\VS9" />
+		
+		<CreateItem Include="MSBuild\**" Exclude="**\*svn\**">
+			<Output TaskParameter="Include" ItemName="MSBuildFiles" />
+		</CreateItem>
+		<Copy SourceFiles="@(MSBuildFiles)" DestinationFiles="@(MSBuildFiles->'$(SPDeployOutputPath)%(Filename)%(Extension)')" />
 	</Target>
 </Project>
