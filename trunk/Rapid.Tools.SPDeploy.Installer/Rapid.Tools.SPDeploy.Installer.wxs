@@ -65,7 +65,7 @@
 		<DirectoryRef Id="SPDeploy_Csharp_VS">
 			<Component Id="SPDeploy_csharp.zip_VS" Guid="2173D1D4-AA81-4392-B4F8-95486F015897" DiskId="1" Transitive="yes">
 				<Condition>(VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED)</Condition>
-				<File Id="SPDeploy_Template.zip_VS"  Name="SPDeploy_Template.zip" KeyPath="yes" Source="Files\SPDeploy_Template.zip"/>
+				<File Id="SPDeploy_Template.zip_VS"  Name="SPDeploy_Template.zip" KeyPath="yes" Source="Files\SPDeploy_VS8_Template.zip"/>
 			</Component>
 		</DirectoryRef>
 
