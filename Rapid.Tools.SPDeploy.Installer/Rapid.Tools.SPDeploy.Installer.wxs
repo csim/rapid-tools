@@ -26,8 +26,8 @@
 			<![CDATA[1]]>
 		</Property>
 
-		<Property Id="ARPHELPLINK" Value="http://www.ascentium.com/blog/sp" />
-		<Property Id="ARPURLINFOABOUT" Value="http://www.ascentium.com" />
+		<Property Id="ARPHELPLINK" Value="http://rapid-tools.googlecode.com" />
+		<Property Id="ARPURLINFOABOUT" Value="http://rapid-tools.googlecode.com" />
 
 		<Media Id="1" Cabinet="SPDeploy.Installer.cab" EmbedCab="yes" />
 
@@ -52,20 +52,20 @@
 
 		<DirectoryRef Id="SPDeployFolder">
 			<Component Id="SPDeploy_MSBuild" Guid="997DDAA7-430B-49aa-809B-A8B2F4678926" DiskId="1" Transitive="yes">
-				<File Id="pdh.dll_file"  Name="pdh.dll" Source="pdh.dll"/>
-				<File Id="psexec.exe_file"  Name="psexec.exe" Source="psexec.exe"/>
-				<File Id="Readme.txt_file"  Name="Readme.txt"  Source="Readme.txt"/>
-				<File Id="SPDeploy.targets_file"  Name="SPDeploy.targets"  Source="SPDeploy.targets"/>
-				<File Id="SPDeploy.vssettings_file"  Name="SPDeploy.vssettings"  Source="SPDeploy.vssettings"/>
-				<File Id="SPDeploy.Tasks.dll_file"  Name="Rapid.Tools.SPDeploy.Tasks.dll"  Source="Rapid.Tools.SPDeploy.Tasks.dll"/>
-				<File Id="SPDeploy.Tasks.pdb_file"  Name="Rapid.Tools.SPDeploy.Tasks.pdb"  Source="Rapid.Tools.SPDeploy.Tasks.pdb"/>
+				<File Id="pdh.dll_file"  Name="pdh.dll" Source="Files\pdh.dll"/>
+				<File Id="psexec.exe_file"  Name="psexec.exe" Source="Files\psexec.exe"/>
+				<File Id="Readme.txt_file"  Name="Readme.txt"  Source="Files\Readme.txt"/>
+				<File Id="SPDeploy.targets_file"  Name="SPDeploy.targets"  Source="Files\SPDeploy.targets"/>
+				<File Id="SPDeploy.vssettings_file"  Name="SPDeploy.vssettings"  Source="Files\SPDeploy.vssettings"/>
+				<File Id="SPDeploy.Tasks.dll_file"  Name="Rapid.Tools.SPDeploy.Tasks.dll"  Source="Files\Rapid.Tools.SPDeploy.Tasks.dll"/>
+				<File Id="SPDeploy.Tasks.pdb_file"  Name="Rapid.Tools.SPDeploy.Tasks.pdb"  Source="Files\Rapid.Tools.SPDeploy.Tasks.pdb"/>
 			</Component>
 		</DirectoryRef>
 
 		<DirectoryRef Id="SPDeploy_Csharp_VS">
 			<Component Id="SPDeploy_csharp.zip_VS" Guid="2173D1D4-AA81-4392-B4F8-95486F015897" DiskId="1" Transitive="yes">
 				<Condition>(VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED)</Condition>
-				<File Id="SPDeploy_Template.zip_VS"  Name="SPDeploy_Template.zip" KeyPath="yes" Source="SPDeploy_Template.zip"/>
+				<File Id="SPDeploy_Template.zip_VS"  Name="SPDeploy_Template.zip" KeyPath="yes" Source="Files\SPDeploy_Template.zip"/>
 			</Component>
 		</DirectoryRef>
 
