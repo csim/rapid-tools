@@ -5,7 +5,7 @@
 <?define Property_UpgradeCode = "6BE372E2-8288-4af6-8416-0D44EB949D77" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="Rapid.Tools.SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
+	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="Rapid Tools :: SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
 		<Package InstallerVersion="200" Compressed="yes"/>
 
 		<Upgrade Id="$(var.Property_UpgradeCode)">
@@ -71,21 +71,21 @@
 
 		<DirectoryRef Id="MsBuildFolder">
 			<Component Id="SPDeploy_Registry_SafeImports" Guid="001150EF-D039-45eb-A5D4-220D39A110D3" DiskId="1" Transitive="yes">
-        <RegistryValue Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0\MSBuild\SafeImports" Action="write" Name="SPDeploy" Value="[SPDeployFolder]SPDeploy.Targets" Type="string" />
+				<RegistryValue Root="HKLM" Key="Software\Microsoft\VisualStudio\8.0\MSBuild\SafeImports" Action="write" Name="SPDeploy" Value="[SPDeployFolder]SPDeploy.Targets" Type="string" />
 			</Component>
 		</DirectoryRef>
 
-    
+
 		<Feature Id="ProductFeature" Title="SPDeploy" Level="1">
 			<ComponentRef Id="SPDeploy_csharp.zip_VS" />
 			<ComponentRef Id="SPDeploy_MSBuild"/>
 			<ComponentRef Id="SPDeploy_Registry_SafeImports"/>
-      <Feature Id='Rapid.Tools.SPDeploy.AddIn' Title='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Description='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Level='1'>
-        <ComponentRef Id='Rapid.Tools.SPDeploy.AddIn' />
-        <ComponentRef Id='Rapid.Tools.SPDeploy.AddIn.dll' />
-      </Feature>
+			<Feature Id='Rapid.Tools.SPDeploy.AddIn' Title='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Description='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Level='1'>
+				<ComponentRef Id='Rapid.Tools.SPDeploy.AddIn' />
+				<ComponentRef Id='Rapid.Tools.SPDeploy.AddIn.dll' />
+			</Feature>
 		</Feature>
-       
+
 		<!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->
 		<!-- installation, repair and uninstall of this product.                                             -->
 		<InstallExecuteSequence>
