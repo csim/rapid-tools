@@ -119,12 +119,14 @@
 			</Custom>
 		</InstallUISequence>
 
+
+		<!-- VS 2005 Properties -->
 		<Property Id="VS2005_ROOT_FOLDER" Secure="yes">
 			<RegistrySearch Id="SearchForVS2005RootPath" Root="HKLM" Key="Software\Microsoft\VisualStudio\SxS\VS7" Name="8.0" Type="raw" />
 		</Property>
 
 		<Property Id="VS2005_INSTALLED" Secure="yes">
-			<ComponentSearch Id="SearchForVsVertIntComponent" Guid="03F59C6A-202C-4403-9987-349896B7BC84" Type="file" />
+			<ComponentSearch Id="SearchForVsVertIntComponent2005" Guid="03F59C6A-202C-4403-9987-349896B7BC84" Type="file" />
 		</Property>
 
 		<Property Id="VS2005_IDE_INSTALLED" Secure="yes">
@@ -136,6 +138,13 @@
 		<Property Id="VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED" Secure="yes">
 			<RegistrySearch Id="SearchForVCSProjectSystemUnderVSSetup" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\8.0\Projects\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}" Name="DefaultProjectExtension" Type="raw" />
 		</Property>
+
+
+		<!-- VS 2008 Properties -->
+		<!--<Property Id="VS2008_ROOT_FOLDER" Secure="yes">
+			<RegistrySearch Id="SearchForVS2008RootPath" Root="HKLM" Key="Software\Microsoft\VisualStudio\SxS\VS7" Name="9.0" Type="raw" />
+		</Property>-->
+
 
 		<UIRef Id="WixUI_Minimal"/>
 
