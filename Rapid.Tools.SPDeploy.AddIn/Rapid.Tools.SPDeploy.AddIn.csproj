@@ -47,7 +47,14 @@
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Domain\NodeTags\FileNodeTag.cs" />
+    <Compile Include="Domain\NodeTags\IFileNode.cs" />
+    <Compile Include="Domain\NodeTags\ListNodeTag.cs" />
+    <Compile Include="Domain\NodeTags\NullNodeTag.cs" />
+    <Compile Include="Domain\NodeTags\WebNodeTag.cs" />
     <Compile Include="Domain\RapidOutputWindow.cs" />
+    <Compile Include="Domain\Utilties\ApplicationUtility.cs" />
+    <Compile Include="Domain\Utilties\Functions.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\Control.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\CustomAction.cs" />
