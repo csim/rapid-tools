@@ -200,9 +200,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
             set { _activationDependencies = value; }
         }
 
-        public FeatureManifest() { Id = Guid.NewGuid().ToString(); }
-
+        public FeatureManifest() { Id = Guid.NewGuid().ToString(); }        
+        
         public FeatureManifest(XmlDocument document)
+        {
+            SetProperties(document);
+        }
+
+        public FeatureManifest(string xmlString)
+        {
+            XmlDocument document = new XmlDocument();
+            document.LoadXml(xmlString);
+            SetProperties(document);            
+        }
+
+        public void SetProperties(XmlDocument document)
         {
             XmlNode node = document.DocumentElement;
             if (node.Attributes["ActivateOnDefault"] != null)
@@ -262,8 +274,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
                     ElementManifests.Add(n.Attributes["Location"].Value);
                 }
             }
-
-
         }
 
         public void CreateManifest(string fileLocation)

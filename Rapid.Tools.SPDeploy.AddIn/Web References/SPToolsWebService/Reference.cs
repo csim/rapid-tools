@@ -63,6 +63,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         private System.Threading.SendOrPostCallback getInfoOperationCompleted;
         
+        private System.Threading.SendOrPostCallback OpenBinaryFileOperationCompleted;
+        
         private System.Threading.SendOrPostCallback GetOptionsOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetViewSchemaOperationCompleted;
@@ -167,6 +169,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         /// <remarks/>
         public event getInfoCompletedEventHandler getInfoCompleted;
+        
+        /// <remarks/>
+        public event OpenBinaryFileCompletedEventHandler OpenBinaryFileCompleted;
         
         /// <remarks/>
         public event GetOptionsCompletedEventHandler GetOptionsCompleted;
@@ -287,26 +292,28 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/IsCheckedOut", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool IsCheckedOut(string siteUrl, string fileUrl) {
+        public bool IsCheckedOut(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
             object[] results = this.Invoke("IsCheckedOut", new object[] {
                         siteUrl,
-                        fileUrl});
+                        webGuid,
+                        fileGuid});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void IsCheckedOutAsync(string siteUrl, string fileUrl) {
-            this.IsCheckedOutAsync(siteUrl, fileUrl, null);
+        public void IsCheckedOutAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
+            this.IsCheckedOutAsync(siteUrl, webGuid, fileGuid, null);
         }
         
         /// <remarks/>
-        public void IsCheckedOutAsync(string siteUrl, string fileUrl, object userState) {
+        public void IsCheckedOutAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, object userState) {
             if ((this.IsCheckedOutOperationCompleted == null)) {
                 this.IsCheckedOutOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIsCheckedOutOperationCompleted);
             }
             this.InvokeAsync("IsCheckedOut", new object[] {
                         siteUrl,
-                        fileUrl}, this.IsCheckedOutOperationCompleted, userState);
+                        webGuid,
+                        fileGuid}, this.IsCheckedOutOperationCompleted, userState);
         }
         
         private void OnIsCheckedOutOperationCompleted(object arg) {
@@ -381,26 +388,28 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/OpenBinary", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
-        public byte[] OpenBinary(string siteUrl, string fileUrl) {
+        public byte[] OpenBinary(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
             object[] results = this.Invoke("OpenBinary", new object[] {
                         siteUrl,
-                        fileUrl});
+                        webGuid,
+                        fileGuid});
             return ((byte[])(results[0]));
         }
         
         /// <remarks/>
-        public void OpenBinaryAsync(string siteUrl, string fileUrl) {
-            this.OpenBinaryAsync(siteUrl, fileUrl, null);
+        public void OpenBinaryAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
+            this.OpenBinaryAsync(siteUrl, webGuid, fileGuid, null);
         }
         
         /// <remarks/>
-        public void OpenBinaryAsync(string siteUrl, string fileUrl, object userState) {
+        public void OpenBinaryAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, object userState) {
             if ((this.OpenBinaryOperationCompleted == null)) {
                 this.OpenBinaryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnOpenBinaryOperationCompleted);
             }
             this.InvokeAsync("OpenBinary", new object[] {
                         siteUrl,
-                        fileUrl}, this.OpenBinaryOperationCompleted, userState);
+                        webGuid,
+                        fileGuid}, this.OpenBinaryOperationCompleted, userState);
         }
         
         private void OnOpenBinaryOperationCompleted(object arg) {
@@ -412,27 +421,29 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/SaveBinary", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool SaveBinary(string siteUrl, string fileUrl, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] bytes) {
+        public bool SaveBinary(string siteUrl, System.Guid webGuid, System.Guid fileGuid, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] bytes) {
             object[] results = this.Invoke("SaveBinary", new object[] {
                         siteUrl,
-                        fileUrl,
+                        webGuid,
+                        fileGuid,
                         bytes});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void SaveBinaryAsync(string siteUrl, string fileUrl, byte[] bytes) {
-            this.SaveBinaryAsync(siteUrl, fileUrl, bytes, null);
+        public void SaveBinaryAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, byte[] bytes) {
+            this.SaveBinaryAsync(siteUrl, webGuid, fileGuid, bytes, null);
         }
         
         /// <remarks/>
-        public void SaveBinaryAsync(string siteUrl, string fileUrl, byte[] bytes, object userState) {
+        public void SaveBinaryAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, byte[] bytes, object userState) {
             if ((this.SaveBinaryOperationCompleted == null)) {
                 this.SaveBinaryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveBinaryOperationCompleted);
             }
             this.InvokeAsync("SaveBinary", new object[] {
                         siteUrl,
-                        fileUrl,
+                        webGuid,
+                        fileGuid,
                         bytes}, this.SaveBinaryOperationCompleted, userState);
         }
         
@@ -652,27 +663,29 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/PerformFileAction", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool PerformFileAction(string siteUrl, string fileUrl, FileActions action) {
+        public bool PerformFileAction(string siteUrl, System.Guid webGuid, System.Guid fileGuid, FileActions action) {
             object[] results = this.Invoke("PerformFileAction", new object[] {
                         siteUrl,
-                        fileUrl,
+                        webGuid,
+                        fileGuid,
                         action});
             return ((bool)(results[0]));
         }
         
         /// <remarks/>
-        public void PerformFileActionAsync(string siteUrl, string fileUrl, FileActions action) {
-            this.PerformFileActionAsync(siteUrl, fileUrl, action, null);
+        public void PerformFileActionAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, FileActions action) {
+            this.PerformFileActionAsync(siteUrl, webGuid, fileGuid, action, null);
         }
         
         /// <remarks/>
-        public void PerformFileActionAsync(string siteUrl, string fileUrl, FileActions action, object userState) {
+        public void PerformFileActionAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, FileActions action, object userState) {
             if ((this.PerformFileActionOperationCompleted == null)) {
                 this.PerformFileActionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPerformFileActionOperationCompleted);
             }
             this.InvokeAsync("PerformFileAction", new object[] {
                         siteUrl,
-                        fileUrl,
+                        webGuid,
+                        fileGuid,
                         action}, this.PerformFileActionOperationCompleted, userState);
         }
         
@@ -713,6 +726,40 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             if ((this.getInfoCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.getInfoCompleted(this, new getInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/OpenBinaryFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
+        public byte[] OpenBinaryFile(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
+            object[] results = this.Invoke("OpenBinaryFile", new object[] {
+                        siteUrl,
+                        webGuid,
+                        fileGuid});
+            return ((byte[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void OpenBinaryFileAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
+            this.OpenBinaryFileAsync(siteUrl, webGuid, fileGuid, null);
+        }
+        
+        /// <remarks/>
+        public void OpenBinaryFileAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, object userState) {
+            if ((this.OpenBinaryFileOperationCompleted == null)) {
+                this.OpenBinaryFileOperationCompleted = new System.Threading.SendOrPostCallback(this.OnOpenBinaryFileOperationCompleted);
+            }
+            this.InvokeAsync("OpenBinaryFile", new object[] {
+                        siteUrl,
+                        webGuid,
+                        fileGuid}, this.OpenBinaryFileOperationCompleted, userState);
+        }
+        
+        private void OnOpenBinaryFileOperationCompleted(object arg) {
+            if ((this.OpenBinaryFileCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.OpenBinaryFileCompleted(this, new OpenBinaryFileCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1478,6 +1525,32 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void OpenBinaryFileCompletedEventHandler(object sender, OpenBinaryFileCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class OpenBinaryFileCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal OpenBinaryFileCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public byte[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((byte[])(this.results[0]));
             }
         }
     }

@@ -7,16 +7,28 @@ using System.Xml;
 using System.IO;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.Webs;
 using System.Net;
+using EnvDTE;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 {
     public class Functions
     {
+
         public static DirectoryInfo GetProjectDirectory(DTE2 application)
         {
             string path = application.Solution.Projects.Item(1).FullName;
             path = path.Remove(path.LastIndexOf("\\"));
             return new DirectoryInfo(path);
+        }
+
+        public static FileInfo[] GetFeatureFileInfos(DTE2 ApplicationObject)
+        {
+            return Domain.Utilties.Functions.GetProjectDirectory(ApplicationObject).GetFiles("feature.xml", SearchOption.AllDirectories);
+        }
+
+        public static DirectoryInfo GetWorkingDirectory()
+        {
+            return new DirectoryInfo(GetWorkingDirectoryPath());
         }
 
         public static string GetWorkingDirectoryPath()
@@ -55,6 +67,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
                 path = path.Remove(path.LastIndexOf("\\"));
                 di.CreateSubdirectory(path);
             }
+        }
+
+        public static void OpenVsItem(string item, DTE2 ApplicationObject)
+        {
+            ApplicationObject.ItemOperations.OpenFile(item, Constants.vsViewKindTextView);
         }
 
         public static List<string> GetActivatedFeatures(string web)
