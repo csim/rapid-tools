@@ -17,9 +17,9 @@ using Microsoft.SharePoint.StsAdmin;
 using Microsoft.SharePoint.Administration;
 
 
-namespace Rapid.Tools.Commands
+namespace Rapid.Tools.Domain
 {
-	public class Command : ISPStsadmCommand
+	public class Commands : ISPStsadmCommand
 	{
 
 		public struct CommandNames
