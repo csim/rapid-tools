@@ -1,0 +1,14 @@
+﻿<Feature 
+  Id="09AA27CD-1BAE-4760-8F35-B8AF41BAF84B"
+  Title="Ajaxification"
+  Description="This demoware was created by Ted Pattison Group (www.TedPattison.net)"
+  Scope="WebApplication" 
+  Hidden="true"
+  ImageUrl="TPG\binoculars.gif"  
+  ReceiverAssembly="[REPLACEPROJECTNAME], Version=1.0.0.0, Culture=neutral, PublicKeyToken=4623235946e3a5b5"
+  ReceiverClass="Ajaxification.FeatureReceiver"  
+  xmlns="http://schemas.microsoft.com/sharepoint/">
+
+  <ElementManifests />
+
+</Feature>
