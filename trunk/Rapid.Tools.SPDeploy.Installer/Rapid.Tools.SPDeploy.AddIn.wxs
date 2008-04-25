@@ -11,7 +11,7 @@
 
 		<DirectoryRef Id="VS2005AddInFolder">
 			<Component Id="Rapid.Tools.SPDeploy.AddIn" Guid="{CA16FB64-9C92-4DCE-83AF-19BF90FC0868}">
-				<!--<File Id="Rapid.Tools.SPDeploy.AddIn" Name="Rapid.Tools.SPDeploy.AddIn" KeyPath="no" Source="Files\Rapid.Tools.SPDeploy.AddIn" />-->
+				<File Id="Rapid.Tools.SPDeploy.AddIn" Name="Rapid.Tools.SPDeploy.AddIn" KeyPath="no" Source="Files\Rapid.Tools.SPDeploy.AddIn" />
 				<!-- 
 				  OMG! Why are these Registry keys here? (Hint: Don't delete them)
 				  http://robmensching.com/blog/archive/2007/04/27/How-to-create-an-uninstall-shortcut-and-pass-all-the.aspx
