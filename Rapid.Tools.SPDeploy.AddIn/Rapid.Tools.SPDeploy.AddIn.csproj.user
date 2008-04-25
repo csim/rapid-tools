@@ -11,4 +11,7 @@
     <StartArguments>/resetaddin Rapid.Tools.SPDeploy.AddIn.Connect</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
+  <PropertyGroup>
+    <ProjectView>ShowAllFiles</ProjectView>
+  </PropertyGroup>
 </Project>
