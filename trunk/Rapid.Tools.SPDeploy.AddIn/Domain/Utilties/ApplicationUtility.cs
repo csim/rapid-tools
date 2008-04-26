@@ -32,13 +32,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         public void OpenBrowser(string url)
         {
-
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.FileName = url;
+            process.Start();
         }
 
         public void OpenFile(string filePath)
         {
             ApplicationObject.ItemOperations.OpenFile(filePath, EnvDTE.Constants.vsViewKindTextView);
         }
+
+        public string GetProjectName()
+        {
+            return ApplicationObject.Solution.Projects.Item(1).Name;
+        }      
 
     }
 }

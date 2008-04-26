@@ -37,6 +37,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         private System.Threading.SendOrPostCallback IsCheckedOutOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetFileInfoOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ViewsOperationCompleted;
         
         private System.Threading.SendOrPostCallback featureFilesOperationCompleted;
@@ -44,6 +46,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         private System.Threading.SendOrPostCallback OpenBinaryOperationCompleted;
         
         private System.Threading.SendOrPostCallback SaveBinaryOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SaveFileOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback AddSolutionOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetSolutionsOperationCompleted;
         
@@ -132,6 +138,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         public event IsCheckedOutCompletedEventHandler IsCheckedOutCompleted;
         
         /// <remarks/>
+        public event GetFileInfoCompletedEventHandler GetFileInfoCompleted;
+        
+        /// <remarks/>
         public event ViewsCompletedEventHandler ViewsCompleted;
         
         /// <remarks/>
@@ -142,6 +151,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         /// <remarks/>
         public event SaveBinaryCompletedEventHandler SaveBinaryCompleted;
+        
+        /// <remarks/>
+        public event SaveFileCompletedEventHandler SaveFileCompleted;
+        
+        /// <remarks/>
+        public event AddSolutionCompletedEventHandler AddSolutionCompleted;
         
         /// <remarks/>
         public event GetSolutionsCompletedEventHandler GetSolutionsCompleted;
@@ -324,6 +339,39 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetFileInfo", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetFileInfo(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
+            object[] results = this.Invoke("GetFileInfo", new object[] {
+                        siteUrl,
+                        webGuid,
+                        fileGuid});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetFileInfoAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
+            this.GetFileInfoAsync(siteUrl, webGuid, fileGuid, null);
+        }
+        
+        /// <remarks/>
+        public void GetFileInfoAsync(string siteUrl, System.Guid webGuid, System.Guid fileGuid, object userState) {
+            if ((this.GetFileInfoOperationCompleted == null)) {
+                this.GetFileInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetFileInfoOperationCompleted);
+            }
+            this.InvokeAsync("GetFileInfo", new object[] {
+                        siteUrl,
+                        webGuid,
+                        fileGuid}, this.GetFileInfoOperationCompleted, userState);
+        }
+        
+        private void OnGetFileInfoOperationCompleted(object arg) {
+            if ((this.GetFileInfoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetFileInfoCompleted(this, new GetFileInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/Views", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public string[] Views(string siteUrl, System.Guid webGuid, System.Guid listGuid) {
             object[] results = this.Invoke("Views", new object[] {
@@ -451,6 +499,66 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             if ((this.SaveBinaryCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.SaveBinaryCompleted(this, new SaveBinaryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/SaveFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string SaveFile(string filePath, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] contents) {
+            object[] results = this.Invoke("SaveFile", new object[] {
+                        filePath,
+                        contents});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SaveFileAsync(string filePath, byte[] contents) {
+            this.SaveFileAsync(filePath, contents, null);
+        }
+        
+        /// <remarks/>
+        public void SaveFileAsync(string filePath, byte[] contents, object userState) {
+            if ((this.SaveFileOperationCompleted == null)) {
+                this.SaveFileOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveFileOperationCompleted);
+            }
+            this.InvokeAsync("SaveFile", new object[] {
+                        filePath,
+                        contents}, this.SaveFileOperationCompleted, userState);
+        }
+        
+        private void OnSaveFileOperationCompleted(object arg) {
+            if ((this.SaveFileCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveFileCompleted(this, new SaveFileCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/AddSolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string AddSolution(string filePath) {
+            object[] results = this.Invoke("AddSolution", new object[] {
+                        filePath});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void AddSolutionAsync(string filePath) {
+            this.AddSolutionAsync(filePath, null);
+        }
+        
+        /// <remarks/>
+        public void AddSolutionAsync(string filePath, object userState) {
+            if ((this.AddSolutionOperationCompleted == null)) {
+                this.AddSolutionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddSolutionOperationCompleted);
+            }
+            this.InvokeAsync("AddSolution", new object[] {
+                        filePath}, this.AddSolutionOperationCompleted, userState);
+        }
+        
+        private void OnAddSolutionOperationCompleted(object arg) {
+            if ((this.AddSolutionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.AddSolutionCompleted(this, new AddSolutionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1193,6 +1301,32 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void GetFileInfoCompletedEventHandler(object sender, GetFileInfoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetFileInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetFileInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
     public delegate void ViewsCompletedEventHandler(object sender, ViewsCompletedEventArgs e);
     
     /// <remarks/>
@@ -1291,6 +1425,58 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void SaveFileCompletedEventHandler(object sender, SaveFileCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SaveFileCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SaveFileCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void AddSolutionCompletedEventHandler(object sender, AddSolutionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class AddSolutionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal AddSolutionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
             }
         }
     }

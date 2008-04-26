@@ -48,6 +48,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 fpath = fpath.Remove(fpath.LastIndexOf("\\"));
                 Domain.Utilties.Functions.GetWorkingDirectory().CreateSubdirectory(fpath);
             }
+
+
+            //_contextMenu.MenuItems.Add("GetfileInfo", delegate(object sender, EventArgs e)
+            //{
+            //    string tpath = Domain.Utilties.Functions.GetRandomTempPath();
+            //    File.WriteAllText(tpath, ServiceInstance.GetFileInfo(SiteUrl, WebGuid, Guid));
+            //    ApplicationUtility.OpenFile(tpath);
+            //});
+
+
             if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
             {
 
@@ -68,6 +78,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                     File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
 
                     ApplicationUtility.OpenFile(filePath);
+
+                    Domain.Utilties.WatcherUtilitiy.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, true);
                 });
@@ -90,12 +102,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                });
 
             Label_001:
-
-                _contextMenu.MenuItems.Add("Save Back (Temp)", delegate(object sender, EventArgs e)
-                {
-                    ServiceInstance.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));
-                });
-
+                               
                 _contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
                 {
                     ServiceInstance.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));

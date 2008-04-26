@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
 using System.IO;
+using Rapid.Tools.SPDeploy.AddIn.Domain;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
@@ -48,6 +49,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         {
             VoidDelegate dele = new VoidDelegate(delegate()
             {
+                bool added = false;
                 Invoke(treeView1, delegate()
                 {
                     treeView1.Enabled = false;
@@ -59,7 +61,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 });
                 foreach (Rapid.Tools.SPDeploy.AddIn.SPToolsWebService.Solution sol in sols)
                 {
+                    if (string.Compare(sol.Name, ApplicationObject.Solution.Projects.Item(1).Name + ".wsp", true) == 0)
+                        added = true;
+
                     TreeNode t = new TreeNode(sol.Name);
+
                     t.Tag = sol.Deployed;
                     if (sol.Deployed)
                         t.ImageKey = t.SelectedImageKey = "Deployed";
@@ -71,6 +77,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                         treeView1.Nodes.Add(t);
                     });
                 }
+
+                if (!added)
+                {
+                    TreeNode ndt = new TreeNode(ApplicationObject.Solution.Projects.Item(1).Name + ".wsp");
+                    ndt.ImageKey = ndt.SelectedImageKey = "NotAdded";
+
+                    Invoke(treeView1, delegate()
+                    {
+                        treeView1.Nodes.Add(ndt);
+                    });
+                }
+
                 Invoke(treeView1, delegate()
                 {
                     treeView1.Enabled = true;
@@ -86,24 +104,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             else
                 del.BeginInvoke(null, null);
         }
-
-        private Domain.RapidOutputWindow _outputWindow;
-
-        public Domain.RapidOutputWindow RapidOutputWindow
-        {
-            get
-            {
-
-                if (_outputWindow == null)
-                    if (ApplicationObject == null)
-                        return null;
-                    else
-                        _outputWindow = new Rapid.Tools.SPDeploy.AddIn.Domain.RapidOutputWindow(ApplicationObject);
-                return _outputWindow;
-            }
-            set { _outputWindow = value; }
-        }
-
         
 
 
@@ -113,7 +113,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
             treeView1.ImageList = new ImageList();
             treeView1.ImageList.Images.Add("Deployed", Resources.Images.Files.ewr236l);
-            treeView1.ImageList.Images.Add("NotDeployed", Resources.Images.Files.ewr237l);
+            treeView1.ImageList.Images.Add("NotDeployed", Resources.Images.Files.ewr238l);
+            treeView1.ImageList.Images.Add("NotAdded", Resources.Images.Files.ewr237l);
 
         }
 
@@ -122,7 +123,54 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenu m = new ContextMenu();
-                if ((bool)e.Node.Tag)
+                if (e.Node.Tag == null)
+                {
+                    m.MenuItems.Add("Add Solution", delegate(object se, EventArgs ev)
+                    {
+
+                        EnvDTE.SolutionBuild b = ApplicationObject.Solution.SolutionBuild;
+                        b.Build(true);
+
+
+                        string name = ApplicationObject.Solution.Projects.Item(1).Name;
+
+                        RapidOutputWindow.Instance.Activate();
+                        RapidOutputWindow.Instance.Clear();
+                        RapidOutputWindow.Instance.Write("Compiling WSP..." + Environment.NewLine);
+                        System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\MSBuild.exe");
+                        psi.Arguments = "/target:CompileWsp " + ApplicationObject.Solution.Projects.Item(1).FullName;
+                        psi.CreateNoWindow = true;
+                        psi.UseShellExecute = false;
+
+                        System.Diagnostics.Process p = new System.Diagnostics.Process();
+                        p.StartInfo = psi;
+
+                        p.Start();
+
+                        p.WaitForExit(10000);
+
+                        if (p.ExitCode != 0)
+                        {
+                            RapidOutputWindow.Instance.Write("Compiling WSP Failed!" + Environment.NewLine);
+                            return;
+                        }
+
+                        RapidOutputWindow.Instance.Write("Compiling WSP Successful" + Environment.NewLine + Environment.NewLine);
+                        RapidOutputWindow.Instance.Write("Adding Solution..." + Environment.NewLine);
+
+                        string wspPath = ApplicationObject.Solution.Projects.Item(1).FullName;
+                        wspPath = wspPath.Remove(wspPath.LastIndexOf("\\"));
+                        wspPath = wspPath + "\\obj\\Debug\\" + ApplicationObject.Solution.Projects.Item(1).Name + ".wsp";
+
+                        ServiceInstance.SaveFile(name + "\\" + name + ".wsp", File.ReadAllBytes(wspPath));
+
+                        RapidOutputWindow.Instance.Write(ServiceInstance.AddSolution(@"c:\_spdeploy\" + name + "\\" + name + ".wsp"));
+
+                        FillTreeView();
+
+                    });
+                }
+                else if ((bool)e.Node.Tag)
                 {
                     MenuItem m2 = new MenuItem("Retract", delegate(object se, EventArgs ev)
                     {
@@ -132,10 +180,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 {
                     treeView1.Enabled = false;
                 });
-                            RapidOutputWindow.Activate();
-                            RapidOutputWindow.Clear();
-                            RapidOutputWindow.Write("Retracting..." + Environment.NewLine);
-                            RapidOutputWindow.Write(ServiceInstance.RetractSolution((string)((MenuItem)se).Tag));
+                            RapidOutputWindow.Instance.Activate();
+                            RapidOutputWindow.Instance.Clear();
+                            RapidOutputWindow.Instance.Write("Retracting..." + Environment.NewLine);
+                            RapidOutputWindow.Instance.Write(ServiceInstance.RetractSolution((string)((MenuItem)se).Tag));
                             FillTreeView();
 
                         });
@@ -154,10 +202,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 {
                     treeView1.Enabled = false;
                 });
-                            RapidOutputWindow.Activate();
-                            RapidOutputWindow.Clear();
-                            RapidOutputWindow.Write("Deploying..." + Environment.NewLine);
-                            RapidOutputWindow.Write(ServiceInstance.DeploySolution((string)((MenuItem)se).Tag));
+                            RapidOutputWindow.Instance.Activate();
+                            RapidOutputWindow.Instance.Clear();
+                            RapidOutputWindow.Instance.Write("Deploying..." + Environment.NewLine);
+                            RapidOutputWindow.Instance.Write(ServiceInstance.DeploySolution((string)((MenuItem)se).Tag));
                             FillTreeView();
                         });
                         del.BeginInvoke(null, null);
@@ -172,10 +220,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 {
                     treeView1.Enabled = false;
                 });
-                            RapidOutputWindow.Activate();
-                            RapidOutputWindow.Clear();
-                            RapidOutputWindow.Write("Deleting..." + Environment.NewLine);
-                            RapidOutputWindow.Write(ServiceInstance.DeleteSolution((string)((MenuItem)se).Tag));
+                            RapidOutputWindow.Instance.Activate();
+                            RapidOutputWindow.Instance.Clear();
+                            RapidOutputWindow.Instance.Write("Deleting..." + Environment.NewLine);
+                            RapidOutputWindow.Instance.Write(ServiceInstance.DeleteSolution((string)((MenuItem)se).Tag));
                             FillTreeView();
                         });
                        del.BeginInvoke(null, null);

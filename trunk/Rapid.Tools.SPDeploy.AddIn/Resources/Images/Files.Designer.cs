@@ -102,6 +102,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
             }
         }
         
+        internal static System.Drawing.Bitmap ewr238l {
+            get {
+                object obj = ResourceManager.GetObject("ewr238l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap FOLDER {
             get {
                 object obj = ResourceManager.GetObject("FOLDER", resourceCulture);
@@ -112,6 +119,27 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
         internal static System.Drawing.Bitmap ICGEN {
             get {
                 object obj = ResourceManager.GetObject("ICGEN", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ICXML {
+            get {
+                object obj = ResourceManager.GetObject("ICXML", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ICZIP {
+            get {
+                object obj = ResourceManager.GetObject("ICZIP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap IMNAWAY {
+            get {
+                object obj = ResourceManager.GetObject("IMNAWAY", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
