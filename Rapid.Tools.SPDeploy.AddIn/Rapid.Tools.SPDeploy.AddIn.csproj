@@ -45,9 +45,18 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CommandBar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommandBar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Domain\AppManager.cs" />
+    <Compile Include="Domain\Menus\SolutionMenu.cs">
+    </Compile>
+    <Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />
     <Compile Include="Domain\NodeTags\WebNodeTag.cs" />
     <Compile Include="Domain\NodeTags\NodeTagFactory.cs" />
     <Compile Include="Domain\NodeTags\SPFileNodeTag.cs" />
@@ -58,6 +67,8 @@
     <Compile Include="Domain\RapidOutputWindow.cs" />
     <Compile Include="Domain\Utilties\ApplicationUtility.cs" />
     <Compile Include="Domain\Utilties\Functions.cs" />
+    <Compile Include="Domain\Utilties\ServiceManager.cs" />
+    <Compile Include="Domain\Utilties\WatcherUtilitiy.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\Control.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\CustomAction.cs" />
@@ -85,7 +96,11 @@
     </Content>
     <Content Include="Resources\Features\WebParts\ResourceDeclarations.cs" />
     <Content Include="Resources\Features\WebParts\webpartclass.cs" />
-    <Compile Include="Resources\Images\Files.Designer.cs" />
+    <Compile Include="Resources\Images\Files.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Files.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Project\Files.Designer.cs" />
     <Compile Include="Resources\ResourceUtility.cs" />
     <Compile Include="UI\Controls\SolutionsControl.cs">
@@ -175,6 +190,8 @@
   <ItemGroup>
     <EmbeddedResource Include="CommandBar.resx">
       <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommandBar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Features\FeatureReceivers\Files.resx">
       <SubType>Designer</SubType>
@@ -182,13 +199,7 @@
     <EmbeddedResource Include="Resources\Features\WebParts\Files.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Images\Files.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Project\Files.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\GalleriesControl.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\SolutionsControl.resx">
@@ -282,6 +293,23 @@
     <Content Include="Resources\Features\WebParts\HelloScript.js" />
     <Content Include="Resources\Features\WebParts\HelloWebService.asmx" />
     <Content Include="Resources\Features\WebParts\webpartdotwebpart.xml" />
+    <Content Include="Resources\Images\ewr238l.gif" />
+    <Content Include="Resources\Images\IMNAWAY.PNG" />
+    <Content Include="Resources\Images\recurrence.gif" />
+    <None Include="Resources\Images\ICXML1.GIF" />
+    <None Include="Resources\Images\STSICON1.GIF" />
+    <None Include="Resources\Images\ITGEN1.GIF" />
+    <None Include="Resources\Images\ITDL1.GIF" />
+    <None Include="Resources\Images\IMNON1.PNG" />
+    <None Include="Resources\Images\IMNBUSY1.PNG" />
+    <None Include="Resources\Images\ICGEN1.GIF" />
+    <None Include="Resources\Images\FOLDER1.GIF" />
+    <None Include="Resources\Images\ewr237l1.gif" />
+    <None Include="Resources\Images\ewr236l1.gif" />
+    <None Include="Resources\Images\checkoutoverlay1.gif" />
+    <None Include="Resources\Images\CAT1.GIF" />
+    <None Include="Resources\Images\BLANK1.GIF" />
+    <None Include="Resources\Images\actionssettings1.gif" />
     <EmbeddedResource Include="Resources\Images\actionssettings.gif" />
     <EmbeddedResource Include="Resources\Images\BLANK.GIF" />
     <EmbeddedResource Include="Resources\Images\CAT.GIF" />
@@ -289,6 +317,11 @@
     <EmbeddedResource Include="Resources\Images\CRIT_16.GIF" />
     <EmbeddedResource Include="Resources\Images\ewr236l.gif" />
     <EmbeddedResource Include="Resources\Images\ewr237l.gif" />
+    <EmbeddedResource Include="Resources\Images\Files.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Files.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Images\FOLDER.GIF" />
     <EmbeddedResource Include="Resources\Images\ICACCDB.GIF" />
     <EmbeddedResource Include="Resources\Images\ICACCDC.GIF" />

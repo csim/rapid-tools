@@ -43,9 +43,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                         MenuItem _featureMenuItem = new MenuItem(featureManifest.Title);
                         _featureMenuItem.Click += delegate(object s, EventArgs ea)
                             {
-                                RapidOutputWindow.Activate();
-                                RapidOutputWindow.Clear();
-                                RapidOutputWindow.Write(ServiceInstance.RemoveFeature(SiteUrl, WebGuid, Guid));
+                                RapidOutputWindow.Instance.Activate();
+                                RapidOutputWindow.Instance.Clear();
+                                RapidOutputWindow.Instance.Write(ServiceInstance.RemoveFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
                             };
                         _featureMenuItem.Tag = new Guid(featureManifest.Id);
                         _removeFeatureMenu.MenuItems.Add(_featureMenuItem);
@@ -63,9 +63,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             MenuItem _featureMenuItem = new MenuItem(featureManifest.Title);
                             _featureMenuItem.Click += delegate(object s, EventArgs ea)
                                 {
-                                    RapidOutputWindow.Activate();
-                                    RapidOutputWindow.Clear();
-                                    RapidOutputWindow.Write(ServiceInstance.AddFeature(SiteUrl, WebGuid, Guid));
+                                    RapidOutputWindow.Instance.Activate();
+                                    RapidOutputWindow.Instance.Clear();
+                                    RapidOutputWindow.Instance.Write(ServiceInstance.AddFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
 
                                 };
                             _featureMenuItem.Tag = new Guid(featureManifest.Id);
@@ -82,7 +82,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-                Domain.Utilties.Functions.OpenItem(Url);
+               // Domain.Utilties.Functions.OpenItem(Url);
             });
 
             return _contextMenu;

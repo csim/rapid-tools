@@ -7,17 +7,7 @@ using System.Net;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-
-    public enum NodeType
-    {
-        Site,
-        Web,
-        List,
-        ListItem,
-        Folder,
-        File
-    }
-
+   
     public abstract class WebNodeTag : INodeTag
     {
         private Domain.Utilties.ApplicationUtility _applicationUtility;
@@ -57,7 +47,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         private Guid getWebGuid(TreeNode _node)
         {
-            while (((WebNodeTag)_node.Tag).TagType != NodeType.Web)
+            while (_node.Tag == null || ((WebNodeTag)_node.Tag).TagType != NodeType.Web)
             {
                 _node = _node.Parent;
             }
@@ -90,26 +80,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 }
                 return _serviceInstance;
             }
-        }
-
-        private Domain.RapidOutputWindow _outputWindow;
-
-        public Domain.RapidOutputWindow RapidOutputWindow
-        {
-            get
-            {
-                if (_outputWindow == null)
-                {
-                    if (ApplicationObject == null)
-                        return null;
-                    _outputWindow = new Domain.RapidOutputWindow(ApplicationObject);
-                }
-                return _outputWindow;
-            }
-            set { _outputWindow = value; }
-        }
-
-
+        }    
 
         #region INodeTag Members
 

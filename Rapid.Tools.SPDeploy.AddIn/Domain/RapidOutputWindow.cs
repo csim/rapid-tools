@@ -11,11 +11,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
     {
         const string STR_Window_Name = "Rapid";
 
+        private static readonly RapidOutputWindow instance = new RapidOutputWindow();
+
+        public static RapidOutputWindow Instance
+        {
+            get { return instance; }
+        }
+
         OutputWindowPane _rapidOutputWindow;
 
-        public RapidOutputWindow(DTE2 applicationObject)
+        private RapidOutputWindow()
         {
-            OutputWindow _mainWindow = applicationObject.ToolWindows.OutputWindow;
+            OutputWindow _mainWindow = AppManager.Instance.ApplicationObject.ToolWindows.OutputWindow;
             IEnumerator _enum = _mainWindow.OutputWindowPanes.GetEnumerator();
             while (_enum.MoveNext())
             {
@@ -39,9 +46,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             _rapidOutputWindow.OutputString(message);
         }
 
+        public void Write(string message, bool addNewLine)
+        {
+            _rapidOutputWindow.OutputString(message);
+            if (addNewLine)
+                _rapidOutputWindow.OutputString(Environment.NewLine);
+        }
+
         public void Clear()
         {
             _rapidOutputWindow.Clear();
-            }
+        }
     }
 }
