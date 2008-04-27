@@ -56,7 +56,6 @@
     <Compile Include="Domain\AppManager.cs" />
     <Compile Include="Domain\Menus\SolutionMenu.cs">
     </Compile>
-    <Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />
     <Compile Include="Domain\NodeTags\WebNodeTag.cs" />
     <Compile Include="Domain\NodeTags\NodeTagFactory.cs" />
     <Compile Include="Domain\NodeTags\SPFileNodeTag.cs" />
