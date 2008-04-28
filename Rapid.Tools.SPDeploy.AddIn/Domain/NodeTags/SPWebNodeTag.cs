@@ -29,7 +29,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             List<FeatureManifest> _features = new List<FeatureManifest>();
             foreach (FileInfo fileInfo in Domain.Utilties.Functions.GetFeatureFileInfos(ApplicationObject))
                 _features.Add(new FeatureManifest(File.ReadAllText(fileInfo.FullName)));
-            List<string> _activatedFeatures = Domain.Utilties.Functions.GetActivatedFeatures(SiteUrl);
+            List<string> _activatedFeatures = Domain.Utilties.Functions.GetActivatedFeatures(Url);
 
             MenuItem _addFeatureMenu = new MenuItem("Add Feature");
             MenuItem _removeFeatureMenu = new MenuItem("Remove Feature");
