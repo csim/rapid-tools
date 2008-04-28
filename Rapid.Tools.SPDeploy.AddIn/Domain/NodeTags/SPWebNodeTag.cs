@@ -19,7 +19,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override void Action()
         {
-            ApplicationUtility.OpenBrowser(Url);
+            //ApplicationUtility.OpenBrowser(Url);
         }
 
         public override ContextMenu GetContextMenu()
@@ -82,7 +82,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-               // Domain.Utilties.Functions.OpenItem(Url);
+                Domain.Utilties.Functions.OpenItem(Url);
             });
 
             return _contextMenu;
