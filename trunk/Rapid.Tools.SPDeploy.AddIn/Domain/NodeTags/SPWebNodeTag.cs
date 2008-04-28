@@ -53,7 +53,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 }
                 else
                 {
-                    if (Array.Find<SPToolsWebService.Solution>(ServiceInstance.GetSols(), delegate(SPToolsWebService.Solution sol)
+					if (Array.Find<Proxies.AddIn.Solution>(ServiceInstance.GetSols(), delegate(Proxies.AddIn.Solution sol)
                     {
                         return string.Compare(sol.Name, ApplicationObject.Solution.Projects.Item(1).Name + ".wsp", true) == 0 && sol.Deployed;
                     }) != null)

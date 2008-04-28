@@ -76,7 +76,7 @@
     <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TemplateFiles\Layouts\RapidTools\SPToolsWebService.cs">
+    <Compile Include="TemplateFiles\Layouts\RapidTools\Services\AddIn.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utilities\SPExceptionUtil.cs" />
@@ -105,7 +105,7 @@
   <ItemGroup>
     <None Include="Properties\key.snk" />
     <Content Include="TemplateFiles\Layouts\RapidTools\RapidTools.config" />
-    <Content Include="TemplateFiles\Layouts\RapidTools\SPToolsWebService.asmx" />
+    <Content Include="TemplateFiles\Layouts\RapidTools\Services\AddIn.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TemplateFiles\1033\XML\" />

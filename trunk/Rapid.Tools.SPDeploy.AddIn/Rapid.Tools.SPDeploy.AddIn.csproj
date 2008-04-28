@@ -85,6 +85,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Proxies\AddIn\AddInProxy.cs" />
+    <Compile Include="Proxies\Lists\ListsProxy.cs" />
     <Compile Include="Proxies\SiteData\SiteDataProxy.cs" />
     <Compile Include="Proxies\Webs\WebsProxy.cs" />
     <Content Include="Resources\Features\Ajaxification\Ajaxification.cs" />
@@ -191,11 +193,6 @@
     </Compile>
     <Compile Include="UI\Wizard\SPProjectWizard.cs" />
     <Compile Include="Web References\Lists\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
-    <Compile Include="Web References\SPToolsWebService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -503,7 +500,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Web References\Lists\Lists.disco" />
-    <None Include="Web References\SPToolsWebService\SPToolsWebService.disco" />
+    <None Include="Web References\AddInWebService\SPToolsWebService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -511,35 +508,36 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Proxies\AddIn\AddIn.wsdl" />
+    <None Include="Proxies\Lists\Lists.wsdl" />
     <None Include="Proxies\SiteData\SiteData.wsdl" />
     <None Include="Proxies\Webs\Webs.wsdl" />
     <None Include="Rapid.Tools.SPDeploy.Addin.Snk" />
     <None Include="Resources\Project\key.snk" />
+    <None Include="Web References\AddInWebService\ListOptions2.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\AddInWebService\Solution2.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\Lists\Lists.wsdl" />
     <None Include="Web References\Lists\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\SPToolsWebService\ListOptions.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\SPToolsWebService\Reference.map">
+    <None Include="Web References\AddInWebService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\SPToolsWebService\Solution.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\SPToolsWebService\SPToolsWebService.wsdl" />
+    <None Include="Web References\AddInWebService\SPToolsWebService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://wa1devnint01/_layouts/SPTools/SPToolsWebService.asmx">
+    <WebReferenceUrl Include="http://wa1devnint01/_layouts/RapidTools/Services/AddIn.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\SPToolsWebService\</RelPath>
-      <UpdateFromURL>http://wa1devnint01/_layouts/SPTools/SPToolsWebService.asmx</UpdateFromURL>
+      <RelPath>Web References\AddInWebService\</RelPath>
+      <UpdateFromURL>http://wa1devnint01/_layouts/RapidTools/Services/AddIn.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
