@@ -24,12 +24,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
                 ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.CheckOut);
 
-            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Url.Replace("/", "\\");
+            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
+            Domain.Utilties.Functions.EnsurePath(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
             }
             ApplicationUtility.OpenFile(filePath);
+
+            Domain.Utilties.WatcherUtilitiy.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
+
             Resources.ResourceUtility.SetFileNodeIcon(Node, true);
         }
 
@@ -38,15 +42,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Url.Replace("/", "\\");
-
-
-            string fpath = Url.Replace("/", "\\");
-
-            if (fpath.Contains("\\"))
+            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
+            Domain.Utilties.Functions.EnsurePath(filePath);
+            if (!File.Exists(filePath))
             {
-                fpath = fpath.Remove(fpath.LastIndexOf("\\"));
-                Domain.Utilties.Functions.GetWorkingDirectory().CreateSubdirectory(fpath);
+                File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
             }
 
 
@@ -111,6 +111,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
+                    Domain.Utilties.WatcherUtilitiy.Instance.removeWatcher(filePath);
+
                     ApplicationUtility.DeleteAndClose(filePath);
 
                 });
@@ -119,6 +121,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                     ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.UndoCheckOut);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
+
+                    Domain.Utilties.WatcherUtilitiy.Instance.removeWatcher(filePath);
 
                     ApplicationUtility.DeleteAndClose(filePath);
                 });
@@ -129,6 +133,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.Delete);
 
                 ApplicationUtility.DeleteAndClose(filePath);
+
+                Domain.Utilties.WatcherUtilitiy.Instance.removeWatcher(filePath);
             });
 
 
