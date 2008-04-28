@@ -80,11 +80,6 @@
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\WebPart.cs" />
     <Compile Include="ProjectFiles\FeatureManifest\FeatureManifest.cs" />
     <Compile Include="ProjectFiles\Utilities\ManifestUtility.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Proxies\AddIn\AddInProxy.cs" />
     <Compile Include="Proxies\Lists\ListsProxy.cs" />
     <Compile Include="Proxies\SiteData\SiteDataProxy.cs" />
@@ -496,17 +491,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Proxies\AddIn\AddIn.wsdl" />
     <None Include="Proxies\Lists\Lists.wsdl" />
     <None Include="Proxies\SiteData\SiteData.wsdl" />
     <None Include="Proxies\Webs\Webs.wsdl" />
     <None Include="Rapid.Tools.SPDeploy.Addin.Snk" />
     <None Include="Resources\Project\key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
