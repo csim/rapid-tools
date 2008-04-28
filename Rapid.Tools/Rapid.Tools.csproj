@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_references\Microsoft.SharePoint.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SharePoint.Publishing, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_references\Microsoft.SharePoint.Publishing.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SharePoint.Security, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_references\Microsoft.SharePoint.Security.dll</HintPath>
