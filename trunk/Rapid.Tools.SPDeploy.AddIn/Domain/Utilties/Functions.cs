@@ -84,7 +84,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             DirectoryInfo di = new DirectoryInfo(path.Remove(3));
             path = path.Substring(3);
 
-            if (path.Contains("\\"))
+            if (path.Contains("."))
             {
                 path = path.Remove(path.LastIndexOf("\\"));
                 di.CreateSubdirectory(path);
