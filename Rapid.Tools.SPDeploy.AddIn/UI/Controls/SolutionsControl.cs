@@ -9,6 +9,7 @@ using EnvDTE80;
 using System.Net;
 using System.IO;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
+using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
@@ -24,16 +25,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         }
 
 
-        private SPToolsWebService.SPToolsWebService _serviceInstance;
+        private AddInProxy _serviceInstance;
 
-        public SPToolsWebService.SPToolsWebService ServiceInstance
+		public AddInProxy ServiceInstance
         {
             get
             {
                 if (_serviceInstance == null)
                 {
-                    _serviceInstance = new Rapid.Tools.SPDeploy.AddIn.SPToolsWebService.SPToolsWebService();
-                    _serviceInstance.Url = string.Concat(Domain.Utilties.Functions.GetSiteUrlFromProject(ApplicationObject), "/_layouts/SPTools/SPToolsWebService.asmx");
+                    _serviceInstance = new AddInProxy();
+                    _serviceInstance.Url = string.Concat(Domain.Utilties.Functions.GetSiteUrlFromProject(ApplicationObject), "/_layouts/RapidTools/Services/AddIn.asmx");
                     _serviceInstance.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
                 return _serviceInstance;
@@ -54,12 +55,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 {
                     treeView1.Enabled = false;
                 });
-                Rapid.Tools.SPDeploy.AddIn.SPToolsWebService.Solution[] sols = ServiceInstance.GetSols();
+                Proxies.AddIn.Solution[] sols = ServiceInstance.GetSols();
                 Invoke(treeView1, delegate()
                 {
                     treeView1.Nodes.Clear();
                 });
-                foreach (Rapid.Tools.SPDeploy.AddIn.SPToolsWebService.Solution sol in sols)
+                foreach (Proxies.AddIn.Solution sol in sols)
                 {
                     if (string.Compare(sol.Name, ApplicationObject.Solution.Projects.Item(1).Name + ".wsp", true) == 0)
                         added = true;

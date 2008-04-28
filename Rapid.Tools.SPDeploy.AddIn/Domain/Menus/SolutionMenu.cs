@@ -229,8 +229,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
             hideMenuItems();
 
 
-            SPToolsWebService.Solution solItem = null;
-            if ((solItem = Array.Find<SPToolsWebService.Solution>(ServiceManager.Instance.ServiceInstance.GetSols(), delegate(SPToolsWebService.Solution sol)
+			Proxies.AddIn.Solution solItem = null;
+			if ((solItem = Array.Find<Proxies.AddIn.Solution>(ServiceManager.Instance.ServiceInstance.GetSols(), delegate(Proxies.AddIn.Solution sol)
             {
                 return string.Compare(sol.Name, AppManager.Instance.WspFileName, true) == 0;
             })) != null)

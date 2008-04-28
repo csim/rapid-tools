@@ -6,7 +6,6 @@ using System.IO;
 using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
-using Rapid.Tools.SPDeploy.AddIn.SPToolsWebService;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -22,7 +21,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         public override void Action()
         {
             if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
-                ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.CheckOut);
+				ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
 
             string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
             Domain.Utilties.Functions.EnsurePath(filePath);
@@ -73,7 +72,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 _contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
                 {
 
-                    ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.CheckOut);
+					ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
 
                     File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
 
@@ -107,7 +106,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 {
                     ServiceInstance.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));
 
-                    ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.CheckIn);
+					ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckIn);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
@@ -118,7 +117,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 });
                 _contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
                 {
-                    ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.UndoCheckOut);
+					ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.UndoCheckOut);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
@@ -130,7 +129,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
             {
-                ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, FileActions.Delete);
+				ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.Delete);
 
                 ApplicationUtility.DeleteAndClose(filePath);
 

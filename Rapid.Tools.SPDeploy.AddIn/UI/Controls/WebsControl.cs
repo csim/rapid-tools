@@ -11,7 +11,7 @@ using EnvDTE80;
 using System.IO;
 using System.Net;
 using EnvDTE;
-using Rapid.Tools.SPDeploy.AddIn.SPToolsWebService;
+using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 using System.Security.Principal;
 using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.Webs;

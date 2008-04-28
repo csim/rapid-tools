@@ -8,7 +8,6 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
-using Rapid.Tools.SPDeploy.AddIn.SPToolsWebService;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {

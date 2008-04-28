@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
+using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 {
@@ -22,17 +23,17 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             get { return instance; }
         }
 
-        private SPToolsWebService.SPToolsWebService _serviceInstance;
+        private AddInProxy _serviceInstance;
 
-        public SPToolsWebService.SPToolsWebService ServiceInstance
+        public AddInProxy ServiceInstance
         {
             get
             {
                 if (_serviceInstance == null)
                 {
-                    _serviceInstance = new Rapid.Tools.SPDeploy.AddIn.SPToolsWebService.SPToolsWebService();
+                    _serviceInstance = new AddInProxy();
                     _serviceInstance.Credentials = defaultCredentials;
-                    _serviceInstance.Url = url + "/_layouts/SPTools/SPToolsWebService.asmx";
+                    _serviceInstance.Url = url + "/_layouts/RapidTools/Services/AddIn.asmx";
                 }
                 return _serviceInstance;
             }

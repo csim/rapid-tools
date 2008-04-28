@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
+using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -244,7 +245,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                         }
 
 
-                        SPToolsWebService.ListOptions lo = ServiceInstance.GetOptions(SiteUrl, WebGuid, Guid);
+						Proxies.AddIn.ListOptions lo = ServiceInstance.GetOptions(SiteUrl, WebGuid, Guid);
                         if (lo.AllowContentTypes)
                             schemaDocument.DocumentElement.SetAttribute("AllowContentTypes", "true");
                         if (lo.ContentTypesEnabled)

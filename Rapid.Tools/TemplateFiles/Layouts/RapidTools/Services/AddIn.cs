@@ -12,12 +12,12 @@ using System.IO;
 using System.Collections.ObjectModel;
 using Rapid.Tools.Utilities;
 
-namespace Rapid.Tools.Layouts
+namespace Rapid.Tools.Layouts.Services
 {
     // An example callback Web Service API for the Hello2 Web Part
     [WebService(Namespace = "http://ascentium.com/RapidTools")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    public class SPToolsWebService : System.Web.Services.WebService
+	public class AddInWebService : System.Web.Services.WebService
     {
 
         XmlTextWriter _textWriter;
