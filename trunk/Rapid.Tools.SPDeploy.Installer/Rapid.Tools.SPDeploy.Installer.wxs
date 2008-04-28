@@ -83,7 +83,8 @@
 			<Feature Id='Rapid.Tools.SPDeploy.AddIn' Title='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Description='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Level='1'>
 				<ComponentRef Id='Rapid.Tools.SPDeploy.AddIn' />
 				<ComponentRef Id='Rapid.Tools.SPDeploy.AddIn.dll' />
-			</Feature>
+        <ComponentRef Id='Rapid.Tools.SPDeploy.AddInGac' />
+      </Feature>
 		</Feature>
 
 		<!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->

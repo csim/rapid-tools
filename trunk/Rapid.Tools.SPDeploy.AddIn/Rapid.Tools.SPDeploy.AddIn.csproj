@@ -11,6 +11,8 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Rapid.Tools.SPDeploy.AddIn</AssemblyName>
     <RootNamespace>Rapid.Tools.SPDeploy.AddIn</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Rapid.Tools.SPDeploy.Addin.Snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -286,7 +288,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Rapid.Tools.SPDeploy.AddIn.AddIn" />
+    <Content Include="Rapid.Tools.SPDeploy.AddIn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Features\Ajaxification\feature.xml" />
     <Content Include="Resources\Features\WebParts\elements.xml" />
     <Content Include="Resources\Features\WebParts\feature.xml" />
@@ -484,6 +488,7 @@
     </None>
     <None Include="Proxies\SiteData\SiteData.wsdl" />
     <None Include="Proxies\Webs\Webs.wsdl" />
+    <None Include="Rapid.Tools.SPDeploy.Addin.Snk" />
     <None Include="Resources\Project\key.snk" />
     <None Include="Web References\Lists\Lists.wsdl" />
     <None Include="Web References\Lists\Reference.map">
