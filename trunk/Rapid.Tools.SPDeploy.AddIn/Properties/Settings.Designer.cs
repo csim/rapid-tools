@@ -26,30 +26,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://wa1devnint01/_vti_bin/Lists.asmx")]
-        public string Rapid_Tools_SPDeploy_AddIn_Lists_Lists {
-            get {
-                return ((string)(this["Rapid_Tools_SPDeploy_AddIn_Lists_Lists"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://wa1devnint01/_layouts/SPTools/AddInWebService.asmx")]
         public string Rapid_Tools_SPDeploy_AddIn_AddInWebService_AddInWebService {
             get {
                 return ((string)(this["Rapid_Tools_SPDeploy_AddIn_AddInWebService_AddInWebService"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://wa1devnint01/_layouts/SPTools/SPToolsWebService.asmx")]
-        public string Rapid_Tools_SPDeploy_AddIn_SPToolsWebService_SPToolsWebService {
-            get {
-                return ((string)(this["Rapid_Tools_SPDeploy_AddIn_SPToolsWebService_SPToolsWebService"]));
             }
         }
     }
