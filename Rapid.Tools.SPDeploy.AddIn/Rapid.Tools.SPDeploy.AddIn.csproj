@@ -192,11 +192,6 @@
       <DependentUpon>CreationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Wizard\SPProjectWizard.cs" />
-    <Compile Include="Web References\Lists\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CommandBar.resx">
@@ -499,8 +494,6 @@
       <DependentUpon>LoadingForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Web References\Lists\Lists.disco" />
-    <None Include="Web References\AddInWebService\SPToolsWebService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -514,48 +507,6 @@
     <None Include="Proxies\Webs\Webs.wsdl" />
     <None Include="Rapid.Tools.SPDeploy.Addin.Snk" />
     <None Include="Resources\Project\key.snk" />
-    <None Include="Web References\AddInWebService\ListOptions2.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\AddInWebService\Solution2.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\Lists\Lists.wsdl" />
-    <None Include="Web References\Lists\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\AddInWebService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-    </None>
-    <None Include="Web References\AddInWebService\SPToolsWebService.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://wa1devnint01/_layouts/RapidTools/Services/AddIn.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\AddInWebService\</RelPath>
-      <UpdateFromURL>http://wa1devnint01/_layouts/RapidTools/Services/AddIn.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Rapid_Tools_SPDeploy_AddIn_SPToolsWebService_SPToolsWebService</CachedSettingsPropName>
-    </WebReferenceUrl>
-    <WebReferenceUrl Include="http://wa1devnint01/_vti_bin/Lists.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\Lists\</RelPath>
-      <UpdateFromURL>http://wa1devnint01/_vti_bin/Lists.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Rapid_Tools_SPDeploy_AddIn_Lists_Lists</CachedSettingsPropName>
-    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
