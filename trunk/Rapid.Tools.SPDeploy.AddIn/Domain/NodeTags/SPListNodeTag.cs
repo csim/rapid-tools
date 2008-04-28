@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
+using Rapid.Tools.SPDeploy.AddIn.Proxies.Lists;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -29,7 +30,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-            Lists.Lists _listsWebService = new Rapid.Tools.SPDeploy.AddIn.Lists.Lists();
+			ListsProxy _listsWebService = new ListsProxy();
             _listsWebService.Url = SiteUrl + "/_vti_bin/lists.asmx";
             _listsWebService.Credentials = CredentialCache.DefaultNetworkCredentials;
 
