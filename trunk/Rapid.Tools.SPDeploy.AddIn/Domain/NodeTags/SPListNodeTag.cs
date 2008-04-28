@@ -19,7 +19,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override void Action()
         {
-            ApplicationUtility.OpenBrowser(SiteUrl + Url);
+            //ApplicationUtility.OpenBrowser(SiteUrl + Url);
         }
 
         public delegate void VoidDelegate();
@@ -54,7 +54,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 File.WriteAllText(_schemaPath, _listsWebService.GetList(Node.Text).OuterXml);
 
                 ApplicationObject.ItemOperations.OpenFile(_schemaPath, EnvDTE.Constants.vsViewKindTextView);
-            });          
+            });
 
             _contextMenu.MenuItems.Add("Create Feature", delegate(object sendr, EventArgs e)
             {
@@ -269,7 +269,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-                //Domain.Utilties.Functions.OpenItem(SiteUrl + Url);
+                Domain.Utilties.Functions.OpenItem(SiteUrl + Url);
             });
 
             return _contextMenu;
