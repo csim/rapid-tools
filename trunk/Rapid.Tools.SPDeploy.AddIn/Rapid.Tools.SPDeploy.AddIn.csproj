@@ -301,7 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Rapid.Tools.SPDeploy.AddIn">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\ewr238l.gif" />
     <Content Include="Resources\Features\Ajaxification\feature.xml" />
