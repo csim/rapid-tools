@@ -65,7 +65,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
                 return _projectPath;
             }
             set { _projectPath = value; }
-        }
+        }        
 
         private string GetProjectPath()
         {
