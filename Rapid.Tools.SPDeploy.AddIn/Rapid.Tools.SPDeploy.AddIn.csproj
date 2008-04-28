@@ -147,6 +147,12 @@
     <Compile Include="UI\Forms\FeatureForm.Designer.cs">
       <DependentUpon>FeatureForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\FeatureModificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\FeatureModificationForm.Designer.cs">
+      <DependentUpon>FeatureModificationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\FeatureReceiverForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,12 @@
     </Compile>
     <Compile Include="UI\Forms\ListDefinitionDialog.Designer.cs">
       <DependentUpon>ListDefinitionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\WebPartForm.cs">
       <SubType>Form</SubType>
@@ -291,14 +303,19 @@
     <Content Include="Rapid.Tools.SPDeploy.AddIn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\ewr238l.gif" />
     <Content Include="Resources\Features\Ajaxification\feature.xml" />
     <Content Include="Resources\Features\WebParts\elements.xml" />
     <Content Include="Resources\Features\WebParts\feature.xml" />
     <Content Include="Resources\Features\WebParts\HelloScript.js" />
     <Content Include="Resources\Features\WebParts\HelloWebService.asmx" />
     <Content Include="Resources\Features\WebParts\webpartdotwebpart.xml" />
+    <Content Include="Resources\Images\buttonLess.png" />
+    <Content Include="Resources\Images\buttonMore.png" />
     <Content Include="Resources\Images\ewr238l.gif" />
     <Content Include="Resources\Images\IMNAWAY.PNG" />
+    <Content Include="Resources\Images\Loading.bmp" />
+    <Content Include="Resources\Images\rapidheader.png" />
     <Content Include="Resources\Images\recurrence.gif" />
     <None Include="Resources\Images\ICXML1.GIF" />
     <None Include="Resources\Images\STSICON1.GIF" />
@@ -477,6 +494,14 @@
     <EmbeddedResource Include="Resources\Images\ITDL.GIF" />
     <EmbeddedResource Include="Resources\Images\ITGEN.GIF" />
     <EmbeddedResource Include="Resources\Images\STSICON.GIF" />
+    <EmbeddedResource Include="UI\Forms\FeatureModificationForm.resx">
+      <DependentUpon>FeatureModificationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Web References\Lists\Lists.disco" />
     <None Include="Web References\SPToolsWebService\SPToolsWebService.disco" />
   </ItemGroup>
