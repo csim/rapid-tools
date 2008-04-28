@@ -9,8 +9,8 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
-using Microsoft.SharePoint.Publishing;
 using System.Collections.ObjectModel;
+using Rapid.Tools.Utilities;
 
 namespace Rapid.Tools.Layouts
 {
@@ -69,7 +69,11 @@ namespace Rapid.Tools.Layouts
             _textWriter.WriteAttributeString("Url", web.Url);
             _textWriter.WriteAttributeString("Guid", web.ID.ToString());
 
-            _textWriter.WriteAttributeString("Publishing", Convert.ToString(PublishingWeb.IsPublishingWeb(web)));
+			//PublishingWeb.IsPublishingWeb(web)
+			// TODO: change to MOSS publishing web feature
+			bool ispubweb = SPFeatureUtil.FeatureActivated(web, Guid.Empty);
+
+            _textWriter.WriteAttributeString("Publishing", ispubweb.ToString());
             if (web.Webs.Count > 0)
             {
                 _textWriter.WriteStartElement("Webs");
