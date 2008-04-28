@@ -71,6 +71,7 @@
     <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TemplateFiles\Layouts\RapidTools\SPToolsWebService.cs" />
     <Compile Include="Utilities\SPExceptionUtil.cs" />
     <Compile Include="Utilities\SPCamlUtil.cs" />
     <Compile Include="Utilities\SPFeatureUtil.cs" />
@@ -97,6 +98,7 @@
   <ItemGroup>
     <None Include="Properties\key.snk" />
     <Content Include="TemplateFiles\Layouts\RapidTools\RapidTools.config" />
+    <Content Include="TemplateFiles\Layouts\RapidTools\SPToolsWebService.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TemplateFiles\1033\XML\" />

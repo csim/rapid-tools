@@ -47,6 +47,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         private System.Threading.SendOrPostCallback SaveBinaryOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetInstalledFeatuesOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpgradeSolutionOperationCompleted;
+        
         private System.Threading.SendOrPostCallback SaveFileOperationCompleted;
         
         private System.Threading.SendOrPostCallback AddSolutionOperationCompleted;
@@ -82,6 +86,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         private System.Threading.SendOrPostCallback GetContentTypeNamesOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetListSchemaOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback CompareFeatureFileOperationCompleted;
         
         private System.Threading.SendOrPostCallback UpdateViewSchemaOperationCompleted;
         
@@ -153,6 +159,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         public event SaveBinaryCompletedEventHandler SaveBinaryCompleted;
         
         /// <remarks/>
+        public event GetInstalledFeatuesCompletedEventHandler GetInstalledFeatuesCompleted;
+        
+        /// <remarks/>
+        public event UpgradeSolutionCompletedEventHandler UpgradeSolutionCompleted;
+        
+        /// <remarks/>
         public event SaveFileCompletedEventHandler SaveFileCompleted;
         
         /// <remarks/>
@@ -205,6 +217,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         
         /// <remarks/>
         public event GetListSchemaCompletedEventHandler GetListSchemaCompleted;
+        
+        /// <remarks/>
+        public event CompareFeatureFileCompletedEventHandler CompareFeatureFileCompleted;
         
         /// <remarks/>
         public event UpdateViewSchemaCompletedEventHandler UpdateViewSchemaCompleted;
@@ -499,6 +514,66 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             if ((this.SaveBinaryCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.SaveBinaryCompleted(this, new SaveBinaryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetInstalledFeatues", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string[] GetInstalledFeatues(System.Guid[] featureIds) {
+            object[] results = this.Invoke("GetInstalledFeatues", new object[] {
+                        featureIds});
+            return ((string[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetInstalledFeatuesAsync(System.Guid[] featureIds) {
+            this.GetInstalledFeatuesAsync(featureIds, null);
+        }
+        
+        /// <remarks/>
+        public void GetInstalledFeatuesAsync(System.Guid[] featureIds, object userState) {
+            if ((this.GetInstalledFeatuesOperationCompleted == null)) {
+                this.GetInstalledFeatuesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetInstalledFeatuesOperationCompleted);
+            }
+            this.InvokeAsync("GetInstalledFeatues", new object[] {
+                        featureIds}, this.GetInstalledFeatuesOperationCompleted, userState);
+        }
+        
+        private void OnGetInstalledFeatuesOperationCompleted(object arg) {
+            if ((this.GetInstalledFeatuesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetInstalledFeatuesCompleted(this, new GetInstalledFeatuesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/UpgradeSolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string UpgradeSolution(string solution, string filePath) {
+            object[] results = this.Invoke("UpgradeSolution", new object[] {
+                        solution,
+                        filePath});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpgradeSolutionAsync(string solution, string filePath) {
+            this.UpgradeSolutionAsync(solution, filePath, null);
+        }
+        
+        /// <remarks/>
+        public void UpgradeSolutionAsync(string solution, string filePath, object userState) {
+            if ((this.UpgradeSolutionOperationCompleted == null)) {
+                this.UpgradeSolutionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpgradeSolutionOperationCompleted);
+            }
+            this.InvokeAsync("UpgradeSolution", new object[] {
+                        solution,
+                        filePath}, this.UpgradeSolutionOperationCompleted, userState);
+        }
+        
+        private void OnUpgradeSolutionOperationCompleted(object arg) {
+            if ((this.UpgradeSolutionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpgradeSolutionCompleted(this, new UpgradeSolutionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1070,6 +1145,36 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/CompareFeatureFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
+        public byte[] CompareFeatureFile(string relativeFilePath) {
+            object[] results = this.Invoke("CompareFeatureFile", new object[] {
+                        relativeFilePath});
+            return ((byte[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void CompareFeatureFileAsync(string relativeFilePath) {
+            this.CompareFeatureFileAsync(relativeFilePath, null);
+        }
+        
+        /// <remarks/>
+        public void CompareFeatureFileAsync(string relativeFilePath, object userState) {
+            if ((this.CompareFeatureFileOperationCompleted == null)) {
+                this.CompareFeatureFileOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCompareFeatureFileOperationCompleted);
+            }
+            this.InvokeAsync("CompareFeatureFile", new object[] {
+                        relativeFilePath}, this.CompareFeatureFileOperationCompleted, userState);
+        }
+        
+        private void OnCompareFeatureFileOperationCompleted(object arg) {
+            if ((this.CompareFeatureFileCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.CompareFeatureFileCompleted(this, new CompareFeatureFileCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/UpdateViewSchema", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void UpdateViewSchema(string siteUrl, System.Guid webUid, System.Guid listGuid, string viewNAme, string schema) {
             this.Invoke("UpdateViewSchema", new object[] {
@@ -1425,6 +1530,58 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void GetInstalledFeatuesCompletedEventHandler(object sender, GetInstalledFeatuesCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetInstalledFeatuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetInstalledFeatuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void UpgradeSolutionCompletedEventHandler(object sender, UpgradeSolutionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpgradeSolutionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpgradeSolutionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
             }
         }
     }
@@ -1893,6 +2050,32 @@ namespace Rapid.Tools.SPDeploy.AddIn.SPToolsWebService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    public delegate void CompareFeatureFileCompletedEventHandler(object sender, CompareFeatureFileCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.1433")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class CompareFeatureFileCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal CompareFeatureFileCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public byte[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((byte[])(this.results[0]));
             }
         }
     }

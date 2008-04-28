@@ -147,6 +147,40 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetInstalledFeatues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="featureIds" type="tns:ArrayOfGuid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfGuid">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="guid" type="s1:guid" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetInstalledFeatuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetInstalledFeatuesResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpgradeSolution">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="solution" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="filePath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpgradeSolutionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpgradeSolutionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="SaveFile">
         <s:complexType>
           <s:sequence>
@@ -446,6 +480,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="CompareFeatureFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="relativeFilePath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CompareFeatureFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CompareFeatureFileResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UpdateViewSchema">
         <s:complexType>
           <s:sequence>
@@ -536,6 +584,18 @@
   </wsdl:message>
   <wsdl:message name="SaveBinarySoapOut">
     <wsdl:part name="parameters" element="tns:SaveBinaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetInstalledFeatuesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetInstalledFeatues" />
+  </wsdl:message>
+  <wsdl:message name="GetInstalledFeatuesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetInstalledFeatuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpgradeSolutionSoapIn">
+    <wsdl:part name="parameters" element="tns:UpgradeSolution" />
+  </wsdl:message>
+  <wsdl:message name="UpgradeSolutionSoapOut">
+    <wsdl:part name="parameters" element="tns:UpgradeSolutionResponse" />
   </wsdl:message>
   <wsdl:message name="SaveFileSoapIn">
     <wsdl:part name="parameters" element="tns:SaveFile" />
@@ -645,6 +705,12 @@
   <wsdl:message name="GetListSchemaSoapOut">
     <wsdl:part name="parameters" element="tns:GetListSchemaResponse" />
   </wsdl:message>
+  <wsdl:message name="CompareFeatureFileSoapIn">
+    <wsdl:part name="parameters" element="tns:CompareFeatureFile" />
+  </wsdl:message>
+  <wsdl:message name="CompareFeatureFileSoapOut">
+    <wsdl:part name="parameters" element="tns:CompareFeatureFileResponse" />
+  </wsdl:message>
   <wsdl:message name="UpdateViewSchemaSoapIn">
     <wsdl:part name="parameters" element="tns:UpdateViewSchema" />
   </wsdl:message>
@@ -693,6 +759,14 @@
     <wsdl:operation name="SaveBinary">
       <wsdl:input message="tns:SaveBinarySoapIn" />
       <wsdl:output message="tns:SaveBinarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInstalledFeatues">
+      <wsdl:input message="tns:GetInstalledFeatuesSoapIn" />
+      <wsdl:output message="tns:GetInstalledFeatuesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSolution">
+      <wsdl:input message="tns:UpgradeSolutionSoapIn" />
+      <wsdl:output message="tns:UpgradeSolutionSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="SaveFile">
       <wsdl:input message="tns:SaveFileSoapIn" />
@@ -765,6 +839,10 @@
     <wsdl:operation name="GetListSchema">
       <wsdl:input message="tns:GetListSchemaSoapIn" />
       <wsdl:output message="tns:GetListSchemaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CompareFeatureFile">
+      <wsdl:input message="tns:CompareFeatureFileSoapIn" />
+      <wsdl:output message="tns:CompareFeatureFileSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="UpdateViewSchema">
       <wsdl:input message="tns:UpdateViewSchemaSoapIn" />
@@ -851,6 +929,24 @@
     </wsdl:operation>
     <wsdl:operation name="SaveBinary">
       <soap:operation soapAction="http://SPProject/SaveBinary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInstalledFeatues">
+      <soap:operation soapAction="http://SPProject/GetInstalledFeatues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSolution">
+      <soap:operation soapAction="http://SPProject/UpgradeSolution" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1020,6 +1116,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CompareFeatureFile">
+      <soap:operation soapAction="http://SPProject/CompareFeatureFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UpdateViewSchema">
       <soap:operation soapAction="http://SPProject/UpdateViewSchema" style="document" />
       <wsdl:input>
@@ -1115,6 +1220,24 @@
     </wsdl:operation>
     <wsdl:operation name="SaveBinary">
       <soap12:operation soapAction="http://SPProject/SaveBinary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInstalledFeatues">
+      <soap12:operation soapAction="http://SPProject/GetInstalledFeatues" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSolution">
+      <soap12:operation soapAction="http://SPProject/UpgradeSolution" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1277,6 +1400,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetListSchema">
       <soap12:operation soapAction="http://SPProject/GetListSchema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompareFeatureFile">
+      <soap12:operation soapAction="http://SPProject/CompareFeatureFile" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
