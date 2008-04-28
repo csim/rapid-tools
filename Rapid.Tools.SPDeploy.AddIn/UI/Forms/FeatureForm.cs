@@ -12,7 +12,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
     public partial class FeatureForm : Form
     {
-        private bool _canceled;
+        private bool _canceled = true;
 
         public bool Canceled
         {
@@ -26,12 +26,35 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         {
             get { return _fileLocation; }
             set { _fileLocation = value; }
-        }       
+        }
 
+        bool showMore = false;
         public FeatureForm()
         {
             InitializeComponent();
-        }       
+            pictureBox2.Image = Resources.Images.Files.rapidheader;
+            pictureBox3.Image = Resources.Images.Files.buttonMore;
+
+            pictureBox3.Click += new EventHandler(pictureBox3_Click);
+        }
+
+        void pictureBox3_Click(object sender, EventArgs e)
+        {
+            if (!showMore)
+            {
+                this.Height += panel1.Height;
+                pictureBox3.Image = Resources.Images.Files.buttonLess;
+            }
+            else
+            {
+                this.Height -= panel1.Height;
+                pictureBox3.Image = Resources.Images.Files.buttonMore;
+            }
+            showMore = !showMore;
+        }
+
+       
+      
 
         public void GetFeatures(string projectPath)
         {
@@ -39,7 +62,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             FileLocation = FileLocation + "\\TemplateFiles\\Features";
 
             ddlScope.SelectedValue = "Web";
-            txtFeatureTitle.Enabled = txtFeatureFolder.Enabled = txtFeatureDescription.Enabled = ddlScope.Enabled = false;
+            txtFeatureTitle.Enabled = cbActivateOnDefault.Enabled = cbHidden.Enabled = txtImageUrl.Enabled = txtFeatureDescription.Enabled = ddlScope.Enabled = false;
             rbNewFeature.Checked = true;
             DirectoryInfo di = new DirectoryInfo(FileLocation);
             foreach (FileInfo fi in di.GetFiles("feature.xml", SearchOption.AllDirectories))
@@ -83,16 +106,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
                 fm.Description = txtFeatureDescription.Text;
                 fm.Scope = ddlScope.SelectedItem.ToString();
                 DirectoryInfo di = new DirectoryInfo(FileLocation);
-                di.CreateSubdirectory(txtFeatureFolder.Text);
-                FileLocation = string.Format("{0}\\{1}\\feature.xml", FileLocation, txtFeatureFolder.Text); ;
+                di.CreateSubdirectory(txtFeatureTitle.Text.Replace(" ", string.Empty));
+                FileLocation = string.Format("{0}\\{1}\\feature.xml", FileLocation, txtFeatureTitle.Text.Replace(" ", string.Empty)); ;
+                fm.Hidden = cbHidden.Checked;
+                fm.ActivateOnDefault = cbActivateOnDefault.Checked;
+                fm.ImageUrl = txtImageUrl.Text;
                 fm.CreateManifest(FileLocation);
             }
+            Canceled = false;
             this.Close();
         }
 
         private void rbNewFeature_CheckedChanged(object sender, EventArgs e)
         {
-            txtFeatureTitle.Enabled = txtFeatureFolder.Enabled = txtFeatureDescription.Enabled = ddlScope.Enabled = rbNewFeature.Checked;
+            txtFeatureTitle.Enabled = cbHidden.Enabled = cbActivateOnDefault.Enabled = txtImageUrl.Enabled = txtFeatureDescription.Enabled = ddlScope.Enabled = rbNewFeature.Checked;
             cbFeatureTitle.Enabled = rbExistingFeature.Checked;
         }
 

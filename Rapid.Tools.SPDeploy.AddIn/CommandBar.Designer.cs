@@ -60,6 +60,20 @@ namespace Rapid.Tools.SPDeploy.AddIn {
             }
         }
         
+        internal static System.Drawing.Bitmap buttonLess {
+            get {
+                object obj = ResourceManager.GetObject("buttonLess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap buttonMore {
+            get {
+                object obj = ResourceManager.GetObject("buttonMore", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Aktion.
         /// </summary>
@@ -2136,6 +2150,13 @@ namespace Rapid.Tools.SPDeploy.AddIn {
         internal static string koXML {
             get {
                 return ResourceManager.GetString("koXML", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rapidheader {
+            get {
+                object obj = ResourceManager.GetObject("rapidheader", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -33,21 +33,25 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.label11 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // txtWebPartFileName
             // 
-            this.txtWebPartFileName.Location = new System.Drawing.Point(257, 41);
+            this.txtWebPartFileName.Location = new System.Drawing.Point(119, 84);
             this.txtWebPartFileName.Name = "txtWebPartFileName";
-            this.txtWebPartFileName.Size = new System.Drawing.Size(235, 20);
+            this.txtWebPartFileName.Size = new System.Drawing.Size(305, 20);
             this.txtWebPartFileName.TabIndex = 82;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(155, 19);
+            this.label9.Location = new System.Drawing.Point(17, 62);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(89, 13);
             this.label9.TabIndex = 81;
@@ -56,7 +60,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(171, 48);
+            this.label11.Location = new System.Drawing.Point(33, 91);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 79;
@@ -64,7 +68,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(417, 126);
+            this.btnCancel.Location = new System.Drawing.Point(349, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 76;
@@ -74,7 +78,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(325, 126);
+            this.btnOk.Location = new System.Drawing.Point(268, 4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 75;
@@ -82,28 +86,54 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // pictureBox1
+            // panel3
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(13, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(125, 131);
-            this.pictureBox1.TabIndex = 61;
-            this.pictureBox1.TabStop = false;
+            this.panel3.BackColor = System.Drawing.SystemColors.Menu;
+            this.panel3.Controls.Add(this.pictureBox3);
+            this.panel3.Controls.Add(this.btnCancel);
+            this.panel3.Controls.Add(this.btnOk);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 129);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(436, 33);
+            this.panel3.TabIndex = 116;
             // 
-            // FeatureReceiverOptions
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::Rapid.Tools.SPDeploy.AddIn.CommandBar.buttonMore;
+            this.pictureBox3.Location = new System.Drawing.Point(10, 5);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(22, 22);
+            this.pictureBox3.TabIndex = 4;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pictureBox2.Image = global::Rapid.Tools.SPDeploy.AddIn.CommandBar.rapidheader;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(436, 50);
+            this.pictureBox2.TabIndex = 115;
+            this.pictureBox2.TabStop = false;
+            // 
+            // FeatureReceiverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 174);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(436, 162);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.txtWebPartFileName);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.pictureBox1);
-            this.Name = "FeatureReceiverOptions";
-            this.Text = "FeatureReceiverOptions";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "FeatureReceiverForm";
+            this.Text = "Feature Receiver";
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,7 +146,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox2;
 
     }
 }

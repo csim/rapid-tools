@@ -74,6 +74,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
             }
         }
         
+        internal static System.Drawing.Bitmap buttonLess {
+            get {
+                object obj = ResourceManager.GetObject("buttonLess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap buttonMore {
+            get {
+                object obj = ResourceManager.GetObject("buttonMore", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap CAT {
             get {
                 object obj = ResourceManager.GetObject("CAT", resourceCulture);
@@ -84,6 +98,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
         internal static System.Drawing.Bitmap checkoutoverlay {
             get {
                 object obj = ResourceManager.GetObject("checkoutoverlay", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CRIT_16 {
+            get {
+                object obj = ResourceManager.GetObject("CRIT_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -168,6 +189,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
         internal static System.Drawing.Bitmap ITGEN {
             get {
                 object obj = ResourceManager.GetObject("ITGEN", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rapidheader {
+            get {
+                object obj = ResourceManager.GetObject("rapidheader", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -33,7 +33,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.solutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,11 +48,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.Gainsboro;
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.solutionToolStripMenuItem,
-            this.projectToolStripMenuItem});
+            this.solutionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(287, 24);
@@ -62,6 +60,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
             this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
@@ -75,12 +75,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             this.solutionToolStripMenuItem.Name = "solutionToolStripMenuItem";
             this.solutionToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.solutionToolStripMenuItem.Text = "Deployment";
-            // 
-            // projectToolStripMenuItem
-            // 
-            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.projectToolStripMenuItem.Text = "Project";
             // 
             // WebsControl
             // 
@@ -103,6 +97,5 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem solutionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
     }
 }

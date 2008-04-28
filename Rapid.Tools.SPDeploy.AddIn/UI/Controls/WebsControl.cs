@@ -62,6 +62,113 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         private Domain.Utilties.ApplicationUtility _applicationUtility;
 
+
+        public class abc : ProfessionalColorTable
+        {            
+            public override Color ImageMarginGradientBegin
+            {
+                get
+                {
+                    return SystemColors.ControlLight;
+                }
+            }
+
+            public override Color ImageMarginGradientMiddle
+            {
+                get
+                {
+                    return SystemColors.Control;
+                }
+            }
+
+            public override Color ImageMarginGradientEnd
+            {
+                get
+                {
+                    return SystemColors.ControlDark;
+                }
+            }
+
+            
+
+            public override Color  MenuItemSelectedGradientBegin
+            {
+                get
+                {
+                    return SystemColors.GradientInactiveCaption;
+                }
+            }
+
+           
+
+            public override Color MenuItemSelectedGradientEnd
+            {
+                get
+                {
+                    return SystemColors.GradientInactiveCaption;
+                }
+            }
+
+            public override Color MenuItemPressedGradientBegin
+            {
+                get
+                {
+                    return SystemColors.ControlLight;
+                }
+            }
+
+            public override Color MenuItemPressedGradientMiddle
+            {
+                get
+                {
+                    return SystemColors.ControlLight;
+                }
+            }
+
+            public override Color MenuItemPressedGradientEnd
+            {
+                get
+                {
+                    return SystemColors.ControlLight;
+                }
+            }            
+
+            public override Color ButtonSelectedGradientBegin
+            {
+                get
+                {
+                    return SystemColors.GradientInactiveCaption;
+                }
+            }
+
+            public override Color ButtonSelectedGradientMiddle
+            {
+                get
+                {
+                    return SystemColors.GradientInactiveCaption;
+                }
+            }
+
+            public override Color ButtonSelectedGradientEnd
+            {
+                get
+                {
+                    return SystemColors.GradientInactiveCaption;
+                }
+            }
+            
+           
+            public override Color MenuItemSelected
+            {
+                get
+                {
+                    return SystemColors.GradientInactiveCaption;
+                }
+            }
+        }
+
+      
+
         public Domain.Utilties.ApplicationUtility ApplicationUtility
         {
             get
@@ -72,11 +179,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             }
             set { _applicationUtility = value; }
         }
-
+        private WatcherUtilitiy util;
         public delegate void VoidDelegate();
         public void FillTreeView()
         {
-           
+
+            abc b = new abc();
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(b);
+
+
+            LoadingForm lf = new LoadingForm();
+            lf.Show();
+
 
 
 
@@ -86,7 +200,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 
 
-
+            util = WatcherUtilitiy.Instance;
 
 
 
@@ -97,8 +211,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             ServiceManager.Instance.ServiceInstance.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
             ServiceManager.Instance.ServiceInstance.GetSiteStructureAsync(Domain.Utilties.Functions.GetSiteUrlFromProject(AppManager.Instance.ApplicationObject));
 
-           
+            lf.Close();
 
+
+            return;
         }
 
 
@@ -111,6 +227,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.Nodes[0].Expand();
             treeView1.Enabled = true;
         }
+
+
 
         private void AddWebNodes(XmlElement xmlElement)
         {
@@ -275,18 +393,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.SelectedNode = e.Node;
         }
 
-        private void showListItemsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            treeView1.Nodes.Clear();
-            currentNode = null;
-            FillTreeView();
-        }
-
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Node.Tag != null && e.Node.Tag is INodeTag)
@@ -295,6 +401,98 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 tag.Action();
             }
         }
+
+        private void abbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (FileInfo fi in Domain.Utilties.Functions.GetFeatureFileInfos(AppManager.Instance.ApplicationObject))
+            {
+                MessageBox.Show(state(fi).ToString());
+            }
+        }
+
+        public enum State
+        {
+            NotInstalled,
+            Installed,
+            InstalledNotUpdated,
+            Deployed,
+            DeployedNotUpdated            
+        }
+
+        private State state(FileInfo fi)
+        {            
+            string path = fi.FullName.Remove(fi.FullName.LastIndexOf("\\"));
+            DirectoryInfo di = new DirectoryInfo(path);
+            foreach (FileInfo f in di.GetFiles("*", SearchOption.AllDirectories))
+            {
+                string tpath = Domain.Utilties.Functions.GetRandomTempPath();
+
+                File.WriteAllBytes(tpath, ServiceManager.Instance.ServiceInstance.CompareFeatureFile(f.FullName.Substring(di.FullName.Remove(di.FullName.LastIndexOf("\\")).Length + 1)));
+
+                if (!FileCompare(tpath, f.FullName))
+                {
+                    return State.InstalledNotUpdated;                    
+                }
+            }
+            return State.Installed;
+        }
+
+        // This method accepts two strings the represent two files to 
+        // compare. A return value of 0 indicates that the contents of the files
+        // are the same. A return value of any other value indicates that the 
+        // files are not the same.
+        private bool FileCompare(string file1, string file2)
+        {
+            int file1byte;
+            int file2byte;
+            FileStream fs1;
+            FileStream fs2;
+
+            // Determine if the same file was referenced two times.
+            if (file1 == file2)
+            {
+                // Return true to indicate that the files are the same.
+                return true;
+            }
+
+            // Open the two files.
+            fs1 = new FileStream(file1, FileMode.Open);
+            fs2 = new FileStream(file2, FileMode.Open);
+
+            // Check the file sizes. If they are not the same, the files 
+            // are not the same.
+            if (fs1.Length != fs2.Length)
+            {
+                // Close the file
+                fs1.Close();
+                fs2.Close();
+
+                // Return false to indicate files are different
+                return false;
+            }
+
+            // Read and compare a byte from each file until either a
+            // non-matching set of bytes is found or until the end of
+            // file1 is reached.
+            do
+            {
+                // Read one byte from each file.
+                file1byte = fs1.ReadByte();
+                file2byte = fs2.ReadByte();
+            }
+            while ((file1byte == file2byte) && (file1byte != -1));
+
+            // Close the files.
+            fs1.Close();
+            fs2.Close();
+
+            // Return the success of the comparison. "file1byte" is 
+            // equal to "file2byte" at this point only if the files are 
+            // the same.
+            return ((file1byte - file2byte) == 0);
+        }
+
+
     }
 
 

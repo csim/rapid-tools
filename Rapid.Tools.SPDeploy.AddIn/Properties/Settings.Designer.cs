@@ -26,7 +26,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://wa1devnint01/_layouts/SPTools/SPToolsWebService.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://wa1devnint01/_layouts/sptools/sptoolswebservice.asmx")]
         public string Rapid_Tools_SPDeploy_AddIn_SPToolsWebService_SPToolsWebService {
             get {
                 return ((string)(this["Rapid_Tools_SPDeploy_AddIn_SPToolsWebService_SPToolsWebService"]));

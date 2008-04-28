@@ -9,6 +9,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
 {
     public class FeatureManifest
     {
+
+        public override bool Equals(object obj)
+        {
+            FeatureManifest fm = obj as FeatureManifest;
+            bool b = true;
+            b = b && fm.Id == this.Id;
+            b = b && fm.Description == this.Description;
+            b = b && fm.Scope == this.Scope;
+            b = b && fm.Hidden == this.Hidden;
+            return b;
+
+        }
         bool? _activateOnDefault;
 
         /// <summary>
@@ -318,6 +330,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
                         writer.WriteAttributeString("Location", s);
                         writer.WriteEndElement();
                     });
+                    writer.WriteEndElement();
                 }
 
                 if (ActivationDependencies != null && ActivationDependencies.Count > 0)
@@ -329,6 +342,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
                         writer.WriteAttributeString("FeatureId", s);
                         writer.WriteEndElement();
                     });
+                    writer.WriteEndElement();
                 }
 
                 writer.WriteEndElement();
