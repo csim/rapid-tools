@@ -26,15 +26,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
 
-			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
 
-			EnvironmentUtil.EnsureDirectory(filePath);
+			AppManager.Instance.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
             }
-            ApplicationUtility.OpenFile(filePath);
+			AppManager.Instance.OpenFile(filePath);
 
             Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
@@ -48,10 +48,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
 
-			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
 
-			EnvironmentUtil.EnsureDirectory(filePath);
+			AppManager.Instance.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
                 File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
@@ -69,11 +69,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                 _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
                {
-                   string path = Domain.Utilties.EnvironmentUtil.GetRandomTempPath();
+				   string path = AppManager.Instance.GetRandomTempPath();
 
                    File.WriteAllBytes(path, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
-                   ApplicationUtility.OpenFile(path);
+				   AppManager.Instance.OpenFile(path);
                });
 
                 _contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
@@ -83,7 +83,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
-                    ApplicationUtility.OpenFile(filePath);
+					AppManager.Instance.OpenFile(filePath);
 
                     Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
@@ -93,24 +93,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             else
             {
 
-                foreach (EnvDTE.Document doc in ApplicationObject.Documents)
-                {
-                    if (doc.FullName == filePath)
-                        goto Label_001;
-                }
+				bool isopen = AppManager.Instance.IsFileOpen(filePath);
 
-                _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
-               {
-                   if (!File.Exists(filePath))
-                   {
-                       File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
-                   }
-                   ApplicationUtility.OpenFile(filePath);
-               });
+				if (!isopen)
+				{
+					_contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
+				   {
+					   if (!File.Exists(filePath))
+					   {
+						   File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
+					   }
+					   AppManager.Instance.OpenFile(filePath);
+				   });
+				}
 
-            Label_001:
-                               
-                _contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
+				_contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
                 {
                     AddInService.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));
 
@@ -120,7 +117,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
 
-                    ApplicationUtility.DeleteAndClose(filePath);
+					AppManager.Instance.CloseWorkspaceFile(filePath);
 
                 });
                 _contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
@@ -131,7 +128,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
 
-                    ApplicationUtility.DeleteAndClose(filePath);
+					AppManager.Instance.CloseWorkspaceFile(filePath);
                 });
             }
 
@@ -139,7 +136,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             {
 				AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.Delete);
 
-                ApplicationUtility.DeleteAndClose(filePath);
+				AppManager.Instance.CloseWorkspaceFile(filePath);
 
                 Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
             });

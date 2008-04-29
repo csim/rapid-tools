@@ -67,8 +67,6 @@
     <Compile Include="Domain\NodeTags\NullNodeTag.cs" />
     <Compile Include="Domain\NodeTags\SPWebNodeTag.cs" />
     <Compile Include="Domain\RapidOutputWindow.cs" />
-    <Compile Include="Domain\Utilties\ApplicationUtil.cs" />
-    <Compile Include="Domain\Utilties\EnvironmentUtil.cs" />
     <Compile Include="Domain\ProxyBridge.cs" />
     <Compile Include="Domain\Utilties\WatcherUtil.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />

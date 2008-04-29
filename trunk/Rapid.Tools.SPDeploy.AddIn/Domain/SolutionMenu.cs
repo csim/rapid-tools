@@ -94,63 +94,65 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             RapidOutputWindow.Instance.Clear();
 
 			string output = "";
+			string projectname = AppManager.Instance.GetProjectName();
+			string wspname = AppManager.Instance.GetWspFileName();
 
             switch (action)
             {
                 case Action.Deploy:
                     WriteLine("Deploying...");
-                    output = _bridge.AddInService.DeploySolution(AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.DeploySolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Retract:
 					WriteLine("Retracting...");
-					output = _bridge.AddInService.RetractSolution(AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.RetractSolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Delete:
 					WriteLine("Deleting...");
-                    output = _bridge.AddInService.DeleteSolution(AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.DeleteSolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Cycle:
 					WriteLine("Retracting...");
-                    output = _bridge.AddInService.RetractSolution(AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.RetractSolution(wspname);
 					WriteLine(output);
 
                     RefreshAsync();
                 
 					WriteLine("Deleting...");
-                    output = _bridge.AddInService.DeleteSolution(AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.DeleteSolution(wspname);
 					WriteLine(output);
 
 					RefreshAsync();
                     
 					CompileWsp();
                     CopyFiles();
-                    
-					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName);
+
+					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + projectname + "\\" + wspname);
 					WriteLine(output);
 
 					RefreshAsync();
                     WriteLine("Deploying...");
-                    output = _bridge.AddInService.DeploySolution(AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.DeploySolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Add:
                     CompileWsp();
                     CopyFiles();
-					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName);
+					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + projectname + "\\" + wspname);
 					WriteLine(output);
                     break;
              
                 case Action.Upgrade:
                     CompileWsp();
                     CopyFiles();
-                    _bridge.AddInService.UpgradeSolution(AppManager.Instance.WspFileName, @"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName);
+					_bridge.AddInService.UpgradeSolution(wspname, @"c:\_spdeploy\" + projectname + "\\" + wspname);
                     break;
 
                 default:
@@ -170,7 +172,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			WriteLine("Compiling WSP...");
 
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\MSBuild.exe");
-            psi.Arguments = "/target:CompileWsp " + AppManager.Instance.ProjectPath;
+            psi.Arguments = "/target:CompileWsp " + AppManager.Instance.GetProjectPath();
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
 
@@ -194,10 +196,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         private void CopyFiles()
         {
 			WriteLine("Copying Files...");
-            string wspPath = AppManager.Instance.ProjectPath;
-            wspPath = wspPath.Remove(wspPath.LastIndexOf("\\"));
-            wspPath = wspPath + "\\obj\\Debug\\" + AppManager.Instance.WspFileName;
-            _bridge.AddInService.SaveFile(AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName, File.ReadAllBytes(wspPath));            
+			
+			string projectname = AppManager.Instance.GetProjectName();
+			string projectpath = AppManager.Instance.GetProjectDirectory().FullName;
+			string wspname = AppManager.Instance.GetWspFileName();
+			string wsppath = string.Format(@"{0}\bin\Debug\{1}", projectpath, wspname);
+
+			byte[] wspcontents = File.ReadAllBytes(wsppath);
+
+			_bridge.AddInService.SaveFile(string.Format(@"{0}\{1}", projectname, wsppath), wspcontents);
         }
 
         public enum Action
@@ -263,7 +270,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 			solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
 					{
-						return string.Compare(sol.Name, AppManager.Instance.WspFileName, true) == 0;
+						return string.Compare(sol.Name, AppManager.Instance.GetWspFileName(), true) == 0;
 					});
 
 			if (solution != null)

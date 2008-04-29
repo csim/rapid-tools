@@ -10,10 +10,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
     public class ProxyBridge
     {
-		private AddInProxy _addInService = new AddInProxy();
-		private WebsProxy _websService = new WebsProxy();
-
-
+		private AddInProxy _addInService = null;
+		private WebsProxy _websService = null;
 
 		public AddInProxy AddInService
         {
@@ -21,7 +19,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             {
 				if (_addInService == null)
                 {
-					string host = EnvironmentUtil.GetWebApplicationUrl();
+					string host = AppManager.Instance.GetWebApplicationUrl();
 
 					_addInService = new AddInProxy();
 					_addInService.Credentials = CredentialCache.DefaultNetworkCredentials;
@@ -37,7 +35,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			{
 				if (_websService == null)
 				{
-					string host = EnvironmentUtil.GetWebApplicationUrl();
+					string host = AppManager.Instance.GetWebApplicationUrl();
 
 					_websService = new WebsProxy();
 					_websService.Credentials = CredentialCache.DefaultNetworkCredentials;

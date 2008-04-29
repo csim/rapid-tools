@@ -24,16 +24,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}.xml", wdir.FullName, Node.TreeView.Nodes[0].Text, Node.Parent.Parent.Text, Node.Text);
 
             if (ApplicationObject.ActiveDocument == null || ApplicationObject.ActiveDocument.FullName != filePath)
             {
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                    {
-					   EnvironmentUtil.EnsureDirectory(filePath);
+					   AppManager.Instance.EnsureDirectory(filePath);
                        File.WriteAllText(filePath, AddInService.GetViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text));
-                       ApplicationUtility.OpenFile(filePath);
+                       AppManager.Instance.OpenFile(filePath);
                    });
             }
 
@@ -43,17 +43,17 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 _contextMenu.MenuItems.Add("Save To List", delegate(object sender, EventArgs e)
                 {
                     AddInService.UpdateViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text, File.ReadAllText(filePath));
-                    ApplicationUtility.DeleteAndClose(filePath);
+					AppManager.Instance.CloseWorkspaceFile(filePath);
                 });
                 _contextMenu.MenuItems.Add("Remove From Workspace", delegate(object sender, EventArgs e)
                 {
-                    ApplicationUtility.DeleteAndClose(filePath);
+					AppManager.Instance.CloseWorkspaceFile(filePath);
                 });
             }
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-                ApplicationUtility.OpenBrowser(SiteUrl + "/" + Url);
+				AppManager.Instance.OpenBrowser(SiteUrl + "/" + Url);
             });
 
             return _contextMenu;

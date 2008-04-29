@@ -11,11 +11,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 {
     public class WatcherUtil
     {
-		private static readonly WatcherUtil instance = new WatcherUtil();
+		private static WatcherUtil instance = null;
 
         public static WatcherUtil Instance
         {
-            get { return instance; }
+            get {
+				if (instance == null) instance = new WatcherUtil();
+				return instance; 
+			}
         }       
 
         [Serializable]
@@ -35,24 +38,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
         {
             VisualStudioItems = new Hashtable();
 
-			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
             
 			watcher = new FileSystemWatcher(wdir.FullName);
             watcher.IncludeSubdirectories = true;
             watcher.Renamed += new RenamedEventHandler(watcher_Renamed);
             watcher.EnableRaisingEvents = true;
 
-            if (File.Exists(@"C:\theinfo.dat"))
-            {
-                XmlSerializer ser = new XmlSerializer(typeof(List<WatcherUtilInfo>));
-                FileStream fs = new FileStream(@"C:\theinfo.dat", FileMode.Open);
-                List<WatcherUtilInfo> wu = ser.Deserialize(fs) as List<WatcherUtilInfo>;
-
-                foreach (WatcherUtilInfo u in wu)
-                {
-                    VisualStudioItems.Add(u.filePath, u);
-                }
-            }
         }
 
 
@@ -107,9 +99,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
                 abc.Add(u);
             }
 
-            XmlSerializer ser = new XmlSerializer(typeof(List<WatcherUtilInfo>));
-            FileStream fs = new FileStream(@"C:\theinfo.dat", FileMode.Create);
-            ser.Serialize(fs, abc);                        
         }
 
 

@@ -12,18 +12,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
    
     public abstract class WebNodeTag : INodeTag
     {
-        private Domain.Utilties.ApplicationUtil _applicationUtility;
-
-        public Domain.Utilties.ApplicationUtil ApplicationUtility
-        {
-            get
-            {
-                if (_applicationUtility == null)
-                    _applicationUtility = new Rapid.Tools.SPDeploy.AddIn.Domain.Utilties.ApplicationUtil(ApplicationObject);
-                return _applicationUtility;
-            }
-            set { _applicationUtility = value; }
-        }
 
         public NodeType TagType;
 
@@ -77,7 +65,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 if (_serviceInstance == null)
                 {
 					_serviceInstance = new AddInProxy();
-                    _serviceInstance.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", EnvironmentUtil.GetWebApplicationUrl());
+					_serviceInstance.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", AppManager.Instance.GetWebApplicationUrl());
                     _serviceInstance.Credentials = CredentialCache.DefaultCredentials;
                 }
                 return _serviceInstance;

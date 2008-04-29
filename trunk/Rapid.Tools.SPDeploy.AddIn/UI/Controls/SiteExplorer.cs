@@ -58,9 +58,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         Domain.Utilties.WatcherUtil w;
 
 
-        private Domain.Utilties.ApplicationUtil _applicationUtility;
-
-
         public class abc : ProfessionalColorTable
         {            
             public override Color ImageMarginGradientBegin
@@ -167,16 +164,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
       
 
-        public Domain.Utilties.ApplicationUtil ApplicationUtility
-        {
-            get
-            {
-                if (_applicationUtility == null)
-                    _applicationUtility = new Rapid.Tools.SPDeploy.AddIn.Domain.Utilties.ApplicationUtil(AppManager.Instance.ApplicationObject);
-                return _applicationUtility;
-            }
-            set { _applicationUtility = value; }
-        }
         private WatcherUtil util;
         public delegate void VoidDelegate();
         public void FillTreeView()
@@ -199,7 +186,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.Enabled = false;
 
             _bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
-			_bridge.AddInService.GetSiteStructureAsync(EnvironmentUtil.GetWebApplicationUrl());
+			_bridge.AddInService.GetSiteStructureAsync(AppManager.Instance.GetWebApplicationUrl());
 
             lf.Close();
 
@@ -394,7 +381,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         private void abbToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (FileInfo fi in Domain.Utilties.EnvironmentUtil.GetFeatureFiles(AppManager.Instance.ApplicationObject))
+			foreach (FileInfo fi in AppManager.Instance.GetFeatureFiles())
             {
                 MessageBox.Show(getState(fi).ToString());
             }
@@ -415,7 +402,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
             foreach (FileInfo f in dir.GetFiles("*", SearchOption.AllDirectories))
             {
-                string tpath = EnvironmentUtil.GetRandomTempPath();
+				string tpath = AppManager.Instance.GetRandomTempPath();
 
 				byte[] rcontents = _bridge.AddInService.CompareFeatureFile(f.FullName.Substring(dir.FullName.Remove(dir.FullName.LastIndexOf("\\")).Length + 1));
 				
