@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
+using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -23,8 +24,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
 				ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
 
-            string filePath = Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
-            Domain.Utilties.EnvironmentUtil.EnsurePath(filePath);
+			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
+
+			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
+
+            EnvironmentUtil.EnsurePath(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
@@ -41,12 +46,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-            string filePath = Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
-            Domain.Utilties.EnvironmentUtil.EnsurePath(filePath);
+			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
+
+			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
+			
+			EnvironmentUtil.EnsurePath(filePath);
             if (!File.Exists(filePath))
-            {
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
-            }
 
 
             //_contextMenu.MenuItems.Add("GetfileInfo", delegate(object sender, EventArgs e)

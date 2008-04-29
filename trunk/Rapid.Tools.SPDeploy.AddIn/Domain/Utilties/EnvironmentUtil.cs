@@ -14,48 +14,98 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
     public class EnvironmentUtil
     {
 
-        public static DirectoryInfo GetProjectDirectory(DTE2 application)
+
+		public static Project GetProject()
+		{
+			DTE2 application = AppManager.Instance.ApplicationObject;
+
+			// TODO: change to the active project
+			return application.Solution.Projects.Item(1);
+		}
+
+		private static string GetUsername()
+		{
+			string username = WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1];
+			return username;
+		}
+
+		private static XmlDocument GetConfiguration()
+		{
+			DirectoryInfo ppath = GetProjectDirectory();
+			string configpath = string.Format(@"{0}\Properties\SPDeploy.user", ppath.FullName);
+
+			if (!File.Exists(configpath))
+				throw new FileNotFoundException("SPDeploy.user not found.");
+
+			XmlDocument doc = new XmlDocument();
+			doc.Load(configpath);
+
+			return doc;
+		}
+
+		public static XmlElement GetUserConfiguration()
+		{
+			XmlDocument xdoc = GetConfiguration();
+
+			XmlNamespaceManager nm = new XmlNamespaceManager(xdoc.NameTable);
+			nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
+			
+			string username = GetUsername();
+
+			XmlElement xconfig = (XmlElement)xdoc.SelectSingleNode(string.Format("/n:Project/n:PropertyGroup[contains(@Condition,'{0}')]", username), nm);
+
+			if (xconfig == null)
+				throw new Exception("Could not find user configuration in SPDeploy.user");
+
+			return xconfig;
+		}
+
+
+
+		public static string GetWebApplicationUrl()
+		{
+			XmlElement xconfig = GetUserConfiguration();
+			XmlElement xhost = (XmlElement)xconfig.SelectSingleNode("WspServerName");
+			XmlElement xport = (XmlElement)xconfig.SelectSingleNode("WebApplicationPort");
+
+			if (xhost == null)
+				throw new Exception("Could not find server name in SPDeploy.user");
+
+			if (xport == null)
+				throw new Exception("Could not port name in SPDeploy.user");
+
+			string host = xhost.Value;
+			string port = xport.Value;
+
+			if (string.IsNullOrEmpty(port) || port == "80")
+				port = "";
+			else
+				port = ":" + port;
+
+			return string.Format("http://{0}{1}", host, port);
+
+		}
+		
+		public static DirectoryInfo GetProjectDirectory()
         {
-            string path = application.Solution.Projects.Item(1).FullName;
-            path = path.Remove(path.LastIndexOf("\\"));
+			Project proj = GetProject();
+			string path = proj.FullName;
+			path = path.Remove(path.LastIndexOf("\\"));
+
             return new DirectoryInfo(path);
         }
 
         public static FileInfo[] GetFeatureFiles(DTE2 ApplicationObject)
         {
-            return Domain.Utilties.EnvironmentUtil.GetProjectDirectory(ApplicationObject).GetFiles("feature.xml", SearchOption.AllDirectories);
+			DirectoryInfo pdir = GetProjectDirectory();
+            FileInfo[] files = pdir.GetFiles("feature.xml", SearchOption.AllDirectories);
+			return files;
         }
 
         public static DirectoryInfo GetWorkingDirectory()
         {
-            return new DirectoryInfo(GetWorkingDirectoryPath());
-        }
-
-        public static string GetWorkingDirectoryPath()
-        {
-           return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\SPDeploy\\Workspace";
-        }
-
-        public static string GetSiteUrlFromProject()
-        {
-            DTE2 application = AppManager.Instance.ApplicationObject;
-
-            string path = application.Solution.Projects.Item(1).FullName;
-            path = path.Remove(path.LastIndexOf("\\"));
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load(path + "\\Properties\\SPDeploy.user");
-
-            XmlNamespaceManager nm = new XmlNamespaceManager(doc.NameTable);
-            nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
-
-            XmlNode node = null;
-            foreach (XmlNode no in doc.SelectNodes("/n:Project/n:PropertyGroup", nm))
-            {
-                if (no.Attributes["Condition"] != null && no.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1]))
-                    node = no;
-            }
-            return "http://" + node.ChildNodes[0].InnerText;
+			string wdir = string.Format(@"{0}\SPDeploy\Workspace", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            return new DirectoryInfo(wdir);
         }
 
 
