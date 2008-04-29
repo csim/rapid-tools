@@ -10,7 +10,7 @@ using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class SPFileNodeTag : WebNodeTag
+    public class SPFileNodeTag : NodeTag
     {
 
         public SPFileNodeTag(TreeNode node, DTE2 applicationObject)
@@ -19,24 +19,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             ApplicationObject = applicationObject;
         }
 
-        public override void Action()
+        public override void DoubleClick()
         {
-            if (!AddInService.IsCheckedOut(SiteUrl, WebGuid, Guid))
-				AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
+            if (!AppManager.Current.ActiveBridge.AddInService.IsCheckedOut(SiteUrl, WebID, ID))
+				AppManager.Current.ActiveBridge.AddInService.PerformFileAction(SiteUrl, WebID, ID, Proxies.AddIn.FileActions.CheckOut);
 
-			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
-
-			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
-			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
-
-			AppManager.Current.EnsureDirectory(filePath);
-            if (!File.Exists(filePath))
-            {
-                File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
-            }
-			AppManager.Current.OpenFile(filePath);
-
-            Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
+			OpenWorkspaceFile();
 
             Resources.ResourceUtility.SetFileNodeIcon(Node, true);
         }
@@ -46,46 +34,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
 
-			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
-			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
-
-			AppManager.Current.EnsureDirectory(filePath);
-            if (!File.Exists(filePath))
-                File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
-
-
-            //_contextMenu.MenuItems.Add("GetfileInfo", delegate(object sender, EventArgs e)
-            //{
-            //    string tpath = Domain.Utilties.Functions.GetRandomTempPath();
-            //    File.WriteAllText(tpath, ServiceInstance.GetFileInfo(SiteUrl, WebGuid, Guid));
-            //    ApplicationUtility.OpenFile(tpath);
-            //});
-
-
-            if (!AddInService.IsCheckedOut(SiteUrl, WebGuid, Guid))
+			if (!AppManager.Current.ActiveBridge.AddInService.IsCheckedOut(SiteUrl, WebID, ID))
             {
 
-                _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
-               {
-				   string path = AppManager.Current.GetRandomTempPath();
-
-                   File.WriteAllBytes(path, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
-
-				   AppManager.Current.OpenFile(path);
-               });
+			   // _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
+			   //{
+			   //    AppManager.Current.OpenFile(SiteUrl, WebID, ServerRelativeUrl, FileID);
+			   //});
 
                 _contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
                 {
 
-					AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
+					AppManager.Current.ActiveBridge.AddInService.PerformFileAction(SiteUrl, WebID, ID, Proxies.AddIn.FileActions.CheckOut);
 
-                    File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
-
-					AppManager.Current.OpenFile(filePath);
-
-                    Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
+					OpenWorkspaceFile();
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, true);
                 });
@@ -93,52 +56,35 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             else
             {
 
-				bool isopen = AppManager.Current.IsFileOpen(filePath);
+				bool isopen = AppManager.Current.IsFileOpen(WorkspacePath.FullName);
 
 				if (!isopen)
 				{
 					_contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
 				   {
-					   if (!File.Exists(filePath))
-					   {
-						   File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
-					   }
-					   AppManager.Current.OpenFile(filePath);
+					   OpenWorkspaceFile();
 				   });
 				}
 
 				_contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
                 {
-                    AddInService.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));
-
-					AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckIn);
-
+					AppManager.Current.ActiveBridge.AddInService.PerformFileAction(SiteUrl, WebID, ID, Proxies.AddIn.FileActions.CheckIn);
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
-
-                    Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
-
-					AppManager.Current.CloseWorkspaceFile(filePath);
+					CloseWorkspaceFile();
 
                 });
                 _contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
                 {
-					AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.UndoCheckOut);
-
+					AppManager.Current.ActiveBridge.AddInService.PerformFileAction(SiteUrl, WebID, ID, Proxies.AddIn.FileActions.UndoCheckOut);
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
-
-                    Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
-
-					AppManager.Current.CloseWorkspaceFile(filePath);
+					CloseWorkspaceFile();
                 });
             }
 
             _contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
             {
-				AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.Delete);
-
-				AppManager.Current.CloseWorkspaceFile(filePath);
-
-                Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
+				AppManager.Current.ActiveBridge.AddInService.PerformFileAction(SiteUrl, WebID, ID, Proxies.AddIn.FileActions.Delete);
+				CloseWorkspaceFile();
             });
 
 

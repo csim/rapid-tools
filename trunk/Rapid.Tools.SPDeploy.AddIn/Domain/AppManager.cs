@@ -10,6 +10,8 @@ using System.Security.Principal;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.Webs;
 using System.Net;
 
+using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
+
 namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
     public class AppManager
@@ -41,6 +43,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 		private SPEnvironmentInfo _activeEnvironment = null;
 		private DirectoryInfo _activeWorkspaceDirectory = null;
 		private string _activeWspFileName = null;
+		private ProxyBridge _activeBridge = null;
 
 		public Project ActiveProject
 		{
@@ -95,6 +98,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			}
 		}
 
+		public ProxyBridge ActiveBridge
+		{
+			get {
+				if (_activeBridge == null)
+					_activeBridge = new ProxyBridge();
+
+				return _activeBridge; 
+			}
+		}
+
 
 		public void ResetActiveProject()
 		{
@@ -102,12 +115,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			_activeEnvironment = null;
 			_activeWorkspaceDirectory = null;
 			_activeWspFileName = null;
+			_activeBridge = null;
 		}
 
 
 		public FileInfo[] GetFeatureFiles()
 		{
-			DirectoryInfo pdir = AppManager.Current.ActiveProjectPath.Directory;
+			DirectoryInfo pdir = ActiveProjectPath.Directory;
 			FileInfo[] files = pdir.GetFiles("feature.xml", SearchOption.AllDirectories);
 			return files;
 		}
@@ -132,9 +146,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		public List<string> GetActivatedFeatures(string web)
 		{
-			ProxyBridge bridge = new ProxyBridge();
-
-			string result = bridge.WebsService.GetActivatedFeatures();
+			string result = ActiveBridge.WebsService.GetActivatedFeatures();
 			if (string.IsNullOrEmpty(result))
 				return null;
 			
@@ -154,27 +166,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 		}
 
 
-		public void CloseWorkspaceFile(string filePath)
-		{
-			if (File.Exists(filePath))
-			{
-				File.Delete(filePath);
-
-				if (Application.ActiveDocument != null && Application.ActiveDocument.FullName == filePath)
-					Application.ActiveDocument.Close(EnvDTE.vsSaveChanges.vsSaveChangesNo);
-			}
-		}
-
 		public void OpenBrowser(string url)
 		{
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			process.StartInfo.FileName = url;
 			process.Start();
-		}
-
-		public void OpenFile(string filePath)
-		{
-			Application.ItemOperations.OpenFile(filePath, EnvDTE.Constants.vsViewKindTextView);
 		}
 
 
@@ -192,7 +188,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
         internal void SetMachineInfo(string machineName, string port)
         {
-            string path = AppManager.Current.Application.Solution.Projects.Item(1).FullName;
+            string path = ActiveProject.FullName;
             path = path.Remove(path.LastIndexOf("\\"));
 
             XmlDocument doc = new XmlDocument();
@@ -212,5 +208,99 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
             doc.Save(path + "\\Properties\\SPDeploy.user");
         }
-    }
+
+
+
+		public void EnsureFilesAdded(string folderPath)
+		{
+			foreach (FileInfo fi in new DirectoryInfo(folderPath).GetFiles("*", SearchOption.AllDirectories))
+			{
+				ActiveProject.ProjectItems.AddFromFile(fi.FullName);
+			}
+		}
+
+
+		public void ExecuteMSBuildCommand(string command)
+		{
+			try
+			{
+				RapidOutputWindow.Instance.Activate();
+				RapidOutputWindow.Instance.Clear();
+
+				System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\MSBuild.exe");
+				psi.Arguments = command;
+				psi.CreateNoWindow = true;
+				psi.UseShellExecute = false;
+				psi.RedirectStandardOutput = true;
+
+				System.Diagnostics.Process p = new System.Diagnostics.Process();
+				p.StartInfo = psi;
+				p.Start();
+
+
+				string line = string.Empty;
+
+				do
+				{
+					line = p.StandardOutput.ReadLine();
+					if (!string.IsNullOrEmpty(line))
+					{
+						RapidOutputWindow.Instance.Write(line + "\r\n");
+					}
+				} while (!p.StandardOutput.EndOfStream);
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
+	
+		public string GetRootNamespace()
+		{
+			XmlDocument d = new XmlDocument();
+			d.Load(ActiveProject.FullName);
+
+			XmlNamespaceManager nm = new XmlNamespaceManager(d.NameTable);
+			nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
+
+			return d.SelectSingleNode("/n:Project/n:PropertyGroup/n:RootNamespace", nm).InnerText;
+		}
+
+
+		public string GetFeatureFolder()
+		{
+			UI.Forms.FeatureForm featureForm = new UI.Forms.FeatureForm();
+			featureForm.GetFeatures(ActiveProject.FullName);
+			featureForm.ShowDialog();
+
+			if (featureForm.Canceled)
+				return string.Empty;
+
+			return featureForm.FileLocation.Remove(featureForm.FileLocation.LastIndexOf("\\"));
+		}
+
+		public void OpenFile(string filePath)
+		{
+			Application.ItemOperations.OpenFile(filePath, EnvDTE.Constants.vsViewKindTextView);
+		}
+
+		public void CloseFile(string filePath)
+		{
+			if (File.Exists(filePath))
+			{
+				Documents docs = AppManager.Current.Application.Documents;
+
+				for (int i=1; i<docs.Count; i++)
+				{
+					if (docs.Item(i).FullName.ToLower() == filePath.ToLower())
+						docs.Item(i).Close(EnvDTE.vsSaveChanges.vsSaveChangesPrompt);
+				}
+
+				File.Delete(filePath);
+			}
+		}
+
+	}
+
+
 }

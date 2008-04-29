@@ -12,7 +12,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
     {
 
         private ToolStripMenuItem _solutionItem;
-		private ProxyBridge _bridge = new ProxyBridge();
 
         public ToolStripMenuItem SolutionItem
         {
@@ -105,35 +104,37 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			string projectname = AppManager.Current.ActiveProject.Name;
 			string wspname = AppManager.Current.ActiveWspFileName;
 
+			ProxyBridge bridge = AppManager.Current.ActiveBridge;
+
             switch (action)
             {
                 case Action.Deploy:
                     WriteLine("Deploying...");
-					output = _bridge.AddInService.DeploySolution(wspname);
+					output = bridge.AddInService.DeploySolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Retract:
 					WriteLine("Retracting...");
-					output = _bridge.AddInService.RetractSolution(wspname);
+					output = bridge.AddInService.RetractSolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Delete:
 					WriteLine("Deleting...");
-					output = _bridge.AddInService.DeleteSolution(wspname);
+					output = bridge.AddInService.DeleteSolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Cycle:
 					WriteLine("Retracting...");
-					output = _bridge.AddInService.RetractSolution(wspname);
+					output = bridge.AddInService.RetractSolution(wspname);
 					WriteLine(output);
 
                     RefreshAsync();
                 
 					WriteLine("Deleting...");
-					output = _bridge.AddInService.DeleteSolution(wspname);
+					output = bridge.AddInService.DeleteSolution(wspname);
 					WriteLine(output);
 
 					RefreshAsync();
@@ -141,26 +142,26 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 					CompileWsp();
                     CopyFiles();
 
-					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + projectname + "\\" + wspname);
+					output = bridge.AddInService.AddSolution(@"c:\_spdeploy\" + projectname + "\\" + wspname);
 					WriteLine(output);
 
 					RefreshAsync();
                     WriteLine("Deploying...");
-					output = _bridge.AddInService.DeploySolution(wspname);
+					output = bridge.AddInService.DeploySolution(wspname);
 					WriteLine(output);
                     break;
                 
 				case Action.Add:
                     CompileWsp();
                     CopyFiles();
-					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + projectname + "\\" + wspname);
+					output = bridge.AddInService.AddSolution(@"c:\_spdeploy\" + projectname + "\\" + wspname);
 					WriteLine(output);
                     break;
              
                 case Action.Upgrade:
                     CompileWsp();
                     CopyFiles();
-					_bridge.AddInService.UpgradeSolution(wspname, @"c:\_spdeploy\" + projectname + "\\" + wspname);
+					bridge.AddInService.UpgradeSolution(wspname, @"c:\_spdeploy\" + projectname + "\\" + wspname);
                     break;
 
                 default:
@@ -212,7 +213,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 			byte[] wspcontents = File.ReadAllBytes(wsppath);
 
-			_bridge.AddInService.SaveFile(string.Format(@"{0}\{1}", projectname, wsppath), wspcontents);
+			AppManager.Current.ActiveBridge.AddInService.SaveFile(string.Format(@"{0}\{1}", projectname, wsppath), wspcontents);
         }
 
         public enum Action
@@ -274,7 +275,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 
 			Proxies.AddIn.Solution solution = null;
-			Proxies.AddIn.Solution[] solutions = _bridge.AddInService.GetSols();
+			Proxies.AddIn.Solution[] solutions = AppManager.Current.ActiveBridge.AddInService.GetSols();
 
 			solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
 					{

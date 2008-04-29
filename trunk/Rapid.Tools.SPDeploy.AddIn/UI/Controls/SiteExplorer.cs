@@ -36,8 +36,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             set { _siteStructureDocument = value; }
         }
 
-		private ProxyBridge _bridge = new ProxyBridge();
-
         public SiteExplorer()
         {
             InitializeComponent();
@@ -54,7 +52,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.ImageList.Images.Add("ViewIcon", Resources.Images.Files.ICXML);
             treeView1.ImageList.Images.Add("ViewsIcon", Resources.Images.Files.ICZIP);
 
-            _bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
+            AppManager.Current.ActiveBridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
 
         }
 
@@ -109,8 +107,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.Nodes.Add("Loading");
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
-            
-			_bridge.AddInService.GetSiteStructureAsync(AppManager.Current.ActiveEnvironment.WebApplicationUrl);
+
+			AppManager.Current.ActiveBridge.AddInService.GetSiteStructureAsync(AppManager.Current.ActiveEnvironment.WebApplicationUrl);
 
             if (!_preloaded)
                 _loadingForm.Close();
@@ -138,9 +136,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             else
                 currentNode = currentNode.Nodes.Add(xmlElement.Attributes[0].Value);
 
-            WebNodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Web);
-            tag.Url = xmlElement.Attributes["Url"].Value;
-            tag.Guid = new Guid(xmlElement.Attributes["Guid"].Value);
+            NodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Web);
+            tag.ServerRelativeUrl = xmlElement.Attributes["Url"].Value;
+            tag.ID = new Guid(xmlElement.Attributes["Guid"].Value);
             currentNode.Tag = tag;
 
 
@@ -190,9 +188,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             //  add the node
             TreeNode _fileNode = currentNode.Nodes.Add(xmlElement.Attributes["Name"].Value);
 
-            WebNodeTag tag = NodeTagFactory.Create(_fileNode, AppManager.Current.Application, NodeType.File);
-            tag.Url = xmlElement.Attributes["Url"].Value;
-            tag.Guid = new Guid(xmlElement.Attributes["Guid"].Value);
+            NodeTag tag = NodeTagFactory.Create(_fileNode, AppManager.Current.Application, NodeType.File);
+            tag.ServerRelativeUrl = xmlElement.Attributes["Url"].Value;
+            tag.ID = new Guid(xmlElement.Attributes["Guid"].Value);
             _fileNode.Tag = tag;
 
             //  set the icon for the file node
@@ -207,9 +205,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             //  add the node
             currentNode = currentNode.Nodes.Add(xmlElement.Attributes["Title"].Value);
 
-            WebNodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.List);
-            tag.Url = xmlElement.Attributes["Url"].Value;
-            tag.Guid = new Guid(xmlElement.Attributes["Guid"].Value);
+            NodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.List);
+            tag.ServerRelativeUrl = xmlElement.Attributes["Url"].Value;
+            tag.ID = new Guid(xmlElement.Attributes["Guid"].Value);
             currentNode.Tag = tag;
 
             //  set the icon to generic unless it is a document library            
@@ -231,9 +229,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
                 TreeNode tNode = currentNode.Nodes.Add(no.Attributes["Title"].Value);
                 tNode.SelectedImageKey = tNode.ImageKey = "ViewIcon";
-                WebNodeTag t = NodeTagFactory.Create(tNode, AppManager.Current.Application, NodeType.View);
-                t.Guid = new Guid(no.Attributes["Guid"].Value);
-                t.Url = no.Attributes["Url"].Value;
+                NodeTag t = NodeTagFactory.Create(tNode, AppManager.Current.Application, NodeType.View);
+                t.ID = new Guid(no.Attributes["Guid"].Value);
+                t.ServerRelativeUrl = no.Attributes["Url"].Value;
                 tNode.Tag = t;
 
             }
@@ -299,7 +297,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             if (e.Node.Tag != null && e.Node.Tag is INodeTag)
             {
                 INodeTag tag = e.Node.Tag as INodeTag;
-                tag.Action();
+                tag.DoubleClick();
             }
         }     
        
