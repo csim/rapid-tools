@@ -27,19 +27,23 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         public XmlNode getUserConfigurationNode()
         {
-            XmlDocument _spUserDoc = new XmlDocument();
-            _spUserDoc.Load(string.Concat(path, "\\Properties\\SPDeploy.user"));
+            XmlDocument spUserDoc = new XmlDocument();
+			spUserDoc.Load(string.Concat(path, "\\Properties\\SPDeploy.user"));
 
-            XmlNamespaceManager _spUserNameSpaceManager = new XmlNamespaceManager(_spUserDoc.NameTable);
-            _spUserNameSpaceManager.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
+			XmlNamespaceManager spUserNameSpaceManager = new XmlNamespaceManager(spUserDoc.NameTable);
+            spUserNameSpaceManager.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
 
-            XmlNode _node = null;
-            foreach (XmlNode node in _spUserDoc.SelectNodes("/n:Project/n:PropertyGroup", _spUserNameSpaceManager))
-            {
-                if (node.Attributes["Condition"] != null && node.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split('\\')[1]))
-                    _node = node;
-            }
-            return _node;
+            XmlNode node = null;
+
+			string username = WindowsIdentity.GetCurrent().Name.Split('\\')[1].ToLower();
+			node = spUserDoc.SelectSingleNode(string.Format("/n:Project/n:PropertyGroup[contains(@Condition,'{0}')]", username), spUserNameSpaceManager);
+            
+			//foreach (XmlNode node in _spUserDoc.SelectNodes("/n:Project/n:PropertyGroup", _spUserNameSpaceManager))
+			//{
+			//    if (node.Attributes["Condition"] != null && node.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split('\\')[1]))
+			//        _node = node;
+			//}
+            return node;
         }
 
 

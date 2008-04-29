@@ -3,10 +3,10 @@
 	<Fragment Id="AddinFragment">
 		<DirectoryRef Id="TARGETDIR">
        <!-- Put Addin.dll in the GAC-->
-      <Component Id="Rapid.Tools.SPDeploy.AddInGac" Guid="{A7BE0BE4-E2BE-4b7a-A3CA-E3C5580019E5}">
+      <!--<Component Id="Rapid.Tools.SPDeploy.AddInGac" Guid="{A7BE0BE4-E2BE-4b7a-A3CA-E3C5580019E5}">
         <File Id="Rapid.Tools.SPDeploy.AddInGac" Name="Rapid.Tools.SPDeploy.AddIn.dll" KeyPath="yes"  Assembly=".net" Source="Files\Rapid.Tools.SPDeploy.AddIn.dll" />
         <RemoveFile Id="Rapid.Tools.SPDeploy.AddInGAC.Rem" Name="Rapid.Tools.SPDeploy.AddInGac.Rem" On="uninstall" />
-      </Component>
+      </Component>-->
 
       <Directory Id="PersonalFolder" Name="MyDocumentsFolders">
 				<Directory Id="VisualStudio2005Directory" Name="Visual Studio 2005">
