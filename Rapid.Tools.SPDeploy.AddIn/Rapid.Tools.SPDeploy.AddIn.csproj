@@ -56,6 +56,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Domain\AppManager.cs" />
+    <Compile Include="Domain\DefaultColorTable.cs" />
     <Compile Include="Domain\SolutionMenu.cs">
     </Compile>
     <Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />

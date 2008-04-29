@@ -20,6 +20,7 @@ using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
 using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 using Rapid.Tools.SPDeploy.AddIn.UI.Forms;
+using Rapid.Tools.SPDeploy.AddIn.UI.Wizard;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
@@ -53,130 +54,56 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.ImageList.Images.Add("ViewIcon", Resources.Images.Files.ICXML);
             treeView1.ImageList.Images.Add("ViewsIcon", Resources.Images.Files.ICZIP);
 
+            _bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
+
         }
 
         Domain.Utilties.WatcherUtil w;
 
 
-        public class abc : ProfessionalColorTable
-        {            
-            public override Color ImageMarginGradientBegin
-            {
-                get
-                {
-                    return SystemColors.ControlLight;
-                }
-            }
 
-            public override Color ImageMarginGradientMiddle
-            {
-                get
-                {
-                    return SystemColors.Control;
-                }
-            }
-
-            public override Color ImageMarginGradientEnd
-            {
-                get
-                {
-                    return SystemColors.ControlDark;
-                }
-            }
-
-            
-
-            public override Color  MenuItemSelectedGradientBegin
-            {
-                get
-                {
-                    return SystemColors.GradientInactiveCaption;
-                }
-            }
-
-           
-
-            public override Color MenuItemSelectedGradientEnd
-            {
-                get
-                {
-                    return SystemColors.GradientInactiveCaption;
-                }
-            }
-
-            public override Color MenuItemPressedGradientBegin
-            {
-                get
-                {
-                    return SystemColors.ControlLight;
-                }
-            }
-
-            public override Color MenuItemPressedGradientMiddle
-            {
-                get
-                {
-                    return SystemColors.ControlLight;
-                }
-            }
-
-            public override Color MenuItemPressedGradientEnd
-            {
-                get
-                {
-                    return SystemColors.ControlLight;
-                }
-            }            
-
-            public override Color ButtonSelectedGradientBegin
-            {
-                get
-                {
-                    return SystemColors.GradientInactiveCaption;
-                }
-            }
-
-            public override Color ButtonSelectedGradientMiddle
-            {
-                get
-                {
-                    return SystemColors.GradientInactiveCaption;
-                }
-            }
-
-            public override Color ButtonSelectedGradientEnd
-            {
-                get
-                {
-                    return SystemColors.GradientInactiveCaption;
-                }
-            }
-            
-           
-            public override Color MenuItemSelected
-            {
-                get
-                {
-                    return SystemColors.GradientInactiveCaption;
-                }
-            }
-        }
-
+        DefaultColorTable _defaultColorTable;
+        bool _preloaded = false;
       
 
         private WatcherUtil util;
         public delegate void VoidDelegate();
+        SolutionMenu _solutionMenu;
         public void FillTreeView()
         {
 
-            abc b = new abc();
-            menuStrip1.Renderer = new ToolStripProfessionalRenderer(b);
+            _defaultColorTable = new DefaultColorTable();
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(_defaultColorTable);
 
-			LoadingForm lf = new LoadingForm();
-            lf.Show();
+            LoadingForm _loadingForm = null;
 
-            SolutionMenu sm = new SolutionMenu(solutionToolStripMenuItem);
-            sm.RefreshAsync();
+
+            if (!_preloaded)
+            {
+                _loadingForm = new LoadingForm();
+                _loadingForm.Show();
+            }
+
+            try
+            {
+                ProxyBridge pb = new ProxyBridge();
+                pb.AddInService.GetSols();
+            }
+            catch (System.InvalidOperationException)
+            {
+
+                if (!_preloaded)
+                {
+                    _loadingForm.Close();
+                }
+                MessageBox.Show("The development web services do not seem to be installed, would you like to install them? (Restart for Now)");
+                return;
+            }
+
+            if (_solutionMenu == null)
+                _solutionMenu = new SolutionMenu(solutionToolStripMenuItem, toolStripMenuItem1_Click);
+            
+            _solutionMenu.RefreshAsync();
 
             util = WatcherUtil.Instance;
 
@@ -184,14 +111,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.Nodes.Add("Loading");
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
-
-            _bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
+            
 			_bridge.AddInService.GetSiteStructureAsync(AppManager.Instance.GetWebApplicationUrl());
 
-            lf.Close();
+            if (!_preloaded)
+                _loadingForm.Close();
 
-
-            return;
+            _preloaded = true;
         }
 
 
@@ -377,97 +303,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 INodeTag tag = e.Node.Tag as INodeTag;
                 tag.Action();
             }
-        }
-
-        private void abbToolStripMenuItem_Click(object sender, EventArgs e)
+        }     
+       
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-			foreach (FileInfo fi in AppManager.Instance.GetFeatureFiles())
+            if (((ToolStripMenuItem)sender).Tag == "ServerButton")
             {
-                MessageBox.Show(getState(fi).ToString());
+                CreationForm cf = new CreationForm(AppManager.Instance.GetMachineName(), AppManager.Instance.GetPort());
+                cf.ShowDialog();
             }
-        }
-
-        public enum State
-        {
-            NotInstalled,
-            Installed,
-            InstalledNotUpdated,
-            Deployed,
-            DeployedNotUpdated            
-        }
-
-        private State getState(FileInfo fi)
-        {            
-			DirectoryInfo dir = fi.Directory;
-
-            foreach (FileInfo f in dir.GetFiles("*", SearchOption.AllDirectories))
-            {
-				string tpath = AppManager.Instance.GetRandomTempPath();
-
-				byte[] rcontents = _bridge.AddInService.CompareFeatureFile(f.FullName.Substring(dir.FullName.Remove(dir.FullName.LastIndexOf("\\")).Length + 1));
-				
-				File.WriteAllBytes(tpath, rcontents);
-
-                if (!FileCompare(tpath, f.FullName))
-                    return State.InstalledNotUpdated;                    
-			}
-
-            return State.Installed;
-        }
-
-        // This method accepts two strings the represent two files to 
-        // compare. A return value of 0 indicates that the contents of the files
-        // are the same. A return value of any other value indicates that the 
-        // files are not the same.
-        private bool FileCompare(string file1, string file2)
-        {
-            int file1byte;
-            int file2byte;
-            FileStream fs1;
-            FileStream fs2;
-
-            // Determine if the same file was referenced two times.
-            if (file1 == file2)
-            {
-                // Return true to indicate that the files are the same.
-                return true;
-            }
-
-            // Open the two files.
-            fs1 = new FileStream(file1, FileMode.Open);
-            fs2 = new FileStream(file2, FileMode.Open);
-
-            // Check the file sizes. If they are not the same, the files 
-            // are not the same.
-            if (fs1.Length != fs2.Length)
-            {
-                // Close the file
-                fs1.Close();
-                fs2.Close();
-
-                // Return false to indicate files are different
-                return false;
-            }
-
-            // Read and compare a byte from each file until either a
-            // non-matching set of bytes is found or until the end of
-            // file1 is reached.
-            do
-            {
-                // Read one byte from each file.
-                file1byte = fs1.ReadByte();
-                file2byte = fs2.ReadByte();
-            }
-            while ((file1byte == file2byte) && (file1byte != -1));
-
-            // Close the files.
-            fs1.Close();
-            fs2.Close();
-
-            // Return the success of the comparison. "file1byte" is 
-            // equal to "file2byte" at this point only if the files are 
-            // the same.
-            return ((file1byte - file2byte) == 0);
+            currentNode = null;
+            treeView1.Nodes.Clear();
+            FillTreeView();
         }
 
 

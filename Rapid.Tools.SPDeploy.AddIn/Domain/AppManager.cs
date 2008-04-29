@@ -118,6 +118,17 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			return xconfig;
 		}
 
+        public string GetMachineName()
+        {
+            return GetUserConfiguration().ChildNodes[0].InnerText;
+        }
+
+        public string GetPort()
+        {
+            string port = GetUserConfiguration().ChildNodes[1].InnerText;
+            return port.Substring(port.LastIndexOf(":") + 1);
+        }
+
 		public string GetWebApplicationUrl()
 		{
 
@@ -231,5 +242,28 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			return false;
 
 		}
+
+        internal void SetMachineInfo(string machineName, string port)
+        {
+            string path = AppManager.Instance.ApplicationObject.Solution.Projects.Item(1).FullName;
+            path = path.Remove(path.LastIndexOf("\\"));
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path + "\\Properties\\SPDeploy.user");
+
+            XmlNamespaceManager nm = new XmlNamespaceManager(doc.NameTable);
+            nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
+
+            XmlNode node = null;
+            foreach (XmlNode no in doc.SelectNodes("/n:Project/n:PropertyGroup", nm))
+            {
+                if (no.Attributes["Condition"] != null && no.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1]))
+                    node = no;
+            }
+            node.ChildNodes[0].InnerText = machineName;
+            node.ChildNodes[1].InnerText = "http://$(WspServerName):" + port;
+
+            doc.Save(path + "\\Properties\\SPDeploy.user");
+        }
     }
 }
