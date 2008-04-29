@@ -8,7 +8,7 @@ using EnvDTE80;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class SPWebNodeTag : WebNodeTag
+    public class SPWebNodeTag : NodeTag
     {
         public SPWebNodeTag(TreeNode node, DTE2 applicationObject)
         {
@@ -17,7 +17,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             _node = node;
         }
 
-        public override void Action()
+        public override void DoubleClick()
         {
             //ApplicationUtility.OpenBrowser(Url);
         }
@@ -31,7 +31,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			foreach (FileInfo fileInfo in AppManager.Current.GetFeatureFiles())
                 _features.Add(new FeatureManifest(File.ReadAllText(fileInfo.FullName)));
 
-			List<string> _activatedFeatures = AppManager.Current.GetActivatedFeatures(Url);
+			List<string> _activatedFeatures = AppManager.Current.GetActivatedFeatures(ServerRelativeUrl);
 
             MenuItem _addFeatureMenu = new MenuItem("Add Feature");
             MenuItem _removeFeatureMenu = new MenuItem("Remove Feature");
@@ -47,7 +47,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 RapidOutputWindow.Instance.Activate();
                                 RapidOutputWindow.Instance.Clear();
-                                RapidOutputWindow.Instance.Write(AddInService.RemoveFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
+								RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.RemoveFeature(SiteUrl, WebID, (Guid)((MenuItem)s).Tag));
                             };
                         _featureMenuItem.Tag = new Guid(featureManifest.Id);
                         _removeFeatureMenu.MenuItems.Add(_featureMenuItem);
@@ -55,7 +55,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 }
                 else
                 {
-					if (Array.Find<Proxies.AddIn.Solution>(AddInService.GetSols(), delegate(Proxies.AddIn.Solution sol)
+					if (Array.Find<Proxies.AddIn.Solution>(AppManager.Current.ActiveBridge.AddInService.GetSols(), delegate(Proxies.AddIn.Solution sol)
                     {
                         return string.Compare(sol.Name, ApplicationObject.Solution.Projects.Item(1).Name + ".wsp", true) == 0 && sol.Deployed;
                     }) != null)
@@ -67,7 +67,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                 {
                                     RapidOutputWindow.Instance.Activate();
                                     RapidOutputWindow.Instance.Clear();
-                                    RapidOutputWindow.Instance.Write(AddInService.AddFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
+									RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.AddFeature(SiteUrl, WebID, (Guid)((MenuItem)s).Tag));
 
                                 };
                             _featureMenuItem.Tag = new Guid(featureManifest.Id);
@@ -84,7 +84,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.Execute(Url);
+				AppManager.Current.Execute(ServerRelativeUrl);
             });
 
             return _contextMenu;

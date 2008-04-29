@@ -21,7 +21,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
     public class NodeTagFactory
     {
-        public static WebNodeTag Create(TreeNode node, DTE2 applicationObject, NodeType type)
+        public static NodeTag Create(TreeNode node, DTE2 applicationObject, NodeType type)
         {
             switch (type)
             {

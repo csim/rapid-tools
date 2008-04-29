@@ -8,16 +8,16 @@ using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class SPViewNodeTag : WebNodeTag
+    public class SPViewNodeTag : NodeTag
     {
 
-        private Guid ListGuid;
+        private Guid ListID;
 
         public SPViewNodeTag(TreeNode node, DTE2 applicationObject)
         {
             _node = node;
             ApplicationObject = applicationObject;
-            ListGuid = ((WebNodeTag)Node.Parent.Parent.Tag).Guid;
+            ListID = ((NodeTag)Node.Parent.Parent.Tag).ID;
         }
 
         public override ContextMenu GetContextMenu()
@@ -32,7 +32,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                    {
 					   AppManager.Current.EnsureDirectory(filePath);
-                       File.WriteAllText(filePath, AddInService.GetViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text));
+					   File.WriteAllText(filePath, AppManager.Current.ActiveBridge.AddInService.GetViewSchema(SiteUrl, WebID, ListID, Node.Text));
                        AppManager.Current.OpenFile(filePath);
                    });
             }
@@ -42,24 +42,24 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             {
                 _contextMenu.MenuItems.Add("Save To List", delegate(object sender, EventArgs e)
                 {
-                    AddInService.UpdateViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text, File.ReadAllText(filePath));
-					AppManager.Current.CloseWorkspaceFile(filePath);
+					AppManager.Current.ActiveBridge.AddInService.UpdateViewSchema(SiteUrl, WebID, ListID, Node.Text, File.ReadAllText(filePath));
+					AppManager.Current.CloseFile(filePath);
                 });
                 _contextMenu.MenuItems.Add("Remove From Workspace", delegate(object sender, EventArgs e)
                 {
-					AppManager.Current.CloseWorkspaceFile(filePath);
+					AppManager.Current.CloseFile(filePath);
                 });
             }
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.OpenBrowser(SiteUrl + "/" + Url);
+				AppManager.Current.OpenBrowser(SiteUrl + "/" + ServerRelativeUrl);
             });
 
             return _contextMenu;
         }
 
-        public override void Action()
+        public override void DoubleClick()
         {
             
         }

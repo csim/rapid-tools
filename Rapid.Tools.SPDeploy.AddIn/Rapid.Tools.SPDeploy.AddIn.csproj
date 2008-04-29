@@ -57,10 +57,11 @@
     </Compile>
     <Compile Include="Domain\AppManager.cs" />
     <Compile Include="Domain\DefaultColorTable.cs" />
+    <Compile Include="Domain\ExceptionUtil.cs" />
     <Compile Include="Domain\SolutionMenu.cs">
     </Compile>
     <Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />
-    <Compile Include="Domain\NodeTags\WebNodeTag.cs" />
+    <Compile Include="Domain\NodeTags\NodeTag.cs" />
     <Compile Include="Domain\NodeTags\NodeTagFactory.cs" />
     <Compile Include="Domain\NodeTags\SPFileNodeTag.cs" />
     <Compile Include="Domain\NodeTags\INodeTag.cs" />
@@ -102,12 +103,6 @@
     </Compile>
     <Compile Include="Resources\Project\Files.Designer.cs" />
     <Compile Include="Resources\ResourceUtility.cs" />
-    <Compile Include="UI\Controls\SolutionExplorer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\SolutionExplorer.Designer.cs">
-      <DependentUpon>SolutionExplorer.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Controls\SiteExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -195,10 +190,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Project\Files.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\SolutionExplorer.resx">
-      <DependentUpon>SolutionExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\SiteExplorer.resx">

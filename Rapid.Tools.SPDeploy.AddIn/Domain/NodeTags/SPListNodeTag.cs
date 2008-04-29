@@ -13,7 +13,7 @@ using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class SPListNodeTag : WebNodeTag
+    public class SPListNodeTag : NodeTag
     {
         public SPListNodeTag(TreeNode node, DTE2 applicationObject)
         {
@@ -21,7 +21,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             ApplicationObject = applicationObject;
         }
 
-        public override void Action()
+        public override void DoubleClick()
         {
             //ApplicationUtility.OpenBrowser(SiteUrl + Url);
         }
@@ -81,9 +81,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                         _templateName = string.Join(string.Empty, _templateDisplayName.Split(' '));
                         _templateNumber = _listDialog.TemplateNumber;
 
-                        foreach (string s in AddInService.featureFiles(_listsWebService.GetList(Node.Text).OuterXml))
+                        foreach (string s in AppManager.Current.ActiveBridge.AddInService.featureFiles(_listsWebService.GetList(Node.Text).OuterXml))
                         {
-                            string projectPath = ApplicationObject.Solution.Projects.Item(1).FullName;
+                            string projectPath = AppManager.Current.ActiveProject.FullName;
                             projectPath = projectPath.Remove(projectPath.LastIndexOf("\\"));
 
                             string fPath = s.Substring(s.IndexOf("\\TEMPLATE\\FEATURES\\"));
@@ -98,12 +98,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                             if (tempString.ToLower() == "schema.xml")
                             {
-                                string schema = AddInService.GetListSchema(SiteUrl, WebGuid, Guid);
+								string schema = AppManager.Current.ActiveBridge.AddInService.GetListSchema(SiteUrl, WebID, ID);
 
 
                                 XmlDocument oSchema = new XmlDocument();
                                 Encoding enc = Encoding.UTF8;
-                                oSchema.LoadXml(enc.GetString(AddInService.OpenFile(s)));
+								oSchema.LoadXml(enc.GetString(AppManager.Current.ActiveBridge.AddInService.OpenFile(s)));
 
                                 XmlDocument nSchema = new XmlDocument();
                                 nSchema.LoadXml(schema);
@@ -114,7 +114,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                     oSchema.SelectSingleNode("/List/MetaData/Fields").InnerXml = nSchema.SelectSingleNode("/List/Fields").InnerXml;
 
                                     XmlDocument doc = new XmlDocument();
-                                    doc.LoadXml(AddInService.GetViewNodes(SiteUrl, WebGuid, Guid).OuterXml);
+									doc.LoadXml(AppManager.Current.ActiveBridge.AddInService.GetViewNodes(SiteUrl, WebID, ID).OuterXml);
 
 
                                     XmlNode formNode = oSchema.SelectSingleNode("/List/MetaData/Forms");
@@ -161,7 +161,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 featureFile = projectPath + fPath;
                                 XmlDocument fe = new XmlDocument();
-                                File.WriteAllBytes(projectPath + fPath, AddInService.OpenFile(s));
+								File.WriteAllBytes(projectPath + fPath, AppManager.Current.ActiveBridge.AddInService.OpenFile(s));
                                 fe.Load(projectPath + fPath);
 
                                 fe.DocumentElement.Attributes["Id"].Value = Guid.NewGuid().ToString().Replace("{", "").Replace("}", "");
@@ -171,7 +171,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                 fe.Save(featureFile);
                             }
                             else
-                                File.WriteAllBytes(projectPath + fPath, AddInService.OpenFile(s));
+								File.WriteAllBytes(projectPath + fPath, AppManager.Current.ActiveBridge.AddInService.OpenFile(s));
 
                         }
 
@@ -233,7 +233,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                         dir = new DirectoryInfo(featureFile);
                         foreach (FileInfo fi in dir.GetFiles("*", SearchOption.AllDirectories))
                         {
-                            ApplicationObject.Solution.Projects.Item(1).ProjectItems.AddFromFile(fi.FullName);
+                            AppManager.Current.ActiveProject.ProjectItems.AddFromFile(fi.FullName);
                         }
 
 
@@ -242,13 +242,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 
                         schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml = string.Empty;
-                        foreach (string s in AddInService.GetContentTypeNames(SiteUrl, WebGuid, Guid))
+						foreach (string s in AppManager.Current.ActiveBridge.AddInService.GetContentTypeNames(SiteUrl, WebID, ID))
                         {
                             schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml += s;
                         }
 
 
-						Proxies.AddIn.ListOptions lo = AddInService.GetOptions(SiteUrl, WebGuid, Guid);
+						Proxies.AddIn.ListOptions lo = AppManager.Current.ActiveBridge.AddInService.GetOptions(SiteUrl, WebID, ID);
                         if (lo.AllowContentTypes)
                             schemaDocument.DocumentElement.SetAttribute("AllowContentTypes", "true");
                         if (lo.ContentTypesEnabled)
@@ -273,7 +273,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.Execute(SiteUrl + Url);
+				AppManager.Current.Execute(SiteUrl + ServerRelativeUrl);
             });
 
             return _contextMenu;

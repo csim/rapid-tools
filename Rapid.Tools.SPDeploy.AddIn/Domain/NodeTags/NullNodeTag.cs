@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class NullNodeTag : WebNodeTag
+    public class NullNodeTag : NodeTag
     {
 
-        public override void Action()
+        public override void DoubleClick()
         {
             
         }

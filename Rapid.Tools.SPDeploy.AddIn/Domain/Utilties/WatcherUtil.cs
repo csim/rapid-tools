@@ -32,53 +32,55 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         FileSystemWatcher watcher;
 
-        public Hashtable VisualStudioItems;
+        public Hashtable WatchedItems;
 
         private WatcherUtil()
         {
-            VisualStudioItems = new Hashtable();
+            WatchedItems = new Hashtable();
 
 			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
             
 			watcher = new FileSystemWatcher(wdir.FullName);
             watcher.IncludeSubdirectories = true;
-            watcher.Renamed += new RenamedEventHandler(watcher_Renamed);
+            watcher.Renamed += new RenamedEventHandler(WatchedFileRenamed);
             watcher.EnableRaisingEvents = true;
 
         }
 
 
 
-        void watcher_Renamed(object sender, RenamedEventArgs e)
+        private void WatchedFileRenamed(object sender, RenamedEventArgs e)
         {
-            if (VisualStudioItems.Contains(e.FullPath))
-            {
-                WatcherUtilInfo util = VisualStudioItems[e.FullPath] as WatcherUtilInfo;
-                try
-                {
-					ProxyBridge bridge = new ProxyBridge();
-					bridge.AddInService.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);                    
-                }
-            }
-        }
+			try
+			{
+				if (WatchedItems.Contains(e.FullPath))
+				{
+					WatcherUtilInfo util = WatchedItems[e.FullPath] as WatcherUtilInfo;
+					
+					// TODO: figure out the file locking here -- this is a temporary fix
+					System.Threading.Thread.Sleep(1000);
+					AppManager.Current.ActiveBridge.AddInService.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
+				}
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
 
-        public void AddWatcher(string fileName, string siteUrl, Guid webGuid, Guid fileGuid)
+		public void AddWatcher(FileInfo file, string siteUrl, Guid webGuid, Guid fileGuid)
         {
             WatcherUtilInfo util = new WatcherUtilInfo();
             util.siteUrl = siteUrl;
             util.webGuid = webGuid;
             util.fileGuid = fileGuid;
-            VisualStudioItems[fileName] = util;
+            WatchedItems[file.FullName] = util;
         }
 
-        public void RemoveWatcher(string fileName)
+        public void RemoveWatcher(FileInfo file)
         {
-            if (VisualStudioItems.Contains(fileName))
-                VisualStudioItems.Remove(fileName);
+			if (WatchedItems.Contains(file.FullName))
+				WatchedItems.Remove(file.FullName);
         }
 
 
@@ -91,10 +93,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
             List<WatcherUtilInfo> abc = new List<WatcherUtilInfo>();
 
-            foreach (string k in VisualStudioItems.Keys)
+            foreach (string k in WatchedItems.Keys)
             {
                 WatcherUtilInfo u = new WatcherUtilInfo();
-                u = VisualStudioItems[k] as WatcherUtilInfo;
+                u = WatchedItems[k] as WatcherUtilInfo;
                 u.filePath = k;
                 abc.Add(u);
             }

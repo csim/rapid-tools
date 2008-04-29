@@ -14,6 +14,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
     public interface INodeTag
     {
         ContextMenu GetContextMenu();
-        void Action();
+        void DoubleClick();
     }   
 }
