@@ -41,7 +41,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             _deleteSolutionItem = new ToolStripMenuItem("Delete Solution");
             _cycleSolutionItem = new ToolStripMenuItem("Cycle Solution");
             _upgradeSolutionItem = new ToolStripMenuItem("Upgrade Solution");
-            _serverUrl = new ToolStripMenuItem(AppManager.Instance.GetMachineName() + ":" + AppManager.Instance.GetPort());
+            _serverUrl = new ToolStripMenuItem(AppManager.Current.ActiveEnvironment.ServerName + ":" + AppManager.Current.ActiveEnvironment.ServerPort);
 
             _solutionItem.DropDownItems.Add(_serverUrl);
             _solutionItem.DropDownItems.Add(new ToolStripSeparator());
@@ -102,8 +102,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             RapidOutputWindow.Instance.Clear();
 
 			string output = "";
-			string projectname = AppManager.Instance.GetProjectName();
-			string wspname = AppManager.Instance.GetWspFileName();
+			string projectname = AppManager.Current.ActiveProject.Name;
+			string wspname = AppManager.Current.ActiveWspFileName;
 
             switch (action)
             {
@@ -180,7 +180,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			WriteLine("Compiling WSP...");
 
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\MSBuild.exe");
-            psi.Arguments = "/target:CompileWsp " + AppManager.Instance.GetProjectPath();
+			psi.Arguments = string.Format("/target:CompileWsp \"{0}\"", AppManager.Current.ActiveProjectPath.FullName);
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
 
@@ -205,9 +205,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         {
 			WriteLine("Copying Files...");
 			
-			string projectname = AppManager.Instance.GetProjectName();
-			string projectpath = AppManager.Instance.GetProjectDirectory().FullName;
-			string wspname = AppManager.Instance.GetWspFileName();
+			string projectname = AppManager.Current.ActiveProject.Name;
+			string projectpath = AppManager.Current.ActiveProjectPath.FullName;
+			string wspname = AppManager.Current.ActiveWspFileName;
 			string wsppath = string.Format(@"{0}\bin\Debug\{1}", projectpath, wspname);
 
 			byte[] wspcontents = File.ReadAllBytes(wsppath);
@@ -278,7 +278,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 			solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
 					{
-						return string.Compare(sol.Name, AppManager.Instance.GetWspFileName(), true) == 0;
+						return string.Compare(sol.Name, AppManager.Current.ActiveWspFileName, true) == 0;
 					});
 
 			if (solution != null)

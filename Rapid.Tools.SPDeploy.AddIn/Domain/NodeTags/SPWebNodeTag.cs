@@ -28,10 +28,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             List<FeatureManifest> _features = new List<FeatureManifest>();
 			
-			foreach (FileInfo fileInfo in AppManager.Instance.GetFeatureFiles())
+			foreach (FileInfo fileInfo in AppManager.Current.GetFeatureFiles())
                 _features.Add(new FeatureManifest(File.ReadAllText(fileInfo.FullName)));
 
-			List<string> _activatedFeatures = AppManager.Instance.GetActivatedFeatures(Url);
+			List<string> _activatedFeatures = AppManager.Current.GetActivatedFeatures(Url);
 
             MenuItem _addFeatureMenu = new MenuItem("Add Feature");
             MenuItem _removeFeatureMenu = new MenuItem("Remove Feature");
@@ -84,7 +84,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Instance.Execute(Url);
+				AppManager.Current.Execute(Url);
             });
 
             return _contextMenu;
