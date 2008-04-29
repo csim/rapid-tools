@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
-    public class SolutionMenu
+    public class DeploymentMenu
     {
 
         private ToolStripMenuItem _solutionItem;
@@ -29,7 +29,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         private ToolStripMenuItem _upgradeSolutionItem;
         private ToolStripMenuItem _serverUrl;
 
-        public SolutionMenu(ToolStripMenuItem solutionItem, EventHandler ev)
+        public DeploymentMenu(ToolStripMenuItem solutionItem, EventHandler ev)
         {
             MachineChanged = ev;
 
