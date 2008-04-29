@@ -14,153 +14,100 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
     public class AppManager
     {
-        private static readonly AppManager instance = new AppManager();
+        private static AppManager _current = null;
 
-        private DTE2 _applicationObject;
+        private DTE2 _application;
 
-        public DTE2 ApplicationObject
+		public DTE2 Application
         {
-            get { return _applicationObject; }
-            set { _applicationObject = value; }
+			get { return _application; }
         }
 
-        private AppManager()
+        public AppManager(DTE2 application)
         {
-        }
-
-        public static AppManager Instance
-        {
-            get
-            {
-                return instance;
-            }
+			_application = application;
+			ResetActiveProject();
         }
 
 
+		public static AppManager Current
+        {
+            get { return _current; }
+			set { _current = value; }
+        }
 
-		public Project GetProject()
+
+		private Project _activeProject;
+		private SPEnvironmentInfo _activeEnvironment = null;
+		private DirectoryInfo _activeWorkspaceDirectory = null;
+		private string _activeWspFileName = null;
+
+		public Project ActiveProject
 		{
-			return ApplicationObject.ActiveDocument.ProjectItem.ContainingProject;
+			get {
+				if (_activeProject == null)
+					_activeProject = Application.ActiveDocument.ProjectItem.ContainingProject;
+
+				return _activeProject; 
+			}
 		}
 
-		public string GetProjectPath()
-        {
-			Project proj = GetProject();
-			return proj.FullName;
-        }
-
-		public string GetProjectName()
-        {
-			Project proj = GetProject();
-            return proj.Name;
-        }
-
-        public string GetWspFileName()
-        {
-            return GetProjectName() + ".wsp";
-        }
-
-
-		public DirectoryInfo GetProjectDirectory()
+		public FileInfo ActiveProjectPath
 		{
-			string path = GetProjectPath();
-			return new DirectoryInfo(Path.GetDirectoryName(path));
+			get { return new FileInfo(ActiveProject.FullName); }
 		}
 
-		public DirectoryInfo GetWorkspaceDirectory()
+		public SPEnvironmentInfo ActiveEnvironment
 		{
-			Project proj = GetProject();
-			string wdir = string.Format(@"{0}\SPDeploy\Workspace\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), proj.Name);
+			get {
+				if (_activeEnvironment == null)
+					_activeEnvironment = SPEnvironmentInfo.Parse(ActiveProject);
 
-			DirectoryInfo ret = new DirectoryInfo(wdir);
+				return _activeEnvironment; 
+			}
+		}
+		
+		public DirectoryInfo ActiveWorkspaceDirectory
+		{
+			get
+			{
+				if (_activeWorkspaceDirectory == null)
+				{
+					string wdir = string.Format(@"{0}\SPDeploy\Workspace\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ActiveProject.Name);
 
-			if (!Directory.Exists(ret.FullName))
-				Directory.CreateDirectory(ret.FullName);
+					_activeWorkspaceDirectory = new DirectoryInfo(wdir);
 
-			return ret;
+					if (!Directory.Exists(_activeWorkspaceDirectory.FullName))
+						Directory.CreateDirectory(_activeWorkspaceDirectory.FullName);
+				}
+
+				return _activeWorkspaceDirectory;
+			}
+		}
+
+		public string ActiveWspFileName
+		{
+			get {
+				if (string.IsNullOrEmpty(_activeWspFileName))
+					_activeWspFileName = string.Format("{0}.wsp", ActiveProject.Name);
+
+				return _activeWspFileName; 
+			}
 		}
 
 
-		private string GetUserName()
+		public void ResetActiveProject()
 		{
-			string username = WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1];
-			return username;
+			_activeProject = null;
+			_activeEnvironment = null;
+			_activeWorkspaceDirectory = null;
+			_activeWspFileName = null;
 		}
 
-		private XmlDocument GetConfiguration()
-		{
-			DirectoryInfo ppath = AppManager.Instance.GetProjectDirectory();
-			string configpath = string.Format(@"{0}\Properties\SPDeploy.user", ppath.FullName);
-
-			if (!File.Exists(configpath))
-				throw new FileNotFoundException("SPDeploy.user not found.");
-
-			XmlDocument doc = new XmlDocument();
-			doc.Load(configpath);
-
-			return doc;
-		}
-
-		public XmlElement GetUserConfiguration()
-		{
-			XmlDocument xdoc = GetConfiguration();
-
-			XmlNamespaceManager nm = new XmlNamespaceManager(xdoc.NameTable);
-			nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
-
-			string username = GetUserName();
-
-			XmlElement xconfig = (XmlElement)xdoc.SelectSingleNode(string.Format("/n:Project/n:PropertyGroup[contains(@Condition,'{0}')]", username), nm);
-
-			if (xconfig == null)
-				throw new Exception("Could not find user configuration in SPDeploy.user");
-
-			return xconfig;
-		}
-
-        public string GetMachineName()
-        {
-            return GetUserConfiguration().ChildNodes[0].InnerText;
-        }
-
-        public string GetPort()
-        {
-            string port = GetUserConfiguration().ChildNodes[1].InnerText;
-            return port.Substring(port.LastIndexOf(":") + 1);
-        }
-
-		public string GetWebApplicationUrl()
-		{
-
-			XmlElement xconfig = GetUserConfiguration();
-
-			XmlNamespaceManager nm = new XmlNamespaceManager(xconfig.OwnerDocument.NameTable);
-			nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
-
-			XmlElement xhost = (XmlElement)xconfig.SelectSingleNode("n:WspServerName", nm);
-			XmlElement xport = (XmlElement)xconfig.SelectSingleNode("n:WebApplicationPort", nm);
-
-			if (xhost == null)
-				throw new Exception("Could not find server name in SPDeploy.user");
-
-			if (xport == null)
-				throw new Exception("Could not port name in SPDeploy.user");
-
-			string host = xhost.InnerText;
-			string port = xport.InnerText;
-
-			if (string.IsNullOrEmpty(port) || port == "80")
-				port = "";
-			else
-				port = ":" + port;
-
-			return string.Format("http://{0}{1}", host, port);
-
-		}
 
 		public FileInfo[] GetFeatureFiles()
 		{
-			DirectoryInfo pdir = AppManager.Instance.GetProjectDirectory();
+			DirectoryInfo pdir = AppManager.Current.ActiveProjectPath.Directory;
 			FileInfo[] files = pdir.GetFiles("feature.xml", SearchOption.AllDirectories);
 			return files;
 		}
@@ -213,8 +160,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			{
 				File.Delete(filePath);
 
-				if (ApplicationObject.ActiveDocument != null && ApplicationObject.ActiveDocument.FullName == filePath)
-					ApplicationObject.ActiveDocument.Close(EnvDTE.vsSaveChanges.vsSaveChangesNo);
+				if (Application.ActiveDocument != null && Application.ActiveDocument.FullName == filePath)
+					Application.ActiveDocument.Close(EnvDTE.vsSaveChanges.vsSaveChangesNo);
 			}
 		}
 
@@ -227,13 +174,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		public void OpenFile(string filePath)
 		{
-			ApplicationObject.ItemOperations.OpenFile(filePath, EnvDTE.Constants.vsViewKindTextView);
+			Application.ItemOperations.OpenFile(filePath, EnvDTE.Constants.vsViewKindTextView);
 		}
 
 
 		public bool IsFileOpen(string filePath)
 		{
-			foreach (EnvDTE.Document doc in ApplicationObject.Documents)
+			foreach (EnvDTE.Document doc in Application.Documents)
 			{
 				if (doc.FullName == filePath)
 					return true;
@@ -245,7 +192,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
         internal void SetMachineInfo(string machineName, string port)
         {
-            string path = AppManager.Instance.ApplicationObject.Solution.Projects.Item(1).FullName;
+            string path = AppManager.Current.Application.Solution.Projects.Item(1).FullName;
             path = path.Remove(path.LastIndexOf("\\"));
 
             XmlDocument doc = new XmlDocument();
