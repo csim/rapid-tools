@@ -26,7 +26,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn
 [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Web.Services.WebServiceBindingAttribute(Name="AddInWebServiceSoap", Namespace="http://SPProject")]
+[System.Web.Services.WebServiceBindingAttribute(Name="AddInWebServiceSoap", Namespace="http://ascentium.com/RapidTools")]
 public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientProtocol {
     
     private System.Threading.SendOrPostCallback GetSiteStructureOperationCompleted;
@@ -195,7 +195,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     public event OpenFileCompletedEventHandler OpenFileCompleted;
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetSiteStructure", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetSiteStructure", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public System.Xml.XmlNode GetSiteStructure(string siteUrl) {
         object[] results = this.Invoke("GetSiteStructure", new object[] {
                     siteUrl});
@@ -236,7 +236,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/DeleteFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/DeleteFile", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public void DeleteFile(string siteUrl, string fileUrl) {
         this.Invoke("DeleteFile", new object[] {
                     siteUrl,
@@ -278,7 +278,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/AddFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/AddFile", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public void AddFile(string siteUrl, System.Guid listGuid, string fileUrl, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] bytes) {
         this.Invoke("AddFile", new object[] {
                     siteUrl,
@@ -326,7 +326,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/IsCheckedOut", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/IsCheckedOut", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public bool IsCheckedOut(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
         object[] results = this.Invoke("IsCheckedOut", new object[] {
                     siteUrl,
@@ -373,7 +373,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetFileInfo", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetFileInfo", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string GetFileInfo(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
         object[] results = this.Invoke("GetFileInfo", new object[] {
                     siteUrl,
@@ -420,7 +420,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/Views", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/Views", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string[] Views(string siteUrl, System.Guid webGuid, System.Guid listGuid) {
         object[] results = this.Invoke("Views", new object[] {
                     siteUrl,
@@ -467,7 +467,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/featureFiles", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/featureFiles", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string[] featureFiles(string listSchema) {
         object[] results = this.Invoke("featureFiles", new object[] {
                     listSchema});
@@ -508,7 +508,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/OpenBinary", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/OpenBinary", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
     public byte[] OpenBinary(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
         object[] results = this.Invoke("OpenBinary", new object[] {
@@ -556,7 +556,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/SaveBinary", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/SaveBinary", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public bool SaveBinary(string siteUrl, System.Guid webGuid, System.Guid fileGuid, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] bytes) {
         object[] results = this.Invoke("SaveBinary", new object[] {
                     siteUrl,
@@ -606,7 +606,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetInstalledFeatues", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetInstalledFeatues", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string[] GetInstalledFeatues(System.Guid[] featureIds) {
         object[] results = this.Invoke("GetInstalledFeatues", new object[] {
                     featureIds});
@@ -647,7 +647,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/UpgradeSolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/UpgradeSolution", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string UpgradeSolution(string solution, string filePath) {
         object[] results = this.Invoke("UpgradeSolution", new object[] {
                     solution,
@@ -691,7 +691,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/SaveFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/SaveFile", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string SaveFile(string filePath, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] contents) {
         object[] results = this.Invoke("SaveFile", new object[] {
                     filePath,
@@ -735,7 +735,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/AddSolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/AddSolution", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string AddSolution(string filePath) {
         object[] results = this.Invoke("AddSolution", new object[] {
                     filePath});
@@ -776,7 +776,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetSolutions", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetSolutions", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string[] GetSolutions() {
         object[] results = this.Invoke("GetSolutions", new object[0]);
         return ((string[])(results[0]));
@@ -814,7 +814,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetSols", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetSols", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public Solution[] GetSols() {
         object[] results = this.Invoke("GetSols", new object[0]);
         return ((Solution[])(results[0]));
@@ -852,7 +852,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/DeploySolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/DeploySolution", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string DeploySolution(string solutionName) {
         object[] results = this.Invoke("DeploySolution", new object[] {
                     solutionName});
@@ -893,7 +893,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/RetractSolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/RetractSolution", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string RetractSolution(string solutionName) {
         object[] results = this.Invoke("RetractSolution", new object[] {
                     solutionName});
@@ -934,7 +934,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/DeleteSolution", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/DeleteSolution", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string DeleteSolution(string solutionName) {
         object[] results = this.Invoke("DeleteSolution", new object[] {
                     solutionName});
@@ -975,7 +975,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/AddFeature", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/AddFeature", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string AddFeature(string siteUrl, System.Guid webGuid, System.Guid featureId) {
         object[] results = this.Invoke("AddFeature", new object[] {
                     siteUrl,
@@ -1022,7 +1022,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/RemoveFeature", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/RemoveFeature", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string RemoveFeature(string siteUrl, System.Guid webGuid, System.Guid featureId) {
         object[] results = this.Invoke("RemoveFeature", new object[] {
                     siteUrl,
@@ -1069,7 +1069,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/PerformFileAction", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/PerformFileAction", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public bool PerformFileAction(string siteUrl, System.Guid webGuid, System.Guid fileGuid, FileActions action) {
         object[] results = this.Invoke("PerformFileAction", new object[] {
                     siteUrl,
@@ -1119,7 +1119,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/getInfo", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/getInfo", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string getInfo(string siteUrl, System.Guid webUid, System.Guid listGuid) {
         object[] results = this.Invoke("getInfo", new object[] {
                     siteUrl,
@@ -1166,7 +1166,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/OpenBinaryFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/OpenBinaryFile", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
     public byte[] OpenBinaryFile(string siteUrl, System.Guid webGuid, System.Guid fileGuid) {
         object[] results = this.Invoke("OpenBinaryFile", new object[] {
@@ -1214,7 +1214,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetOptions", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetOptions", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public ListOptions GetOptions(string siteUrl, System.Guid webUid, System.Guid listGuid) {
         object[] results = this.Invoke("GetOptions", new object[] {
                     siteUrl,
@@ -1261,7 +1261,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetViewSchema", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetViewSchema", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string GetViewSchema(string siteUrl, System.Guid webUid, System.Guid listGuid, string viewNAme) {
         object[] results = this.Invoke("GetViewSchema", new object[] {
                     siteUrl,
@@ -1311,7 +1311,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetViewNodes", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetViewNodes", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public System.Xml.XmlNode GetViewNodes(string siteUrl, System.Guid webGuid, System.Guid listGuid) {
         object[] results = this.Invoke("GetViewNodes", new object[] {
                     siteUrl,
@@ -1358,7 +1358,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetContentTypeName", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetContentTypeName", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string GetContentTypeName(string siteUrl, string contentTypeId) {
         object[] results = this.Invoke("GetContentTypeName", new object[] {
                     siteUrl,
@@ -1402,7 +1402,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetContentTypeNames", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetContentTypeNames", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string[] GetContentTypeNames(string siteUrl, System.Guid webGuid, System.Guid listGuid) {
         object[] results = this.Invoke("GetContentTypeNames", new object[] {
                     siteUrl,
@@ -1449,7 +1449,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/GetListSchema", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetListSchema", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public string GetListSchema(string siteUrl, System.Guid webUid, System.Guid listGuid) {
         object[] results = this.Invoke("GetListSchema", new object[] {
                     siteUrl,
@@ -1496,7 +1496,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/CompareFeatureFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/CompareFeatureFile", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
     public byte[] CompareFeatureFile(string relativeFilePath) {
         object[] results = this.Invoke("CompareFeatureFile", new object[] {
@@ -1538,7 +1538,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/UpdateViewSchema", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/UpdateViewSchema", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public void UpdateViewSchema(string siteUrl, System.Guid webUid, System.Guid listGuid, string viewNAme, string schema) {
         this.Invoke("UpdateViewSchema", new object[] {
                     siteUrl,
@@ -1589,7 +1589,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
     }
     
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://SPProject/OpenFile", RequestNamespace="http://SPProject", ResponseNamespace="http://SPProject", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/OpenFile", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
     public byte[] OpenFile(string filePath) {
         object[] results = this.Invoke("OpenFile", new object[] {
@@ -1641,7 +1641,7 @@ public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientPr
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://SPProject")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ascentium.com/RapidTools")]
 public partial class Solution {
     
     private string nameField;
@@ -1674,7 +1674,7 @@ public partial class Solution {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://SPProject")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ascentium.com/RapidTools")]
 public partial class ListOptions {
     
     private bool allowContentTypesField;
@@ -1705,7 +1705,7 @@ public partial class ListOptions {
 /// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
 [System.SerializableAttribute()]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://SPProject")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ascentium.com/RapidTools")]
 public enum FileActions {
     
     /// <remarks/>

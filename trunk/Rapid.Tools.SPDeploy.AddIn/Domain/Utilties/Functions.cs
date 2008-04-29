@@ -55,7 +55,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
                 if (no.Attributes["Condition"] != null && no.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1]))
                     node = no;
             }
-            return string.Concat("http://" + node.ChildNodes[0].InnerText);
+            return "http://" + node.ChildNodes[0].InnerText;
         }
 
 

@@ -229,13 +229,17 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
             hideMenuItems();
 
 
-			Proxies.AddIn.Solution solItem = null;
-			if ((solItem = Array.Find<Proxies.AddIn.Solution>(ServiceManager.Instance.ServiceInstance.GetSols(), delegate(Proxies.AddIn.Solution sol)
+			Proxies.AddIn.Solution solution = null;
+			Proxies.AddIn.Solution[] solutions = ServiceManager.Instance.ServiceInstance.GetSols();
+
+			solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
+					{
+						return string.Compare(sol.Name, AppManager.Instance.WspFileName, true) == 0;
+					});
+
+			if (solution != null)
             {
-                return string.Compare(sol.Name, AppManager.Instance.WspFileName, true) == 0;
-            })) != null)
-            {
-                if (solItem.Deployed)
+				if (solution.Deployed)
                 {
                     _upgradeSolutionItem.Visible =
                     _cycleSolutionItem.Visible =
