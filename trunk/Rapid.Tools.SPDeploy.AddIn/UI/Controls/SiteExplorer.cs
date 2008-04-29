@@ -305,7 +305,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
        
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-			foreach (FileInfo fi in AppManager.Current.GetFeatureFiles())
+			if (((ToolStripMenuItem)sender).Tag == "ServerButton")
             {
 				CreationForm cf = new CreationForm(AppManager.Current.ActiveEnvironment.ServerName, AppManager.Current.ActiveEnvironment.ServerPort);
                 cf.ShowDialog();
