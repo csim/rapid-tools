@@ -45,7 +45,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 RapidOutputWindow.Instance.Activate();
                                 RapidOutputWindow.Instance.Clear();
-                                RapidOutputWindow.Instance.Write(ServiceInstance.RemoveFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
+                                RapidOutputWindow.Instance.Write(AddInService.RemoveFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
                             };
                         _featureMenuItem.Tag = new Guid(featureManifest.Id);
                         _removeFeatureMenu.MenuItems.Add(_featureMenuItem);
@@ -53,7 +53,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 }
                 else
                 {
-					if (Array.Find<Proxies.AddIn.Solution>(ServiceInstance.GetSols(), delegate(Proxies.AddIn.Solution sol)
+					if (Array.Find<Proxies.AddIn.Solution>(AddInService.GetSols(), delegate(Proxies.AddIn.Solution sol)
                     {
                         return string.Compare(sol.Name, ApplicationObject.Solution.Projects.Item(1).Name + ".wsp", true) == 0 && sol.Deployed;
                     }) != null)
@@ -65,7 +65,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                 {
                                     RapidOutputWindow.Instance.Activate();
                                     RapidOutputWindow.Instance.Clear();
-                                    RapidOutputWindow.Instance.Write(ServiceInstance.AddFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
+                                    RapidOutputWindow.Instance.Write(AddInService.AddFeature(SiteUrl, WebGuid, (Guid)((MenuItem)s).Tag));
 
                                 };
                             _featureMenuItem.Tag = new Guid(featureManifest.Id);
