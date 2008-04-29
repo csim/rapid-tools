@@ -29,7 +29,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
 
-            EnvironmentUtil.EnsurePath(filePath);
+			EnvironmentUtil.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
@@ -50,8 +50,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
-			
-			EnvironmentUtil.EnsurePath(filePath);
+
+			EnvironmentUtil.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
 

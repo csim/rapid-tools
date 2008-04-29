@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
+using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -76,7 +77,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 if (_serviceInstance == null)
                 {
 					_serviceInstance = new AddInProxy();
-                    _serviceInstance.Url = string.Concat(Domain.Utilties.EnvironmentUtil.GetSiteUrlFromProject(ApplicationObject), "/_layouts/RapidTools/Services/AddIn.asmx");
+                    _serviceInstance.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", EnvironmentUtil.GetWebApplicationUrl());
                     _serviceInstance.Credentials = CredentialCache.DefaultCredentials;
                 }
                 return _serviceInstance;

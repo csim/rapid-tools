@@ -187,29 +187,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             abc b = new abc();
             menuStrip1.Renderer = new ToolStripProfessionalRenderer(b);
 
-
-            LoadingForm lf = new LoadingForm();
+			LoadingForm lf = new LoadingForm();
             lf.Show();
-
-
-
 
             Domain.Menus.SolutionMenu sm = new Rapid.Tools.SPDeploy.AddIn.Domain.Menus.SolutionMenu(solutionToolStripMenuItem);
             sm.RefreshMenuItemsAsync();
 
-
-
-
             util = WatcherUtilitiy.Instance;
-
-
 
             SiteStructureDocument = new XmlDocument();
             treeView1.Nodes.Add("Loading");
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
-            ServiceManager.Instance.ServiceInstance.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
-            ServiceManager.Instance.ServiceInstance.GetSiteStructureAsync(Domain.Utilties.EnvironmentUtil.GetSiteUrlFromProject(AppManager.Instance.ApplicationObject));
+
+            ServiceManager.Instance.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
+            ServiceManager.Instance.AddInService.GetSiteStructureAsync(EnvironmentUtil.GetWebApplicationUrl());
 
             lf.Close();
 
@@ -427,7 +419,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             {
                 string tpath = Domain.Utilties.EnvironmentUtil.GetRandomTempPath();
 
-                File.WriteAllBytes(tpath, ServiceManager.Instance.ServiceInstance.CompareFeatureFile(f.FullName.Substring(di.FullName.Remove(di.FullName.LastIndexOf("\\")).Length + 1)));
+                File.WriteAllBytes(tpath, ServiceManager.Instance.AddInService.CompareFeatureFile(f.FullName.Substring(di.FullName.Remove(di.FullName.LastIndexOf("\\")).Length + 1)));
 
                 if (!FileCompare(tpath, f.FullName))
                 {

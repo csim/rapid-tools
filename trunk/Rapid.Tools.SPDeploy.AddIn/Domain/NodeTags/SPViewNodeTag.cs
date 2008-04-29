@@ -31,7 +31,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             {
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                    {
-                       Domain.Utilties.EnvironmentUtil.EnsurePath(filePath);
+					   EnvironmentUtil.EnsureDirectory(filePath);
                        File.WriteAllText(filePath, ServiceInstance.GetViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text));
                        ApplicationUtility.OpenFile(filePath);
                    });

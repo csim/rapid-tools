@@ -8,6 +8,8 @@ using EnvDTE80;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.Lists;
+using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
+
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -49,9 +51,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("View List Schema", delegate(object sender, EventArgs e)
             {
-                string _schemaPath = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\SPDeploy\\Workspace\\Lists\\", Node.Text, ".xml");
+                string _schemaPath = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\SPDeploy\Workspace\Lists\", Node.Text, ".xml");
 
-                Domain.Utilties.EnvironmentUtil.EnsurePath(_schemaPath);
+				EnvironmentUtil.EnsureDirectory(_schemaPath);
 
                 File.WriteAllText(_schemaPath, _listsWebService.GetList(Node.Text).OuterXml);
 
@@ -89,7 +91,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             fPath = fPath.Substring(fPath.IndexOf("\\") + 1);
                             fPath = "\\TemplateFiles\\Features\\" + _templateName + "\\" + fPath;
 
-                            Domain.Utilties.EnvironmentUtil.EnsurePath(projectPath + fPath);
+							EnvironmentUtil.EnsureDirectory(projectPath + fPath);
 
                             string tempString = fPath.Substring(fPath.LastIndexOf("\\") + 1);
 
