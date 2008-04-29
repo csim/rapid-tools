@@ -1,6 +1,6 @@
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
-    partial class WebsControl
+    partial class SolutionExplorer
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,11 +28,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebsControl));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.solutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,49 +40,42 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(287, 390);
+            this.treeView1.Size = new System.Drawing.Size(182, 270);
             this.treeView1.TabIndex = 0;
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.solutionToolStripMenuItem});
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(287, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(182, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // toolStripMenuItem1
+            // toolsToolStripMenuItem
             // 
-            this.toolStripMenuItem1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(28, 20);
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
             // 
-            // solutionToolStripMenuItem
+            // refreshToolStripMenuItem
             // 
-            this.solutionToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("solutionToolStripMenuItem.Image")));
-            this.solutionToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.solutionToolStripMenuItem.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.solutionToolStripMenuItem.Name = "solutionToolStripMenuItem";
-            this.solutionToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.solutionToolStripMenuItem.Text = "Deployment";
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
-            // WebsControl
+            // SolutionsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "WebsControl";
-            this.Size = new System.Drawing.Size(287, 414);
+            this.Name = "SolutionsControl";
+            this.Size = new System.Drawing.Size(182, 294);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -95,7 +87,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem solutionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
     }
 }
