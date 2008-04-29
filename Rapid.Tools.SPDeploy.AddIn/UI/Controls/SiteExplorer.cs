@@ -58,8 +58,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         }
 
-        Domain.Utilties.WatcherUtil w;
-
 
 
         DefaultColorTable _defaultColorTable;
@@ -112,7 +110,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
             
-			_bridge.AddInService.GetSiteStructureAsync(AppManager.Instance.GetWebApplicationUrl());
+			_bridge.AddInService.GetSiteStructureAsync(AppManager.Current.ActiveEnvironment.WebApplicationUrl);
 
             if (!_preloaded)
                 _loadingForm.Close();
@@ -140,7 +138,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             else
                 currentNode = currentNode.Nodes.Add(xmlElement.Attributes[0].Value);
 
-            WebNodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Instance.ApplicationObject, NodeType.Web);
+            WebNodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Web);
             tag.Url = xmlElement.Attributes["Url"].Value;
             tag.Guid = new Guid(xmlElement.Attributes["Guid"].Value);
             currentNode.Tag = tag;
@@ -192,7 +190,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             //  add the node
             TreeNode _fileNode = currentNode.Nodes.Add(xmlElement.Attributes["Name"].Value);
 
-            WebNodeTag tag = NodeTagFactory.Create(_fileNode, AppManager.Instance.ApplicationObject, NodeType.File);
+            WebNodeTag tag = NodeTagFactory.Create(_fileNode, AppManager.Current.Application, NodeType.File);
             tag.Url = xmlElement.Attributes["Url"].Value;
             tag.Guid = new Guid(xmlElement.Attributes["Guid"].Value);
             _fileNode.Tag = tag;
@@ -209,7 +207,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             //  add the node
             currentNode = currentNode.Nodes.Add(xmlElement.Attributes["Title"].Value);
 
-            WebNodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Instance.ApplicationObject, NodeType.List);
+            WebNodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.List);
             tag.Url = xmlElement.Attributes["Url"].Value;
             tag.Guid = new Guid(xmlElement.Attributes["Guid"].Value);
             currentNode.Tag = tag;
@@ -227,13 +225,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             XmlNodeList _nodeList = xmlElement.SelectNodes("Views/View");
             currentNode = currentNode.Nodes.Add("Views");
             currentNode.SelectedImageKey = currentNode.ImageKey = "FolderIcon";
-            currentNode.Tag = NodeTagFactory.Create(currentNode, AppManager.Instance.ApplicationObject, NodeType.Null);
+            currentNode.Tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Null);
             foreach (XmlNode no in _nodeList)
             {
 
                 TreeNode tNode = currentNode.Nodes.Add(no.Attributes["Title"].Value);
                 tNode.SelectedImageKey = tNode.ImageKey = "ViewIcon";
-                WebNodeTag t = NodeTagFactory.Create(tNode, AppManager.Instance.ApplicationObject, NodeType.View);
+                WebNodeTag t = NodeTagFactory.Create(tNode, AppManager.Current.Application, NodeType.View);
                 t.Guid = new Guid(no.Attributes["Guid"].Value);
                 t.Url = no.Attributes["Url"].Value;
                 tNode.Tag = t;
@@ -266,7 +264,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
             //  add the node
             currentNode = currentNode.Nodes.Add(xmlElement.Attributes["Title"].Value);
-            currentNode.Tag = NodeTagFactory.Create(currentNode, AppManager.Instance.ApplicationObject, NodeType.Null);
+            currentNode.Tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Null);
 
             //  set the node image
             currentNode.ImageKey = currentNode.SelectedImageKey = "FolderIcon";
@@ -307,9 +305,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
        
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (((ToolStripMenuItem)sender).Tag == "ServerButton")
+			foreach (FileInfo fi in AppManager.Current.GetFeatureFiles())
             {
-                CreationForm cf = new CreationForm(AppManager.Instance.GetMachineName(), AppManager.Instance.GetPort());
+				CreationForm cf = new CreationForm(AppManager.Current.ActiveEnvironment.ServerName, AppManager.Current.ActiveEnvironment.ServerPort);
                 cf.ShowDialog();
             }
             currentNode = null;
