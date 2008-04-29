@@ -12,14 +12,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
    
     public abstract class WebNodeTag : INodeTag
     {
-        private Domain.Utilties.ApplicationUtility _applicationUtility;
+        private Domain.Utilties.ApplicationUtil _applicationUtility;
 
-        public Domain.Utilties.ApplicationUtility ApplicationUtility
+        public Domain.Utilties.ApplicationUtil ApplicationUtility
         {
             get
             {
                 if (_applicationUtility == null)
-                    _applicationUtility = new Rapid.Tools.SPDeploy.AddIn.Domain.Utilties.ApplicationUtility(ApplicationObject);
+                    _applicationUtility = new Rapid.Tools.SPDeploy.AddIn.Domain.Utilties.ApplicationUtil(ApplicationObject);
                 return _applicationUtility;
             }
             set { _applicationUtility = value; }

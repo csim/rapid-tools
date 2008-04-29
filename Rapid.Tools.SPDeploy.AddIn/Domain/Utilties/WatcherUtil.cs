@@ -1,9 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.IO;
 using System.Collections;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -11,17 +9,17 @@ using System.Collections.Specialized;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 {
-    public class WatcherUtilitiy
+    public class WatcherUtil
     {
-        private static readonly WatcherUtilitiy instance = new WatcherUtilitiy();
+		private static readonly WatcherUtil instance = new WatcherUtil();
 
-        public static WatcherUtilitiy Instance
+        public static WatcherUtil Instance
         {
             get { return instance; }
         }       
 
         [Serializable]
-        public class WatcherUtil
+        public class WatcherUtilInfo
         {
             public string siteUrl;
             public Guid webGuid;
@@ -33,7 +31,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         public Hashtable VisualStudioItems;
 
-        private WatcherUtilitiy()
+        private WatcherUtil()
         {
             VisualStudioItems = new Hashtable();
 
@@ -46,11 +44,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
             if (File.Exists(@"C:\theinfo.dat"))
             {
-                XmlSerializer ser = new XmlSerializer(typeof(List<WatcherUtil>));
+                XmlSerializer ser = new XmlSerializer(typeof(List<WatcherUtilInfo>));
                 FileStream fs = new FileStream(@"C:\theinfo.dat", FileMode.Open);
-                List<WatcherUtil> wu = ser.Deserialize(fs) as List<WatcherUtil>;
+                List<WatcherUtilInfo> wu = ser.Deserialize(fs) as List<WatcherUtilInfo>;
 
-                foreach (WatcherUtil u in wu)
+                foreach (WatcherUtilInfo u in wu)
                 {
                     VisualStudioItems.Add(u.filePath, u);
                 }
@@ -63,10 +61,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
         {
             if (VisualStudioItems.Contains(e.FullPath))
             {
-                WatcherUtil util = VisualStudioItems[e.FullPath] as WatcherUtil;
+                WatcherUtilInfo util = VisualStudioItems[e.FullPath] as WatcherUtilInfo;
                 try
                 {
-                    ServiceManager.Instance.AddInService.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
+					ProxyBridge bridge = new ProxyBridge();
+					bridge.AddInService.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
                 }
                 catch (Exception ex)
                 {
@@ -77,7 +76,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         public void AddWatcher(string fileName, string siteUrl, Guid webGuid, Guid fileGuid)
         {
-            WatcherUtil util = new WatcherUtil();
+            WatcherUtilInfo util = new WatcherUtilInfo();
             util.siteUrl = siteUrl;
             util.webGuid = webGuid;
             util.fileGuid = fileGuid;
@@ -95,20 +94,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
 
 
-        ~WatcherUtilitiy()
+        ~WatcherUtil()
         {
 
-            List<WatcherUtil> abc = new List<WatcherUtil>();
+            List<WatcherUtilInfo> abc = new List<WatcherUtilInfo>();
 
             foreach (string k in VisualStudioItems.Keys)
             {
-                WatcherUtil u = new WatcherUtil();
-                u = VisualStudioItems[k] as WatcherUtil;
+                WatcherUtilInfo u = new WatcherUtilInfo();
+                u = VisualStudioItems[k] as WatcherUtilInfo;
                 u.filePath = k;
                 abc.Add(u);
             }
 
-            XmlSerializer ser = new XmlSerializer(typeof(List<WatcherUtil>));
+            XmlSerializer ser = new XmlSerializer(typeof(List<WatcherUtilInfo>));
             FileStream fs = new FileStream(@"C:\theinfo.dat", FileMode.Create);
             ser.Serialize(fs, abc);                        
         }

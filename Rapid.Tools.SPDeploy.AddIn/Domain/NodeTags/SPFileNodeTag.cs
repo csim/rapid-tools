@@ -36,7 +36,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             }
             ApplicationUtility.OpenFile(filePath);
 
-            Domain.Utilties.WatcherUtilitiy.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
+            Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
             Resources.ResourceUtility.SetFileNodeIcon(Node, true);
         }
@@ -85,7 +85,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     ApplicationUtility.OpenFile(filePath);
 
-                    Domain.Utilties.WatcherUtilitiy.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
+                    Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, true);
                 });
@@ -118,7 +118,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
-                    Domain.Utilties.WatcherUtilitiy.Instance.RemoveWatcher(filePath);
+                    Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
 
                     ApplicationUtility.DeleteAndClose(filePath);
 
@@ -129,7 +129,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
-                    Domain.Utilties.WatcherUtilitiy.Instance.RemoveWatcher(filePath);
+                    Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
 
                     ApplicationUtility.DeleteAndClose(filePath);
                 });
@@ -141,7 +141,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                 ApplicationUtility.DeleteAndClose(filePath);
 
-                Domain.Utilties.WatcherUtilitiy.Instance.RemoveWatcher(filePath);
+                Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
             });
 
 
