@@ -17,10 +17,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
 		public static Project GetProject()
 		{
-			DTE2 application = AppManager.Instance.ApplicationObject;
-
-			// TODO: change to the active project
-			return application.Solution.Projects.Item(1);
+			return AppManager.Instance.ApplicationObject.ActiveDocument.ProjectItem.ContainingProject;
 		}
 
 		private static string GetUsername()
@@ -64,9 +61,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
 		public static string GetWebApplicationUrl()
 		{
+
 			XmlElement xconfig = GetUserConfiguration();
-			XmlElement xhost = (XmlElement)xconfig.SelectSingleNode("WspServerName");
-			XmlElement xport = (XmlElement)xconfig.SelectSingleNode("WebApplicationPort");
+
+			XmlNamespaceManager nm = new XmlNamespaceManager(xconfig.OwnerDocument.NameTable);
+			nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
+			
+			XmlElement xhost = (XmlElement)xconfig.SelectSingleNode("n:WspServerName", nm);
+			XmlElement xport = (XmlElement)xconfig.SelectSingleNode("n:WebApplicationPort", nm);
 
 			if (xhost == null)
 				throw new Exception("Could not find server name in SPDeploy.user");
@@ -74,8 +76,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 			if (xport == null)
 				throw new Exception("Could not port name in SPDeploy.user");
 
-			string host = xhost.Value;
-			string port = xport.Value;
+			string host = xhost.InnerText;
+			string port = xport.InnerText;
 
 			if (string.IsNullOrEmpty(port) || port == "80")
 				port = "";
@@ -104,42 +106,26 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         public static DirectoryInfo GetWorkingDirectory()
         {
-			string wdir = string.Format(@"{0}\SPDeploy\Workspace", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-            return new DirectoryInfo(wdir);
+			Project proj = GetProject();
+			string wdir = string.Format(@"{0}\SPDeploy\Workspace\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), proj.Name);
+
+			DirectoryInfo ret = new DirectoryInfo(wdir);
+
+			if (!Directory.Exists(ret.FullName))
+				Directory.CreateDirectory(ret.FullName);
+
+            return ret;
         }
 
 
-        public static string GetSiteUrlFromProject(DTE2 application)
+        public static void EnsureDirectory(string filepath)
         {
-            string path = application.Solution.Projects.Item(1).FullName;
-            path = path.Remove(path.LastIndexOf("\\"));
+			FileInfo finfo = new FileInfo(filepath);
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(path + "\\Properties\\SPDeploy.user");
-
-            XmlNamespaceManager nm = new XmlNamespaceManager(doc.NameTable);
-            nm.AddNamespace("n", "http://schemas.microsoft.com/developer/msbuild/2003");
-
-            XmlNode node = null;
-            foreach (XmlNode no in doc.SelectNodes("/n:Project/n:PropertyGroup", nm))
-            {
-                if (no.Attributes["Condition"] != null && no.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1]))
-                    node = no;
-            }
-            return string.Concat("http://" + node.ChildNodes[0].InnerText);
+			if (!Directory.Exists(finfo.Directory.FullName))
+				Directory.CreateDirectory(finfo.Directory.FullName);
         }
 
-        public static void EnsurePath(string path)
-        {
-            DirectoryInfo di = new DirectoryInfo(path.Remove(3));
-            path = path.Substring(3);
-
-            if (path.Contains("."))
-            {
-                path = path.Remove(path.LastIndexOf("\\"));
-                di.CreateSubdirectory(path);
-            }
-        }
 
         public static void OpenVsItem(string item, DTE2 ApplicationObject)
         {
@@ -154,10 +140,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             return new List<string>(_websProxy.GetActivatedFeatures().ToLower().Split(','));
         }
 
-        public static void Execute(string itemPath)
+        public static void Execute(string filepath)
         {
             System.Diagnostics.Process _process = new System.Diagnostics.Process();
-            _process.StartInfo.FileName = itemPath;
+			_process.StartInfo.FileName = filepath;
             _process.Start();
         }
 

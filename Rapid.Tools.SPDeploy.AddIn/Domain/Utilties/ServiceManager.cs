@@ -11,11 +11,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
         private static readonly ServiceManager instance = new ServiceManager();
 
         private NetworkCredential defaultCredentials = CredentialCache.DefaultNetworkCredentials;
-        private string url = string.Empty;
+        private string _baseurl = string.Empty;
 
         private ServiceManager()
         {
-            url = EnvironmentUtil.GetWebApplicationUrl();
+			_baseurl = EnvironmentUtil.GetWebApplicationUrl();
         }
 
         public static ServiceManager Instance
@@ -25,7 +25,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         private AddInProxy _serviceInstance;
 
-        public AddInProxy ServiceInstance
+        public AddInProxy AddInService
         {
             get
             {
@@ -33,13 +33,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
                 {
                     _serviceInstance = new AddInProxy();
                     _serviceInstance.Credentials = defaultCredentials;
-                    _serviceInstance.Url = url + "/_layouts/RapidTools/Services/AddIn.asmx";
+					_serviceInstance.Url = _baseurl + "/_layouts/RapidTools/Services/AddIn.asmx";
                 }
                 return _serviceInstance;
             }
             set { _serviceInstance = value; }
         }
-
 
 
     }

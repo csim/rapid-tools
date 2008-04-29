@@ -66,7 +66,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
                 WatcherUtil util = VisualStudioItems[e.FullPath] as WatcherUtil;
                 try
                 {
-                    ServiceManager.Instance.ServiceInstance.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
+                    ServiceManager.Instance.AddInService.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
                 }
                 catch (Exception ex)
                 {
