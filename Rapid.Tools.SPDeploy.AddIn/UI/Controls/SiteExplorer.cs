@@ -64,7 +64,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         private WatcherUtil util;
         public delegate void VoidDelegate();
-        SolutionMenu _solutionMenu;
+        DeploymentMenu _solutionMenu;
         public void FillTreeView()
         {
 
@@ -97,7 +97,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             }
 
             if (_solutionMenu == null)
-                _solutionMenu = new SolutionMenu(solutionToolStripMenuItem, toolStripMenuItem1_Click);
+                _solutionMenu = new DeploymentMenu(solutionToolStripMenuItem, toolStripMenuItem1_Click);
             
             _solutionMenu.RefreshAsync();
 
