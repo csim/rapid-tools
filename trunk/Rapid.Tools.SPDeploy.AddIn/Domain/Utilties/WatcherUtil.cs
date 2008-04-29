@@ -38,7 +38,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
         {
             VisualStudioItems = new Hashtable();
 
-			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
+			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
             
 			watcher = new FileSystemWatcher(wdir.FullName);
             watcher.IncludeSubdirectories = true;

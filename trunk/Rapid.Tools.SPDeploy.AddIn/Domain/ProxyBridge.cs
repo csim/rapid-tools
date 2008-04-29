@@ -19,7 +19,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             {
 				if (_addInService == null)
                 {
-					string host = AppManager.Instance.GetWebApplicationUrl();
+					string host = AppManager.Current.ActiveEnvironment.WebApplicationUrl;
 
 					_addInService = new AddInProxy();
 					_addInService.Credentials = CredentialCache.DefaultNetworkCredentials;
@@ -35,7 +35,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			{
 				if (_websService == null)
 				{
-					string host = AppManager.Instance.GetWebApplicationUrl();
+					string host = AppManager.Current.ActiveEnvironment.WebApplicationUrl;
 
 					_websService = new WebsProxy();
 					_websService.Credentials = CredentialCache.DefaultNetworkCredentials;

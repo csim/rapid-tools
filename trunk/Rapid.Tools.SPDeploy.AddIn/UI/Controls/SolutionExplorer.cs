@@ -35,7 +35,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
                 if (_serviceInstance == null)
                 {
                     _serviceInstance = new AddInProxy();
-					_serviceInstance.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", AppManager.Instance.GetWebApplicationUrl());
+					_serviceInstance.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", AppManager.Current.ActiveEnvironment.WebApplicationUrl);
                     _serviceInstance.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
                 return _serviceInstance;

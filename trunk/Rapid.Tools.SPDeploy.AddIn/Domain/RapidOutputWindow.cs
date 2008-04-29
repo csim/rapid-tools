@@ -22,7 +22,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
         private RapidOutputWindow()
         {
-            OutputWindow _mainWindow = AppManager.Instance.ApplicationObject.ToolWindows.OutputWindow;
+            OutputWindow _mainWindow = AppManager.Current.Application.ToolWindows.OutputWindow;
             IEnumerator _enum = _mainWindow.OutputWindowPanes.GetEnumerator();
             while (_enum.MoveNext())
             {

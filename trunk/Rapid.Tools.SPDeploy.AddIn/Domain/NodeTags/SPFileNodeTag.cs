@@ -26,15 +26,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
 
-			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
+			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
 
-			AppManager.Instance.EnsureDirectory(filePath);
+			AppManager.Current.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
             }
-			AppManager.Instance.OpenFile(filePath);
+			AppManager.Current.OpenFile(filePath);
 
             Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
@@ -48,10 +48,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
 
-			DirectoryInfo wdir = AppManager.Instance.GetWorkspaceDirectory();
+			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
 			string filePath = string.Format(@"{0}\{1}\{2}\{3}", wdir.FullName, Node.TreeView.Nodes[0].Text, wguid, Url.Replace("/", @"\"));
 
-			AppManager.Instance.EnsureDirectory(filePath);
+			AppManager.Current.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
                 File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
@@ -69,11 +69,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                 _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
                {
-				   string path = AppManager.Instance.GetRandomTempPath();
+				   string path = AppManager.Current.GetRandomTempPath();
 
                    File.WriteAllBytes(path, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
-				   AppManager.Instance.OpenFile(path);
+				   AppManager.Current.OpenFile(path);
                });
 
                 _contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
@@ -83,7 +83,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
-					AppManager.Instance.OpenFile(filePath);
+					AppManager.Current.OpenFile(filePath);
 
                     Domain.Utilties.WatcherUtil.Instance.AddWatcher(filePath, SiteUrl, WebGuid, Guid);
 
@@ -93,7 +93,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             else
             {
 
-				bool isopen = AppManager.Instance.IsFileOpen(filePath);
+				bool isopen = AppManager.Current.IsFileOpen(filePath);
 
 				if (!isopen)
 				{
@@ -103,7 +103,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 					   {
 						   File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 					   }
-					   AppManager.Instance.OpenFile(filePath);
+					   AppManager.Current.OpenFile(filePath);
 				   });
 				}
 
@@ -117,7 +117,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
 
-					AppManager.Instance.CloseWorkspaceFile(filePath);
+					AppManager.Current.CloseWorkspaceFile(filePath);
 
                 });
                 _contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
@@ -128,7 +128,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                     Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
 
-					AppManager.Instance.CloseWorkspaceFile(filePath);
+					AppManager.Current.CloseWorkspaceFile(filePath);
                 });
             }
 
@@ -136,7 +136,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             {
 				AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.Delete);
 
-				AppManager.Instance.CloseWorkspaceFile(filePath);
+				AppManager.Current.CloseWorkspaceFile(filePath);
 
                 Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(filePath);
             });
