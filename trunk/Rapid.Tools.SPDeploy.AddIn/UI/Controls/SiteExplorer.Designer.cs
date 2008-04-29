@@ -66,6 +66,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(28, 20);
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // solutionToolStripMenuItem
             // 
@@ -76,13 +77,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             this.solutionToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.solutionToolStripMenuItem.Text = "Deployment";
             // 
-            // WebsControl
+            // SiteExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "WebsControl";
+            this.Name = "SiteExplorer";
             this.Size = new System.Drawing.Size(287, 414);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -20,15 +20,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             set { _solutionItem = value; }
         }
 
+        public EventHandler MachineChanged;
+
         private ToolStripMenuItem _addSolutionItem;
         private ToolStripMenuItem _deploySolutionItem;
         private ToolStripMenuItem _retractSolutionItem;
         private ToolStripMenuItem _deleteSolutionItem;
         private ToolStripMenuItem _cycleSolutionItem;
         private ToolStripMenuItem _upgradeSolutionItem;
+        private ToolStripMenuItem _serverUrl;
 
-        public SolutionMenu(ToolStripMenuItem solutionItem)
+        public SolutionMenu(ToolStripMenuItem solutionItem, EventHandler ev)
         {
+            MachineChanged = ev;
+
             _solutionItem = solutionItem;
             _addSolutionItem = new ToolStripMenuItem("Add Solution");
             _deploySolutionItem = new ToolStripMenuItem("Deploy Solution");
@@ -36,7 +41,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             _deleteSolutionItem = new ToolStripMenuItem("Delete Solution");
             _cycleSolutionItem = new ToolStripMenuItem("Cycle Solution");
             _upgradeSolutionItem = new ToolStripMenuItem("Upgrade Solution");
+            _serverUrl = new ToolStripMenuItem(AppManager.Instance.GetMachineName() + ":" + AppManager.Instance.GetPort());
 
+            _solutionItem.DropDownItems.Add(_serverUrl);
+            _solutionItem.DropDownItems.Add(new ToolStripSeparator());
             _solutionItem.DropDownItems.Add(_retractSolutionItem);
             _solutionItem.DropDownItems.Add(_deploySolutionItem);
             _solutionItem.DropDownItems.Add(_deleteSolutionItem);
@@ -44,8 +52,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             _solutionItem.DropDownItems.Add(_cycleSolutionItem);
             _solutionItem.DropDownItems.Add(_upgradeSolutionItem);
 
-
-
+            _serverUrl.Tag = "ServerButton";
+            _serverUrl.Click += ev;
             _retractSolutionItem.Click += new EventHandler(_retractSolutionItem_Click);
             _deploySolutionItem.Click += new EventHandler(_deploySolutionItem_Click);
             _deleteSolutionItem.Click += new EventHandler(_deleteSolutionItem_Click);
