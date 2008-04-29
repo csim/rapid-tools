@@ -6,12 +6,13 @@ using System.Collections;
 using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 using System.IO;
 
-namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
+namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
     public class SolutionMenu
     {
 
         private ToolStripMenuItem _solutionItem;
+		private ProxyBridge _bridge = new ProxyBridge();
 
         public ToolStripMenuItem SolutionItem
         {
@@ -91,54 +92,82 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
         {
             RapidOutputWindow.Instance.Activate();
             RapidOutputWindow.Instance.Clear();
+
+			string output = "";
+
             switch (action)
             {
                 case Action.Deploy:
-                    RapidOutputWindow.Instance.Write("Deploying...", true);
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.DeploySolution(AppManager.Instance.WspFileName), true);
+                    WriteLine("Deploying...");
+                    output = _bridge.AddInService.DeploySolution(AppManager.Instance.WspFileName);
+					WriteLine(output);
                     break;
-                case Action.Retract:
-                    RapidOutputWindow.Instance.Write("Retracting...", true);
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.RetractSolution(AppManager.Instance.WspFileName), true);
+                
+				case Action.Retract:
+					WriteLine("Retracting...");
+					output = _bridge.AddInService.RetractSolution(AppManager.Instance.WspFileName);
+					WriteLine(output);
                     break;
-                case Action.Delete:
-                    RapidOutputWindow.Instance.Write("Deleting...", true);
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.DeleteSolution(AppManager.Instance.WspFileName), true);
+                
+				case Action.Delete:
+					WriteLine("Deleting...");
+                    output = _bridge.AddInService.DeleteSolution(AppManager.Instance.WspFileName);
+					WriteLine(output);
                     break;
-                case Action.Cycle:
-                    RapidOutputWindow.Instance.Write("Retracting...", true);
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.RetractSolution(AppManager.Instance.WspFileName), true);
-                    RefreshMenuItemsAsync();
-                    RapidOutputWindow.Instance.Write("Deleting...", true);
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.DeleteSolution(AppManager.Instance.WspFileName), true);
-                    RefreshMenuItemsAsync();
+                
+				case Action.Cycle:
+					WriteLine("Retracting...");
+                    output = _bridge.AddInService.RetractSolution(AppManager.Instance.WspFileName);
+					WriteLine(output);
+
+                    RefreshAsync();
+                
+					WriteLine("Deleting...");
+                    output = _bridge.AddInService.DeleteSolution(AppManager.Instance.WspFileName);
+					WriteLine(output);
+
+					RefreshAsync();
+                    
+					CompileWsp();
+                    CopyFiles();
+                    
+					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName);
+					WriteLine(output);
+
+					RefreshAsync();
+                    WriteLine("Deploying...");
+                    output = _bridge.AddInService.DeploySolution(AppManager.Instance.WspFileName);
+					WriteLine(output);
+                    break;
+                
+				case Action.Add:
                     CompileWsp();
                     CopyFiles();
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.AddSolution(@"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName), true);
-                    RefreshMenuItemsAsync();
-                    RapidOutputWindow.Instance.Write("Deploying...", true);
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.DeploySolution(AppManager.Instance.WspFileName), true);                    
+					output = _bridge.AddInService.AddSolution(@"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName);
+					WriteLine(output);
                     break;
-                case Action.Add:
-                    CompileWsp();
-                    CopyFiles();
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.AddSolution(@"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName), true);
-                    break;                
+             
                 case Action.Upgrade:
                     CompileWsp();
                     CopyFiles();
-                    RapidOutputWindow.Instance.Write(ServiceManager.Instance.AddInService.UpgradeSolution(AppManager.Instance.WspFileName, @"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName), true);
+                    _bridge.AddInService.UpgradeSolution(AppManager.Instance.WspFileName, @"c:\_spdeploy\" + AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName);
                     break;
+
                 default:
                     break;
             }
-            RapidOutputWindow.Instance.Write("Completed: " + DateTime.Now);
-            RefreshMenuItemsAsync();
+            WriteLine("Completed: " + DateTime.Now);
+            RefreshAsync();
         }
+
+		private void WriteLine(string message)
+		{
+			RapidOutputWindow.Instance.Write(message, true);
+		}
 
         private void CompileWsp()
         {
-            RapidOutputWindow.Instance.Write("Compiling WSP...", true);
+			WriteLine("Compiling WSP...");
 
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\MSBuild.exe");
             psi.Arguments = "/target:CompileWsp " + AppManager.Instance.ProjectPath;
@@ -155,20 +184,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
 
             if (p.ExitCode != 0)
             {
-                RapidOutputWindow.Instance.Write("Compiling WSP Failed!", true);
+				WriteLine("Compiling WSP Failed!");
                 return;
             }
 
-            RapidOutputWindow.Instance.Write("Compiling WSP Successful", true);
+			WriteLine("Compiling WSP Successful");
         }
 
         private void CopyFiles()
-        {                        
-            RapidOutputWindow.Instance.Write("Copying Files...", true);
+        {
+			WriteLine("Copying Files...");
             string wspPath = AppManager.Instance.ProjectPath;
             wspPath = wspPath.Remove(wspPath.LastIndexOf("\\"));
             wspPath = wspPath + "\\obj\\Debug\\" + AppManager.Instance.WspFileName;
-            ServiceManager.Instance.AddInService.SaveFile(AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName, File.ReadAllBytes(wspPath));            
+            _bridge.AddInService.SaveFile(AppManager.Instance.ProjectName + "\\" + AppManager.Instance.WspFileName, File.ReadAllBytes(wspPath));            
         }
 
         public enum Action
@@ -212,7 +241,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
             _deploySolutionItem.Visible = false;
         }
 
-        public void RefreshMenuItemsAsync()
+        public void RefreshAsync()
         {
             if (_solutionItem.Owner.InvokeRequired)
             {
@@ -230,7 +259,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Menus
 
 
 			Proxies.AddIn.Solution solution = null;
-			Proxies.AddIn.Solution[] solutions = ServiceManager.Instance.AddInService.GetSols();
+			Proxies.AddIn.Solution[] solutions = _bridge.AddInService.GetSols();
 
 			solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
 					{

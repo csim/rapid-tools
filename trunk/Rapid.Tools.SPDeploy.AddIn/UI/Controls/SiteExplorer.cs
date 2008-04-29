@@ -35,6 +35,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             set { _siteStructureDocument = value; }
         }
 
+		private ProxyBridge _bridge = new ProxyBridge();
 
         public SiteExplorer()
         {
@@ -54,10 +55,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         }
 
-        Domain.Utilties.WatcherUtilitiy w;
+        Domain.Utilties.WatcherUtil w;
 
 
-        private Domain.Utilties.ApplicationUtility _applicationUtility;
+        private Domain.Utilties.ApplicationUtil _applicationUtility;
 
 
         public class abc : ProfessionalColorTable
@@ -166,17 +167,17 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
       
 
-        public Domain.Utilties.ApplicationUtility ApplicationUtility
+        public Domain.Utilties.ApplicationUtil ApplicationUtility
         {
             get
             {
                 if (_applicationUtility == null)
-                    _applicationUtility = new Rapid.Tools.SPDeploy.AddIn.Domain.Utilties.ApplicationUtility(AppManager.Instance.ApplicationObject);
+                    _applicationUtility = new Rapid.Tools.SPDeploy.AddIn.Domain.Utilties.ApplicationUtil(AppManager.Instance.ApplicationObject);
                 return _applicationUtility;
             }
             set { _applicationUtility = value; }
         }
-        private WatcherUtilitiy util;
+        private WatcherUtil util;
         public delegate void VoidDelegate();
         public void FillTreeView()
         {
@@ -187,18 +188,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			LoadingForm lf = new LoadingForm();
             lf.Show();
 
-            Domain.Menus.SolutionMenu sm = new Rapid.Tools.SPDeploy.AddIn.Domain.Menus.SolutionMenu(solutionToolStripMenuItem);
-            sm.RefreshMenuItemsAsync();
+            SolutionMenu sm = new SolutionMenu(solutionToolStripMenuItem);
+            sm.RefreshAsync();
 
-            util = WatcherUtilitiy.Instance;
+            util = WatcherUtil.Instance;
 
             SiteStructureDocument = new XmlDocument();
             treeView1.Nodes.Add("Loading");
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
 
-            ServiceManager.Instance.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
-            ServiceManager.Instance.AddInService.GetSiteStructureAsync(EnvironmentUtil.GetWebApplicationUrl());
+            _bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
+			_bridge.AddInService.GetSiteStructureAsync(EnvironmentUtil.GetWebApplicationUrl());
 
             lf.Close();
 
@@ -395,7 +396,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         {
             foreach (FileInfo fi in Domain.Utilties.EnvironmentUtil.GetFeatureFiles(AppManager.Instance.ApplicationObject))
             {
-                MessageBox.Show(state(fi).ToString());
+                MessageBox.Show(getState(fi).ToString());
             }
         }
 
@@ -408,21 +409,22 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             DeployedNotUpdated            
         }
 
-        private State state(FileInfo fi)
+        private State getState(FileInfo fi)
         {            
-            string path = fi.FullName.Remove(fi.FullName.LastIndexOf("\\"));
-            DirectoryInfo di = new DirectoryInfo(path);
-            foreach (FileInfo f in di.GetFiles("*", SearchOption.AllDirectories))
-            {
-                string tpath = Domain.Utilties.EnvironmentUtil.GetRandomTempPath();
+			DirectoryInfo dir = fi.Directory;
 
-                File.WriteAllBytes(tpath, ServiceManager.Instance.AddInService.CompareFeatureFile(f.FullName.Substring(di.FullName.Remove(di.FullName.LastIndexOf("\\")).Length + 1)));
+            foreach (FileInfo f in dir.GetFiles("*", SearchOption.AllDirectories))
+            {
+                string tpath = EnvironmentUtil.GetRandomTempPath();
+
+				byte[] rcontents = _bridge.AddInService.CompareFeatureFile(f.FullName.Substring(dir.FullName.Remove(dir.FullName.LastIndexOf("\\")).Length + 1));
+				
+				File.WriteAllBytes(tpath, rcontents);
 
                 if (!FileCompare(tpath, f.FullName))
-                {
                     return State.InstalledNotUpdated;                    
-                }
-            }
+			}
+
             return State.Installed;
         }
 

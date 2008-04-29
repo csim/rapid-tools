@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 {
-    public class ApplicationUtility
+    public class ApplicationUtil
     {
         private DTE2 _applicationObject;
 
@@ -15,7 +15,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             get { return _applicationObject; }           
         }
 
-        public ApplicationUtility(DTE2 applicationObject)
+        public ApplicationUtil(DTE2 applicationObject)
         {
             _applicationObject = applicationObject;
         }
