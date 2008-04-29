@@ -23,7 +23,7 @@ using Rapid.Tools.SPDeploy.AddIn.UI.Forms;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
-    public partial class WebsControl : UserControl
+    public partial class SiteExplorer : UserControl
     {
         private TreeNode currentNode;
 
@@ -36,12 +36,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         }
 
 
-        public WebsControl()
+        public SiteExplorer()
         {
             InitializeComponent();
-
-
-
 
             treeView1.ImageList = new ImageList();
             treeView1.ImageList.Images.Add("GenericIcon", Resources.Images.Files.ICGEN);

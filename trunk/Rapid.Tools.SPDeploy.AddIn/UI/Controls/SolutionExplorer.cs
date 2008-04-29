@@ -14,7 +14,7 @@ using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
-    public partial class SolutionsControl : UserControl
+    public partial class SolutionExplorer : UserControl
     {
 
         private DTE2 _applicationObject;
@@ -109,7 +109,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         
 
 
-        public SolutionsControl()
+        public SolutionExplorer()
         {
             InitializeComponent();
 
