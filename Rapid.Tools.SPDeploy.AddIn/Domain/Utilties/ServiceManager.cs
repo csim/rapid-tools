@@ -15,7 +15,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 
         private ServiceManager()
         {
-            url = Functions.GetSiteUrlFromProject();
+            url = EnvironmentUtil.GetSiteUrlFromProject();
         }
 
         public static ServiceManager Instance

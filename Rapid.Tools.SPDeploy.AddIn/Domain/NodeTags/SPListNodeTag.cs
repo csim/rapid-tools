@@ -51,7 +51,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             {
                 string _schemaPath = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\SPDeploy\\Workspace\\Lists\\", Node.Text, ".xml");
 
-                Domain.Utilties.Functions.EnsurePath(_schemaPath);
+                Domain.Utilties.EnvironmentUtil.EnsurePath(_schemaPath);
 
                 File.WriteAllText(_schemaPath, _listsWebService.GetList(Node.Text).OuterXml);
 
@@ -89,7 +89,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             fPath = fPath.Substring(fPath.IndexOf("\\") + 1);
                             fPath = "\\TemplateFiles\\Features\\" + _templateName + "\\" + fPath;
 
-                            Domain.Utilties.Functions.EnsurePath(projectPath + fPath);
+                            Domain.Utilties.EnvironmentUtil.EnsurePath(projectPath + fPath);
 
                             string tempString = fPath.Substring(fPath.LastIndexOf("\\") + 1);
 
@@ -271,7 +271,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-                Domain.Utilties.Functions.OpenItem(SiteUrl + Url);
+                Domain.Utilties.EnvironmentUtil.Execute(SiteUrl + Url);
             });
 
             return _contextMenu;

@@ -27,9 +27,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             ContextMenu _contextMenu = new ContextMenu();
 
             List<FeatureManifest> _features = new List<FeatureManifest>();
-            foreach (FileInfo fileInfo in Domain.Utilties.Functions.GetFeatureFileInfos(ApplicationObject))
+            foreach (FileInfo fileInfo in Domain.Utilties.EnvironmentUtil.GetFeatureFiles(ApplicationObject))
                 _features.Add(new FeatureManifest(File.ReadAllText(fileInfo.FullName)));
-            List<string> _activatedFeatures = Domain.Utilties.Functions.GetActivatedFeatures(Url);
+            List<string> _activatedFeatures = Domain.Utilties.EnvironmentUtil.GetActivatedFeatures(Url);
 
             MenuItem _addFeatureMenu = new MenuItem("Add Feature");
             MenuItem _removeFeatureMenu = new MenuItem("Remove Feature");
@@ -82,7 +82,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-                Domain.Utilties.Functions.OpenItem(Url);
+                Domain.Utilties.EnvironmentUtil.Execute(Url);
             });
 
             return _contextMenu;

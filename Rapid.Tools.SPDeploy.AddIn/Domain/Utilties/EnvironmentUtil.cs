@@ -11,7 +11,7 @@ using EnvDTE;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
 {
-    public class Functions
+    public class EnvironmentUtil
     {
 
         public static DirectoryInfo GetProjectDirectory(DTE2 application)
@@ -21,9 +21,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             return new DirectoryInfo(path);
         }
 
-        public static FileInfo[] GetFeatureFileInfos(DTE2 ApplicationObject)
+        public static FileInfo[] GetFeatureFiles(DTE2 ApplicationObject)
         {
-            return Domain.Utilties.Functions.GetProjectDirectory(ApplicationObject).GetFiles("feature.xml", SearchOption.AllDirectories);
+            return Domain.Utilties.EnvironmentUtil.GetProjectDirectory(ApplicationObject).GetFiles("feature.xml", SearchOption.AllDirectories);
         }
 
         public static DirectoryInfo GetWorkingDirectory()
@@ -104,7 +104,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             return new List<string>(_websProxy.GetActivatedFeatures().ToLower().Split(','));
         }
 
-        public static void OpenItem(string itemPath)
+        public static void Execute(string itemPath)
         {
             System.Diagnostics.Process _process = new System.Diagnostics.Process();
             _process.StartInfo.FileName = itemPath;

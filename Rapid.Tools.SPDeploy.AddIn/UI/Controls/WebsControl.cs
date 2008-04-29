@@ -209,7 +209,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
             ServiceManager.Instance.ServiceInstance.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
-            ServiceManager.Instance.ServiceInstance.GetSiteStructureAsync(Domain.Utilties.Functions.GetSiteUrlFromProject(AppManager.Instance.ApplicationObject));
+            ServiceManager.Instance.ServiceInstance.GetSiteStructureAsync(Domain.Utilties.EnvironmentUtil.GetSiteUrlFromProject(AppManager.Instance.ApplicationObject));
 
             lf.Close();
 
@@ -404,7 +404,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         private void abbToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (FileInfo fi in Domain.Utilties.Functions.GetFeatureFileInfos(AppManager.Instance.ApplicationObject))
+            foreach (FileInfo fi in Domain.Utilties.EnvironmentUtil.GetFeatureFiles(AppManager.Instance.ApplicationObject))
             {
                 MessageBox.Show(state(fi).ToString());
             }
@@ -425,7 +425,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             DirectoryInfo di = new DirectoryInfo(path);
             foreach (FileInfo f in di.GetFiles("*", SearchOption.AllDirectories))
             {
-                string tpath = Domain.Utilties.Functions.GetRandomTempPath();
+                string tpath = Domain.Utilties.EnvironmentUtil.GetRandomTempPath();
 
                 File.WriteAllBytes(tpath, ServiceManager.Instance.ServiceInstance.CompareFeatureFile(f.FullName.Substring(di.FullName.Remove(di.FullName.LastIndexOf("\\")).Length + 1)));
 

@@ -23,13 +23,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + Node.Parent.Parent.Text + "\\" + Node.Text + ".xml";
+            string filePath = Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + Node.Parent.Parent.Text + "\\" + Node.Text + ".xml";
 
             if (ApplicationObject.ActiveDocument == null || ApplicationObject.ActiveDocument.FullName != filePath)
             {
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                    {
-                       Domain.Utilties.Functions.EnsurePath(filePath);
+                       Domain.Utilties.EnvironmentUtil.EnsurePath(filePath);
                        File.WriteAllText(filePath, ServiceInstance.GetViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text));
                        ApplicationUtility.OpenFile(filePath);
                    });

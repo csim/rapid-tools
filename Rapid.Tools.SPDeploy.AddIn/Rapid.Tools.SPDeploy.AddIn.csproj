@@ -68,7 +68,7 @@
     <Compile Include="Domain\NodeTags\SPWebNodeTag.cs" />
     <Compile Include="Domain\RapidOutputWindow.cs" />
     <Compile Include="Domain\Utilties\ApplicationUtility.cs" />
-    <Compile Include="Domain\Utilties\Functions.cs" />
+    <Compile Include="Domain\Utilties\EnvironmentUtil.cs" />
     <Compile Include="Domain\Utilties\ServiceManager.cs" />
     <Compile Include="Domain\Utilties\WatcherUtilitiy.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />

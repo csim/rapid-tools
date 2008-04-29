@@ -23,8 +23,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
 				ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
 
-            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
-            Domain.Utilties.Functions.EnsurePath(filePath);
+            string filePath = Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
+            Domain.Utilties.EnvironmentUtil.EnsurePath(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
@@ -41,8 +41,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-            string filePath = Domain.Utilties.Functions.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
-            Domain.Utilties.Functions.EnsurePath(filePath);
+            string filePath = Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + WebGuid.ToString().Replace("{", string.Empty).Replace("}", string.Empty) + "\\" + Url.Replace("/", "\\");
+            Domain.Utilties.EnvironmentUtil.EnsurePath(filePath);
             if (!File.Exists(filePath))
             {
                 File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
@@ -62,7 +62,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                 _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
                {
-                   string path = Domain.Utilties.Functions.GetRandomTempPath();
+                   string path = Domain.Utilties.EnvironmentUtil.GetRandomTempPath();
 
                    File.WriteAllBytes(path, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
 
