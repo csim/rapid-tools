@@ -36,7 +36,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
         private WatcherUtilitiy()
         {
             VisualStudioItems = new Hashtable();
-            watcher = new FileSystemWatcher(Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath());
+
+			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+            
+			watcher = new FileSystemWatcher(wdir.FullName);
             watcher.IncludeSubdirectories = true;
             watcher.Renamed += new RenamedEventHandler(watcher_Renamed);
             watcher.EnableRaisingEvents = true;

@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using EnvDTE80;
+using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -23,7 +24,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
             ContextMenu _contextMenu = new ContextMenu();
 
-            string filePath = Domain.Utilties.EnvironmentUtil.GetWorkingDirectoryPath() + "\\" + Node.TreeView.Nodes[0].Text + "\\" + Node.Parent.Parent.Text + "\\" + Node.Text + ".xml";
+			DirectoryInfo wdir = EnvironmentUtil.GetWorkingDirectory();
+			string filePath = string.Format(@"{0}\{1}\{2}\{3}.xml", wdir.FullName, Node.TreeView.Nodes[0].Text, Node.Parent.Parent.Text, Node.Text);
 
             if (ApplicationObject.ActiveDocument == null || ApplicationObject.ActiveDocument.FullName != filePath)
             {
