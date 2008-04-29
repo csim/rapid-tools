@@ -21,8 +21,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override void Action()
         {
-            if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
-				ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
+            if (!AddInService.IsCheckedOut(SiteUrl, WebGuid, Guid))
+				AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
 
 			string wguid = WebGuid.ToString().Replace("{", "").Replace("}", "");
 
@@ -32,7 +32,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			EnvironmentUtil.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
             {
-                File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
+                File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
             }
             ApplicationUtility.OpenFile(filePath);
 
@@ -53,7 +53,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 			EnvironmentUtil.EnsureDirectory(filePath);
             if (!File.Exists(filePath))
-                File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
+                File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
 
             //_contextMenu.MenuItems.Add("GetfileInfo", delegate(object sender, EventArgs e)
@@ -64,14 +64,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             //});
 
 
-            if (!ServiceInstance.IsCheckedOut(SiteUrl, WebGuid, Guid))
+            if (!AddInService.IsCheckedOut(SiteUrl, WebGuid, Guid))
             {
 
                 _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
                {
                    string path = Domain.Utilties.EnvironmentUtil.GetRandomTempPath();
 
-                   File.WriteAllBytes(path, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
+                   File.WriteAllBytes(path, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
                    ApplicationUtility.OpenFile(path);
                });
@@ -79,9 +79,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 _contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
                 {
 
-					ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
+					AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckOut);
 
-                    File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
+                    File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
 
                     ApplicationUtility.OpenFile(filePath);
 
@@ -98,11 +98,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                     if (doc.FullName == filePath)
                         goto Label_001;
                 }
+
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                {
                    if (!File.Exists(filePath))
                    {
-                       File.WriteAllBytes(filePath, ServiceInstance.OpenBinary(SiteUrl, WebGuid, Guid));
+                       File.WriteAllBytes(filePath, AddInService.OpenBinary(SiteUrl, WebGuid, Guid));
                    }
                    ApplicationUtility.OpenFile(filePath);
                });
@@ -111,24 +112,24 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                
                 _contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
                 {
-                    ServiceInstance.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));
+                    AddInService.SaveBinary(SiteUrl, WebGuid, Guid, File.ReadAllBytes(filePath));
 
-					ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckIn);
+					AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.CheckIn);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
-                    Domain.Utilties.WatcherUtilitiy.Instance.removeWatcher(filePath);
+                    Domain.Utilties.WatcherUtilitiy.Instance.RemoveWatcher(filePath);
 
                     ApplicationUtility.DeleteAndClose(filePath);
 
                 });
                 _contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
                 {
-					ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.UndoCheckOut);
+					AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.UndoCheckOut);
 
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 
-                    Domain.Utilties.WatcherUtilitiy.Instance.removeWatcher(filePath);
+                    Domain.Utilties.WatcherUtilitiy.Instance.RemoveWatcher(filePath);
 
                     ApplicationUtility.DeleteAndClose(filePath);
                 });
@@ -136,11 +137,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
             {
-				ServiceInstance.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.Delete);
+				AddInService.PerformFileAction(SiteUrl, WebGuid, Guid, Proxies.AddIn.FileActions.Delete);
 
                 ApplicationUtility.DeleteAndClose(filePath);
 
-                Domain.Utilties.WatcherUtilitiy.Instance.removeWatcher(filePath);
+                Domain.Utilties.WatcherUtilitiy.Instance.RemoveWatcher(filePath);
             });
 
 

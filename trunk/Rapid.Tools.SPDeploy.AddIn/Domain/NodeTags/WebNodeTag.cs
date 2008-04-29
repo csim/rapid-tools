@@ -70,7 +70,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         private AddInProxy _serviceInstance;
 
-        public AddInProxy ServiceInstance
+        public AddInProxy AddInService
         {
             get
             {

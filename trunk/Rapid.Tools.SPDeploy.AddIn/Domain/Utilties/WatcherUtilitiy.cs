@@ -84,7 +84,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.Utilties
             VisualStudioItems[fileName] = util;
         }
 
-        public void removeWatcher(string fileName)
+        public void RemoveWatcher(string fileName)
         {
             if (VisualStudioItems.Contains(fileName))
                 VisualStudioItems.Remove(fileName);

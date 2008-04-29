@@ -81,7 +81,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                         _templateName = string.Join(string.Empty, _templateDisplayName.Split(' '));
                         _templateNumber = _listDialog.TemplateNumber;
 
-                        foreach (string s in ServiceInstance.featureFiles(_listsWebService.GetList(Node.Text).OuterXml))
+                        foreach (string s in AddInService.featureFiles(_listsWebService.GetList(Node.Text).OuterXml))
                         {
                             string projectPath = ApplicationObject.Solution.Projects.Item(1).FullName;
                             projectPath = projectPath.Remove(projectPath.LastIndexOf("\\"));
@@ -98,12 +98,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                             if (tempString.ToLower() == "schema.xml")
                             {
-                                string schema = ServiceInstance.GetListSchema(SiteUrl, WebGuid, Guid);
+                                string schema = AddInService.GetListSchema(SiteUrl, WebGuid, Guid);
 
 
                                 XmlDocument oSchema = new XmlDocument();
                                 Encoding enc = Encoding.UTF8;
-                                oSchema.LoadXml(enc.GetString(ServiceInstance.OpenFile(s)));
+                                oSchema.LoadXml(enc.GetString(AddInService.OpenFile(s)));
 
                                 XmlDocument nSchema = new XmlDocument();
                                 nSchema.LoadXml(schema);
@@ -114,7 +114,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                     oSchema.SelectSingleNode("/List/MetaData/Fields").InnerXml = nSchema.SelectSingleNode("/List/Fields").InnerXml;
 
                                     XmlDocument doc = new XmlDocument();
-                                    doc.LoadXml(ServiceInstance.GetViewNodes(SiteUrl, WebGuid, Guid).OuterXml);
+                                    doc.LoadXml(AddInService.GetViewNodes(SiteUrl, WebGuid, Guid).OuterXml);
 
 
                                     XmlNode formNode = oSchema.SelectSingleNode("/List/MetaData/Forms");
@@ -161,7 +161,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 featureFile = projectPath + fPath;
                                 XmlDocument fe = new XmlDocument();
-                                File.WriteAllBytes(projectPath + fPath, ServiceInstance.OpenFile(s));
+                                File.WriteAllBytes(projectPath + fPath, AddInService.OpenFile(s));
                                 fe.Load(projectPath + fPath);
 
                                 fe.DocumentElement.Attributes["Id"].Value = Guid.NewGuid().ToString().Replace("{", "").Replace("}", "");
@@ -171,7 +171,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                 fe.Save(featureFile);
                             }
                             else
-                                File.WriteAllBytes(projectPath + fPath, ServiceInstance.OpenFile(s));
+                                File.WriteAllBytes(projectPath + fPath, AddInService.OpenFile(s));
 
                         }
 
@@ -242,13 +242,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 
                         schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml = string.Empty;
-                        foreach (string s in ServiceInstance.GetContentTypeNames(SiteUrl, WebGuid, Guid))
+                        foreach (string s in AddInService.GetContentTypeNames(SiteUrl, WebGuid, Guid))
                         {
                             schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml += s;
                         }
 
 
-						Proxies.AddIn.ListOptions lo = ServiceInstance.GetOptions(SiteUrl, WebGuid, Guid);
+						Proxies.AddIn.ListOptions lo = AddInService.GetOptions(SiteUrl, WebGuid, Guid);
                         if (lo.AllowContentTypes)
                             schemaDocument.DocumentElement.SetAttribute("AllowContentTypes", "true");
                         if (lo.ContentTypesEnabled)

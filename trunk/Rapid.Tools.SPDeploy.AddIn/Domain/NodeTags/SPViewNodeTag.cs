@@ -32,7 +32,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                    {
 					   EnvironmentUtil.EnsureDirectory(filePath);
-                       File.WriteAllText(filePath, ServiceInstance.GetViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text));
+                       File.WriteAllText(filePath, AddInService.GetViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text));
                        ApplicationUtility.OpenFile(filePath);
                    });
             }
@@ -42,7 +42,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             {
                 _contextMenu.MenuItems.Add("Save To List", delegate(object sender, EventArgs e)
                 {
-                    ServiceInstance.UpdateViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text, File.ReadAllText(filePath));
+                    AddInService.UpdateViewSchema(SiteUrl, WebGuid, ListGuid, Node.Text, File.ReadAllText(filePath));
                     ApplicationUtility.DeleteAndClose(filePath);
                 });
                 _contextMenu.MenuItems.Add("Remove From Workspace", delegate(object sender, EventArgs e)
