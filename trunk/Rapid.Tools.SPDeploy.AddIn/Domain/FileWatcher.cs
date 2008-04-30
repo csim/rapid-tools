@@ -6,6 +6,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Collections.Specialized;
+using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
@@ -21,22 +22,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			}
         }       
 
-        [Serializable]
-        public class WatcherUtilInfo
-        {
-            public string siteUrl;
-            public Guid webGuid;
-            public Guid fileGuid;
-            public string filePath;
-        }
-
         FileSystemWatcher watcher;
 
-        public Hashtable WatchFiles;
+        public Dictionary<string, NodeTag> WatchFiles;
 
         public FileWatcher()
         {
-            WatchFiles = new Hashtable();
+            WatchFiles = new Dictionary<string,NodeTag>();
 
 			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
             
@@ -48,40 +40,46 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         }
 
 
-
-		public void AddWatcher(FileInfo file, string siteUrl, Guid webGuid, Guid fileGuid)
+		public void AddWatcher(NodeTag tag)
         {
-            WatcherUtilInfo util = new WatcherUtilInfo();
-            util.siteUrl = siteUrl;
-            util.webGuid = webGuid;
-            util.fileGuid = fileGuid;
-            WatchFiles[file.FullName] = util;
+			WatchFiles.Add(tag.WorkspacePath.FullName, tag);
         }
 
-        public void RemoveWatcher(FileInfo file)
+		public void RemoveWatcher(NodeTag tag)
         {
-			if (WatchFiles.Contains(file.FullName))
-				WatchFiles.Remove(file.FullName);
+			string wpath = tag.WorkspacePath.FullName;
+
+			if (WatchFiles.ContainsKey(wpath))
+				WatchFiles.Remove(wpath);
         }
-
-
+		
 
 		private void FileRenamed(object sender, RenamedEventArgs e)
 		{
 			try
 			{
-				if (WatchFiles.Contains(e.FullPath))
+				if (WatchFiles.ContainsKey(e.FullPath))
 				{
-					WatcherUtilInfo util = WatchFiles[e.FullPath] as WatcherUtilInfo;
+					NodeTag tag = WatchFiles[e.FullPath];
 
-					// TODO: figure out the file locking here -- this is a temporary fix
-					System.Threading.Thread.Sleep(1000);
-					AppManager.Current.ActiveBridge.AddInService.SaveBinary(util.siteUrl, util.webGuid, util.fileGuid, File.ReadAllBytes(e.FullPath));
+					if (tag.TagType == NodeType.File)
+					{
+						// TODO: figure out the file locking here -- this is a temporary fix
+						System.Threading.Thread.Sleep(1000);
+						AppManager.Current.ActiveBridge.AddInService.SaveBinary(tag.WebID, tag.ID, File.ReadAllBytes(e.FullPath));
+					}
+					else if (tag.TagType == NodeType.View)
+					{
+						// TODO: figure out the file locking here -- this is a temporary fix
+						System.Threading.Thread.Sleep(1000);
+						AppManager.Current.ActiveBridge.AddInService.UpdateViewSchema(tag.WebID, tag.ListID, tag.Node.Text, File.ReadAllText(e.FullPath));
+					}
+
 				}
 			}
 			catch (Exception ex)
 			{
-				ExceptionUtil.Handle(ex);
+				AppManager.Current.Write(ex);
 			}
 		}
 

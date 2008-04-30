@@ -76,8 +76,9 @@
     <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TemplateFiles\Layouts\RapidTools\Services\AddIn.cs">
+    <Compile Include="TemplateFiles\Layouts\RapidTools\Services\AddIn.asmx.cs">
       <SubType>Component</SubType>
+      <DependentUpon>AddIn.asmx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\SPExceptionUtil.cs" />
     <Compile Include="Utilities\SPCamlUtil.cs" />

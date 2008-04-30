@@ -57,10 +57,10 @@ namespace Rapid.Tools.Utilities
 
 		public static string Format(Exception ex)
 		{
-			return FormatException(ex, null);
+			return Format(ex, null);
 		}
 
-		public static string FormatException(Exception ex, NameValueCollection additionalInfo)
+		public static string Format(Exception ex, NameValueCollection additionalInfo)
 		{
 
 			if (additionalInfo == null) additionalInfo = GetAdditionalInfo(ex, null);

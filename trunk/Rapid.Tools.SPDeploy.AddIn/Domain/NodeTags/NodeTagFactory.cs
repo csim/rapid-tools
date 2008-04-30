@@ -29,10 +29,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                     return new NullNodeTag();
                     break;
                 case NodeType.Web:
-                    return new SPWebNodeTag(node, applicationObject);
+                    return new SPWebNodeTag(node);
                     break;
                 case NodeType.List:
-                    return new SPListNodeTag(node, applicationObject);
+                    return new SPListNodeTag(node);
                     break;
                 case NodeType.ListItem:
                     return new NullNodeTag();
@@ -41,10 +41,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                     return new NullNodeTag();
                     break;
                 case NodeType.File:
-                    return new SPFileNodeTag(node, applicationObject);
+                    return new SPFileNodeTag(node);
                     break;
                 case NodeType.View:
-                    return new SPViewNodeTag(node, applicationObject);
+                    return new SPViewNodeTag(node);
                     break;
                 default:
                     break;

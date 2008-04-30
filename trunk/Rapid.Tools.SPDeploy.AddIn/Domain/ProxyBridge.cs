@@ -21,7 +21,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 					string host = AppManager.Current.ActiveEnvironment.WebApplicationUrl;
 
 					_addInService = new AddInProxy();
-					_addInService.Credentials = CredentialCache.DefaultNetworkCredentials;
+					_addInService.Credentials = CredentialCache.DefaultCredentials;
 					_addInService.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", host);
                 }
 				return _addInService;
@@ -37,7 +37,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 					string host = AppManager.Current.ActiveEnvironment.WebApplicationUrl;
 
 					_websService = new WebsProxy();
-					_websService.Credentials = CredentialCache.DefaultNetworkCredentials;
+					_websService.Credentials = CredentialCache.DefaultCredentials;
 					_websService.Url = string.Format("{0}/_vti_bin/Webs.asmx", host);
 				}
 				return _websService;

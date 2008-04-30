@@ -10,10 +10,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
     public class SPWebNodeTag : NodeTag
     {
-        public SPWebNodeTag(TreeNode node, DTE2 applicationObject)
+        public SPWebNodeTag(TreeNode node)
         {
-            this.TagType = NodeType.Web;
-            this.ApplicationObject = applicationObject;
+            TagType = NodeType.Web;
             _node = node;
         }
 
@@ -47,7 +46,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 RapidOutputWindow.Instance.Activate();
                                 RapidOutputWindow.Instance.Clear();
-								RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.RemoveFeature(SiteUrl, WebID, (Guid)((MenuItem)s).Tag));
+								RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.RemoveFeature(WebID, (Guid)((MenuItem)s).Tag));
                             };
                         _featureMenuItem.Tag = new Guid(featureManifest.Id);
                         _removeFeatureMenu.MenuItems.Add(_featureMenuItem);
@@ -55,9 +54,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 }
                 else
                 {
-					if (Array.Find<Proxies.AddIn.Solution>(AppManager.Current.ActiveBridge.AddInService.GetSols(), delegate(Proxies.AddIn.Solution sol)
+					if (Array.Find<Proxies.AddIn.Solution>(AppManager.Current.ActiveBridge.AddInService.GetSolutions(), delegate(Proxies.AddIn.Solution sol)
                     {
-                        return string.Compare(sol.Name, ApplicationObject.Solution.Projects.Item(1).Name + ".wsp", true) == 0 && sol.Deployed;
+						return string.Compare(sol.Name, AppManager.Current.ActiveWspFileName, true) == 0 && sol.Deployed;
                     }) != null)
                     {
                         if (Node.Parent == null || featureManifest.Scope == "Web")
@@ -67,7 +66,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                 {
                                     RapidOutputWindow.Instance.Activate();
                                     RapidOutputWindow.Instance.Clear();
-									RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.AddFeature(SiteUrl, WebID, (Guid)((MenuItem)s).Tag));
+									RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.AddFeature(WebID, (Guid)((MenuItem)s).Tag));
 
                                 };
                             _featureMenuItem.Tag = new Guid(featureManifest.Id);
