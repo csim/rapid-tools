@@ -11,7 +11,6 @@ using EnvDTE;
 using Microsoft.Win32;
 using System.Xml;
 using System.Security.Principal;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Wizard
