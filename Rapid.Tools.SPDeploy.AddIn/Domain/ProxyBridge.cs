@@ -4,7 +4,6 @@ using System.Text;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.Webs;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {

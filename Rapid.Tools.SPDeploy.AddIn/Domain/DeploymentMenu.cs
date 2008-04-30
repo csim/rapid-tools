@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 using System.IO;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain

@@ -71,7 +71,7 @@
     <Compile Include="Domain\RapidOutputWindow.cs" />
     <Compile Include="Domain\ProxyBridge.cs" />
     <Compile Include="Domain\SPEnvironmentInfo.cs" />
-    <Compile Include="Domain\Utilties\WatcherUtil.cs" />
+    <Compile Include="Domain\FileWatcher.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\Control.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\CustomAction.cs" />

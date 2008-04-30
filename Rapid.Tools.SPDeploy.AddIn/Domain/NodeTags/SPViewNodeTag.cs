@@ -4,7 +4,6 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using EnvDTE80;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {

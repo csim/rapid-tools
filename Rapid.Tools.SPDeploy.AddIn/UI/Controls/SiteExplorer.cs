@@ -18,7 +18,6 @@ using Rapid.Tools.SPDeploy.AddIn.Proxies.Webs;
 using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.ElementManifest;
 using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 using Rapid.Tools.SPDeploy.AddIn.UI.Forms;
 using Rapid.Tools.SPDeploy.AddIn.UI.Wizard;
 
@@ -62,7 +61,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         bool _preloaded = false;
       
 
-        private WatcherUtil util;
+        private FileWatcher util;
         public delegate void VoidDelegate();
         DeploymentMenu _solutionMenu;
         public void FillTreeView()
@@ -101,7 +100,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             
             _solutionMenu.RefreshAsync();
 
-            util = WatcherUtil.Instance;
+            util = FileWatcher.Instance;
 
             SiteStructureDocument = new XmlDocument();
             treeView1.Nodes.Add("Loading");

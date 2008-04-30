@@ -43,7 +43,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 		private SPEnvironmentInfo _activeEnvironment = null;
 		private DirectoryInfo _activeWorkspaceDirectory = null;
 		private string _activeWspFileName = null;
+		
 		private ProxyBridge _activeBridge = null;
+		private FileWatcher _activeFileWatcher = null;
 
 		public Project ActiveProject
 		{
@@ -108,6 +110,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			}
 		}
 
+		public FileWatcher ActiveFileWatcher
+		{
+			get {
+				if (_activeFileWatcher == null)
+					_activeFileWatcher = new FileWatcher();
+
+				return _activeFileWatcher; 
+			}
+		}
+
 
 		public void ResetActiveProject()
 		{
@@ -116,6 +128,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			_activeWorkspaceDirectory = null;
 			_activeWspFileName = null;
 			_activeBridge = null;
+			_activeFileWatcher = null;
 		}
 
 

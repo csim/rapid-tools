@@ -8,7 +8,6 @@ using EnvDTE80;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.Lists;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags

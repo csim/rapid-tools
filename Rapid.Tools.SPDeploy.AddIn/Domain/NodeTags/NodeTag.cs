@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using EnvDTE80;
 using System.Net;
 using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
-using Rapid.Tools.SPDeploy.AddIn.Domain.Utilties;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
@@ -77,7 +76,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			byte[] contents = AppManager.Current.ActiveBridge.AddInService.OpenBinary(SiteUrl, WebID, ID);
 			File.WriteAllBytes(WorkspacePath.FullName, contents);
 
-			Domain.Utilties.WatcherUtil.Instance.AddWatcher(WorkspacePath, SiteUrl, WebID, ID);
+			AppManager.Current.ActiveFileWatcher.AddWatcher(WorkspacePath, SiteUrl, WebID, ID);
 
 			AppManager.Current.Application.ItemOperations.OpenFile(WorkspacePath.FullName, EnvDTE.Constants.vsViewKindTextView);
 		}
@@ -95,7 +94,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 				//File.Delete(WorkspacePath.FullName);
 			}
 
-			Domain.Utilties.WatcherUtil.Instance.RemoveWatcher(WorkspacePath);
+			AppManager.Current.ActiveFileWatcher.RemoveWatcher(WorkspacePath);
 		}
 
 
