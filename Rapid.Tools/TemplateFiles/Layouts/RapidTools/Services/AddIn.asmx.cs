@@ -319,9 +319,6 @@ namespace Rapid.Tools.Layouts.Services
             return features;
         }
 
-
-
-
 		public void ExecuteAdminJobs(string wspName)
 		{
 			//SPRunningJobCollection jobs = SPWebService.AdministrationService.RunningJobs;
@@ -338,8 +335,6 @@ namespace Rapid.Tools.Layouts.Services
 			//}
 
 		}
-
-
 
 
         [WebMethod]
