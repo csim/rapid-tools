@@ -9,13 +9,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
     public class SPViewNodeTag : NodeTag
     {
-
-        private Guid ListID;
-
-        public SPViewNodeTag(TreeNode node, DTE2 applicationObject)
+        public SPViewNodeTag(TreeNode node)
         {
             _node = node;
-            ApplicationObject = applicationObject;
+			TagType = NodeType.View;
             ListID = ((NodeTag)Node.Parent.Parent.Tag).ID;
         }
 
@@ -24,30 +21,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             ContextMenu _contextMenu = new ContextMenu();
 
 			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
-			string filePath = string.Format(@"{0}\{1}\{2}\{3}.xml", wdir.FullName, Node.TreeView.Nodes[0].Text, Node.Parent.Parent.Text, Node.Text);
+			string wpath = WorkspacePath.FullName;
 
-            if (ApplicationObject.ActiveDocument == null || ApplicationObject.ActiveDocument.FullName != filePath)
+			if (AppManager.Current.Application.ActiveDocument == null || AppManager.Current.Application.ActiveDocument.FullName != wpath)
             {
                 _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
                    {
-					   AppManager.Current.EnsureDirectory(filePath);
-					   File.WriteAllText(filePath, AppManager.Current.ActiveBridge.AddInService.GetViewSchema(SiteUrl, WebID, ListID, Node.Text));
-                       AppManager.Current.OpenFile(filePath);
+					   OpenWorkspaceFile();
                    });
-            }
-
-
-            if (File.Exists(filePath))
-            {
-                _contextMenu.MenuItems.Add("Save To List", delegate(object sender, EventArgs e)
-                {
-					AppManager.Current.ActiveBridge.AddInService.UpdateViewSchema(SiteUrl, WebID, ListID, Node.Text, File.ReadAllText(filePath));
-					AppManager.Current.CloseFile(filePath);
-                });
-                _contextMenu.MenuItems.Add("Remove From Workspace", delegate(object sender, EventArgs e)
-                {
-					AppManager.Current.CloseFile(filePath);
-                });
             }
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
@@ -60,7 +41,29 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override void DoubleClick()
         {
-            
+			OpenWorkspaceFile();
         }
+
+		public void OpenWorkspaceFile()
+		{
+			string wpath = WorkspacePath.FullName;
+			AppManager.Current.EnsureDirectory(wpath);
+			
+			File.WriteAllText(wpath, AppManager.Current.ActiveBridge.AddInService.GetViewSchema(WebID, ListID, Node.Text));
+			AppManager.Current.OpenFile(wpath);
+
+			AppManager.Current.ActiveFileWatcher.AddWatcher(this);
+		}
+
+		public void CloseWorkspaceFile()
+		{
+			if (File.Exists(WorkspacePath.FullName))
+			{
+				AppManager.Current.CloseFile(WorkspacePath.FullName);
+				//File.Delete(WorkspacePath.FullName);
+			}
+
+			AppManager.Current.ActiveFileWatcher.RemoveWatcher(this);
+		}
     }
 }

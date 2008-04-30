@@ -1,1446 +1,1381 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://SPProject" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://SPProject" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://SPProject">
-      <s:import namespace="http://microsoft.com/wsdl/types/" />
-      <s:element name="GetSiteStructure">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetSiteStructureResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetSiteStructureResult">
-              <s:complexType mixed="true">
-                <s:sequence>
-                  <s:any />
-                </s:sequence>
-              </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeleteFile">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="fileUrl" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeleteFileResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="AddFile">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-            <s:element minOccurs="0" maxOccurs="1" name="fileUrl" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="bytes" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddFileResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="IsCheckedOut">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="fileGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="IsCheckedOutResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="IsCheckedOutResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetFileInfo">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="fileGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetFileInfoResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetFileInfoResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="Views">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="ViewsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="ViewsResult" type="tns:ArrayOfString" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfString">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="featureFiles">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="listSchema" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="featureFilesResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="featureFilesResult" type="tns:ArrayOfString" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="OpenBinary">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="fileGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="OpenBinaryResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="OpenBinaryResult" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="SaveBinary">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="fileGuid" type="s1:guid" />
-            <s:element minOccurs="0" maxOccurs="1" name="bytes" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="SaveBinaryResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="SaveBinaryResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetInstalledFeatues">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="featureIds" type="tns:ArrayOfGuid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfGuid">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="guid" type="s1:guid" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetInstalledFeatuesResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetInstalledFeatuesResult" type="tns:ArrayOfString" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UpgradeSolution">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="solution" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="filePath" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UpgradeSolutionResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UpgradeSolutionResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="SaveFile">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="filePath" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="contents" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="SaveFileResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="SaveFileResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddSolution">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="filePath" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddSolutionResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="AddSolutionResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetSolutions">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetSolutionsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetSolutionsResult" type="tns:ArrayOfString" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetSols">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetSolsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetSolsResult" type="tns:ArrayOfSolution" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfSolution">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Solution" nillable="true" type="tns:Solution" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Solution">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="Deployed" type="s:boolean" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="DeploySolution">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="solutionName" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeploySolutionResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="DeploySolutionResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RetractSolution">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="solutionName" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RetractSolutionResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="RetractSolutionResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeleteSolution">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="solutionName" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeleteSolutionResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="DeleteSolutionResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddFeature">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="featureId" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddFeatureResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="AddFeatureResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RemoveFeature">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="featureId" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RemoveFeatureResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="RemoveFeatureResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PerformFileAction">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="fileGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="action" type="tns:FileActions" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:simpleType name="FileActions">
-        <s:restriction base="s:string">
-          <s:enumeration value="CheckIn" />
-          <s:enumeration value="CheckOut" />
-          <s:enumeration value="Delete" />
-          <s:enumeration value="UndoCheckOut" />
-        </s:restriction>
-      </s:simpleType>
-      <s:element name="PerformFileActionResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="PerformFileActionResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getInfo">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getInfoResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getInfoResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="OpenBinaryFile">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="fileGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="OpenBinaryFileResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="OpenBinaryFileResult" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetOptions">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetOptionsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetOptionsResult" type="tns:ListOptions" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ListOptions">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="AllowContentTypes" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="ContentTypesEnabled" type="s:boolean" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetViewSchema">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-            <s:element minOccurs="0" maxOccurs="1" name="viewNAme" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetViewSchemaResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetViewSchemaResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetViewNodes">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetViewNodesResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetViewNodesResult">
-              <s:complexType mixed="true">
-                <s:sequence>
-                  <s:any />
-                </s:sequence>
-              </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetContentTypeName">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="contentTypeId" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetContentTypeNameResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetContentTypeNameResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetContentTypeNames">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webGuid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetContentTypeNamesResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetContentTypeNamesResult" type="tns:ArrayOfString" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetListSchema">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetListSchemaResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetListSchemaResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CompareFeatureFile">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="relativeFilePath" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CompareFeatureFileResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CompareFeatureFileResult" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UpdateViewSchema">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="siteUrl" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
-            <s:element minOccurs="1" maxOccurs="1" name="listGuid" type="s1:guid" />
-            <s:element minOccurs="0" maxOccurs="1" name="viewNAme" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="schema" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UpdateViewSchemaResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="OpenFile">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="filePath" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="OpenFileResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="OpenFileResult" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-    </s:schema>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
-      <s:simpleType name="guid">
-        <s:restriction base="s:string">
-          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
-        </s:restriction>
-      </s:simpleType>
-    </s:schema>
-  </wsdl:types>
-  <wsdl:message name="GetSiteStructureSoapIn">
-    <wsdl:part name="parameters" element="tns:GetSiteStructure" />
-  </wsdl:message>
-  <wsdl:message name="GetSiteStructureSoapOut">
-    <wsdl:part name="parameters" element="tns:GetSiteStructureResponse" />
-  </wsdl:message>
-  <wsdl:message name="DeleteFileSoapIn">
-    <wsdl:part name="parameters" element="tns:DeleteFile" />
-  </wsdl:message>
-  <wsdl:message name="DeleteFileSoapOut">
-    <wsdl:part name="parameters" element="tns:DeleteFileResponse" />
-  </wsdl:message>
-  <wsdl:message name="AddFileSoapIn">
-    <wsdl:part name="parameters" element="tns:AddFile" />
-  </wsdl:message>
-  <wsdl:message name="AddFileSoapOut">
-    <wsdl:part name="parameters" element="tns:AddFileResponse" />
-  </wsdl:message>
-  <wsdl:message name="IsCheckedOutSoapIn">
-    <wsdl:part name="parameters" element="tns:IsCheckedOut" />
-  </wsdl:message>
-  <wsdl:message name="IsCheckedOutSoapOut">
-    <wsdl:part name="parameters" element="tns:IsCheckedOutResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetFileInfoSoapIn">
-    <wsdl:part name="parameters" element="tns:GetFileInfo" />
-  </wsdl:message>
-  <wsdl:message name="GetFileInfoSoapOut">
-    <wsdl:part name="parameters" element="tns:GetFileInfoResponse" />
-  </wsdl:message>
-  <wsdl:message name="ViewsSoapIn">
-    <wsdl:part name="parameters" element="tns:Views" />
-  </wsdl:message>
-  <wsdl:message name="ViewsSoapOut">
-    <wsdl:part name="parameters" element="tns:ViewsResponse" />
-  </wsdl:message>
-  <wsdl:message name="featureFilesSoapIn">
-    <wsdl:part name="parameters" element="tns:featureFiles" />
-  </wsdl:message>
-  <wsdl:message name="featureFilesSoapOut">
-    <wsdl:part name="parameters" element="tns:featureFilesResponse" />
-  </wsdl:message>
-  <wsdl:message name="OpenBinarySoapIn">
-    <wsdl:part name="parameters" element="tns:OpenBinary" />
-  </wsdl:message>
-  <wsdl:message name="OpenBinarySoapOut">
-    <wsdl:part name="parameters" element="tns:OpenBinaryResponse" />
-  </wsdl:message>
-  <wsdl:message name="SaveBinarySoapIn">
-    <wsdl:part name="parameters" element="tns:SaveBinary" />
-  </wsdl:message>
-  <wsdl:message name="SaveBinarySoapOut">
-    <wsdl:part name="parameters" element="tns:SaveBinaryResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetInstalledFeatuesSoapIn">
-    <wsdl:part name="parameters" element="tns:GetInstalledFeatues" />
-  </wsdl:message>
-  <wsdl:message name="GetInstalledFeatuesSoapOut">
-    <wsdl:part name="parameters" element="tns:GetInstalledFeatuesResponse" />
-  </wsdl:message>
-  <wsdl:message name="UpgradeSolutionSoapIn">
-    <wsdl:part name="parameters" element="tns:UpgradeSolution" />
-  </wsdl:message>
-  <wsdl:message name="UpgradeSolutionSoapOut">
-    <wsdl:part name="parameters" element="tns:UpgradeSolutionResponse" />
-  </wsdl:message>
-  <wsdl:message name="SaveFileSoapIn">
-    <wsdl:part name="parameters" element="tns:SaveFile" />
-  </wsdl:message>
-  <wsdl:message name="SaveFileSoapOut">
-    <wsdl:part name="parameters" element="tns:SaveFileResponse" />
-  </wsdl:message>
-  <wsdl:message name="AddSolutionSoapIn">
-    <wsdl:part name="parameters" element="tns:AddSolution" />
-  </wsdl:message>
-  <wsdl:message name="AddSolutionSoapOut">
-    <wsdl:part name="parameters" element="tns:AddSolutionResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetSolutionsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetSolutions" />
-  </wsdl:message>
-  <wsdl:message name="GetSolutionsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetSolutionsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetSolsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetSols" />
-  </wsdl:message>
-  <wsdl:message name="GetSolsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetSolsResponse" />
-  </wsdl:message>
-  <wsdl:message name="DeploySolutionSoapIn">
-    <wsdl:part name="parameters" element="tns:DeploySolution" />
-  </wsdl:message>
-  <wsdl:message name="DeploySolutionSoapOut">
-    <wsdl:part name="parameters" element="tns:DeploySolutionResponse" />
-  </wsdl:message>
-  <wsdl:message name="RetractSolutionSoapIn">
-    <wsdl:part name="parameters" element="tns:RetractSolution" />
-  </wsdl:message>
-  <wsdl:message name="RetractSolutionSoapOut">
-    <wsdl:part name="parameters" element="tns:RetractSolutionResponse" />
-  </wsdl:message>
-  <wsdl:message name="DeleteSolutionSoapIn">
-    <wsdl:part name="parameters" element="tns:DeleteSolution" />
-  </wsdl:message>
-  <wsdl:message name="DeleteSolutionSoapOut">
-    <wsdl:part name="parameters" element="tns:DeleteSolutionResponse" />
-  </wsdl:message>
-  <wsdl:message name="AddFeatureSoapIn">
-    <wsdl:part name="parameters" element="tns:AddFeature" />
-  </wsdl:message>
-  <wsdl:message name="AddFeatureSoapOut">
-    <wsdl:part name="parameters" element="tns:AddFeatureResponse" />
-  </wsdl:message>
-  <wsdl:message name="RemoveFeatureSoapIn">
-    <wsdl:part name="parameters" element="tns:RemoveFeature" />
-  </wsdl:message>
-  <wsdl:message name="RemoveFeatureSoapOut">
-    <wsdl:part name="parameters" element="tns:RemoveFeatureResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformFileActionSoapIn">
-    <wsdl:part name="parameters" element="tns:PerformFileAction" />
-  </wsdl:message>
-  <wsdl:message name="PerformFileActionSoapOut">
-    <wsdl:part name="parameters" element="tns:PerformFileActionResponse" />
-  </wsdl:message>
-  <wsdl:message name="getInfoSoapIn">
-    <wsdl:part name="parameters" element="tns:getInfo" />
-  </wsdl:message>
-  <wsdl:message name="getInfoSoapOut">
-    <wsdl:part name="parameters" element="tns:getInfoResponse" />
-  </wsdl:message>
-  <wsdl:message name="OpenBinaryFileSoapIn">
-    <wsdl:part name="parameters" element="tns:OpenBinaryFile" />
-  </wsdl:message>
-  <wsdl:message name="OpenBinaryFileSoapOut">
-    <wsdl:part name="parameters" element="tns:OpenBinaryFileResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetOptionsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetOptions" />
-  </wsdl:message>
-  <wsdl:message name="GetOptionsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetOptionsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetViewSchemaSoapIn">
-    <wsdl:part name="parameters" element="tns:GetViewSchema" />
-  </wsdl:message>
-  <wsdl:message name="GetViewSchemaSoapOut">
-    <wsdl:part name="parameters" element="tns:GetViewSchemaResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetViewNodesSoapIn">
-    <wsdl:part name="parameters" element="tns:GetViewNodes" />
-  </wsdl:message>
-  <wsdl:message name="GetViewNodesSoapOut">
-    <wsdl:part name="parameters" element="tns:GetViewNodesResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetContentTypeNameSoapIn">
-    <wsdl:part name="parameters" element="tns:GetContentTypeName" />
-  </wsdl:message>
-  <wsdl:message name="GetContentTypeNameSoapOut">
-    <wsdl:part name="parameters" element="tns:GetContentTypeNameResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetContentTypeNamesSoapIn">
-    <wsdl:part name="parameters" element="tns:GetContentTypeNames" />
-  </wsdl:message>
-  <wsdl:message name="GetContentTypeNamesSoapOut">
-    <wsdl:part name="parameters" element="tns:GetContentTypeNamesResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetListSchemaSoapIn">
-    <wsdl:part name="parameters" element="tns:GetListSchema" />
-  </wsdl:message>
-  <wsdl:message name="GetListSchemaSoapOut">
-    <wsdl:part name="parameters" element="tns:GetListSchemaResponse" />
-  </wsdl:message>
-  <wsdl:message name="CompareFeatureFileSoapIn">
-    <wsdl:part name="parameters" element="tns:CompareFeatureFile" />
-  </wsdl:message>
-  <wsdl:message name="CompareFeatureFileSoapOut">
-    <wsdl:part name="parameters" element="tns:CompareFeatureFileResponse" />
-  </wsdl:message>
-  <wsdl:message name="UpdateViewSchemaSoapIn">
-    <wsdl:part name="parameters" element="tns:UpdateViewSchema" />
-  </wsdl:message>
-  <wsdl:message name="UpdateViewSchemaSoapOut">
-    <wsdl:part name="parameters" element="tns:UpdateViewSchemaResponse" />
-  </wsdl:message>
-  <wsdl:message name="OpenFileSoapIn">
-    <wsdl:part name="parameters" element="tns:OpenFile" />
-  </wsdl:message>
-  <wsdl:message name="OpenFileSoapOut">
-    <wsdl:part name="parameters" element="tns:OpenFileResponse" />
-  </wsdl:message>
-  <wsdl:portType name="AddInWebServiceSoap">
-    <wsdl:operation name="GetSiteStructure">
-      <wsdl:input message="tns:GetSiteStructureSoapIn" />
-      <wsdl:output message="tns:GetSiteStructureSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DeleteFile">
-      <wsdl:input message="tns:DeleteFileSoapIn" />
-      <wsdl:output message="tns:DeleteFileSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="AddFile">
-      <wsdl:input message="tns:AddFileSoapIn" />
-      <wsdl:output message="tns:AddFileSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="IsCheckedOut">
-      <wsdl:input message="tns:IsCheckedOutSoapIn" />
-      <wsdl:output message="tns:IsCheckedOutSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetFileInfo">
-      <wsdl:input message="tns:GetFileInfoSoapIn" />
-      <wsdl:output message="tns:GetFileInfoSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="Views">
-      <wsdl:input message="tns:ViewsSoapIn" />
-      <wsdl:output message="tns:ViewsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="featureFiles">
-      <wsdl:input message="tns:featureFilesSoapIn" />
-      <wsdl:output message="tns:featureFilesSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="OpenBinary">
-      <wsdl:input message="tns:OpenBinarySoapIn" />
-      <wsdl:output message="tns:OpenBinarySoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="SaveBinary">
-      <wsdl:input message="tns:SaveBinarySoapIn" />
-      <wsdl:output message="tns:SaveBinarySoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetInstalledFeatues">
-      <wsdl:input message="tns:GetInstalledFeatuesSoapIn" />
-      <wsdl:output message="tns:GetInstalledFeatuesSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UpgradeSolution">
-      <wsdl:input message="tns:UpgradeSolutionSoapIn" />
-      <wsdl:output message="tns:UpgradeSolutionSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="SaveFile">
-      <wsdl:input message="tns:SaveFileSoapIn" />
-      <wsdl:output message="tns:SaveFileSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="AddSolution">
-      <wsdl:input message="tns:AddSolutionSoapIn" />
-      <wsdl:output message="tns:AddSolutionSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetSolutions">
-      <wsdl:input message="tns:GetSolutionsSoapIn" />
-      <wsdl:output message="tns:GetSolutionsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetSols">
-      <wsdl:input message="tns:GetSolsSoapIn" />
-      <wsdl:output message="tns:GetSolsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DeploySolution">
-      <wsdl:input message="tns:DeploySolutionSoapIn" />
-      <wsdl:output message="tns:DeploySolutionSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="RetractSolution">
-      <wsdl:input message="tns:RetractSolutionSoapIn" />
-      <wsdl:output message="tns:RetractSolutionSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DeleteSolution">
-      <wsdl:input message="tns:DeleteSolutionSoapIn" />
-      <wsdl:output message="tns:DeleteSolutionSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="AddFeature">
-      <wsdl:input message="tns:AddFeatureSoapIn" />
-      <wsdl:output message="tns:AddFeatureSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="RemoveFeature">
-      <wsdl:input message="tns:RemoveFeatureSoapIn" />
-      <wsdl:output message="tns:RemoveFeatureSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PerformFileAction">
-      <wsdl:input message="tns:PerformFileActionSoapIn" />
-      <wsdl:output message="tns:PerformFileActionSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getInfo">
-      <wsdl:input message="tns:getInfoSoapIn" />
-      <wsdl:output message="tns:getInfoSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="OpenBinaryFile">
-      <wsdl:input message="tns:OpenBinaryFileSoapIn" />
-      <wsdl:output message="tns:OpenBinaryFileSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetOptions">
-      <wsdl:input message="tns:GetOptionsSoapIn" />
-      <wsdl:output message="tns:GetOptionsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetViewSchema">
-      <wsdl:input message="tns:GetViewSchemaSoapIn" />
-      <wsdl:output message="tns:GetViewSchemaSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetViewNodes">
-      <wsdl:input message="tns:GetViewNodesSoapIn" />
-      <wsdl:output message="tns:GetViewNodesSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetContentTypeName">
-      <wsdl:input message="tns:GetContentTypeNameSoapIn" />
-      <wsdl:output message="tns:GetContentTypeNameSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetContentTypeNames">
-      <wsdl:input message="tns:GetContentTypeNamesSoapIn" />
-      <wsdl:output message="tns:GetContentTypeNamesSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetListSchema">
-      <wsdl:input message="tns:GetListSchemaSoapIn" />
-      <wsdl:output message="tns:GetListSchemaSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="CompareFeatureFile">
-      <wsdl:input message="tns:CompareFeatureFileSoapIn" />
-      <wsdl:output message="tns:CompareFeatureFileSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdateViewSchema">
-      <wsdl:input message="tns:UpdateViewSchemaSoapIn" />
-      <wsdl:output message="tns:UpdateViewSchemaSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="OpenFile">
-      <wsdl:input message="tns:OpenFileSoapIn" />
-      <wsdl:output message="tns:OpenFileSoapOut" />
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:binding name="AddInWebServiceSoap" type="tns:AddInWebServiceSoap">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetSiteStructure">
-      <soap:operation soapAction="http://SPProject/GetSiteStructure" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteFile">
-      <soap:operation soapAction="http://SPProject/DeleteFile" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddFile">
-      <soap:operation soapAction="http://SPProject/AddFile" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="IsCheckedOut">
-      <soap:operation soapAction="http://SPProject/IsCheckedOut" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetFileInfo">
-      <soap:operation soapAction="http://SPProject/GetFileInfo" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Views">
-      <soap:operation soapAction="http://SPProject/Views" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="featureFiles">
-      <soap:operation soapAction="http://SPProject/featureFiles" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="OpenBinary">
-      <soap:operation soapAction="http://SPProject/OpenBinary" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SaveBinary">
-      <soap:operation soapAction="http://SPProject/SaveBinary" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetInstalledFeatues">
-      <soap:operation soapAction="http://SPProject/GetInstalledFeatues" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpgradeSolution">
-      <soap:operation soapAction="http://SPProject/UpgradeSolution" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SaveFile">
-      <soap:operation soapAction="http://SPProject/SaveFile" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddSolution">
-      <soap:operation soapAction="http://SPProject/AddSolution" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSolutions">
-      <soap:operation soapAction="http://SPProject/GetSolutions" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSols">
-      <soap:operation soapAction="http://SPProject/GetSols" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeploySolution">
-      <soap:operation soapAction="http://SPProject/DeploySolution" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetractSolution">
-      <soap:operation soapAction="http://SPProject/RetractSolution" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteSolution">
-      <soap:operation soapAction="http://SPProject/DeleteSolution" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddFeature">
-      <soap:operation soapAction="http://SPProject/AddFeature" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RemoveFeature">
-      <soap:operation soapAction="http://SPProject/RemoveFeature" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PerformFileAction">
-      <soap:operation soapAction="http://SPProject/PerformFileAction" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getInfo">
-      <soap:operation soapAction="http://SPProject/getInfo" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="OpenBinaryFile">
-      <soap:operation soapAction="http://SPProject/OpenBinaryFile" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetOptions">
-      <soap:operation soapAction="http://SPProject/GetOptions" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetViewSchema">
-      <soap:operation soapAction="http://SPProject/GetViewSchema" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetViewNodes">
-      <soap:operation soapAction="http://SPProject/GetViewNodes" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetContentTypeName">
-      <soap:operation soapAction="http://SPProject/GetContentTypeName" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetContentTypeNames">
-      <soap:operation soapAction="http://SPProject/GetContentTypeNames" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetListSchema">
-      <soap:operation soapAction="http://SPProject/GetListSchema" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CompareFeatureFile">
-      <soap:operation soapAction="http://SPProject/CompareFeatureFile" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateViewSchema">
-      <soap:operation soapAction="http://SPProject/UpdateViewSchema" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="OpenFile">
-      <soap:operation soapAction="http://SPProject/OpenFile" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:binding name="AddInWebServiceSoap12" type="tns:AddInWebServiceSoap">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetSiteStructure">
-      <soap12:operation soapAction="http://SPProject/GetSiteStructure" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteFile">
-      <soap12:operation soapAction="http://SPProject/DeleteFile" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddFile">
-      <soap12:operation soapAction="http://SPProject/AddFile" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="IsCheckedOut">
-      <soap12:operation soapAction="http://SPProject/IsCheckedOut" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetFileInfo">
-      <soap12:operation soapAction="http://SPProject/GetFileInfo" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Views">
-      <soap12:operation soapAction="http://SPProject/Views" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="featureFiles">
-      <soap12:operation soapAction="http://SPProject/featureFiles" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="OpenBinary">
-      <soap12:operation soapAction="http://SPProject/OpenBinary" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SaveBinary">
-      <soap12:operation soapAction="http://SPProject/SaveBinary" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetInstalledFeatues">
-      <soap12:operation soapAction="http://SPProject/GetInstalledFeatues" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpgradeSolution">
-      <soap12:operation soapAction="http://SPProject/UpgradeSolution" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="SaveFile">
-      <soap12:operation soapAction="http://SPProject/SaveFile" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddSolution">
-      <soap12:operation soapAction="http://SPProject/AddSolution" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSolutions">
-      <soap12:operation soapAction="http://SPProject/GetSolutions" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSols">
-      <soap12:operation soapAction="http://SPProject/GetSols" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeploySolution">
-      <soap12:operation soapAction="http://SPProject/DeploySolution" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetractSolution">
-      <soap12:operation soapAction="http://SPProject/RetractSolution" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteSolution">
-      <soap12:operation soapAction="http://SPProject/DeleteSolution" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddFeature">
-      <soap12:operation soapAction="http://SPProject/AddFeature" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RemoveFeature">
-      <soap12:operation soapAction="http://SPProject/RemoveFeature" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PerformFileAction">
-      <soap12:operation soapAction="http://SPProject/PerformFileAction" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getInfo">
-      <soap12:operation soapAction="http://SPProject/getInfo" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="OpenBinaryFile">
-      <soap12:operation soapAction="http://SPProject/OpenBinaryFile" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetOptions">
-      <soap12:operation soapAction="http://SPProject/GetOptions" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetViewSchema">
-      <soap12:operation soapAction="http://SPProject/GetViewSchema" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetViewNodes">
-      <soap12:operation soapAction="http://SPProject/GetViewNodes" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetContentTypeName">
-      <soap12:operation soapAction="http://SPProject/GetContentTypeName" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetContentTypeNames">
-      <soap12:operation soapAction="http://SPProject/GetContentTypeNames" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetListSchema">
-      <soap12:operation soapAction="http://SPProject/GetListSchema" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CompareFeatureFile">
-      <soap12:operation soapAction="http://SPProject/CompareFeatureFile" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateViewSchema">
-      <soap12:operation soapAction="http://SPProject/UpdateViewSchema" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="OpenFile">
-      <soap12:operation soapAction="http://SPProject/OpenFile" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="AddInWebService">
-    <wsdl:port name="AddInWebServiceSoap" binding="tns:AddInWebServiceSoap">
-      <soap:address location="http://wa1devnint01/_layouts/SPTools/AddInWebService.asmx" />
-    </wsdl:port>
-    <wsdl:port name="AddInWebServiceSoap12" binding="tns:AddInWebServiceSoap12">
-      <soap12:address location="http://wa1devnint01/_layouts/SPTools/AddInWebService.asmx" />
-    </wsdl:port>
-  </wsdl:service>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ascentium.com/RapidTools" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://ascentium.com/RapidTools" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://ascentium.com/RapidTools">
+			<s:import namespace="http://microsoft.com/wsdl/types/" />
+			<s:element name="GetSiteStructure">
+				<s:complexType />
+			</s:element>
+			<s:element name="GetSiteStructureResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetSiteStructureResult">
+							<s:complexType mixed="true">
+								<s:sequence>
+									<s:any />
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="DeleteFile">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="fileUrl" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="DeleteFileResponse">
+				<s:complexType />
+			</s:element>
+			<s:element name="AddFile">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+						<s:element minOccurs="0" maxOccurs="1" name="fileUrl" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1" name="bytes" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="AddFileResponse">
+				<s:complexType />
+			</s:element>
+			<s:element name="IsCheckedOut">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="fileID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="IsCheckedOutResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="IsCheckedOutResult" type="s:boolean" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetFileInfo">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="fileID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetFileInfoResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetFileInfoResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="Views">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="ViewsResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="ViewsResult" type="tns:ArrayOfString" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="ArrayOfString">
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="featureFiles">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="listSchema" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="featureFilesResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="featureFilesResult" type="tns:ArrayOfString" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="OpenBinary">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="fileID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="OpenBinaryResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="OpenBinaryResult" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="SaveBinary">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="fileID" type="s1:guid" />
+						<s:element minOccurs="0" maxOccurs="1" name="bytes" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="SaveBinaryResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="SaveBinaryResult" type="s:boolean" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetInstalledFeatues">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="featureIds" type="tns:ArrayOfGuid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="ArrayOfGuid">
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="unbounded" name="guid" type="s1:guid" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="GetInstalledFeatuesResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetInstalledFeatuesResult" type="tns:ArrayOfString" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="UpgradeSolution">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="wspName" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1" name="wspcontents" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="UpgradeSolutionResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="UpgradeSolutionResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="AddSolution">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="wspName" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1" name="wspcontents" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="AddSolutionResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="AddSolutionResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetSolutions">
+				<s:complexType />
+			</s:element>
+			<s:element name="GetSolutionsResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetSolutionsResult" type="tns:ArrayOfString" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetSols">
+				<s:complexType />
+			</s:element>
+			<s:element name="GetSolsResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetSolsResult" type="tns:ArrayOfSolution" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="ArrayOfSolution">
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="unbounded" name="Solution" nillable="true" type="tns:Solution" />
+				</s:sequence>
+			</s:complexType>
+			<s:complexType name="Solution">
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+					<s:element minOccurs="1" maxOccurs="1" name="Deployed" type="s:boolean" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="DeploySolution">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="wspName" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="DeploySolutionResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="DeploySolutionResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="RetractSolution">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="solutionName" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="RetractSolutionResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="RetractSolutionResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="DeleteSolution">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="solutionName" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="DeleteSolutionResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="DeleteSolutionResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="AddFeature">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="featureId" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="AddFeatureResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="AddFeatureResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="RemoveFeature">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="featureId" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="RemoveFeatureResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="RemoveFeatureResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="PerformFileAction">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="fileID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="action" type="tns:FileActions" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:simpleType name="FileActions">
+				<s:restriction base="s:string">
+					<s:enumeration value="CheckIn" />
+					<s:enumeration value="CheckOut" />
+					<s:enumeration value="Delete" />
+					<s:enumeration value="UndoCheckOut" />
+				</s:restriction>
+			</s:simpleType>
+			<s:element name="PerformFileActionResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="PerformFileActionResult" type="s:boolean" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="getInfo">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="getInfoResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="getInfoResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="OpenBinaryFile">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="fileID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="OpenBinaryFileResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="OpenBinaryFileResult" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetOptions">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetOptionsResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetOptionsResult" type="tns:ListOptions" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="ListOptions">
+				<s:sequence>
+					<s:element minOccurs="1" maxOccurs="1" name="AllowContentTypes" type="s:boolean" />
+					<s:element minOccurs="1" maxOccurs="1" name="ContentTypesEnabled" type="s:boolean" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="GetViewSchema">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+						<s:element minOccurs="0" maxOccurs="1" name="viewNAme" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetViewSchemaResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetViewSchemaResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetViewNodes">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetViewNodesResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetViewNodesResult">
+							<s:complexType mixed="true">
+								<s:sequence>
+									<s:any />
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetContentTypeName">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="contentTypeId" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetContentTypeNameResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetContentTypeNameResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetContentTypeNames">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webID" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetContentTypeNamesResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetContentTypeNamesResult" type="tns:ArrayOfString" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetListSchema">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="GetListSchemaResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="GetListSchemaResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="CompareFeatureFile">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="relativeFilePath" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="CompareFeatureFileResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="CompareFeatureFileResult" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="UpdateViewSchema">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="webUid" type="s1:guid" />
+						<s:element minOccurs="1" maxOccurs="1" name="listID" type="s1:guid" />
+						<s:element minOccurs="0" maxOccurs="1" name="viewNAme" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1" name="schema" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="UpdateViewSchemaResponse">
+				<s:complexType />
+			</s:element>
+			<s:element name="OpenFile">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="filePath" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="OpenFileResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1" name="OpenFileResult" type="s:base64Binary" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:schema>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+			<s:simpleType name="guid">
+				<s:restriction base="s:string">
+					<s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+				</s:restriction>
+			</s:simpleType>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="GetSiteStructureSoapIn">
+		<wsdl:part name="parameters" element="tns:GetSiteStructure" />
+	</wsdl:message>
+	<wsdl:message name="GetSiteStructureSoapOut">
+		<wsdl:part name="parameters" element="tns:GetSiteStructureResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeleteFileSoapIn">
+		<wsdl:part name="parameters" element="tns:DeleteFile" />
+	</wsdl:message>
+	<wsdl:message name="DeleteFileSoapOut">
+		<wsdl:part name="parameters" element="tns:DeleteFileResponse" />
+	</wsdl:message>
+	<wsdl:message name="AddFileSoapIn">
+		<wsdl:part name="parameters" element="tns:AddFile" />
+	</wsdl:message>
+	<wsdl:message name="AddFileSoapOut">
+		<wsdl:part name="parameters" element="tns:AddFileResponse" />
+	</wsdl:message>
+	<wsdl:message name="IsCheckedOutSoapIn">
+		<wsdl:part name="parameters" element="tns:IsCheckedOut" />
+	</wsdl:message>
+	<wsdl:message name="IsCheckedOutSoapOut">
+		<wsdl:part name="parameters" element="tns:IsCheckedOutResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetFileInfoSoapIn">
+		<wsdl:part name="parameters" element="tns:GetFileInfo" />
+	</wsdl:message>
+	<wsdl:message name="GetFileInfoSoapOut">
+		<wsdl:part name="parameters" element="tns:GetFileInfoResponse" />
+	</wsdl:message>
+	<wsdl:message name="ViewsSoapIn">
+		<wsdl:part name="parameters" element="tns:Views" />
+	</wsdl:message>
+	<wsdl:message name="ViewsSoapOut">
+		<wsdl:part name="parameters" element="tns:ViewsResponse" />
+	</wsdl:message>
+	<wsdl:message name="featureFilesSoapIn">
+		<wsdl:part name="parameters" element="tns:featureFiles" />
+	</wsdl:message>
+	<wsdl:message name="featureFilesSoapOut">
+		<wsdl:part name="parameters" element="tns:featureFilesResponse" />
+	</wsdl:message>
+	<wsdl:message name="OpenBinarySoapIn">
+		<wsdl:part name="parameters" element="tns:OpenBinary" />
+	</wsdl:message>
+	<wsdl:message name="OpenBinarySoapOut">
+		<wsdl:part name="parameters" element="tns:OpenBinaryResponse" />
+	</wsdl:message>
+	<wsdl:message name="SaveBinarySoapIn">
+		<wsdl:part name="parameters" element="tns:SaveBinary" />
+	</wsdl:message>
+	<wsdl:message name="SaveBinarySoapOut">
+		<wsdl:part name="parameters" element="tns:SaveBinaryResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetInstalledFeatuesSoapIn">
+		<wsdl:part name="parameters" element="tns:GetInstalledFeatues" />
+	</wsdl:message>
+	<wsdl:message name="GetInstalledFeatuesSoapOut">
+		<wsdl:part name="parameters" element="tns:GetInstalledFeatuesResponse" />
+	</wsdl:message>
+	<wsdl:message name="UpgradeSolutionSoapIn">
+		<wsdl:part name="parameters" element="tns:UpgradeSolution" />
+	</wsdl:message>
+	<wsdl:message name="UpgradeSolutionSoapOut">
+		<wsdl:part name="parameters" element="tns:UpgradeSolutionResponse" />
+	</wsdl:message>
+	<wsdl:message name="AddSolutionSoapIn">
+		<wsdl:part name="parameters" element="tns:AddSolution" />
+	</wsdl:message>
+	<wsdl:message name="AddSolutionSoapOut">
+		<wsdl:part name="parameters" element="tns:AddSolutionResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetSolutionsSoapIn">
+		<wsdl:part name="parameters" element="tns:GetSolutions" />
+	</wsdl:message>
+	<wsdl:message name="GetSolutionsSoapOut">
+		<wsdl:part name="parameters" element="tns:GetSolutionsResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetSolsSoapIn">
+		<wsdl:part name="parameters" element="tns:GetSols" />
+	</wsdl:message>
+	<wsdl:message name="GetSolsSoapOut">
+		<wsdl:part name="parameters" element="tns:GetSolsResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeploySolutionSoapIn">
+		<wsdl:part name="parameters" element="tns:DeploySolution" />
+	</wsdl:message>
+	<wsdl:message name="DeploySolutionSoapOut">
+		<wsdl:part name="parameters" element="tns:DeploySolutionResponse" />
+	</wsdl:message>
+	<wsdl:message name="RetractSolutionSoapIn">
+		<wsdl:part name="parameters" element="tns:RetractSolution" />
+	</wsdl:message>
+	<wsdl:message name="RetractSolutionSoapOut">
+		<wsdl:part name="parameters" element="tns:RetractSolutionResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeleteSolutionSoapIn">
+		<wsdl:part name="parameters" element="tns:DeleteSolution" />
+	</wsdl:message>
+	<wsdl:message name="DeleteSolutionSoapOut">
+		<wsdl:part name="parameters" element="tns:DeleteSolutionResponse" />
+	</wsdl:message>
+	<wsdl:message name="AddFeatureSoapIn">
+		<wsdl:part name="parameters" element="tns:AddFeature" />
+	</wsdl:message>
+	<wsdl:message name="AddFeatureSoapOut">
+		<wsdl:part name="parameters" element="tns:AddFeatureResponse" />
+	</wsdl:message>
+	<wsdl:message name="RemoveFeatureSoapIn">
+		<wsdl:part name="parameters" element="tns:RemoveFeature" />
+	</wsdl:message>
+	<wsdl:message name="RemoveFeatureSoapOut">
+		<wsdl:part name="parameters" element="tns:RemoveFeatureResponse" />
+	</wsdl:message>
+	<wsdl:message name="PerformFileActionSoapIn">
+		<wsdl:part name="parameters" element="tns:PerformFileAction" />
+	</wsdl:message>
+	<wsdl:message name="PerformFileActionSoapOut">
+		<wsdl:part name="parameters" element="tns:PerformFileActionResponse" />
+	</wsdl:message>
+	<wsdl:message name="getInfoSoapIn">
+		<wsdl:part name="parameters" element="tns:getInfo" />
+	</wsdl:message>
+	<wsdl:message name="getInfoSoapOut">
+		<wsdl:part name="parameters" element="tns:getInfoResponse" />
+	</wsdl:message>
+	<wsdl:message name="OpenBinaryFileSoapIn">
+		<wsdl:part name="parameters" element="tns:OpenBinaryFile" />
+	</wsdl:message>
+	<wsdl:message name="OpenBinaryFileSoapOut">
+		<wsdl:part name="parameters" element="tns:OpenBinaryFileResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetOptionsSoapIn">
+		<wsdl:part name="parameters" element="tns:GetOptions" />
+	</wsdl:message>
+	<wsdl:message name="GetOptionsSoapOut">
+		<wsdl:part name="parameters" element="tns:GetOptionsResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetViewSchemaSoapIn">
+		<wsdl:part name="parameters" element="tns:GetViewSchema" />
+	</wsdl:message>
+	<wsdl:message name="GetViewSchemaSoapOut">
+		<wsdl:part name="parameters" element="tns:GetViewSchemaResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetViewNodesSoapIn">
+		<wsdl:part name="parameters" element="tns:GetViewNodes" />
+	</wsdl:message>
+	<wsdl:message name="GetViewNodesSoapOut">
+		<wsdl:part name="parameters" element="tns:GetViewNodesResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetContentTypeNameSoapIn">
+		<wsdl:part name="parameters" element="tns:GetContentTypeName" />
+	</wsdl:message>
+	<wsdl:message name="GetContentTypeNameSoapOut">
+		<wsdl:part name="parameters" element="tns:GetContentTypeNameResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetContentTypeNamesSoapIn">
+		<wsdl:part name="parameters" element="tns:GetContentTypeNames" />
+	</wsdl:message>
+	<wsdl:message name="GetContentTypeNamesSoapOut">
+		<wsdl:part name="parameters" element="tns:GetContentTypeNamesResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetListSchemaSoapIn">
+		<wsdl:part name="parameters" element="tns:GetListSchema" />
+	</wsdl:message>
+	<wsdl:message name="GetListSchemaSoapOut">
+		<wsdl:part name="parameters" element="tns:GetListSchemaResponse" />
+	</wsdl:message>
+	<wsdl:message name="CompareFeatureFileSoapIn">
+		<wsdl:part name="parameters" element="tns:CompareFeatureFile" />
+	</wsdl:message>
+	<wsdl:message name="CompareFeatureFileSoapOut">
+		<wsdl:part name="parameters" element="tns:CompareFeatureFileResponse" />
+	</wsdl:message>
+	<wsdl:message name="UpdateViewSchemaSoapIn">
+		<wsdl:part name="parameters" element="tns:UpdateViewSchema" />
+	</wsdl:message>
+	<wsdl:message name="UpdateViewSchemaSoapOut">
+		<wsdl:part name="parameters" element="tns:UpdateViewSchemaResponse" />
+	</wsdl:message>
+	<wsdl:message name="OpenFileSoapIn">
+		<wsdl:part name="parameters" element="tns:OpenFile" />
+	</wsdl:message>
+	<wsdl:message name="OpenFileSoapOut">
+		<wsdl:part name="parameters" element="tns:OpenFileResponse" />
+	</wsdl:message>
+	<wsdl:portType name="AddInWebServiceSoap">
+		<wsdl:operation name="GetSiteStructure">
+			<wsdl:input message="tns:GetSiteStructureSoapIn" />
+			<wsdl:output message="tns:GetSiteStructureSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeleteFile">
+			<wsdl:input message="tns:DeleteFileSoapIn" />
+			<wsdl:output message="tns:DeleteFileSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="AddFile">
+			<wsdl:input message="tns:AddFileSoapIn" />
+			<wsdl:output message="tns:AddFileSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="IsCheckedOut">
+			<wsdl:input message="tns:IsCheckedOutSoapIn" />
+			<wsdl:output message="tns:IsCheckedOutSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetFileInfo">
+			<wsdl:input message="tns:GetFileInfoSoapIn" />
+			<wsdl:output message="tns:GetFileInfoSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="Views">
+			<wsdl:input message="tns:ViewsSoapIn" />
+			<wsdl:output message="tns:ViewsSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="featureFiles">
+			<wsdl:input message="tns:featureFilesSoapIn" />
+			<wsdl:output message="tns:featureFilesSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="OpenBinary">
+			<wsdl:input message="tns:OpenBinarySoapIn" />
+			<wsdl:output message="tns:OpenBinarySoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="SaveBinary">
+			<wsdl:input message="tns:SaveBinarySoapIn" />
+			<wsdl:output message="tns:SaveBinarySoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetInstalledFeatues">
+			<wsdl:input message="tns:GetInstalledFeatuesSoapIn" />
+			<wsdl:output message="tns:GetInstalledFeatuesSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="UpgradeSolution">
+			<wsdl:input message="tns:UpgradeSolutionSoapIn" />
+			<wsdl:output message="tns:UpgradeSolutionSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="AddSolution">
+			<wsdl:input message="tns:AddSolutionSoapIn" />
+			<wsdl:output message="tns:AddSolutionSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetSolutions">
+			<wsdl:input message="tns:GetSolutionsSoapIn" />
+			<wsdl:output message="tns:GetSolutionsSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetSols">
+			<wsdl:input message="tns:GetSolsSoapIn" />
+			<wsdl:output message="tns:GetSolsSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeploySolution">
+			<wsdl:input message="tns:DeploySolutionSoapIn" />
+			<wsdl:output message="tns:DeploySolutionSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="RetractSolution">
+			<wsdl:input message="tns:RetractSolutionSoapIn" />
+			<wsdl:output message="tns:RetractSolutionSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSolution">
+			<wsdl:input message="tns:DeleteSolutionSoapIn" />
+			<wsdl:output message="tns:DeleteSolutionSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="AddFeature">
+			<wsdl:input message="tns:AddFeatureSoapIn" />
+			<wsdl:output message="tns:AddFeatureSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="RemoveFeature">
+			<wsdl:input message="tns:RemoveFeatureSoapIn" />
+			<wsdl:output message="tns:RemoveFeatureSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="PerformFileAction">
+			<wsdl:input message="tns:PerformFileActionSoapIn" />
+			<wsdl:output message="tns:PerformFileActionSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="getInfo">
+			<wsdl:input message="tns:getInfoSoapIn" />
+			<wsdl:output message="tns:getInfoSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="OpenBinaryFile">
+			<wsdl:input message="tns:OpenBinaryFileSoapIn" />
+			<wsdl:output message="tns:OpenBinaryFileSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetOptions">
+			<wsdl:input message="tns:GetOptionsSoapIn" />
+			<wsdl:output message="tns:GetOptionsSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetViewSchema">
+			<wsdl:input message="tns:GetViewSchemaSoapIn" />
+			<wsdl:output message="tns:GetViewSchemaSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetViewNodes">
+			<wsdl:input message="tns:GetViewNodesSoapIn" />
+			<wsdl:output message="tns:GetViewNodesSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetContentTypeName">
+			<wsdl:input message="tns:GetContentTypeNameSoapIn" />
+			<wsdl:output message="tns:GetContentTypeNameSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetContentTypeNames">
+			<wsdl:input message="tns:GetContentTypeNamesSoapIn" />
+			<wsdl:output message="tns:GetContentTypeNamesSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetListSchema">
+			<wsdl:input message="tns:GetListSchemaSoapIn" />
+			<wsdl:output message="tns:GetListSchemaSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="CompareFeatureFile">
+			<wsdl:input message="tns:CompareFeatureFileSoapIn" />
+			<wsdl:output message="tns:CompareFeatureFileSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="UpdateViewSchema">
+			<wsdl:input message="tns:UpdateViewSchemaSoapIn" />
+			<wsdl:output message="tns:UpdateViewSchemaSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="OpenFile">
+			<wsdl:input message="tns:OpenFileSoapIn" />
+			<wsdl:output message="tns:OpenFileSoapOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AddInWebServiceSoap" type="tns:AddInWebServiceSoap">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GetSiteStructure">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetSiteStructure" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteFile">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/DeleteFile" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddFile">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/AddFile" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="IsCheckedOut">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/IsCheckedOut" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetFileInfo">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetFileInfo" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Views">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/Views" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="featureFiles">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/featureFiles" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OpenBinary">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/OpenBinary" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SaveBinary">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/SaveBinary" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInstalledFeatues">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetInstalledFeatues" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpgradeSolution">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/UpgradeSolution" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddSolution">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/AddSolution" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSolutions">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetSolutions" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSols">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetSols" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeploySolution">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/DeploySolution" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RetractSolution">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/RetractSolution" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSolution">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/DeleteSolution" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddFeature">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/AddFeature" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RemoveFeature">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/RemoveFeature" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="PerformFileAction">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/PerformFileAction" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getInfo">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/getInfo" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OpenBinaryFile">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/OpenBinaryFile" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetOptions">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetOptions" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetViewSchema">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetViewSchema" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetViewNodes">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetViewNodes" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetContentTypeName">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetContentTypeName" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetContentTypeNames">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetContentTypeNames" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetListSchema">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/GetListSchema" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompareFeatureFile">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/CompareFeatureFile" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateViewSchema">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/UpdateViewSchema" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OpenFile">
+			<soap:operation soapAction="http://ascentium.com/RapidTools/OpenFile" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="AddInWebServiceSoap12" type="tns:AddInWebServiceSoap">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GetSiteStructure">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetSiteStructure" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteFile">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/DeleteFile" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddFile">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/AddFile" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="IsCheckedOut">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/IsCheckedOut" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetFileInfo">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetFileInfo" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Views">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/Views" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="featureFiles">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/featureFiles" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OpenBinary">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/OpenBinary" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SaveBinary">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/SaveBinary" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInstalledFeatues">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetInstalledFeatues" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpgradeSolution">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/UpgradeSolution" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddSolution">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/AddSolution" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSolutions">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetSolutions" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSols">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetSols" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeploySolution">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/DeploySolution" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RetractSolution">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/RetractSolution" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSolution">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/DeleteSolution" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddFeature">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/AddFeature" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RemoveFeature">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/RemoveFeature" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="PerformFileAction">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/PerformFileAction" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getInfo">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/getInfo" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OpenBinaryFile">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/OpenBinaryFile" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetOptions">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetOptions" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetViewSchema">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetViewSchema" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetViewNodes">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetViewNodes" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetContentTypeName">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetContentTypeName" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetContentTypeNames">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetContentTypeNames" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetListSchema">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/GetListSchema" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompareFeatureFile">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/CompareFeatureFile" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateViewSchema">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/UpdateViewSchema" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OpenFile">
+			<soap12:operation soapAction="http://ascentium.com/RapidTools/OpenFile" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AddInWebService">
+		<wsdl:port name="AddInWebServiceSoap" binding="tns:AddInWebServiceSoap">
+			<soap:address location="http://mordor.int.ascentium.com:101/_layouts/RapidTools/Services/AddIn.asmx" />
+		</wsdl:port>
+		<wsdl:port name="AddInWebServiceSoap12" binding="tns:AddInWebServiceSoap12">
+			<soap12:address location="http://mordor.int.ascentium.com:101/_layouts/RapidTools/Services/AddIn.asmx" />
+		</wsdl:port>
+	</wsdl:service>
 </wsdl:definitions>

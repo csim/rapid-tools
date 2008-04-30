@@ -14,10 +14,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
     public class SPListNodeTag : NodeTag
     {
-        public SPListNodeTag(TreeNode node, DTE2 applicationObject)
+        public SPListNodeTag(TreeNode node)
         {
             _node = node;
-            ApplicationObject = applicationObject;
+			TagType = NodeType.List;
         }
 
         public override void DoubleClick()
@@ -56,7 +56,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                 File.WriteAllText(_schemaPath, _listsWebService.GetList(Node.Text).OuterXml);
 
-                ApplicationObject.ItemOperations.OpenFile(_schemaPath, EnvDTE.Constants.vsViewKindTextView);
+                AppManager.Current.Application.ItemOperations.OpenFile(_schemaPath, EnvDTE.Constants.vsViewKindTextView);
             });
 
             _contextMenu.MenuItems.Add("Create Feature", delegate(object sendr, EventArgs e)
@@ -97,7 +97,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                             if (tempString.ToLower() == "schema.xml")
                             {
-								string schema = AppManager.Current.ActiveBridge.AddInService.GetListSchema(SiteUrl, WebID, ID);
+								string schema = AppManager.Current.ActiveBridge.AddInService.GetListSchema(WebID, ID);
 
 
                                 XmlDocument oSchema = new XmlDocument();
@@ -113,7 +113,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                     oSchema.SelectSingleNode("/List/MetaData/Fields").InnerXml = nSchema.SelectSingleNode("/List/Fields").InnerXml;
 
                                     XmlDocument doc = new XmlDocument();
-									doc.LoadXml(AppManager.Current.ActiveBridge.AddInService.GetViewNodes(SiteUrl, WebID, ID).OuterXml);
+									doc.LoadXml(AppManager.Current.ActiveBridge.AddInService.GetViewNodes(WebID, ID).OuterXml);
 
 
                                     XmlNode formNode = oSchema.SelectSingleNode("/List/MetaData/Forms");
@@ -241,13 +241,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 
                         schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml = string.Empty;
-						foreach (string s in AppManager.Current.ActiveBridge.AddInService.GetContentTypeNames(SiteUrl, WebID, ID))
+						foreach (string s in AppManager.Current.ActiveBridge.AddInService.GetContentTypeNames(WebID, ID))
                         {
                             schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml += s;
                         }
 
 
-						Proxies.AddIn.ListOptions lo = AppManager.Current.ActiveBridge.AddInService.GetOptions(SiteUrl, WebID, ID);
+						Proxies.AddIn.ListOptions lo = AppManager.Current.ActiveBridge.AddInService.GetOptions(WebID, ID);
                         if (lo.AllowContentTypes)
                             schemaDocument.DocumentElement.SetAttribute("AllowContentTypes", "true");
                         if (lo.ContentTypesEnabled)

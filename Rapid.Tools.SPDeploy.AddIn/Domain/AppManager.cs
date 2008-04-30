@@ -224,7 +224,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 
 
-		public void EnsureFilesAdded(string folderPath)
+		public void EnsureProjectFilesAdded(string folderPath)
 		{
 			foreach (FileInfo fi in new DirectoryInfo(folderPath).GetFiles("*", SearchOption.AllDirectories))
 			{
@@ -233,14 +233,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 		}
 
 
-		public void ExecuteMSBuildCommand(string command)
+		public void ExecuteMSBuild(string target)
 		{
 			try
 			{
 				RapidOutputWindow.Instance.Activate();
 				RapidOutputWindow.Instance.Clear();
 
-				System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("C:\\Windows\\Microsoft.NET\\Framework\\v2.0.50727\\MSBuild.exe");
+				string command = @"/target:" + target + " \"" + AppManager.Current.ActiveProject.FullName;
+
+				System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(@"C:\Windows\Microsoft.NET\Framework\v2.0.50727\MSBuild.exe");
 				psi.Arguments = command;
 				psi.CreateNoWindow = true;
 				psi.UseShellExecute = false;
@@ -249,7 +251,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 				System.Diagnostics.Process p = new System.Diagnostics.Process();
 				p.StartInfo = psi;
 				p.Start();
-
 
 				string line = string.Empty;
 
@@ -264,7 +265,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			}
 			catch (Exception ex)
 			{
-				ExceptionUtil.Handle(ex);
+				AppManager.Current.Write(ex);
 			}
 		}
 	
@@ -312,6 +313,29 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 				File.Delete(filePath);
 			}
 		}
+
+
+		public void Write(Exception ex)
+		{
+			string message = ExceptionUtil.Format(ex);
+			Write(message, true);
+		}
+
+		public void WriteLine(string message)
+		{
+			Write(message, true);
+		}
+
+		public void Write(string message)
+		{
+			Write(message, false);
+		}
+
+		public void Write(string message, bool newLine)
+		{
+			RapidOutputWindow.Instance.Write(message, newLine);
+		}
+
 
 	}
 

@@ -63,7 +63,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         private FileWatcher util;
         public delegate void VoidDelegate();
-        DeploymentMenu _solutionMenu;
+        DeploymentMenu solutionMenu;
+
         public void FillTreeView()
         {
 
@@ -82,23 +83,25 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             try
             {
                 ProxyBridge pb = new ProxyBridge();
-                pb.AddInService.GetSols();
+				pb.AddInService.GetSolutions();
             }
-            catch (System.InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
+
+				AppManager.Current.Write(ex);
 
                 if (!_preloaded)
                 {
                     _loadingForm.Close();
                 }
-                MessageBox.Show("The development web services do not seem to be installed, would you like to install them? (Restart for Now)");
+                MessageBox.Show(string.Format("The Rapid Tools server components are not installed on {0}", AppManager.Current.ActiveEnvironment.WebApplicationUrl));
                 return;
             }
 
-            if (_solutionMenu == null)
-                _solutionMenu = new DeploymentMenu(solutionToolStripMenuItem, toolStripMenuItem1_Click);
+            if (solutionMenu == null)
+                solutionMenu = new DeploymentMenu(solutionToolStripMenuItem, toolStripMenuItem1_Click);
             
-            _solutionMenu.RefreshAsync();
+            solutionMenu.RefreshAsync();
 
             util = FileWatcher.Instance;
 

@@ -22,10 +22,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             get { return _node; }
         }
 
-        public string ServerRelativeUrl;
-        public Guid ID;
+		public Guid ID;
+		public Guid ListID; 
+		public string ServerRelativeUrl;
         public string Text;
-        public DTE2 ApplicationObject;
 
         public Guid WebID
         {
@@ -54,13 +54,19 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             }
         }
 
-
 		public FileInfo WorkspacePath
 		{
 			get
 			{
 				DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
-				FileInfo ifile = new FileInfo(string.Format(@"{0}\{1}", wdir.FullName, ServerRelativeUrl.Replace("/", @"\")));
+
+				string wpath = string.Format(@"{0}\{1}", wdir.FullName, ServerRelativeUrl.Replace("/", @"\"));
+				
+
+				if (TagType == NodeType.View)
+					wpath += ".xml";
+
+				FileInfo ifile = new FileInfo(wpath);
 
 				if (!Directory.Exists(ifile.Directory.FullName))
 					Directory.CreateDirectory(ifile.Directory.FullName);
@@ -68,35 +74,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 				return ifile;
 			}
 		}
-
-
-		//string siteUrl, Guid webID, string fileUrl, Guid fileGuid
-		public void OpenWorkspaceFile()
-		{
-			byte[] contents = AppManager.Current.ActiveBridge.AddInService.OpenBinary(SiteUrl, WebID, ID);
-			File.WriteAllBytes(WorkspacePath.FullName, contents);
-
-			AppManager.Current.ActiveFileWatcher.AddWatcher(WorkspacePath, SiteUrl, WebID, ID);
-
-			AppManager.Current.Application.ItemOperations.OpenFile(WorkspacePath.FullName, EnvDTE.Constants.vsViewKindTextView);
-		}
-
-		public void CloseWorkspaceFile()
-		{
-			CloseWorkspaceFile(EnvDTE.vsSaveChanges.vsSaveChangesPrompt);
-		}
-
-		public void CloseWorkspaceFile(EnvDTE.vsSaveChanges saveChanges)
-		{
-			if (File.Exists(WorkspacePath.FullName))
-			{
-				AppManager.Current.CloseFile(WorkspacePath.FullName);
-				//File.Delete(WorkspacePath.FullName);
-			}
-
-			AppManager.Current.ActiveFileWatcher.RemoveWatcher(WorkspacePath);
-		}
-
 
         #region INodeTag Members
 
