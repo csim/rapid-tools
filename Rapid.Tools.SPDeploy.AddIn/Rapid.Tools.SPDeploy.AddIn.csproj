@@ -103,11 +103,11 @@
     </Compile>
     <Compile Include="Resources\Project\Files.Designer.cs" />
     <Compile Include="Resources\ResourceUtility.cs" />
-    <Compile Include="UI\Controls\SiteExplorer.cs">
+    <Compile Include="UI\Controls\SiteExplorerForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Controls\SiteExplorer.Designer.cs">
-      <DependentUpon>SiteExplorer.cs</DependentUpon>
+    <Compile Include="UI\Controls\SiteExplorerForm.Designer.cs">
+      <DependentUpon>SiteExplorerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ActivationDependencyForm.cs">
       <SubType>Form</SubType>
@@ -192,8 +192,8 @@
     <EmbeddedResource Include="Resources\Project\Files.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\SiteExplorer.resx">
-      <DependentUpon>SiteExplorer.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Controls\SiteExplorerForm.resx">
+      <DependentUpon>SiteExplorerForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ActivationDependencyForm.resx">

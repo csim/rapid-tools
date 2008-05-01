@@ -27,7 +27,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public delegate void VoidDelegate();
 
-        public override ContextMenu GetContextMenu()
+        public override ContextMenu RightClick()
         {
             ContextMenu _contextMenu = new ContextMenu();
 

@@ -23,7 +23,7 @@ using Rapid.Tools.SPDeploy.AddIn.UI.Wizard;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
-    public partial class SiteExplorer : UserControl
+    public partial class SiteExplorerForm : UserControl
     {
         private XmlDocument _siteStructureDocument;
 
@@ -33,7 +33,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             set { _siteStructureDocument = value; }
         }
 
-        public SiteExplorer()
+        public SiteExplorerForm()
         {
             InitializeComponent();
 
@@ -101,10 +101,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             
             solutionMenu.RefreshAsync();
 
-            //util = FileWatcher.Instance;
-
             SiteStructureDocument = new XmlDocument();
-            treeView1.Nodes.Add("Loading");
+            
+			treeView1.Nodes.Add("Loading");
             treeView1.Nodes[0].SelectedImageKey = treeView1.Nodes[0].ImageKey = "LoadingIcon";
             treeView1.Enabled = false;
 
@@ -278,7 +277,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             if (e.Button == MouseButtons.Right)
             {
                 if (e.Node.Tag != null && e.Node.Tag is INodeTag)
-                    e.Node.ContextMenu = ((INodeTag)e.Node.Tag).GetContextMenu();
+                    e.Node.ContextMenu = ((INodeTag)e.Node.Tag).RightClick();
             }
             treeView1.SelectedNode = e.Node;
         }

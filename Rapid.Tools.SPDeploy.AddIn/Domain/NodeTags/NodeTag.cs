@@ -77,7 +77,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         #region INodeTag Members
 
-        public abstract ContextMenu GetContextMenu();
+        public abstract ContextMenu RightClick();
 
         public abstract void DoubleClick();
 

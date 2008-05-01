@@ -1,6 +1,6 @@
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
-    partial class SiteExplorer
+    partial class SiteExplorerForm
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiteExplorer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiteExplorerForm));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();

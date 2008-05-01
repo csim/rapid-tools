@@ -28,7 +28,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             Resources.ResourceUtility.SetFileNodeIcon(Node, true);
         }
 
-        public override ContextMenu GetContextMenu()
+        public override ContextMenu RightClick()
         {
             ContextMenu _contextMenu = new ContextMenu();
 
