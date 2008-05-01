@@ -706,11 +706,15 @@ namespace Rapid.Tools.Layouts.Services
 
 			_structureWriter.WriteAttributeString("Publishing", ispubweb.ToString());
 
+			foreach (SPWeb iweb in web.Webs)
+				AddWebNode(iweb);
+
 			foreach (SPFolder folder in web.Folders) 
 				AddFolderNode(folder);
 
 			foreach (SPFile file in web.Files)			
 				AddFileNode(file);
+
 
 			_structureWriter.WriteEndElement();
 		}
@@ -772,7 +776,6 @@ namespace Rapid.Tools.Layouts.Services
 		private void AddFolderNode(SPFolder folder)
 		{
 			bool islist = (folder.ParentListId != Guid.Empty);
-			bool isweb = (folder.ServerRelativeUrl == folder.ParentWeb.ServerRelativeUrl);
 
 			bool isListRoot = false;
 			SPList list = null;
@@ -783,19 +786,10 @@ namespace Rapid.Tools.Layouts.Services
 				isListRoot = (list.RootFolder.ServerRelativeUrl == folder.ServerRelativeUrl);
 			}
 
-			if (isweb)
-			{
-				AddWebNode(folder.ParentWeb);
-			}
-			else if (islist && isListRoot)
-			{				
+			if (islist && isListRoot)
 				AddListNode(list);
-			}
 			else
-			{
 				AddStandardFolderNode(folder);
-			}
-
 
 		}
 
@@ -815,72 +809,6 @@ namespace Rapid.Tools.Layouts.Services
 
 		}
 
-
-		//private void AddWebFolderNode1(SPFolder folder)
-		//{
-		//    bool islist = (folder.ParentListId != Guid.Empty);
-		//    bool isweb = (folder.ParentWeb.ID != folder.ParentWeb.ID);
-
-		//    if (islist)
-		//    {
-		//        SPList list = subFolder.ParentWeb.Lists[subFolder.ParentListId];
-
-		//        bool isListRoot = (list.RootFolder.ServerRelativeUrl == subFolder.ServerRelativeUrl);
-		//        bool isInWebRoot = (subFolder.ParentWeb.ServerRelativeUrl == subFolder.ServerRelativeUrl);
-
-		//        bool renderFolderNode = (!isInWebRoot && !isListRoot);
-
-		//        if (renderFolderNode)
-		//        {
-		//            _structureWriter.WriteStartElement("Folder");
-		//            _structureWriter.WriteAttributeString("Title", folder.Name);
-		//            _structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
-		//        }
-
-		//        AddListNode(list);
-
-		//        if (renderFolderNode)
-		//            _structureWriter.WriteEndElement();
-		//    }
-
-		//    if (!islist && !isweb)
-		//    {
-		//        _structureWriter.WriteStartElement("Folder");
-		//        _structureWriter.WriteAttributeString("Title", folder.Name);
-		//        _structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
-
-		//        AddWebFolderNode(subFolder);
-
-		//        foreach (SPFile file in folder.Files)
-		//            AddFileNode(file);
-
-		//        _structureWriter.WriteEndElement();
-		//    }
-
-
-		//    foreach (SPFolder subFolder in folder.SubFolders)
-		//    {
-		//        AddWebFolderNode(subFolder);
-		//    }
-
-		//}
-
-		//private void AddListFolderNode1(SPFolder folder)
-		//{
-		//    foreach (SPFolder subFolder in folder.SubFolders)
-		//    {
-		//        _structureWriter.WriteStartElement("Folder");
-		//        _structureWriter.WriteAttributeString("Title", folder.Name);
-		//        _structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
-
-		//        AddListFolderNode(subFolder);
-
-		//        foreach (SPFile file in folder.Files) 
-		//            AddFileNode(file);
-
-		//        _structureWriter.WriteEndElement();
-		//    }
-		//}
 
 		private void AddFileNode(SPFile file)
 		{

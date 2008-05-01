@@ -12,27 +12,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
     public class FileWatcher
     {
-		private static FileWatcher instance = null;
-
-        public static FileWatcher Instance
-        {
-            get {
-				if (instance == null) instance = new FileWatcher();
-				return instance; 
-			}
-        }       
-
         FileSystemWatcher watcher;
 
         public Dictionary<string, NodeTag> WatchFiles;
 
-        public FileWatcher()
+		public FileWatcher(DirectoryInfo watchDirectory)
         {
             WatchFiles = new Dictionary<string,NodeTag>();
 
-			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
-            
-			watcher = new FileSystemWatcher(wdir.FullName);
+			watcher = new FileSystemWatcher(watchDirectory.FullName);
             watcher.IncludeSubdirectories = true;
             watcher.Renamed += new RenamedEventHandler(FileRenamed);
             watcher.EnableRaisingEvents = true;
@@ -47,7 +35,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		public void RemoveWatcher(NodeTag tag)
         {
-			string wpath = tag.WorkspacePath.FullName;
+			string wpath = tag.WorkspacePath.Directory.FullName;
 
 			if (WatchFiles.ContainsKey(wpath))
 				WatchFiles.Remove(wpath);
@@ -66,13 +54,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 					{
 						// TODO: figure out the file locking here -- this is a temporary fix
 						System.Threading.Thread.Sleep(1000);
-						AppManager.Current.ActiveBridge.AddInService.SaveBinary(tag.WebID, tag.ID, File.ReadAllBytes(e.FullPath));
+						tag.SiteTag.AddInService.SaveBinary(tag.WebID, tag.ID, File.ReadAllBytes(e.FullPath));
 					}
 					else if (tag.TagType == NodeType.View)
 					{
 						// TODO: figure out the file locking here -- this is a temporary fix
 						System.Threading.Thread.Sleep(1000);
-						AppManager.Current.ActiveBridge.AddInService.UpdateViewSchema(tag.WebID, tag.ListID, tag.Node.Text, File.ReadAllText(e.FullPath));
+						tag.SiteTag.AddInService.UpdateViewSchema(tag.WebID, tag.ListID, tag.Node.Text, File.ReadAllText(e.FullPath));
 					}
 
 				}
@@ -84,15 +72,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 		}
 
 
-
-
-
         ~FileWatcher()
         {
 
 
         }
-
 
        
     }

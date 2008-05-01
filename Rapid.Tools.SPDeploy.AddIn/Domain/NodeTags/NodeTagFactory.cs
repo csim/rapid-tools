@@ -21,35 +21,23 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
     public class NodeTagFactory
     {
-        public static NodeTag Create(TreeNode node, DTE2 applicationObject, NodeType type)
+        public static NodeTag Create(TreeNode node, NodeType type)
         {
             switch (type)
             {
-                case NodeType.Site:
-                    return new NullNodeTag();
-                    break;
-                case NodeType.Web:
+				case NodeType.Site:
+					return new SPSiteNodeTag(node);
+				case NodeType.Web:
                     return new SPWebNodeTag(node);
-                    break;
                 case NodeType.List:
                     return new SPListNodeTag(node);
-                    break;
-                case NodeType.ListItem:
-                    return new NullNodeTag();
-                    break;
-                case NodeType.Folder:
-                    return new NullNodeTag();
-                    break;
                 case NodeType.File:
                     return new SPFileNodeTag(node);
-                    break;
                 case NodeType.View:
                     return new SPViewNodeTag(node);
-                    break;
-                default:
-                    break;
             }
-            return new NullNodeTag();
+
+			return new GenericNodeTag();
         }
     }    
 }

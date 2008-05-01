@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class NullNodeTag : NodeTag
+    public class GenericNodeTag : NodeTag
     {
 
         public override void DoubleClick()
@@ -15,9 +15,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override System.Windows.Forms.ContextMenu RightClick()
         {
-            ContextMenu _contextMenu = new ContextMenu();
-            _contextMenu.MenuItems.Add("No Actions");
-            return _contextMenu;
+            ContextMenu contextMenu = new ContextMenu();
+            //contextMenu.MenuItems.Add("No Actions");
+            return contextMenu;
         }
     }
 }

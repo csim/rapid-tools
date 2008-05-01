@@ -41,12 +41,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		private Project _activeProject;
 		private SPEnvironmentInfo _activeEnvironment = null;
-		private DirectoryInfo _activeWorkspaceDirectory = null;
-		private string _activeWspFileName = null;
 		
-		private ProxyBridge _activeBridge = null;
-		private FileWatcher _activeFileWatcher = null;
-
 		public Project ActiveProject
 		{
 			get {
@@ -62,73 +57,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			get { return new FileInfo(ActiveProject.FullName); }
 		}
 
-		public SPEnvironmentInfo ActiveEnvironment
-		{
-			get {
-				if (_activeEnvironment == null)
-					_activeEnvironment = SPEnvironmentInfo.Parse(ActiveProject);
-
-				return _activeEnvironment; 
-			}
-		}
-		
-		public DirectoryInfo ActiveWorkspaceDirectory
-		{
-			get
-			{
-				if (_activeWorkspaceDirectory == null)
-				{
-					string wdir = string.Format(@"{0}\SPDeploy\Workspace\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ActiveProject.Name);
-
-					_activeWorkspaceDirectory = new DirectoryInfo(wdir);
-
-					if (!Directory.Exists(_activeWorkspaceDirectory.FullName))
-						Directory.CreateDirectory(_activeWorkspaceDirectory.FullName);
-				}
-
-				return _activeWorkspaceDirectory;
-			}
-		}
-
-		public string ActiveWspFileName
-		{
-			get {
-				if (string.IsNullOrEmpty(_activeWspFileName))
-					_activeWspFileName = string.Format("{0}.wsp", ActiveProject.Name);
-
-				return _activeWspFileName; 
-			}
-		}
-
-		public ProxyBridge ActiveBridge
-		{
-			get {
-				if (_activeBridge == null)
-					_activeBridge = new ProxyBridge();
-
-				return _activeBridge; 
-			}
-		}
-
-		public FileWatcher ActiveFileWatcher
-		{
-			get {
-				if (_activeFileWatcher == null)
-					_activeFileWatcher = new FileWatcher();
-
-				return _activeFileWatcher; 
-			}
-		}
-
 
 		public void ResetActiveProject()
 		{
 			_activeProject = null;
 			_activeEnvironment = null;
-			_activeWorkspaceDirectory = null;
-			_activeWspFileName = null;
-			_activeBridge = null;
-			_activeFileWatcher = null;
 		}
 
 
@@ -159,11 +92,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		public List<string> GetActivatedFeatures(string web)
 		{
-			string result = ActiveBridge.WebsService.GetActivatedFeatures();
-			if (string.IsNullOrEmpty(result))
-				return null;
+			//string result = ActiveBridge.WebsService.GetActivatedFeatures();
+			//if (string.IsNullOrEmpty(result))
+			//    return null;
 			
-			return new List<string>(result.ToLower().Split(','));
+			//return new List<string>(result.ToLower().Split(','));
+			return null;
 		}
 
 		public void Execute(string filepath)
@@ -300,6 +234,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		public void CloseFile(string filePath)
 		{
+			CloseFile(filePath, EnvDTE.vsSaveChanges.vsSaveChangesPrompt);
+		}
+
+		public void CloseFile(string filePath, EnvDTE.vsSaveChanges promptType)
+		{
 			if (File.Exists(filePath))
 			{
 				Documents docs = AppManager.Current.Application.Documents;
@@ -307,7 +246,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 				for (int i=1; i<docs.Count; i++)
 				{
 					if (docs.Item(i).FullName.ToLower() == filePath.ToLower())
-						docs.Item(i).Close(EnvDTE.vsSaveChanges.vsSaveChangesPrompt);
+						docs.Item(i).Close(promptType);
 				}
 
 				File.Delete(filePath);

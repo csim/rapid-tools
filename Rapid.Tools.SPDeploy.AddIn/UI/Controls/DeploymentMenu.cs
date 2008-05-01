@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.IO;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
+using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
 
 namespace Rapid.Tools.SPDeploy.AddIn
 {
@@ -29,18 +30,18 @@ namespace Rapid.Tools.SPDeploy.AddIn
         private ToolStripMenuItem _upgradeSolutionItem;
         private ToolStripMenuItem _serverUrl;
 
-        public DeploymentMenu(ToolStripMenuItem solutionItem, EventHandler ev)
+        public DeploymentMenu(ToolStripMenuItem menuItem, SPSiteNodeTag nodeTag, EventHandler ev)
         {
             MachineChanged = ev;
 
-            _solutionItem = solutionItem;
+			_solutionItem = menuItem;
             _addSolutionItem = new ToolStripMenuItem("Add Solution");
             _deploySolutionItem = new ToolStripMenuItem("Deploy Solution");
             _retractSolutionItem = new ToolStripMenuItem("Retract Solution");
             _deleteSolutionItem = new ToolStripMenuItem("Delete Solution");
             _cycleSolutionItem = new ToolStripMenuItem("Cycle Solution");
             _upgradeSolutionItem = new ToolStripMenuItem("Upgrade Solution");
-            _serverUrl = new ToolStripMenuItem(AppManager.Current.ActiveEnvironment.ServerName + ":" + AppManager.Current.ActiveEnvironment.ServerPort);
+			_serverUrl = new ToolStripMenuItem(nodeTag.Url);
 
             _solutionItem.DropDownItems.Add(_serverUrl);
             _solutionItem.DropDownItems.Add(new ToolStripSeparator());
@@ -99,78 +100,78 @@ namespace Rapid.Tools.SPDeploy.AddIn
         {
 			try
 			{
-				RapidOutputWindow.Instance.Activate();
-				RapidOutputWindow.Instance.Clear();
+				//RapidOutputWindow.Instance.Activate();
+				//RapidOutputWindow.Instance.Clear();
 
-				string output = "";
-				string projectname = AppManager.Current.ActiveProject.Name;
-				string wspname = AppManager.Current.ActiveWspFileName;
+				//string output = "";
+				//string projectname = AppManager.Current.ActiveProject.Name;
+				//string wspname = AppManager.Current.ActiveWspFileName;
 
-				ProxyBridge bridge = AppManager.Current.ActiveBridge;
-				byte[] wspcontents;
+				//ProxyBridge bridge = AppManager.Current.ActiveBridge;
+				//byte[] wspcontents;
 
-				switch (action)
-				{
-				case Action.Deploy:
-					AppManager.Current.WriteLine("Deploying...");
-					wspcontents = GetWspContents();
-					output = bridge.AddInService.DeploySolution(wspname);
-					AppManager.Current.WriteLine(output);
-					break;
+				//switch (action)
+				//{
+				//case Action.Deploy:
+				//    AppManager.Current.WriteLine("Deploying...");
+				//    wspcontents = GetWspContents();
+				//    output = bridge.AddInService.DeploySolution(wspname);
+				//    AppManager.Current.WriteLine(output);
+				//    break;
 
-				case Action.Retract:
-					AppManager.Current.WriteLine("Retracting...");
-					output = bridge.AddInService.RetractSolution(wspname);
-					AppManager.Current.WriteLine(output);
-					break;
+				//case Action.Retract:
+				//    AppManager.Current.WriteLine("Retracting...");
+				//    output = bridge.AddInService.RetractSolution(wspname);
+				//    AppManager.Current.WriteLine(output);
+				//    break;
 
-				case Action.Delete:
-					AppManager.Current.WriteLine("Deleting...");
-					output = bridge.AddInService.DeleteSolution(wspname);
-					AppManager.Current.WriteLine(output);
-					break;
+				//case Action.Delete:
+				//    AppManager.Current.WriteLine("Deleting...");
+				//    output = bridge.AddInService.DeleteSolution(wspname);
+				//    AppManager.Current.WriteLine(output);
+				//    break;
 
-				case Action.Cycle:
-					AppManager.Current.WriteLine("Retracting...");
-					output = bridge.AddInService.RetractSolution(wspname);
-					AppManager.Current.WriteLine(output);
+				//case Action.Cycle:
+				//    AppManager.Current.WriteLine("Retracting...");
+				//    output = bridge.AddInService.RetractSolution(wspname);
+				//    AppManager.Current.WriteLine(output);
 
-					RefreshAsync();
+				//    RefreshAsync();
 
-					AppManager.Current.WriteLine("Deleting...");
-					output = bridge.AddInService.DeleteSolution(wspname);
-					AppManager.Current.WriteLine(output);
+				//    AppManager.Current.WriteLine("Deleting...");
+				//    output = bridge.AddInService.DeleteSolution(wspname);
+				//    AppManager.Current.WriteLine(output);
 
-					RefreshAsync();
+				//    RefreshAsync();
 
-					wspcontents = GetWspContents();
+				//    wspcontents = GetWspContents();
 
-					output = bridge.AddInService.AddSolution(wspname, wspcontents);
-					AppManager.Current.WriteLine(output);
+				//    output = bridge.AddInService.AddSolution(wspname, wspcontents);
+				//    AppManager.Current.WriteLine(output);
 
-					RefreshAsync();
-					AppManager.Current.WriteLine("Deploying...");
-					output = bridge.AddInService.DeploySolution(wspname);
-					AppManager.Current.WriteLine(output);
-					break;
+				//    RefreshAsync();
+				//    AppManager.Current.WriteLine("Deploying...");
+				//    output = bridge.AddInService.DeploySolution(wspname);
+				//    AppManager.Current.WriteLine(output);
+				//    break;
 
-				case Action.Add:
-					wspcontents = GetWspContents();
-					output = bridge.AddInService.AddSolution(wspname, wspcontents);
-					AppManager.Current.WriteLine(output);
-					break;
+				//case Action.Add:
+				//    wspcontents = GetWspContents();
+				//    output = bridge.AddInService.AddSolution(wspname, wspcontents);
+				//    AppManager.Current.WriteLine(output);
+				//    break;
 
-				case Action.Upgrade:
-					wspcontents = GetWspContents();
-					bridge.AddInService.UpgradeSolution(wspname, wspcontents);
-					break;
+				//case Action.Upgrade:
+				//    wspcontents = GetWspContents();
+				//    bridge.AddInService.UpgradeSolution(wspname, wspcontents);
+				//    break;
 
-				default:
-					break;
-				}
+				//default:
+				//    break;
+				//}
 
-				AppManager.Current.WriteLine("Completed: " + DateTime.Now);
-				RefreshAsync();
+				//AppManager.Current.WriteLine("Completed: " + DateTime.Now);
+				//RefreshAsync();
 
 			}
 			catch (Exception ex)
@@ -181,19 +182,20 @@ namespace Rapid.Tools.SPDeploy.AddIn
 
         private byte[] GetWspContents()
         {
-			AppManager.Current.WriteLine("Compiling WSP...");
-			AppManager.Current.ExecuteMSBuild("CompileWsp");
+			//AppManager.Current.WriteLine("Compiling WSP...");
+			//AppManager.Current.ExecuteMSBuild("CompileWsp");
 
-			string projectname = AppManager.Current.ActiveProject.Name;
-			string projectpath = AppManager.Current.ActiveProjectPath.Directory.FullName;
-			string wspname = AppManager.Current.ActiveWspFileName;
+			//string projectname = AppManager.Current.ActiveProject.Name;
+			//string projectpath = AppManager.Current.ActiveProjectPath.Directory.FullName;
+			//string wspname = AppManager.Current.ActiveWspFileName;
 
-			// TODO: make this sensitive to the output directory based on configuration
-			string wsppath = string.Format(@"{0}\bin\Debug\{1}", projectpath, wspname);
+			//// TODO: make this sensitive to the output directory based on configuration
+			//string wsppath = string.Format(@"{0}\bin\Debug\{1}", projectpath, wspname);
 
-			byte[] wspcontents = File.ReadAllBytes(wsppath);
+			//byte[] wspcontents = File.ReadAllBytes(wsppath);
 
-			return wspcontents;
+			//return wspcontents;
+			return null;
         }
 
         public enum Action
@@ -251,45 +253,45 @@ namespace Rapid.Tools.SPDeploy.AddIn
 
 		public void RefreshMenuItems()
 		{
-			try
-			{
-				hideMenuItems();
+			//try
+			//{
+			//    hideMenuItems();
 
 
-				Proxies.AddIn.Solution solution = null;
-				Proxies.AddIn.Solution[] solutions = AppManager.Current.ActiveBridge.AddInService.GetSolutions();
+			//    Proxies.AddIn.Solution solution = null;
+			//    Proxies.AddIn.Solution[] solutions = AppManager.Current.ActiveBridge.AddInService.GetSolutions();
 
-				solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
-						{
-							return string.Compare(sol.Name, AppManager.Current.ActiveWspFileName, true) == 0;
-						});
+			//    //solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
+			//    //        {
+			//    //            return string.Compare(sol.Name, AppManager.Current.ActiveWspFileName, true) == 0;
+			//    //        });
 
-				if (solution != null)
-				{
-					if (solution.Deployed)
-					{
-						_upgradeSolutionItem.Visible =
-						_cycleSolutionItem.Visible =
-						_retractSolutionItem.Visible = true;
-						_solutionItem.Image = Resources.Images.Files.IMNON;
-					}
-					else
-					{
-						_deploySolutionItem.Visible =
-						_deleteSolutionItem.Visible = true;
-						_solutionItem.Image = Resources.Images.Files.IMNAWAY;
-					}
-				}
-				else
-				{
-					_addSolutionItem.Visible = true;
-					_solutionItem.Image = Resources.Images.Files.IMNBUSY;
-				}
-			}
-			catch (Exception ex)
-			{
-				AppManager.Current.Write(ex);
-			}
+			//    if (solution != null)
+			//    {
+			//        if (solution.Deployed)
+			//        {
+			//            _upgradeSolutionItem.Visible =
+			//            _cycleSolutionItem.Visible =
+			//            _retractSolutionItem.Visible = true;
+			//            _solutionItem.Image = Resources.Images.Files.IMNON;
+			//        }
+			//        else
+			//        {
+			//            _deploySolutionItem.Visible =
+			//            _deleteSolutionItem.Visible = true;
+			//            _solutionItem.Image = Resources.Images.Files.IMNAWAY;
+			//        }
+			//    }
+			//    else
+			//    {
+			//        _addSolutionItem.Visible = true;
+			//        _solutionItem.Image = Resources.Images.Files.IMNBUSY;
+			//    }
+			//}
+			//catch (Exception ex)
+			//{
+			//    AppManager.Current.Write(ex);
+			//}
 
         }
 

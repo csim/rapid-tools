@@ -20,8 +20,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override void DoubleClick()
         {
-            if (!AppManager.Current.ActiveBridge.AddInService.IsCheckedOut(WebID, ID))
-				AppManager.Current.ActiveBridge.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckOut);
+			if (!SiteTag.AddInService.IsCheckedOut(WebID, ID))
+				SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckOut);
 
 			OpenWorkspaceFile();
 
@@ -30,21 +30,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override ContextMenu RightClick()
         {
-            ContextMenu _contextMenu = new ContextMenu();
+            ContextMenu contextMenu = new ContextMenu();
 
 
-			if (!AppManager.Current.ActiveBridge.AddInService.IsCheckedOut(WebID, ID))
+			if (!SiteTag.AddInService.IsCheckedOut(WebID, ID))
             {
 
-			   // _contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
+			   // contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
 			   //{
 			   //    AppManager.Current.OpenFile(WebID, ServerRelativeUrl, FileID);
 			   //});
 
-                _contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
+                contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
                 {
 
-					AppManager.Current.ActiveBridge.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckOut);
+					SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckOut);
 
 					OpenWorkspaceFile();
 
@@ -58,43 +58,43 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 				if (!isopen)
 				{
-					_contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
+					contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
 				   {
 					   OpenWorkspaceFile();
 				   });
 				}
 
-				_contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
+				contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
                 {
-					AppManager.Current.ActiveBridge.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckIn);
+					SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckIn);
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 					CloseWorkspaceFile();
-
                 });
-                _contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
+
+				contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
                 {
-					AppManager.Current.ActiveBridge.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.UndoCheckOut);
+					SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.UndoCheckOut);
                     Resources.ResourceUtility.SetFileNodeIcon(Node, false);
 					CloseWorkspaceFile();
                 });
             }
 
-            _contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
+            contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.ActiveBridge.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.Delete);
+				SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.Delete);
 				CloseWorkspaceFile();
             });
 
 
-            return _contextMenu;
+            return contextMenu;
         }
 
 		public void OpenWorkspaceFile()
 		{
-			byte[] contents = AppManager.Current.ActiveBridge.AddInService.OpenBinary(WebID, ID);
+			byte[] contents = SiteTag.AddInService.OpenBinary(WebID, ID);
 			File.WriteAllBytes(WorkspacePath.FullName, contents);
 
-			AppManager.Current.ActiveFileWatcher.AddWatcher(this);
+			SiteTag.Watcher.AddWatcher(this);
 			AppManager.Current.OpenFile(WorkspacePath.FullName);
 		}
 
@@ -103,15 +103,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			CloseWorkspaceFile(EnvDTE.vsSaveChanges.vsSaveChangesPrompt);
 		}
 
-		public void CloseWorkspaceFile(EnvDTE.vsSaveChanges saveChanges)
+		public void CloseWorkspaceFile(EnvDTE.vsSaveChanges promptType)
 		{
 			if (File.Exists(WorkspacePath.FullName))
 			{
-				AppManager.Current.CloseFile(WorkspacePath.FullName);
-				//File.Delete(WorkspacePath.FullName);
+				AppManager.Current.CloseFile(WorkspacePath.FullName, promptType);
+				File.Delete(WorkspacePath.FullName);
 			}
 
-			AppManager.Current.ActiveFileWatcher.RemoveWatcher(this);
+			SiteTag.Watcher.RemoveWatcher(this);
 		}
 
     }

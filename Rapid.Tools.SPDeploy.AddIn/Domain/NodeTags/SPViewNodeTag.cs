@@ -18,25 +18,22 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override ContextMenu RightClick()
         {
-            ContextMenu _contextMenu = new ContextMenu();
+            ContextMenu contextMenu = new ContextMenu();
 
-			DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
+			DirectoryInfo wdir = WorkspacePath.Directory;
 			string wpath = WorkspacePath.FullName;
 
-			if (AppManager.Current.Application.ActiveDocument == null || AppManager.Current.Application.ActiveDocument.FullName != wpath)
-            {
-                _contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
-                   {
-					   OpenWorkspaceFile();
-                   });
-            }
+			contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
+				{
+				   OpenWorkspaceFile();
+				});
 
-            _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
-            {
-				AppManager.Current.OpenBrowser(SiteUrl + ServerRelativeUrl);
-            });
+            contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+				{
+					AppManager.Current.OpenBrowser(SiteTag.Url + ServerRelativeUrl);
+				});
 
-            return _contextMenu;
+            return contextMenu;
         }
 
         public override void DoubleClick()
@@ -48,11 +45,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 		{
 			string wpath = WorkspacePath.FullName;
 			AppManager.Current.EnsureDirectory(wpath);
-			
-			File.WriteAllText(wpath, AppManager.Current.ActiveBridge.AddInService.GetViewSchema(WebID, ListID, Node.Text));
+
+			File.WriteAllText(wpath, SiteTag.AddInService.GetViewSchema(WebID, ListID, Node.Text));
 			AppManager.Current.OpenFile(wpath);
 
-			AppManager.Current.ActiveFileWatcher.AddWatcher(this);
+			SiteTag.Watcher.AddWatcher(this);
 		}
 
 		public void CloseWorkspaceFile()
@@ -63,7 +60,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 				//File.Delete(WorkspacePath.FullName);
 			}
 
-			AppManager.Current.ActiveFileWatcher.RemoveWatcher(this);
+			SiteTag.Watcher.RemoveWatcher(this);
 		}
     }
 }

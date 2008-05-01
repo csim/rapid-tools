@@ -58,6 +58,11 @@
     <Compile Include="Domain\AppManager.cs" />
     <Compile Include="Domain\DefaultColorTable.cs" />
     <Compile Include="Domain\ExceptionUtil.cs" />
+    <Compile Include="Domain\NodeTags\SPSiteNodeTag.cs" />
+    <Compile Include="Domain\ProxyBridge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\OpenMenu.cs" />
     <Compile Include="UI\Controls\DeploymentMenu.cs">
     </Compile>
     <Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />
@@ -66,10 +71,9 @@
     <Compile Include="Domain\NodeTags\SPFileNodeTag.cs" />
     <Compile Include="Domain\NodeTags\INodeTag.cs" />
     <Compile Include="Domain\NodeTags\SPListNodeTag.cs" />
-    <Compile Include="Domain\NodeTags\NullNodeTag.cs" />
+    <Compile Include="Domain\NodeTags\GenericNodeTag.cs" />
     <Compile Include="Domain\NodeTags\SPWebNodeTag.cs" />
     <Compile Include="Domain\RapidOutputWindow.cs" />
-    <Compile Include="Domain\ProxyBridge.cs" />
     <Compile Include="Domain\SPEnvironmentInfo.cs" />
     <Compile Include="Domain\FileWatcher.cs" />
     <Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />
@@ -114,6 +118,12 @@
     </Compile>
     <Compile Include="UI\Forms\ActivationDependencyForm.Designer.cs">
       <DependentUpon>ActivationDependencyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\OpenUrlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\OpenUrlForm.designer.cs">
+      <DependentUpon>OpenUrlForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\CustomActionForm.cs">
       <SubType>Form</SubType>
@@ -462,6 +472,10 @@
     <EmbeddedResource Include="Resources\Images\ITDL.GIF" />
     <EmbeddedResource Include="Resources\Images\ITGEN.GIF" />
     <EmbeddedResource Include="Resources\Images\STSICON.GIF" />
+    <EmbeddedResource Include="UI\Forms\OpenUrlForm.resx">
+      <DependentUpon>OpenUrlForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\FeatureModificationForm.resx">
       <DependentUpon>FeatureModificationForm.cs</DependentUpon>
       <SubType>Designer</SubType>

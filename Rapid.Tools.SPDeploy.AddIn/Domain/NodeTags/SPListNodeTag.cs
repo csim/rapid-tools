@@ -29,15 +29,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override ContextMenu RightClick()
         {
-            ContextMenu _contextMenu = new ContextMenu();
-
-			ListsProxy _listsWebService = new ListsProxy();
-            _listsWebService.Url = SiteUrl + "/_vti_bin/lists.asmx";
-            _listsWebService.Credentials = CredentialCache.DefaultNetworkCredentials;
+            ContextMenu contextMenu = new ContextMenu();
 
             //if (((NodeTag)_node.Tag).IsDocumentLibrary)
             //{
-            //    _contextMenu.MenuItems.Add("Upload", delegate(object sender, EventArgs e)
+            //    contextMenu.MenuItems.Add("Upload", delegate(object sender, EventArgs e)
             //    {
             //        OpenFileDialog _fileDialog = new OpenFileDialog();
 
@@ -48,18 +44,18 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             //    });
             //}
 
-            _contextMenu.MenuItems.Add("View List Schema", delegate(object sender, EventArgs e)
+            contextMenu.MenuItems.Add("View List Schema", delegate(object sender, EventArgs e)
             {
                 string _schemaPath = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\SPDeploy\Workspace\Lists\", Node.Text, ".xml");
 
 				AppManager.Current.EnsureDirectory(_schemaPath);
 
-                File.WriteAllText(_schemaPath, _listsWebService.GetList(Node.Text).OuterXml);
+                File.WriteAllText(_schemaPath, SiteTag.ListsService.GetList(Node.Text).OuterXml);
 
                 AppManager.Current.Application.ItemOperations.OpenFile(_schemaPath, EnvDTE.Constants.vsViewKindTextView);
             });
 
-            _contextMenu.MenuItems.Add("Create Feature", delegate(object sendr, EventArgs e)
+            contextMenu.MenuItems.Add("Create Feature", delegate(object sendr, EventArgs e)
             {
 
                 VoidDelegate d = new VoidDelegate(delegate()
@@ -80,7 +76,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                         _templateName = string.Join(string.Empty, _templateDisplayName.Split(' '));
                         _templateNumber = _listDialog.TemplateNumber;
 
-                        foreach (string s in AppManager.Current.ActiveBridge.AddInService.featureFiles(_listsWebService.GetList(Node.Text).OuterXml))
+						foreach (string s in SiteTag.AddInService.featureFiles(SiteTag.ListsService.GetList(Node.Text).OuterXml))
                         {
                             string projectPath = AppManager.Current.ActiveProject.FullName;
                             projectPath = projectPath.Remove(projectPath.LastIndexOf("\\"));
@@ -97,12 +93,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
                             if (tempString.ToLower() == "schema.xml")
                             {
-								string schema = AppManager.Current.ActiveBridge.AddInService.GetListSchema(WebID, ID);
+								string schema = SiteTag.AddInService.GetListSchema(WebID, ID);
 
 
                                 XmlDocument oSchema = new XmlDocument();
                                 Encoding enc = Encoding.UTF8;
-								oSchema.LoadXml(enc.GetString(AppManager.Current.ActiveBridge.AddInService.OpenFile(s)));
+								oSchema.LoadXml(enc.GetString(SiteTag.AddInService.OpenFile(s)));
 
                                 XmlDocument nSchema = new XmlDocument();
                                 nSchema.LoadXml(schema);
@@ -113,7 +109,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                     oSchema.SelectSingleNode("/List/MetaData/Fields").InnerXml = nSchema.SelectSingleNode("/List/Fields").InnerXml;
 
                                     XmlDocument doc = new XmlDocument();
-									doc.LoadXml(AppManager.Current.ActiveBridge.AddInService.GetViewNodes(WebID, ID).OuterXml);
+									doc.LoadXml(SiteTag.AddInService.GetViewNodes(WebID, ID).OuterXml);
 
 
                                     XmlNode formNode = oSchema.SelectSingleNode("/List/MetaData/Forms");
@@ -160,7 +156,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 featureFile = projectPath + fPath;
                                 XmlDocument fe = new XmlDocument();
-								File.WriteAllBytes(projectPath + fPath, AppManager.Current.ActiveBridge.AddInService.OpenFile(s));
+								File.WriteAllBytes(projectPath + fPath, SiteTag.AddInService.OpenFile(s));
                                 fe.Load(projectPath + fPath);
 
                                 fe.DocumentElement.Attributes["Id"].Value = Guid.NewGuid().ToString().Replace("{", "").Replace("}", "");
@@ -170,7 +166,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                                 fe.Save(featureFile);
                             }
                             else
-								File.WriteAllBytes(projectPath + fPath, AppManager.Current.ActiveBridge.AddInService.OpenFile(s));
+								File.WriteAllBytes(projectPath + fPath, SiteTag.AddInService.OpenFile(s));
 
                         }
 
@@ -241,13 +237,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 
                         schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml = string.Empty;
-						foreach (string s in AppManager.Current.ActiveBridge.AddInService.GetContentTypeNames(WebID, ID))
+						foreach (string s in SiteTag.AddInService.GetContentTypeNames(WebID, ID))
                         {
                             schemaDocument.SelectSingleNode("/List/MetaData/ContentTypes").InnerXml += s;
                         }
 
 
-						Proxies.AddIn.ListOptions lo = AppManager.Current.ActiveBridge.AddInService.GetOptions(WebID, ID);
+						Proxies.AddIn.ListOptions lo = SiteTag.AddInService.GetOptions(WebID, ID);
                         if (lo.AllowContentTypes)
                             schemaDocument.DocumentElement.SetAttribute("AllowContentTypes", "true");
                         if (lo.ContentTypesEnabled)
@@ -270,12 +266,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             });
 
-            _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+            contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.OpenBrowser(SiteUrl + ServerRelativeUrl);
+				AppManager.Current.OpenBrowser(SiteTag.Url + ServerRelativeUrl);
             });
 
-            return _contextMenu;
+            return contextMenu;
         }
     }
 }

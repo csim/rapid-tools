@@ -14,6 +14,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
     {
 
         public NodeType TagType;
+		private SPSiteNodeTag _siteNode;
 
         protected TreeNode _node;
 
@@ -27,41 +28,53 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 		public string ServerRelativeUrl;
         public string Text;
 
-        public Guid WebID
-        {
-            get
-            {
-				TreeNode inode = Node;
+		public Guid _webID; 
 
-				while (inode.Tag == null || ((NodeTag)inode.Tag).TagType != NodeType.Web)
+		public Guid WebID
+		{
+			get
+			{
+
+				if (_webID == Guid.Empty)
 				{
-					inode = inode.Parent;
+					TreeNode inode = Node;
+
+					while (!(inode.Tag is SPSiteNodeTag) && !(inode.Tag is SPWebNodeTag))
+						inode = inode.Parent;
+
+					_webID = ((NodeTag)inode.Tag).ID;
 				}
 
-				return ((NodeTag)inode.Tag).ID;
-            }
-        }
+				return _webID;
+			}
+		}
 
-        private string _siteUrl;
+		public SPSiteNodeTag SiteTag
+		{
+			get {
 
-        public string SiteUrl
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_siteUrl))
-                    _siteUrl = ((NodeTag)Node.TreeView.Nodes[0].Tag).ServerRelativeUrl;
-                return _siteUrl;
-            }
-        }
+				if (_siteNode == null)
+				{
+					TreeNode inode = Node;
+					
+					while (!(inode.Tag is SPSiteNodeTag))
+						inode = inode.Parent;
+
+					_siteNode = (SPSiteNodeTag)inode.Tag;
+				}
+
+				return _siteNode;
+			}
+		}
+
 
 		public FileInfo WorkspacePath
 		{
 			get
 			{
-				DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
 
-				string wpath = string.Format(@"{0}{1}", wdir.FullName, ServerRelativeUrl.Replace("/", @"\"));
-				
+				string wdir = string.Format(@"{0}\SPDeploy\Workspace", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+				string wpath = string.Format(@"{0}\{1}\{2}", wdir, SiteTag.ID.ToString().Replace("{", "").Replace("}", "").Replace("-", ""), ServerRelativeUrl.Replace("/", @"\"));
 
 				if (TagType == NodeType.View)
 					wpath += ".xml";
@@ -75,12 +88,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			}
 		}
 
-        #region INodeTag Members
 
         public abstract ContextMenu RightClick();
 
         public abstract void DoubleClick();
 
-        #endregion
-    }
+	}
 }
