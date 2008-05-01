@@ -23,7 +23,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override ContextMenu RightClick()
         {
-            ContextMenu _contextMenu = new ContextMenu();
+            ContextMenu contextMenu = new ContextMenu();
 
             List<FeatureManifest> _features = new List<FeatureManifest>();
 			
@@ -46,7 +46,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                             {
                                 RapidOutputWindow.Instance.Activate();
                                 RapidOutputWindow.Instance.Clear();
-								RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.RemoveFeature(WebID, (Guid)((MenuItem)s).Tag));
+								RapidOutputWindow.Instance.Write(SiteTag.AddInService.RemoveFeature(WebID, (Guid)((MenuItem)s).Tag));
                             };
                         _featureMenuItem.Tag = new Guid(featureManifest.Id);
                         _removeFeatureMenu.MenuItems.Add(_featureMenuItem);
@@ -54,39 +54,39 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                 }
                 else
                 {
-					if (Array.Find<Proxies.AddIn.Solution>(AppManager.Current.ActiveBridge.AddInService.GetSolutions(), delegate(Proxies.AddIn.Solution sol)
-                    {
-						return string.Compare(sol.Name, AppManager.Current.ActiveWspFileName, true) == 0 && sol.Deployed;
-                    }) != null)
-                    {
-                        if (Node.Parent == null || featureManifest.Scope == "Web")
-                        {
-                            MenuItem _featureMenuItem = new MenuItem(featureManifest.Title);
-                            _featureMenuItem.Click += delegate(object s, EventArgs ea)
-                                {
-                                    RapidOutputWindow.Instance.Activate();
-                                    RapidOutputWindow.Instance.Clear();
-									RapidOutputWindow.Instance.Write(AppManager.Current.ActiveBridge.AddInService.AddFeature(WebID, (Guid)((MenuItem)s).Tag));
+					//if (Array.Find<Proxies.AddIn.Solution>(SiteTag.AddInService.GetSolutions(), delegate(Proxies.AddIn.Solution sol)
+					//{
+					//    return string.Compare(sol.Name, AppManager.Current.ActiveWspFileName, true) == 0 && sol.Deployed;
+					//}) != null)
+					//{
+					//    if (Node.Parent == null || featureManifest.Scope == "Web")
+					//    {
+					//        MenuItem _featureMenuItem = new MenuItem(featureManifest.Title);
+					//        _featureMenuItem.Click += delegate(object s, EventArgs ea)
+					//            {
+					//                RapidOutputWindow.Instance.Activate();
+					//                RapidOutputWindow.Instance.Clear();
+					//                RapidOutputWindow.Instance.Write(SiteTag.AddInService.AddFeature(WebID, (Guid)((MenuItem)s).Tag));
 
-                                };
-                            _featureMenuItem.Tag = new Guid(featureManifest.Id);
-                            _addFeatureMenu.MenuItems.Add(_featureMenuItem);
-                        }
-                    }
+					//            };
+					//        _featureMenuItem.Tag = new Guid(featureManifest.Id);
+					//        _addFeatureMenu.MenuItems.Add(_featureMenuItem);
+					//    }
+					//}
                 }
             }
 
             if (_addFeatureMenu.MenuItems.Count > 0)
-                _contextMenu.MenuItems.Add(_addFeatureMenu);
+                contextMenu.MenuItems.Add(_addFeatureMenu);
             if (_removeFeatureMenu.MenuItems.Count > 0)
-                _contextMenu.MenuItems.Add(_removeFeatureMenu);
+                contextMenu.MenuItems.Add(_removeFeatureMenu);
 
-            _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+            contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.OpenBrowser(SiteUrl + ServerRelativeUrl);
+				AppManager.Current.OpenBrowser(SiteTag.Url + ServerRelativeUrl);
             });
 
-            return _contextMenu;
+            return contextMenu;
         }
     }
 }
