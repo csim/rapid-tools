@@ -91,10 +91,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
 		public void OpenWorkspaceFile()
 		{
-		}
-
-		public void OpenWorkspaceFile(RenamedEventHandler renamedDelegate)
-		{
 			byte[] contents = AppManager.Current.ActiveBridge.AddInService.OpenBinary(WebID, ID);
 			File.WriteAllBytes(WorkspacePath.FullName, contents);
 

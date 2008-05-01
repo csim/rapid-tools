@@ -60,7 +60,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			{
 				DirectoryInfo wdir = AppManager.Current.ActiveWorkspaceDirectory;
 
-				string wpath = string.Format(@"{0}\{1}", wdir.FullName, ServerRelativeUrl.Replace("/", @"\"));
+				string wpath = string.Format(@"{0}{1}", wdir.FullName, ServerRelativeUrl.Replace("/", @"\"));
 				
 
 				if (TagType == NodeType.View)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.Services;
 using Microsoft.SharePoint;
+using Microsoft.SharePoint.Utilities;
 using System.Security.Permissions;
 using Microsoft.SharePoint.Administration;
 using System.Collections.Specialized;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using Rapid.Tools.Utilities;
 using System.Globalization;
+using System.Reflection;
 
 namespace Rapid.Tools.Layouts.Services
 {
@@ -21,7 +23,7 @@ namespace Rapid.Tools.Layouts.Services
 	public class AddInWebService : System.Web.Services.WebService
     {
 
-		XmlTextWriter _textWriter;
+		XmlTextWriter _structureWriter;
 
 		[Serializable]
 		public class Solution
@@ -156,19 +158,12 @@ namespace Rapid.Tools.Layouts.Services
 
 			using (MemoryStream ms = new MemoryStream())
 			{
-				using (_textWriter = new XmlTextWriter(ms, Encoding.UTF8))
+				using (_structureWriter = new XmlTextWriter(ms, Encoding.UTF8))
 				{
-					_textWriter.WriteStartDocument();
-					_textWriter.WriteStartElement("Site");
-					_textWriter.WriteAttributeString("Url", site.Url);
-					_textWriter.WriteStartElement("Webs");
-					foreach (SPWeb web in site.AllWebs)
-					{
-						AddWebNode(web);
-					}
-					_textWriter.WriteEndElement();
-					_textWriter.WriteEndDocument();
-					_textWriter.Flush();
+
+					AddSiteNode(site);
+
+					_structureWriter.Flush();
 					ms.Position = 0;
 
 					using (StreamReader sr = new StreamReader(ms))
@@ -181,6 +176,7 @@ namespace Rapid.Tools.Layouts.Services
 
 			XmlDocument _document = new XmlDocument();
 			_document.LoadXml(_documentString);
+
 			return _document;
 		}
 
@@ -266,8 +262,7 @@ namespace Rapid.Tools.Layouts.Services
             //SPFeatureDefinition fd = f.FeatureDefinitions[new Guid(featureId)];
             //fd.RootDirectory
 
-
-            DirectoryInfo di = new DirectoryInfo(@"c:\program files\common files\microsoft shared\web server extensions\12");
+			DirectoryInfo di = new DirectoryInfo(SPUtility.GetGenericSetupPath(""));
 
             foreach (FileInfo fi in di.GetFiles("feature.xml", SearchOption.AllDirectories))
             {
@@ -589,46 +584,17 @@ namespace Rapid.Tools.Layouts.Services
 
 
         [WebMethod]
-        public void UpdateViewSchema(Guid webUid, Guid listID, string viewNAme, string schema)
-        {
+		public void UpdateViewSchema(Guid webUid, Guid listID, string viewNAme, XmlDocument document)
+		{
 			SPSite site = SPContext.Current.Site;
-
-            using (SPWeb web = site.AllWebs[webUid])
-            {
-                SPList list = web.Lists[listID];
-                SPView view = list.Views[viewNAme];
-
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(schema);
-
-                view.ViewFields.DeleteAll();
-
-                foreach (XmlNode node in doc.DocumentElement.SelectNodes("ViewFields/FieldRef"))
-                {
-                    view.ViewFields.Add(node.Attributes["Name"].Value);
-                }
-
-                try
-                {
-                    view.Toolbar = doc.SelectSingleNode("/View/Toolbar").InnerXml;
-                    view.GroupByHeader = doc.SelectSingleNode("/View/GroupByHeader").InnerXml;
-                    view.GroupByFooter = doc.SelectSingleNode("/View/GroupByFooter").InnerXml;
-                    view.ViewHeader = doc.SelectSingleNode("/View/ViewHeader").InnerXml;
-                    view.ViewBody = doc.SelectSingleNode("/View/ViewBody").InnerXml;
-                    view.ViewFooter = doc.SelectSingleNode("/View/ViewFooter").InnerXml;
-                    view.Paged = Convert.ToBoolean(doc.SelectSingleNode("/View/RowLimit").Attributes["Paged"].Value);
-                    view.RowLimit = Convert.ToUInt32(doc.SelectSingleNode("/View/RowLimit").InnerText);
-                    view.ViewEmpty = doc.SelectSingleNode("/View/ViewEmpty").InnerXml;
-                    view.Query = doc.SelectSingleNode("/View/Query").InnerXml;
-
-
-                    view.Update();
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-        }
+			using (SPWeb web = site.AllWebs[webUid])
+			{
+				SPView view = web.Lists[listID].Views[viewNAme];
+				typeof(SPView).GetMethod("EnsureFullBlownXmlDocument", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(view, null);
+				typeof(SPView).GetField("m_xdView", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(view, document);
+				view.Update();
+			}
+		}
 
 
         [WebMethod]
@@ -712,146 +678,218 @@ namespace Rapid.Tools.Layouts.Services
 			solution.Delete();
 		}
 
+		private void AddSiteNode(SPSite site)
+		{
+			_structureWriter.WriteStartDocument();
+			_structureWriter.WriteStartElement("Site");
+			_structureWriter.WriteAttributeString("ID", site.ID.ToString());
+			_structureWriter.WriteAttributeString("Url", site.Url);
 
+			AddWebNode(site.RootWeb);
+
+			_structureWriter.WriteEndDocument();
+
+		}
 
 		private void AddWebNode(SPWeb web)
 		{
-			_textWriter.WriteStartElement("Web");
-			_textWriter.WriteAttributeString("Title", web.Title);
-			_textWriter.WriteAttributeString("Url", web.Url);
-			_textWriter.WriteAttributeString("Guid", web.ID.ToString());
+			_structureWriter.WriteStartElement("Web");
+			_structureWriter.WriteAttributeString("ID", web.ID.ToString());
+			_structureWriter.WriteAttributeString("Title", web.Title);
+			_structureWriter.WriteAttributeString("ServerRelativeUrl", web.ServerRelativeUrl);
 
 			//PublishingWeb.IsPublishingWeb(web)
 			// TODO: change to MOSS publishing web feature
 			bool ispubweb = SPFeatureUtil.FeatureActivated(web, Guid.Empty);
 
-			_textWriter.WriteAttributeString("Publishing", ispubweb.ToString());
-			if (web.Webs.Count > 0)
-			{
-				_textWriter.WriteStartElement("Webs");
-				foreach (SPWeb subweb in web.Webs)
-				{
-					AddWebNode(subweb);
-				}
-				_textWriter.WriteEndElement();
-			}
-			if (web.Lists.Count > 0)
-			{
-				_textWriter.WriteStartElement("Lists");
-				foreach (SPList list in web.Lists)
-				{
-					AddListNode(list);
-				}
-				_textWriter.WriteEndElement();
-			}
-			_textWriter.WriteStartElement("Files");
-			foreach (SPFile file in web.Files)
-			{
-				AddFileNodes(file);
-			}
-			_textWriter.WriteEndElement();
-			_textWriter.WriteEndElement();
+			_structureWriter.WriteAttributeString("Publishing", ispubweb.ToString());
+
+			foreach (SPFolder folder in web.Folders) 
+				AddFolderNode(folder);
+
+			foreach (SPFile file in web.Files)			
+				AddFileNode(file);
+
+			_structureWriter.WriteEndElement();
 		}
 
 		private void AddListNode(SPList list)
 		{
 
-			_textWriter.WriteStartElement("List");
-			_textWriter.WriteAttributeString("Title", list.Title);
-			_textWriter.WriteAttributeString("Type", list.BaseType.ToString());
-			_textWriter.WriteAttributeString("Url", list.DefaultViewUrl);
-			_textWriter.WriteAttributeString("ContentType", list.ContentTypes[0].ToString());
-			_textWriter.WriteAttributeString("Hidden", list.Hidden.ToString());
-			_textWriter.WriteAttributeString("Guid", list.ID.ToString());
+			_structureWriter.WriteStartElement("List");
+			_structureWriter.WriteAttributeString("ID", list.ID.ToString());
+			_structureWriter.WriteAttributeString("Title", list.Title);
+			_structureWriter.WriteAttributeString("Type", list.BaseType.ToString());
+			_structureWriter.WriteAttributeString("ServerRelativeUrl", list.DefaultViewUrl);
+			_structureWriter.WriteAttributeString("ContentType", list.ContentTypes[0].ToString());
+			_structureWriter.WriteAttributeString("Hidden", list.Hidden.ToString());
 
-
-			_textWriter.WriteStartElement("Views");
-			foreach (SPView view in list.Views)
-			{
+			foreach (SPView view in list.Views)							
 				AddViewNode(view);
-			}
-			_textWriter.WriteEndElement();
+			
+			foreach (SPFolder folder in list.RootFolder.SubFolders) 
+				AddFolderNode(folder);
 
-
-			_textWriter.WriteStartElement("Folders");
-			foreach (SPFolder folder in list.RootFolder.SubFolders)
+			if (list.Items.Count > 0)
 			{
-				AddFolderNodes(folder);
-			}
-			_textWriter.WriteEndElement();
-
-			if (list.Items.Count > 0 && list.BaseType != SPBaseType.DocumentLibrary)
-			{
-				_textWriter.WriteStartElement("Items");
-				foreach (SPListItem li in list.Items)
+				if (list.BaseType != SPBaseType.DocumentLibrary)
 				{
-					AddItemNode(li);
+					foreach (SPListItem li in list.Items) 
+						AddItemNode(li);
 				}
-				_textWriter.WriteEndElement();
-			}
-			if (true)//(list.BaseType == SPBaseType.DocumentLibrary)
-			{
-				_textWriter.WriteStartElement("Files");
-				foreach (SPFile file in list.RootFolder.Files)
+				else
 				{
-					AddFileNodes(file);
+					foreach (SPFile file in list.RootFolder.Files)	
+						AddFileNode(file);
 				}
-				_textWriter.WriteEndElement();
 			}
-			_textWriter.WriteEndElement();
+
+			_structureWriter.WriteEndElement();
+
 		}
 
 		private void AddViewNode(SPView view)
 		{
-			_textWriter.WriteStartElement("View");
-			_textWriter.WriteAttributeString("Title", view.Title);
-			_textWriter.WriteAttributeString("Guid", view.ID.ToString());
-			_textWriter.WriteAttributeString("Url", view.Url);
-			_textWriter.WriteEndElement();
+			_structureWriter.WriteStartElement("View");
+			_structureWriter.WriteAttributeString("ID", view.ID.ToString());
+			_structureWriter.WriteAttributeString("Title", view.Title);
+			_structureWriter.WriteAttributeString("ServerRelativeUrl", view.ServerRelativeUrl);
+			_structureWriter.WriteEndElement();
 		}
+		
 		private void AddItemNode(SPListItem li)
 		{
-			_textWriter.WriteStartElement("Item");
-			_textWriter.WriteAttributeString("Url", li.Url);
-			_textWriter.WriteAttributeString("Guid", li.UniqueId.ToString());
-			_textWriter.WriteAttributeString("Name", li.Name);
-			_textWriter.WriteEndElement();
+			_structureWriter.WriteStartElement("Item");
+			_structureWriter.WriteAttributeString("ID", li.UniqueId.ToString());
+			_structureWriter.WriteAttributeString("Name", li.Name);
+			_structureWriter.WriteAttributeString("Title", li.Title);
+			_structureWriter.WriteAttributeString("ServerRelativeUrl", SPFileUtil.GetServerRelativeUrl(li.ParentList, li.Url));
+			_structureWriter.WriteEndElement();
 		}
-		private void AddFolderNodes(SPFolder folder)
+
+		private void AddFolderNode(SPFolder folder)
 		{
-			_textWriter.WriteStartElement("Folder");
-			_textWriter.WriteAttributeString("Title", folder.Name);
-			_textWriter.WriteAttributeString("Url", folder.Url);
-			if (folder.SubFolders.Count > 0)
+			bool islist = (folder.ParentListId != Guid.Empty);
+			bool isweb = (folder.ServerRelativeUrl == folder.ParentWeb.ServerRelativeUrl);
+
+			bool isListRoot = false;
+			SPList list = null;
+
+			if (islist)
 			{
-				_textWriter.WriteStartElement("Folders");
-				foreach (SPFolder subFolder in folder.SubFolders)
-				{
-					AddFolderNodes(subFolder);
-				}
-				_textWriter.WriteEndElement();
+				list = folder.ParentWeb.Lists[folder.ParentListId];
+				isListRoot = (list.RootFolder.ServerRelativeUrl == folder.ServerRelativeUrl);
 			}
-			if (folder.Files.Count > 0)
+
+			if (isweb)
 			{
-				_textWriter.WriteStartElement("Files");
-				foreach (SPFile file in folder.Files)
-				{
-					AddFileNodes(file);
-				}
-				_textWriter.WriteEndElement();
+				AddWebNode(folder.ParentWeb);
 			}
-			_textWriter.WriteEndElement();
+			else if (islist && isListRoot)
+			{				
+				AddListNode(list);
+			}
+			else
+			{
+				AddStandardFolderNode(folder);
+			}
+
+
 		}
-		private void AddFileNodes(SPFile file)
+
+		private void AddStandardFolderNode(SPFolder folder)
 		{
-			_textWriter.WriteStartElement("File");
-			_textWriter.WriteAttributeString("Title", file.Title);
-			_textWriter.WriteAttributeString("Name", file.Name);
-			_textWriter.WriteAttributeString("Url", file.Url);
-			_textWriter.WriteAttributeString("Customized", file.CustomizedPageStatus.ToString());
-			_textWriter.WriteAttributeString("Guid", file.UniqueId.ToString());
-			_textWriter.WriteAttributeString("CheckedOut", Convert.ToString(file.CheckOutStatus != SPFile.SPCheckOutStatus.None));
-			_textWriter.WriteEndElement();
+			_structureWriter.WriteStartElement("Folder");
+			_structureWriter.WriteAttributeString("Title", folder.Name);
+			_structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
+
+			foreach (SPFolder subfolder in folder.SubFolders)
+				AddFolderNode(subfolder);
+
+			foreach (SPFile file in folder.Files)
+				AddFileNode(file);
+
+			_structureWriter.WriteEndElement();
+
+		}
+
+
+		//private void AddWebFolderNode1(SPFolder folder)
+		//{
+		//    bool islist = (folder.ParentListId != Guid.Empty);
+		//    bool isweb = (folder.ParentWeb.ID != folder.ParentWeb.ID);
+
+		//    if (islist)
+		//    {
+		//        SPList list = subFolder.ParentWeb.Lists[subFolder.ParentListId];
+
+		//        bool isListRoot = (list.RootFolder.ServerRelativeUrl == subFolder.ServerRelativeUrl);
+		//        bool isInWebRoot = (subFolder.ParentWeb.ServerRelativeUrl == subFolder.ServerRelativeUrl);
+
+		//        bool renderFolderNode = (!isInWebRoot && !isListRoot);
+
+		//        if (renderFolderNode)
+		//        {
+		//            _structureWriter.WriteStartElement("Folder");
+		//            _structureWriter.WriteAttributeString("Title", folder.Name);
+		//            _structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
+		//        }
+
+		//        AddListNode(list);
+
+		//        if (renderFolderNode)
+		//            _structureWriter.WriteEndElement();
+		//    }
+
+		//    if (!islist && !isweb)
+		//    {
+		//        _structureWriter.WriteStartElement("Folder");
+		//        _structureWriter.WriteAttributeString("Title", folder.Name);
+		//        _structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
+
+		//        AddWebFolderNode(subFolder);
+
+		//        foreach (SPFile file in folder.Files)
+		//            AddFileNode(file);
+
+		//        _structureWriter.WriteEndElement();
+		//    }
+
+
+		//    foreach (SPFolder subFolder in folder.SubFolders)
+		//    {
+		//        AddWebFolderNode(subFolder);
+		//    }
+
+		//}
+
+		//private void AddListFolderNode1(SPFolder folder)
+		//{
+		//    foreach (SPFolder subFolder in folder.SubFolders)
+		//    {
+		//        _structureWriter.WriteStartElement("Folder");
+		//        _structureWriter.WriteAttributeString("Title", folder.Name);
+		//        _structureWriter.WriteAttributeString("ServerRelativeUrl", folder.ServerRelativeUrl);
+
+		//        AddListFolderNode(subFolder);
+
+		//        foreach (SPFile file in folder.Files) 
+		//            AddFileNode(file);
+
+		//        _structureWriter.WriteEndElement();
+		//    }
+		//}
+
+		private void AddFileNode(SPFile file)
+		{
+			_structureWriter.WriteStartElement("File");
+			_structureWriter.WriteAttributeString("Title", file.Title);
+			_structureWriter.WriteAttributeString("Name", file.Name);
+			_structureWriter.WriteAttributeString("ServerRelativeUrl", file.ServerRelativeUrl);
+			_structureWriter.WriteAttributeString("Customized", file.CustomizedPageStatus.ToString());
+			_structureWriter.WriteAttributeString("ID", file.UniqueId.ToString());
+			_structureWriter.WriteAttributeString("CheckedOut", Convert.ToString(file.CheckOutStatus != SPFile.SPCheckOutStatus.None));
+			_structureWriter.WriteEndElement();
 		}
 
 

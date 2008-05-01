@@ -272,7 +272,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
             _contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
             {
-				AppManager.Current.Execute(SiteUrl + ServerRelativeUrl);
+				AppManager.Current.OpenBrowser(SiteUrl + ServerRelativeUrl);
             });
 
             return _contextMenu;
