@@ -25,8 +25,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
     public partial class SiteExplorer : UserControl
     {
-        private TreeNode currentNode;
-
         private XmlDocument _siteStructureDocument;
 
         public XmlDocument SiteStructureDocument
@@ -103,7 +101,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
             
             solutionMenu.RefreshAsync();
 
-            util = FileWatcher.Instance;
+            //util = FileWatcher.Instance;
 
             SiteStructureDocument = new XmlDocument();
             treeView1.Nodes.Add("Loading");
@@ -122,166 +120,157 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         void ServiceInstance_GetSiteStructureCompleted(object sender, GetSiteStructureCompletedEventArgs e)
         {
-            SiteStructureDocument.LoadXml(e.Result.OuterXml);
-            treeView1.Nodes.Clear();
-            AddWebNodes(SiteStructureDocument.DocumentElement.SelectSingleNode("/Site/Webs/Web") as XmlElement);
-            treeView1.Nodes[0].Expand();
-            treeView1.Enabled = true;
+			try
+			{
+				SiteStructureDocument.LoadXml(e.Result.OuterXml);
+				treeView1.Nodes.Clear();
+
+				AddSiteNode();
+				
+				treeView1.Nodes[0].Expand();
+				treeView1.Enabled = true;
+			}
+			catch (Exception ex)
+			{
+				AppManager.Current.Write(ex);
+			}
+        }
+
+		private void AddSiteNode()
+		{
+			XmlElement isite = (XmlElement)SiteStructureDocument.DocumentElement.SelectSingleNode("/Site");
+			XmlElement irootweb = (XmlElement)SiteStructureDocument.DocumentElement.SelectSingleNode("/Site/Web");
+
+			TreeNode inode = treeView1.Nodes.Add(string.Format("{0} ({1})", irootweb.GetAttribute("Title"), isite.GetAttribute("Url")));
+
+			NodeTag tag = NodeTagFactory.Create(inode, AppManager.Current.Application, NodeType.Web);
+			tag.ServerRelativeUrl = irootweb.Attributes["ServerRelativeUrl"].Value;
+			tag.ID = new Guid(irootweb.Attributes["ID"].Value);
+			inode.Tag = tag;
+
+			AddChildNodes(inode, irootweb);
+
+		}
+
+		private void AddChildNodes(TreeNode parentNode, XmlElement parentElement)
+		{
+			AddListNodes(parentNode, parentElement);
+			AddFolderNodes(parentNode, parentElement);
+			AddWebNodes(parentNode, parentElement);
+			AddFileNodes(parentNode, parentElement);
+		}
+
+		private void AddWebNodes(TreeNode parentNode, XmlElement parentElement)
+        {
+			XmlNodeList nodes = parentElement.SelectNodes("Web");
+
+			foreach (XmlElement ielement in nodes)
+			{
+				TreeNode inode = parentNode.Nodes.Add(ielement.GetAttribute("Title"));
+
+				NodeTag tag = NodeTagFactory.Create(inode, AppManager.Current.Application, NodeType.Web);
+				tag.ServerRelativeUrl = ielement.Attributes["ServerRelativeUrl"].Value;
+				tag.ID = new Guid(ielement.Attributes["ID"].Value);
+				inode.Tag = tag;
+
+				//  set the node image
+				if (!Convert.ToBoolean(ielement.Attributes["Publishing"].Value))
+					inode.ImageKey = inode.SelectedImageKey = "TeamSiteIcon";
+				else
+					inode.ImageKey = inode.SelectedImageKey = "PublishingSiteIcon";
+
+				AddChildNodes(inode, ielement);
+			}
+
+        }
+
+        private void AddFileNodes(TreeNode parentNode, XmlElement parentElement)
+        {
+			XmlNodeList nodes = parentElement.SelectNodes("File");
+
+			foreach (XmlElement ielement in nodes)
+			{
+				//  add the node
+				TreeNode inode = parentNode.Nodes.Add(ielement.Attributes["Name"].Value);
+
+				NodeTag tag = NodeTagFactory.Create(inode, AppManager.Current.Application, NodeType.File);
+				tag.ID = new Guid(ielement.Attributes["ID"].Value);
+				tag.ServerRelativeUrl = ielement.Attributes["ServerRelativeUrl"].Value;
+				inode.Tag = tag;
+
+				//  set the icon for the file node
+				Resources.ResourceUtility.SetFileNodeIcon(inode, Convert.ToBoolean(ielement.Attributes["CheckedOut"].Value));
+			}
+        }
+
+        private void AddListNodes(TreeNode parentNode, XmlElement parentElement)
+        {
+			XmlNodeList nodes = parentElement.SelectNodes("List");
+
+			foreach (XmlElement ielement in nodes)
+			{
+
+				//  do not show empty or hidden lists
+				//if (xmlElement.Attributes["Title"].Value == "" || Convert.ToBoolean(xmlElement.Attributes["Hidden"].Value)) return;
+
+				//  add the node
+				TreeNode inode = parentNode.Nodes.Add(ielement.Attributes["Title"].Value);
+
+				NodeTag tag = NodeTagFactory.Create(inode, AppManager.Current.Application, NodeType.List);
+				tag.ServerRelativeUrl = ielement.Attributes["ServerRelativeUrl"].Value;
+				tag.ID = new Guid(ielement.Attributes["ID"].Value);
+				inode.Tag = tag;
+
+				inode.SelectedImageKey = inode.ImageKey = ielement.Attributes["Type"].Value == "DocumentLibrary" ? "DocumentLibraryIcon" : "GenericListIcon";
+
+				AddChildNodes(inode, ielement);
+			}
+
         }
 
 
+		private void AddViewNodes(TreeNode parentNode, XmlElement parentElement)
+		{
+			XmlNodeList vnodes = parentElement.SelectNodes("View");
 
-        private void AddWebNodes(XmlElement xmlElement)
+			if (vnodes.Count > 0) 
+			{
+				TreeNode vnode = parentNode.Nodes.Add("Views");
+				vnode.SelectedImageKey = vnode.ImageKey = "FolderIcon";
+				vnode.Tag = NodeTagFactory.Create(vnode, AppManager.Current.Application, NodeType.Null);
+
+				foreach (XmlElement ielement in vnodes)
+				{
+					TreeNode vinode = vnode.Nodes.Add(ielement.Attributes["Title"].Value);
+					vinode.SelectedImageKey = vinode.ImageKey = "ViewIcon";
+					
+					NodeTag t = NodeTagFactory.Create(vinode, AppManager.Current.Application, NodeType.View);
+					t.ID = new Guid(ielement.Attributes["ID"].Value);
+					t.ServerRelativeUrl = ielement.Attributes["ServerRelativeUrl"].Value;
+					vinode.Tag = t;
+				}
+			}
+
+		}
+		private void AddFolderNodes(TreeNode parentNode, XmlElement parentElement)
         {
-            if (currentNode == null)
-                currentNode = treeView1.Nodes.Add(xmlElement.Attributes[0].Value);
-            else
-                currentNode = currentNode.Nodes.Add(xmlElement.Attributes[0].Value);
+			XmlNodeList vnodes = parentElement.SelectNodes("Folder");
 
-            NodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Web);
-            tag.ServerRelativeUrl = xmlElement.Attributes["Url"].Value;
-            tag.ID = new Guid(xmlElement.Attributes["Guid"].Value);
-            currentNode.Tag = tag;
+			foreach (XmlElement ielement in vnodes)
+			{
+				//  if the title is empty return
+				if (ielement.Attributes["Title"].Value == "") return;
 
+				//  add the node
+				TreeNode inode = parentNode.Nodes.Add(ielement.Attributes["Title"].Value);
+				inode.Tag = NodeTagFactory.Create(inode, AppManager.Current.Application, NodeType.Folder);
 
-            //  set the node image
-            if (!Convert.ToBoolean(xmlElement.Attributes["Publishing"].Value))
-                currentNode.ImageKey = currentNode.SelectedImageKey = "TeamSiteIcon";
-            else
-                currentNode.ImageKey = currentNode.SelectedImageKey = "PublishingSiteIcon";
+				//  set the node image
+				inode.ImageKey = inode.SelectedImageKey = "FolderIcon";
 
+				AddChildNodes(inode, ielement);
+			}
 
-            //  add the web nodes
-            XmlNodeList _nodeList = xmlElement.SelectNodes("Webs/Web");
-            if (_nodeList.Count > 0)
-            {
-                foreach (XmlNode no in _nodeList)
-                {
-                    AddWebNodes(no as XmlElement);
-                }
-            }
-
-            //  add the list nodes
-            _nodeList = xmlElement.SelectNodes("Lists/List");
-            if (_nodeList.Count > 0)
-            {
-                foreach (XmlNode no in _nodeList)
-                {
-                    AddListNodes(no as XmlElement);
-                }
-            }
-
-            //  add the file nodes
-            _nodeList = xmlElement.SelectNodes("Files/File");
-            if (_nodeList.Count > 0)
-            {
-                foreach (XmlNode no in _nodeList)
-                    AddFileNodes(no as XmlElement);
-            }
-
-            //  move up to the parent node if it exists to continue
-            if (currentNode.Parent != null)
-                currentNode = currentNode.Parent;
-
-        }
-
-        private void AddFileNodes(XmlElement xmlElement)
-        {
-            //  add the node
-            TreeNode _fileNode = currentNode.Nodes.Add(xmlElement.Attributes["Name"].Value);
-
-            NodeTag tag = NodeTagFactory.Create(_fileNode, AppManager.Current.Application, NodeType.File);
-            tag.ServerRelativeUrl = xmlElement.Attributes["Url"].Value;
-            tag.ID = new Guid(xmlElement.Attributes["Guid"].Value);
-            _fileNode.Tag = tag;
-
-            //  set the icon for the file node
-            Resources.ResourceUtility.SetFileNodeIcon(_fileNode, Convert.ToBoolean(xmlElement.Attributes["CheckedOut"].Value));
-        }
-
-        private void AddListNodes(XmlElement xmlElement)
-        {
-            //  do not show empty or hidden lists
-            if (xmlElement.Attributes["Title"].Value == "" || Convert.ToBoolean(xmlElement.Attributes["Hidden"].Value)) return;
-
-            //  add the node
-            currentNode = currentNode.Nodes.Add(xmlElement.Attributes["Title"].Value);
-
-            NodeTag tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.List);
-            tag.ServerRelativeUrl = xmlElement.Attributes["Url"].Value;
-            tag.ID = new Guid(xmlElement.Attributes["Guid"].Value);
-            currentNode.Tag = tag;
-
-            //  set the icon to generic unless it is a document library            
-            if (xmlElement.Attributes["Type"].Value != "DocumentLibrary")
-            {
-                currentNode.SelectedImageKey = currentNode.ImageKey = "GenericListIcon";
-            }
-            else
-            {
-                currentNode.SelectedImageKey = currentNode.ImageKey = "DocumentLibraryIcon";
-            }
-
-            XmlNodeList _nodeList = xmlElement.SelectNodes("Views/View");
-            currentNode = currentNode.Nodes.Add("Views");
-            currentNode.SelectedImageKey = currentNode.ImageKey = "FolderIcon";
-            currentNode.Tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Null);
-            foreach (XmlNode no in _nodeList)
-            {
-
-                TreeNode tNode = currentNode.Nodes.Add(no.Attributes["Title"].Value);
-                tNode.SelectedImageKey = tNode.ImageKey = "ViewIcon";
-                NodeTag t = NodeTagFactory.Create(tNode, AppManager.Current.Application, NodeType.View);
-                t.ID = new Guid(no.Attributes["Guid"].Value);
-                t.ServerRelativeUrl = no.Attributes["Url"].Value;
-                tNode.Tag = t;
-
-            }
-
-            currentNode = currentNode.Parent;
-
-            //  add the folders
-            _nodeList = xmlElement.SelectNodes("Folders/Folder");
-            foreach (XmlNode no in _nodeList)
-                AddFolderNodes(no as XmlElement);
-
-            //  add the files
-            _nodeList = xmlElement.SelectNodes("Files/File");
-            foreach (XmlNode no in _nodeList)
-                AddFileNodes(no as XmlElement);
-
-
-            //  move to the parent
-            if (currentNode.Parent != null)
-                currentNode = currentNode.Parent;
-        }
-
-
-        private void AddFolderNodes(XmlElement xmlElement)
-        {
-            //  if the title is empty return
-            if (xmlElement.Attributes["Title"].Value == "") return;
-
-            //  add the node
-            currentNode = currentNode.Nodes.Add(xmlElement.Attributes["Title"].Value);
-            currentNode.Tag = NodeTagFactory.Create(currentNode, AppManager.Current.Application, NodeType.Null);
-
-            //  set the node image
-            currentNode.ImageKey = currentNode.SelectedImageKey = "FolderIcon";
-
-            //  add the folders
-            XmlNodeList _nodeList = xmlElement.SelectNodes("Folders/Folder");
-            foreach (XmlNode no in _nodeList)
-                AddFolderNodes(no as XmlElement);
-
-            //  add the files
-            _nodeList = xmlElement.SelectNodes("Files/File");
-            foreach (XmlNode no in _nodeList)
-                AddFileNodes(no as XmlElement);
-
-            //  move to the parent node
-            if (currentNode.Parent != null)
-                currentNode = currentNode.Parent;
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -305,12 +294,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
        
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-			if (((ToolStripMenuItem)sender).Tag == "ServerButton")
+			if ((string)((ToolStripMenuItem)sender).Tag == "ServerButton")
             {
 				CreationForm cf = new CreationForm(AppManager.Current.ActiveEnvironment.ServerName, AppManager.Current.ActiveEnvironment.ServerPort);
                 cf.ShowDialog();
             }
-            currentNode = null;
             treeView1.Nodes.Clear();
             FillTreeView();
         }

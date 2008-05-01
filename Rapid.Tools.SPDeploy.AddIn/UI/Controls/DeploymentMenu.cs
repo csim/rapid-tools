@@ -4,8 +4,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
+using Rapid.Tools.SPDeploy.AddIn.Domain;
 
-namespace Rapid.Tools.SPDeploy.AddIn.Domain
+namespace Rapid.Tools.SPDeploy.AddIn
 {
     public class DeploymentMenu
     {
@@ -53,40 +54,40 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             _serverUrl.Tag = "ServerButton";
             _serverUrl.Click += ev;
             _retractSolutionItem.Click += new EventHandler(retractSolutionItem_Click);
-            _deploySolutionItem.Click += new EventHandler(_deploySolutionItem_Click);
-            _deleteSolutionItem.Click += new EventHandler(_deleteSolutionItem_Click);
-            _addSolutionItem.Click += new EventHandler(_addSolutionItem_Click);
-            _cycleSolutionItem.Click += new EventHandler(_cycleSolutionItem_Click);
-            _upgradeSolutionItem.Click += new EventHandler(_upgradeSolutionItem_Click);
+            _deploySolutionItem.Click += new EventHandler(deploySolutionItem_Click);
+            _deleteSolutionItem.Click += new EventHandler(deleteSolutionItem_Click);
+            _addSolutionItem.Click += new EventHandler(addSolutionItem_Click);
+            _cycleSolutionItem.Click += new EventHandler(cycleSolutionItem_Click);
+            _upgradeSolutionItem.Click += new EventHandler(upgradeSolutionItem_Click);
 
             hideMenuItems();
         }
 
-        void _upgradeSolutionItem_Click(object sender, EventArgs e)
+        void upgradeSolutionItem_Click(object sender, EventArgs e)
         {
             PerformActionDelegate del = new PerformActionDelegate(PerformAction);
             del.BeginInvoke(Action.Upgrade, null, null);
         }
 
-        void _cycleSolutionItem_Click(object sender, EventArgs e)
+        void cycleSolutionItem_Click(object sender, EventArgs e)
         {
             PerformActionDelegate del = new PerformActionDelegate(PerformAction);
             del.BeginInvoke(Action.Cycle, null, null);
         }
 
-        void _addSolutionItem_Click(object sender, EventArgs e)
+        void addSolutionItem_Click(object sender, EventArgs e)
         {
             PerformActionDelegate del = new PerformActionDelegate(PerformAction);
             del.BeginInvoke(Action.Add, null, null);
         }
 
-        void _deleteSolutionItem_Click(object sender, EventArgs e)
+        void deleteSolutionItem_Click(object sender, EventArgs e)
         {
             PerformActionDelegate del = new PerformActionDelegate(PerformAction);
             del.BeginInvoke(Action.Delete, null, null);
         }
 
-        void _deploySolutionItem_Click(object sender, EventArgs e)
+        void deploySolutionItem_Click(object sender, EventArgs e)
         {
             PerformActionDelegate del = new PerformActionDelegate(PerformAction);
             del.BeginInvoke(Action.Deploy, null, null);
@@ -228,7 +229,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         private void hideMenuItemsAsync()
         {
             _cycleSolutionItem.Visible =
-                _upgradeSolutionItem.Visible =
+            _upgradeSolutionItem.Visible =
             _addSolutionItem.Visible =
             _deploySolutionItem.Visible =
             _retractSolutionItem.Visible =

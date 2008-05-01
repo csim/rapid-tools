@@ -58,7 +58,7 @@
     <Compile Include="Domain\AppManager.cs" />
     <Compile Include="Domain\DefaultColorTable.cs" />
     <Compile Include="Domain\ExceptionUtil.cs" />
-    <Compile Include="Domain\DeploymentMenu.cs">
+    <Compile Include="UI\Controls\DeploymentMenu.cs">
     </Compile>
     <Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />
     <Compile Include="Domain\NodeTags\NodeTag.cs" />
