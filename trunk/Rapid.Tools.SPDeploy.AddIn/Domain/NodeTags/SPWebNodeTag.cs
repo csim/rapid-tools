@@ -21,7 +21,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             //ApplicationUtility.OpenBrowser(Url);
         }
 
-        public override ContextMenu GetContextMenu()
+        public override ContextMenu RightClick()
         {
             ContextMenu _contextMenu = new ContextMenu();
 

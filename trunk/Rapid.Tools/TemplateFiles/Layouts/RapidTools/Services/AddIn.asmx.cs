@@ -156,6 +156,8 @@ namespace Rapid.Tools.Layouts.Services
 
 			SPSite site = SPContext.Current.Site;
 
+		
+
 			using (MemoryStream ms = new MemoryStream())
 			{
 				using (_structureWriter = new XmlTextWriter(ms, Encoding.UTF8))

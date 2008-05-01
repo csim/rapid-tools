@@ -13,7 +13,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             
         }
 
-        public override System.Windows.Forms.ContextMenu GetContextMenu()
+        public override System.Windows.Forms.ContextMenu RightClick()
         {
             ContextMenu _contextMenu = new ContextMenu();
             _contextMenu.MenuItems.Add("No Actions");
