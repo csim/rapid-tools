@@ -208,11 +208,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 				ExceptionUtil.Handle(ex);
 			}
 		}
-	
-		public string GetRootNamespace()
-		{
-			XmlDocument d = new XmlDocument();
-			d.Load(ActiveProject.FullName);
+
 
         public string GetRootNamespace()
         {
