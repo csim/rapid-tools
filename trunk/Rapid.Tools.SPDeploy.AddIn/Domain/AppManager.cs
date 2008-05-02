@@ -243,7 +243,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			{
 				Documents docs = AppManager.Current.Application.Documents;
 
-				for (int i=1; i<docs.Count; i++)
+				for (int i=1; i<=docs.Count; i++)
 				{
 					if (docs.Item(i).FullName.ToLower() == filePath.ToLower())
 						docs.Item(i).Close(promptType);
