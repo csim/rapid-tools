@@ -199,7 +199,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 			}
 			catch (Exception ex)
 			{
-				AppManager.Current.Write(ex);
+				ExceptionUtil.Handle(ex);
 			}
 		}
 	

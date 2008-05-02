@@ -80,7 +80,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			//catch (InvalidOperationException ex)
 			//{
 
-			//    AppManager.Current.Write(ex);
+			//    ExceptionUtil.Handle(ex);
 
 			//    if (!_preloaded)
 			//    {
@@ -111,7 +111,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			}
 			catch (Exception ex)
 			{
-				AppManager.Current.Write(ex);
+				ExceptionUtil.Handle(ex);
 			}
         }
 
@@ -124,7 +124,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 			SPSiteNodeTag tag = (SPSiteNodeTag)NodeTagFactory.Create(inode, NodeType.Site);
 			tag.ServerRelativeUrl = xrootweb.Attributes["ServerRelativeUrl"].Value;
+
+			tag.SiteID = new Guid(xsite.Attributes["ID"].Value);
 			tag.ID = new Guid(xrootweb.Attributes["ID"].Value);
+
 			tag.Url = xsite.Attributes["Url"].Value;
 			inode.Tag = tag;
 
@@ -315,7 +318,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 				}
 				catch (Exception ex)
 				{
-					AppManager.Current.Write(ex);
+					ExceptionUtil.Handle(ex);
 					CloseLoadingNode();
 				}
 			}

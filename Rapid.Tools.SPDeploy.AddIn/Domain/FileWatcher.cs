@@ -57,7 +57,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 					{
 						// TODO: figure out the file locking here -- this is a temporary fix
 						System.Threading.Thread.Sleep(1000);
-						tag.SiteTag.AddInService.SaveBinary(tag.WebID, tag.ID, File.ReadAllBytes(e.FullPath));
+						tag.SiteTag.AddInService.SaveBinary(tag.WebTag.ID, tag.ID, File.ReadAllBytes(e.FullPath));
 					}
 					else if (tag.TagType == NodeType.View)
 					{
@@ -67,13 +67,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 						XmlDocument xdoc = new XmlDocument();
 						xdoc.LoadXml(File.ReadAllText(e.FullPath));
 
-						tag.SiteTag.AddInService.UpdateViewSchema(tag.WebID, tag.ListID, tag.Node.Text, xdoc);
+						tag.SiteTag.AddInService.UpdateViewSchema(tag.WebTag.ID, tag.ListID, tag.Node.Text, xdoc);
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				AppManager.Current.Write(ex);
+				ExceptionUtil.Handle(ex);
 			}
 		}
 

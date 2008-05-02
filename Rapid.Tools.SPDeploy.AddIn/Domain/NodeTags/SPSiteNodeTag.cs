@@ -11,9 +11,11 @@ using Rapid.Tools.SPDeploy.AddIn.Proxies.Lists;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
-    public class SPSiteNodeTag : NodeTag
+    public class SPSiteNodeTag : SPWebNodeTag
     {
 		private string _url;
+		private Guid _siteID;
+
 
 		private AddInProxy _addInService;
 		private WebsProxy _websService;
@@ -25,6 +27,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 		{
 			get { return _url; }
 			set { _url = value; }
+		}
+
+		public Guid SiteID
+		{
+			get { return _siteID; }
+			set { _siteID = value; }
 		}
 
 		public FileWatcher Watcher
@@ -53,7 +61,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 		}
 
 
-		public SPSiteNodeTag(TreeNode node)
+		public SPSiteNodeTag(TreeNode node) : base(node)
         {
             _node = node;
 			TagType = NodeType.Site;
@@ -88,20 +96,40 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			}
 		}
 
+
+
         public override void DoubleClick()
         {
-            
+			try
+			{
+				Browse();
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
         }
 
         public override ContextMenu RightClick()
         {
             ContextMenu contextMenu = new ContextMenu();
-            //contextMenu.MenuItems.Add("No Actions");
 
-			contextMenu.MenuItems.Add("Close", delegate(object sender, EventArgs e)
+			try
 			{
-				Node.TreeView.Nodes.Remove(Node);
-			});
+				contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+				{
+					Browse();
+				});
+
+				contextMenu.MenuItems.Add("Close", delegate(object sender, EventArgs e)
+				{
+					Node.TreeView.Nodes.Remove(Node);
+				});
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
 			
 			return contextMenu;
         }

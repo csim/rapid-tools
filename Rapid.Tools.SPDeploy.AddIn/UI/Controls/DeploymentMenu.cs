@@ -176,7 +176,7 @@ namespace Rapid.Tools.SPDeploy.AddIn
 			}
 			catch (Exception ex)
 			{
-				AppManager.Current.Write(ex);
+				ExceptionUtil.Handle(ex);
 			}
         }
 
@@ -290,7 +290,7 @@ namespace Rapid.Tools.SPDeploy.AddIn
 			//}
 			//catch (Exception ex)
 			//{
-			//    AppManager.Current.Write(ex);
+			//    ExceptionUtil.Handle(ex);
 			//}
 
         }
