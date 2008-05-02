@@ -112,47 +112,48 @@
     <Compile Include="UI\Controls\SiteExplorerForm.Designer.cs">
       <DependentUpon>SiteExplorerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ActivationDependencyForm.cs">
+    <Compile Include="UI\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ActivationDependencyForm.Designer.cs">
-      <DependentUpon>ActivationDependencyForm.cs</DependentUpon>
+    <Compile Include="UI\Forms\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\FeatureReceiverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\FeatureReceiverControl.Designer.cs">
+      <DependentUpon>FeatureReceiverControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\CustomActionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\CustomActionControl.Designer.cs">
+      <DependentUpon>CustomActionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\CustomActionGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\CustomActionGroupControl.Designer.cs">
+      <DependentUpon>CustomActionGroupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\FeatureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\FeatureControl.Designer.cs">
+      <DependentUpon>FeatureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\WebPartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\WebPartControl.Designer.cs">
+      <DependentUpon>WebPartControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\FormsController.cs" />
     <Compile Include="UI\Forms\OpenUrlForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\OpenUrlForm.designer.cs">
       <DependentUpon>OpenUrlForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\CustomActionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\CustomActionForm.Designer.cs">
-      <DependentUpon>CustomActionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\CustomActionGroupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\CustomActionGroupForm.Designer.cs">
-      <DependentUpon>CustomActionGroupForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\FeatureForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\FeatureForm.Designer.cs">
-      <DependentUpon>FeatureForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\FeatureModificationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\FeatureModificationForm.Designer.cs">
-      <DependentUpon>FeatureModificationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\FeatureReceiverForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\FeatureReceiverForm.Designer.cs">
-      <DependentUpon>FeatureReceiverForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\HideCustomActionForm.cs">
       <SubType>Form</SubType>
@@ -172,11 +173,11 @@
     <Compile Include="UI\Forms\LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\WebPartForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="UI\Forms\ActivationDependencyControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Forms\WebPartForm.Designer.cs">
-      <DependentUpon>WebPartForm.cs</DependentUpon>
+    <Compile Include="UI\Forms\ActivationDependencyControl.Designer.cs">
+      <DependentUpon>ActivationDependencyControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Wizard\CreationForm.cs">
       <SubType>Form</SubType>
@@ -205,36 +206,12 @@
       <DependentUpon>SiteExplorerForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ActivationDependencyForm.resx">
-      <DependentUpon>ActivationDependencyForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\CustomActionForm.resx">
-      <DependentUpon>CustomActionForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\CustomActionGroupForm.resx">
-      <DependentUpon>CustomActionGroupForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\FeatureForm.resx">
-      <DependentUpon>FeatureForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\FeatureReceiverForm.resx">
-      <DependentUpon>FeatureReceiverForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\HideCustomActionForm.resx">
       <DependentUpon>HideCustomActionForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ListDefinitionDialog.resx">
       <DependentUpon>ListDefinitionDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\WebPartForm.resx">
-      <DependentUpon>WebPartForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Wizard\CreationForm.resx">
@@ -471,20 +448,45 @@
     <EmbeddedResource Include="Resources\Images\ITDL.GIF" />
     <EmbeddedResource Include="Resources\Images\ITGEN.GIF" />
     <EmbeddedResource Include="Resources\Images\STSICON.GIF" />
-    <EmbeddedResource Include="UI\Forms\OpenUrlForm.resx">
-      <DependentUpon>OpenUrlForm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\BaseForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\FeatureReceiverControl.resx">
+      <DependentUpon>FeatureReceiverControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\FeatureModificationForm.resx">
-      <DependentUpon>FeatureModificationForm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\CustomActionControl.resx">
+      <DependentUpon>CustomActionControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\CustomActionGroupControl.resx">
+      <DependentUpon>CustomActionGroupControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\FeatureControl.resx">
+      <DependentUpon>FeatureControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\WebPartControl.resx">
+      <DependentUpon>WebPartControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\OpenUrlForm.resx">
+      <DependentUpon>OpenUrlForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\ActivationDependencyControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ActivationDependencyControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Proxies\AddIn\Update-WSDL-georgeo.cmd" />
     <None Include="Proxies\AddIn\Update-WSDL-clints.cmd" />
     <None Include="Proxies\Lists\Lists.wsdl" />
     <None Include="Proxies\SiteData\SiteData.wsdl" />
