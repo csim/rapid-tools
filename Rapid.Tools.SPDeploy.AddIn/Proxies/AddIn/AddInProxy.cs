@@ -25,8 +25,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="AddInWebServiceSoap", Namespace="http://ascentium.com/RapidTools")]
-	public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientProtocol
-	{
+    public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback GetSolutionsOperationCompleted;
         
@@ -89,7 +88,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         private System.Threading.SendOrPostCallback OpenFileOperationCompleted;
         
         /// <remarks/>
-        public AddInProxy() {
+		public AddInProxy()
+		{
         }
         
         /// <remarks/>
@@ -1391,21 +1391,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/UpdateViewSchema", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void UpdateViewSchema(System.Guid webUid, System.Guid listID, string viewNAme, string schema) {
+        public void UpdateViewSchema(System.Guid webUid, System.Guid listID, string viewNAme, System.Xml.XmlNode document) {
             this.Invoke("UpdateViewSchema", new object[] {
                         webUid,
                         listID,
                         viewNAme,
-                        schema});
+                        document});
         }
         
         /// <remarks/>
-        public System.IAsyncResult BeginUpdateViewSchema(System.Guid webUid, System.Guid listID, string viewNAme, string schema, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult BeginUpdateViewSchema(System.Guid webUid, System.Guid listID, string viewNAme, System.Xml.XmlNode document, System.AsyncCallback callback, object asyncState) {
             return this.BeginInvoke("UpdateViewSchema", new object[] {
                         webUid,
                         listID,
                         viewNAme,
-                        schema}, callback, asyncState);
+                        document}, callback, asyncState);
         }
         
         /// <remarks/>
@@ -1414,12 +1414,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         }
         
         /// <remarks/>
-        public void UpdateViewSchemaAsync(System.Guid webUid, System.Guid listID, string viewNAme, string schema) {
-            this.UpdateViewSchemaAsync(webUid, listID, viewNAme, schema, null);
+        public void UpdateViewSchemaAsync(System.Guid webUid, System.Guid listID, string viewNAme, System.Xml.XmlNode document) {
+            this.UpdateViewSchemaAsync(webUid, listID, viewNAme, document, null);
         }
         
         /// <remarks/>
-        public void UpdateViewSchemaAsync(System.Guid webUid, System.Guid listID, string viewNAme, string schema, object userState) {
+        public void UpdateViewSchemaAsync(System.Guid webUid, System.Guid listID, string viewNAme, System.Xml.XmlNode document, object userState) {
             if ((this.UpdateViewSchemaOperationCompleted == null)) {
                 this.UpdateViewSchemaOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateViewSchemaOperationCompleted);
             }
@@ -1427,7 +1427,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
                         webUid,
                         listID,
                         viewNAme,
-                        schema}, this.UpdateViewSchemaOperationCompleted, userState);
+                        document}, this.UpdateViewSchemaOperationCompleted, userState);
         }
         
         private void OnUpdateViewSchemaOperationCompleted(object arg) {

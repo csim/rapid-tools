@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Collections.Specialized;
 using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
+using System.Xml;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
@@ -24,18 +25,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             watcher.IncludeSubdirectories = true;
             watcher.Renamed += new RenamedEventHandler(FileRenamed);
             watcher.EnableRaisingEvents = true;
-
         }
 
 
 		public void AddWatcher(NodeTag tag)
         {
-			WatchFiles.Add(tag.WorkspacePath.FullName, tag);
+			string wpath = tag.WorkspacePath.FullName;
+
+			if (!WatchFiles.ContainsKey(wpath))
+				WatchFiles.Add(wpath, tag);
         }
 
 		public void RemoveWatcher(NodeTag tag)
         {
-			string wpath = tag.WorkspacePath.Directory.FullName;
+			string wpath = tag.WorkspacePath.FullName;
 
 			if (WatchFiles.ContainsKey(wpath))
 				WatchFiles.Remove(wpath);
@@ -60,9 +63,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 					{
 						// TODO: figure out the file locking here -- this is a temporary fix
 						System.Threading.Thread.Sleep(1000);
-						tag.SiteTag.AddInService.UpdateViewSchema(tag.WebID, tag.ListID, tag.Node.Text, File.ReadAllText(e.FullPath));
-					}
 
+						XmlDocument xdoc = new XmlDocument();
+						xdoc.LoadXml(File.ReadAllText(e.FullPath));
+
+						tag.SiteTag.AddInService.UpdateViewSchema(tag.WebID, tag.ListID, tag.Node.Text, xdoc);
+					}
 				}
 			}
 			catch (Exception ex)
@@ -70,13 +76,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 				AppManager.Current.Write(ex);
 			}
 		}
-
-
-        ~FileWatcher()
-        {
-
-
-        }
 
        
     }

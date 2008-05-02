@@ -143,6 +143,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 		private void AddChildNodes(TreeNode parentNode, XmlElement parentElement)
 		{
 			AddListNodes(parentNode, parentElement);
+			AddViewNodes(parentNode, parentElement);
 			AddFolderNodes(parentNode, parentElement);
 			AddWebNodes(parentNode, parentElement);
 			AddFileNodes(parentNode, parentElement);

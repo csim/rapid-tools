@@ -588,6 +588,44 @@ namespace Rapid.Tools.Layouts.Services
         [WebMethod]
 		public void UpdateViewSchema(Guid webUid, Guid listID, string viewNAme, XmlDocument document)
 		{
+			//SPSite site = SPContext.Current.Site;
+
+			//using (SPWeb web = site.AllWebs[webUid])
+			//{
+			//    SPList list = web.Lists[listID];
+			//    SPView view = list.Views[viewNAme];
+
+			//    XmlDocument doc = new XmlDocument();
+			//    doc.LoadXml(schema);
+
+			//    view.ViewFields.DeleteAll();
+
+			//    foreach (XmlNode node in doc.DocumentElement.SelectNodes("ViewFields/FieldRef"))
+			//    {
+			//        view.ViewFields.Add(node.Attributes["Name"].Value);
+			//    }
+
+			//    try
+			//    {
+			//        view.Toolbar = doc.SelectSingleNode("/View/Toolbar").InnerXml;
+			//        view.GroupByHeader = doc.SelectSingleNode("/View/GroupByHeader").InnerXml;
+			//        view.GroupByFooter = doc.SelectSingleNode("/View/GroupByFooter").InnerXml;
+			//        view.ViewHeader = doc.SelectSingleNode("/View/ViewHeader").InnerXml;
+			//        view.ViewBody = doc.SelectSingleNode("/View/ViewBody").InnerXml;
+			//        view.ViewFooter = doc.SelectSingleNode("/View/ViewFooter").InnerXml;
+			//        view.Paged = Convert.ToBoolean(doc.SelectSingleNode("/View/RowLimit").Attributes["Paged"].Value);
+			//        view.RowLimit = Convert.ToUInt32(doc.SelectSingleNode("/View/RowLimit").InnerText);
+			//        view.ViewEmpty = doc.SelectSingleNode("/View/ViewEmpty").InnerXml;
+			//        view.Query = doc.SelectSingleNode("/View/Query").InnerXml;
+
+
+			//        view.Update();
+			//    }
+			//    catch (Exception ex)
+			//    {
+			//    }
+			//}
+
 			SPSite site = SPContext.Current.Site;
 			using (SPWeb web = site.AllWebs[webUid])
 			{

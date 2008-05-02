@@ -73,8 +73,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			get
 			{
 
-				string wdir = string.Format(@"{0}\SPDeploy\Workspace", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-				string wpath = string.Format(@"{0}\{1}\{2}", wdir, SiteTag.ID.ToString().Replace("{", "").Replace("}", "").Replace("-", ""), ServerRelativeUrl.Replace("/", @"\"));
+				string wpath = string.Format(@"{0}\SPDeploy\Workspace", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+				wpath = string.Format(@"{0}\{1}\{2}", wpath, SiteTag.ID.ToString().Replace("{", "").Replace("}", "").Replace("-", ""), ServerRelativeUrl.Replace("/", @"\"));
+				wpath = wpath.Replace(@"\\", @"\");
 
 				if (TagType == NodeType.View)
 					wpath += ".xml";
