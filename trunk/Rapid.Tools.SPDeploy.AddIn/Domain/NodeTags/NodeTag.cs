@@ -28,24 +28,24 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 		public string ServerRelativeUrl;
         public string Text;
 
-		public Guid _webID; 
+		public SPWebNodeTag _webTag;
 
-		public Guid WebID
+		public SPWebNodeTag WebTag
 		{
 			get
 			{
 
-				if (_webID == Guid.Empty)
+				if (_webTag == null)
 				{
 					TreeNode inode = Node;
 
-					while (!(inode.Tag is SPSiteNodeTag) && !(inode.Tag is SPWebNodeTag))
+					while (!(inode.Tag is SPWebNodeTag))
 						inode = inode.Parent;
 
-					_webID = ((NodeTag)inode.Tag).ID;
+					_webTag = (SPWebNodeTag)inode.Tag;
 				}
 
-				return _webID;
+				return _webTag;
 			}
 		}
 
@@ -89,6 +89,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			}
 		}
 
+		protected void Browse() 
+		{
+			AppManager.Current.OpenBrowser(string.Format("{0}{1}", SiteTag.Url, ServerRelativeUrl));
+		}
 
         public abstract ContextMenu RightClick();
 

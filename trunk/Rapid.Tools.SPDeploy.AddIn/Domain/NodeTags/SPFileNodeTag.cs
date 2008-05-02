@@ -20,78 +20,91 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 
         public override void DoubleClick()
         {
-			if (!SiteTag.AddInService.IsCheckedOut(WebID, ID))
-				SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckOut);
+			try{
+				if (!SiteTag.AddInService.IsCheckedOut(WebTag.ID, ID))
+					SiteTag.AddInService.PerformFileAction(WebTag.ID, ID, Proxies.AddIn.FileActions.CheckOut);
 
-			OpenWorkspaceFile();
+				OpenWorkspaceFile();
 
-            Resources.ResourceUtility.SetFileNodeIcon(Node, true);
-        }
+				Resources.ResourceUtility.SetFileNodeIcon(Node, true);
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
 
         public override ContextMenu RightClick()
         {
             ContextMenu contextMenu = new ContextMenu();
 
+			try
+			{
 
-			if (!SiteTag.AddInService.IsCheckedOut(WebID, ID))
-            {
-
-			   // contextMenu.MenuItems.Add("Preview", delegate(object sender, EventArgs e)
-			   //{
-			   //    AppManager.Current.OpenFile(WebID, ServerRelativeUrl, FileID);
-			   //});
-
-                contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
-                {
-
-					SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckOut);
-
-					OpenWorkspaceFile();
-
-                    Resources.ResourceUtility.SetFileNodeIcon(Node, true);
-                });
-            }
-            else
-            {
-
-				bool isopen = AppManager.Current.IsFileOpen(WorkspacePath.FullName);
-
-				if (!isopen)
+				if (!SiteTag.AddInService.IsCheckedOut(WebTag.ID, ID))
 				{
-					contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
-				   {
-					   OpenWorkspaceFile();
-				   });
+
+					contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+					{
+						Browse();
+					});
+
+					contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
+					{
+
+						SiteTag.AddInService.PerformFileAction(WebTag.ID, ID, Proxies.AddIn.FileActions.CheckOut);
+
+						OpenWorkspaceFile();
+
+						Resources.ResourceUtility.SetFileNodeIcon(Node, true);
+					});
+				}
+				else
+				{
+
+					bool isopen = AppManager.Current.IsFileOpen(WorkspacePath.FullName);
+
+					if (!isopen)
+					{
+						contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
+						{
+						   OpenWorkspaceFile();
+						});
+					}
+
+					contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
+					{
+						SiteTag.AddInService.PerformFileAction(WebTag.ID, ID, Proxies.AddIn.FileActions.CheckIn);
+						Resources.ResourceUtility.SetFileNodeIcon(Node, false);
+						CloseWorkspaceFile();
+					});
+
+					contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
+					{
+						SiteTag.AddInService.PerformFileAction(WebTag.ID, ID, Proxies.AddIn.FileActions.UndoCheckOut);
+						Resources.ResourceUtility.SetFileNodeIcon(Node, false);
+						CloseWorkspaceFile();
+					});
 				}
 
-				contextMenu.MenuItems.Add("Check In", delegate(object sender, EventArgs e)
-                {
-					SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.CheckIn);
-                    Resources.ResourceUtility.SetFileNodeIcon(Node, false);
+				contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
+				{
+					SiteTag.AddInService.PerformFileAction(WebTag.ID, ID, Proxies.AddIn.FileActions.Delete);
 					CloseWorkspaceFile();
-                });
-
-				contextMenu.MenuItems.Add("Discard Check Out", delegate(object sender, EventArgs e)
-                {
-					SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.UndoCheckOut);
-                    Resources.ResourceUtility.SetFileNodeIcon(Node, false);
-					CloseWorkspaceFile();
-                });
-            }
-
-            contextMenu.MenuItems.Add("Delete", delegate(object sender, EventArgs e)
-            {
-				SiteTag.AddInService.PerformFileAction(WebID, ID, Proxies.AddIn.FileActions.Delete);
-				CloseWorkspaceFile();
-            });
-
+				});
+			
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
 
             return contextMenu;
         }
 
 		public void OpenWorkspaceFile()
 		{
-			byte[] contents = SiteTag.AddInService.OpenBinary(WebID, ID);
+			byte[] contents = SiteTag.AddInService.OpenBinary(WebTag.ID, ID);
 			File.WriteAllBytes(WorkspacePath.FullName, contents);
 
 			SiteTag.Watcher.AddWatcher(this);

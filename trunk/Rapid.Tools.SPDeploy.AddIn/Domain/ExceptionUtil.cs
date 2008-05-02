@@ -23,8 +23,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
 		public static void Show(Exception ex)
 		{
-			string fex = Format(ex);
-			MessageBox.Show(fex);
+			AppManager.Current.Write(ex);
 		}
 
 		public static void Print(Exception ex)

@@ -16,29 +16,43 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             ListID = ((NodeTag)Node.Parent.Parent.Tag).ID;
         }
 
+		public override void DoubleClick()
+		{
+			try
+			{
+				OpenWorkspaceFile();
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
+
         public override ContextMenu RightClick()
         {
             ContextMenu contextMenu = new ContextMenu();
 
-			DirectoryInfo wdir = WorkspacePath.Directory;
-			string wpath = WorkspacePath.FullName;
+			try
+			{
+				DirectoryInfo wdir = WorkspacePath.Directory;
+				string wpath = WorkspacePath.FullName;
 
-			contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
+				contextMenu.MenuItems.Add("Open", delegate(object sender, EventArgs e)
 				{
-				   OpenWorkspaceFile();
+					OpenWorkspaceFile();
 				});
 
-            contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+				contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
 				{
-					AppManager.Current.OpenBrowser(SiteTag.Url + ServerRelativeUrl);
+					Browse();
 				});
-
-            return contextMenu;
-        }
-
-        public override void DoubleClick()
-        {
-			OpenWorkspaceFile();
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+			
+			return contextMenu;
         }
 
 		public void OpenWorkspaceFile()
@@ -46,7 +60,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			string wpath = WorkspacePath.FullName;
 			AppManager.Current.EnsureDirectory(wpath);
 
-			File.WriteAllText(wpath, SiteTag.AddInService.GetViewSchema(WebID, ListID, Node.Text));
+			File.WriteAllText(wpath, SiteTag.AddInService.GetViewSchema(WebTag.ID, ListID, Node.Text));
 			AppManager.Current.OpenFile(wpath);
 
 			SiteTag.Watcher.AddWatcher(this);
