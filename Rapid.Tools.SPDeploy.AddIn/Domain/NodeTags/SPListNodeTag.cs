@@ -23,11 +23,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         }
 
 
-        public override void DoubleClick()
+		public override void Focus()
+		{
+		}
+		
+		public override void DoubleClick()
         {
 			try
 			{
-				Browse();
 			}
 			catch (Exception ex)
 			{

@@ -10,7 +10,7 @@ using Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn;
 namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 {
    
-    public abstract class NodeTag : INodeTag
+    public abstract class NodeTag
     {
 
         public NodeType TagType;
@@ -94,9 +94,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			AppManager.Current.OpenBrowser(string.Format("{0}{1}", SiteTag.Url, ServerRelativeUrl));
 		}
 
-        public abstract ContextMenu RightClick();
+		public abstract void Focus();
 
-        public abstract void DoubleClick();
+		public abstract void DoubleClick();
+		
+		public abstract ContextMenu RightClick();
 
 	}
 }

@@ -102,7 +102,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         {
 			try
 			{
-				Browse();
 			}
 			catch (Exception ex)
 			{

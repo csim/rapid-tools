@@ -69,7 +69,6 @@
     <Compile Include="Domain\NodeTags\NodeTag.cs" />
     <Compile Include="Domain\NodeTags\NodeTagFactory.cs" />
     <Compile Include="Domain\NodeTags\SPFileNodeTag.cs" />
-    <Compile Include="Domain\NodeTags\INodeTag.cs" />
     <Compile Include="Domain\NodeTags\SPListNodeTag.cs" />
     <Compile Include="Domain\NodeTags\GenericNodeTag.cs" />
     <Compile Include="Domain\NodeTags\SPWebNodeTag.cs" />
