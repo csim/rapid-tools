@@ -8,11 +8,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
     public class GenericNodeTag : NodeTag
     {
 
-        public override void DoubleClick()
+		public GenericNodeTag(TreeNode node)
+        {
+            _node = node;
+			TagType = NodeType.Null;
+        }
+
+		public override void Focus()
+		{
+		}
+		
+		public override void DoubleClick()
         {
 			try
 			{
-				Browse();
 			}
 			catch (Exception ex)
 			{

@@ -16,6 +16,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
             ListID = ((NodeTag)Node.Parent.Parent.Tag).ID;
         }
 
+		public override void Focus()
+		{
+		}
+
 		public override void DoubleClick()
 		{
 			try

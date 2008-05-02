@@ -25,102 +25,50 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 {
     public partial class SiteExplorerForm : UserControl
     {
-		DeploymentMenu _solutionMenu;
-		OpenMenu _openMenu;
-		
-		public delegate void VoidDelegate();
-		
-		
+		private DeploymentMenu _solutionMenu;
+		private OpenMenu _openMenu;
+		private DefaultColorTable _defaultColorTable;
+
 		private XmlDocument _siteStructureDocument;
+		private TreeNode _loadingNode;
+
+		private NodeTag _activeNodeTag;
 
 
         public SiteExplorerForm()
         {
             InitializeComponent();
 
-            treeView1.ImageList = new ImageList();
-            treeView1.ImageList.Images.Add("GenericIcon", Resources.Images.Files.ICGEN);
-            treeView1.ImageList.Images.Add("BlankIcon", Resources.Images.Files.BLANK);
-            treeView1.ImageList.Images.Add("PublishingSiteIcon", Resources.Images.Files.CAT);
-            treeView1.ImageList.Images.Add("TeamSiteIcon", Resources.Images.Files.STSICON);
-            treeView1.ImageList.Images.Add("GenericListIcon", Resources.Images.Files.ITGEN);
-            treeView1.ImageList.Images.Add("DocumentLibraryIcon", Resources.Images.Files.ITDL);
-            treeView1.ImageList.Images.Add("FolderIcon", Resources.Images.Files.FOLDER);
-            treeView1.ImageList.Images.Add("LoadingIcon", Resources.Images.Files.actionssettings);
-            treeView1.ImageList.Images.Add("ViewIcon", Resources.Images.Files.ICXML);
-            treeView1.ImageList.Images.Add("ViewsIcon", Resources.Images.Files.ICZIP);
+            _tree.ImageList = new ImageList();
+            _tree.ImageList.Images.Add("GenericIcon", Resources.Images.Files.ICGEN);
+            _tree.ImageList.Images.Add("BlankIcon", Resources.Images.Files.BLANK);
+            _tree.ImageList.Images.Add("PublishingSiteIcon", Resources.Images.Files.CAT);
+            _tree.ImageList.Images.Add("TeamSiteIcon", Resources.Images.Files.STSICON);
+            _tree.ImageList.Images.Add("GenericListIcon", Resources.Images.Files.ITGEN);
+            _tree.ImageList.Images.Add("DocumentLibraryIcon", Resources.Images.Files.ITDL);
+            _tree.ImageList.Images.Add("FolderIcon", Resources.Images.Files.FOLDER);
+            _tree.ImageList.Images.Add("LoadingIcon", Resources.Images.Files.actionssettings);
+            _tree.ImageList.Images.Add("ViewIcon", Resources.Images.Files.ICXML);
+            _tree.ImageList.Images.Add("ViewsIcon", Resources.Images.Files.ICZIP);
 
 			_defaultColorTable = new DefaultColorTable();
 			menuStrip1.Renderer = new ToolStripProfessionalRenderer(_defaultColorTable);
 			
-			deploymentToolStripMenu.Visible = false;
-			openToolStripMenu.Visible = true;
+			deploymentMenu.Visible = false;
+			openMenu.Visible = true;
 
 			if (_openMenu == null)
-				_openMenu = new OpenMenu(openToolStripMenu, openMenu_Click);
+				_openMenu = new OpenMenu(openMenu, OpenMenuClick);
 
 		}
 
-
-
-        DefaultColorTable _defaultColorTable;
-      
-
-
-        public void FillTreeView1()
-        {
-
-
-
-			//try
-			//{
-			//    ProxyBridge pb = new ProxyBridge();
-			//    pb.AddInService.GetSolutions();
-			//}
-			//catch (InvalidOperationException ex)
-			//{
-
-			//    ExceptionUtil.Handle(ex);
-
-			//    if (!_preloaded)
-			//    {
-			//        _loadingForm.Close();
-			//    }
-			//    MessageBox.Show(string.Format("The Rapid Tools server components are not installed on {0}", AppManager.Current.ActiveEnvironment.WebApplicationUrl));
-			//    return;
-			//}
-
-			//if (_solutionMenu == null)
-			//    _solutionMenu = new DeploymentMenu(solutionToolStripMenu, toolStripMenuItem1_Click);
-            
-        }
-
-
-
-        void ServiceInstance_GetSiteStructureCompleted(object sender, GetSiteStructureCompletedEventArgs e)
-        {
-			try
-			{
-				CloseLoadingNode();
-
-				_siteStructureDocument = new XmlDocument();
-				_siteStructureDocument.LoadXml(e.Result.OuterXml);
-				
-				TreeNode rootNode = AddSiteNode();
-				rootNode.Expand();
-			}
-			catch (Exception ex)
-			{
-				ExceptionUtil.Handle(ex);
-			}
-        }
 
 		private TreeNode AddSiteNode()
 		{
 			XmlElement xsite = (XmlElement)_siteStructureDocument.DocumentElement.SelectSingleNode("/Site");
 			XmlElement xrootweb = (XmlElement)_siteStructureDocument.DocumentElement.SelectSingleNode("/Site/Web");
 
-			TreeNode inode = treeView1.Nodes.Add(string.Format("{0} ({1})", xrootweb.GetAttribute("Title"), xsite.GetAttribute("Url")));
+			TreeNode inode = _tree.Nodes.Add(string.Format("{0} ({1})", xrootweb.GetAttribute("Title"), xsite.GetAttribute("Url")));
 
 			SPSiteNodeTag tag = (SPSiteNodeTag)NodeTagFactory.Create(inode, NodeType.Site);
 			tag.ServerRelativeUrl = xrootweb.Attributes["ServerRelativeUrl"].Value;
@@ -220,7 +168,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         }
 
-
 		private void AddViewNodes(TreeNode parentNode, XmlElement parentElement)
 		{
 			XmlNodeList vnodes = parentElement.SelectNodes("View");
@@ -244,6 +191,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			}
 
 		}
+		
 		private void AddFolderNodes(TreeNode parentNode, XmlElement parentElement)
         {
 			XmlNodeList vnodes = parentElement.SelectNodes("Folder");
@@ -265,71 +213,181 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         }
 
-        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                if (e.Node.Tag != null && e.Node.Tag is INodeTag)
-                    e.Node.ContextMenu = ((INodeTag)e.Node.Tag).RightClick();
-            }
-            treeView1.SelectedNode = e.Node;
-        }
 
-        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void NodeClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Node.Tag != null && e.Node.Tag is INodeTag)
-            {
-                INodeTag tag = e.Node.Tag as INodeTag;
-                tag.DoubleClick();
-            }
-        }     
-       
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-			//if ((string)((ToolStripMenuItem)sender).Tag == "ServerButton")
-			//{
-			//    CreationForm cf = new CreationForm(AppManager.Current.ActiveEnvironment.ServerName, AppManager.Current.ActiveEnvironment.ServerPort);
-			//    cf.ShowDialog();
-			//}
-			//treeView1.Nodes.Clear();
-			//FillTreeView();
-        }
-
-		private TreeNode _loadingNode;
-
-		private void openMenu_Click(object sender, EventArgs e)
-		{
-			if ((string)((ToolStripMenuItem)sender).Tag == "Open")
+			try
 			{
-				try
+				NodeTag tag = null;
+
+				if (e.Node.Tag != null && e.Node.Tag is NodeTag)
+					tag = (NodeTag)e.Node.Tag;
+
+				if (tag == null) return;
+
+				if (e.Button == MouseButtons.Right)
 				{
-					OpenUrlForm oform = new OpenUrlForm();
-					oform.ShowDialog();
-					
-					Uri url = new Uri(oform.Url);
-
-					ProxyBridge bridge = new ProxyBridge(url.ToString());
-
-					_loadingNode = treeView1.Nodes.Add("Loading");
-					_loadingNode.SelectedImageKey = _loadingNode.ImageKey = "LoadingIcon";
-
-					bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(ServiceInstance_GetSiteStructureCompleted);
-					bridge.AddInService.GetSiteStructureAsync(url);
+					e.Node.ContextMenu = tag.RightClick();
 				}
-				catch (Exception ex)
+				else if (e.Button == MouseButtons.Left)
 				{
-					ExceptionUtil.Handle(ex);
-					CloseLoadingNode();
+					tag.Focus();
 				}
+
+				UpdateActiveTag(tag);
+				_tree.SelectedNode = e.Node;
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
 			}
 		}
 
-		private void CloseLoadingNode() {
+        private void NodeDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+			try
+			{
+				NodeTag tag = null;
+
+				if (e.Node.Tag != null && e.Node.Tag is NodeTag)
+					tag = (NodeTag)e.Node.Tag;
+
+				if (tag == null) return;
+
+				UpdateActiveTag(tag);
+				tag.DoubleClick();
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
+
+		private void RefreshMenuClick(object sender, EventArgs e)
+        {
+			try
+			{
+				ToolStripMenuItem menu = (ToolStripMenuItem)sender;
+
+				if ((string)menu.Tag == "Refresh")
+				{
+					RefreshCurrentSite();
+				}
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+        }
+
+		private void OpenMenuClick(object sender, EventArgs e)
+		{
+			try
+			{
+				if ((string)((ToolStripMenuItem)sender).Tag == "Open")
+				{
+					OpenUrlForm oform = new OpenUrlForm();
+					oform.ShowDialog();
+
+					Uri url = new Uri(oform.Url);
+
+					StartLoading(url.ToString());
+
+					ProxyBridge bridge = new ProxyBridge(url.ToString());
+					bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(OpenSiteCompleted);
+					bridge.AddInService.GetSiteStructureAsync("Open");
+				}
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
+
+
+		private void RefreshCurrentSite()
+		{
+			if (_activeNodeTag == null) return;
+
+			ProxyBridge bridge = new ProxyBridge(_activeNodeTag.SiteTag.Url);
+
+			_tree.Nodes.Remove(_activeNodeTag.SiteTag.Node);
+
+			StartLoading(_activeNodeTag.SiteTag.Url);
+
+			bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(RefreshSiteCompleted);
+			bridge.AddInService.GetSiteStructureAsync("Open");
+		}
+
+		private void UpdateActiveTag(NodeTag tag)
+		{
+			_activeNodeTag = tag;
+
+			refreshMenu.Visible = (tag != null);
+			refreshMenu.Enabled = (tag.SiteTag != null);
+
+			deploymentMenu.Visible = (tag != null);
+
+		}
+
+		private void OpenSiteCompleted(object sender, GetSiteStructureCompletedEventArgs e)
+		{
+			try
+			{
+				StopLoading();
+
+				_siteStructureDocument = new XmlDocument();
+				_siteStructureDocument.LoadXml(e.Result.OuterXml);
+
+				TreeNode rootNode = AddSiteNode();
+				rootNode.Expand();
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
+
+		private void RefreshSiteCompleted(object sender, GetSiteStructureCompletedEventArgs e)
+		{
+			try
+			{
+				StopLoading();
+
+				_siteStructureDocument = new XmlDocument();
+				_siteStructureDocument.LoadXml(e.Result.OuterXml);
+
+				TreeNode rootNode = AddSiteNode();
+				UpdateActiveTag((NodeTag)rootNode.Tag);
+				rootNode.Expand();
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+		}
+
+		private void StartLoading(string url)
+		{
+			_loadingNode = _tree.Nodes.Add(string.Format("Loading {0} ...", url));
+
+			_loadingNode.SelectedImageKey = _loadingNode.ImageKey = "LoadingIcon";
+
+			openMenu.Enabled = false;
+			refreshMenu.Enabled = false;
+			deploymentMenu.Visible = false;
+		}
+
+		private void StopLoading()
+		{
 			if (_loadingNode != null)
 			{
-				treeView1.Nodes.Remove(_loadingNode);
+				_tree.Nodes.Remove(_loadingNode);
 				_loadingNode = null;
 			}
+
+			openMenu.Enabled = true;
+			refreshMenu.Enabled = true;
 		}
 
     }

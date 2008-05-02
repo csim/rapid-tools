@@ -18,6 +18,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			TagType = NodeType.File;
         }
 
+		public override void Focus()
+		{
+		}
+
         public override void DoubleClick()
         {
 			try{

@@ -37,7 +37,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
                     return new SPViewNodeTag(node);
             }
 
-			return new GenericNodeTag();
+			return new GenericNodeTag(node);
         }
     }    
 }
