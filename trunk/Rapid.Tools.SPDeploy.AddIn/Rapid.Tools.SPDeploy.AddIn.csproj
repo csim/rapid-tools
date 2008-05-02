@@ -85,10 +85,10 @@
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\WebPart.cs" />
     <Compile Include="ProjectFiles\FeatureManifest\FeatureManifest.cs" />
     <Compile Include="ProjectFiles\Utilities\ManifestUtility.cs" />
-    <Compile Include="Proxies\AddIn\AddInProxy.cs" />
-    <Compile Include="Proxies\Lists\ListsProxy.cs" />
-    <Compile Include="Proxies\SiteData\SiteDataProxy.cs" />
-    <Compile Include="Proxies\Webs\WebsProxy.cs" />
+    <Compile Include="Proxies\AddIn\AddInWebService.cs" />
+    <Compile Include="Proxies\Lists\ListsWebService.cs" />
+    <Compile Include="Proxies\SiteData\SiteDataWebService.cs" />
+    <Compile Include="Proxies\Webs\WebsWebService.cs" />
     <Content Include="Resources\Features\Ajaxification\Ajaxification.cs" />
     <Content Include="Resources\Features\FeatureReceivers\FeatureReceiver.cs" />
     <Compile Include="Resources\Features\FeatureReceivers\Files.Designer.cs" />

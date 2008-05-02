@@ -10,21 +10,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
     public class ProxyBridge
     {
 		public string _baseUrl;
-		private AddInProxy _addInService = null;
-		private WebsProxy _websService = null;
+		private AddInWebService _addInService = null;
+		private WebsWebService _websService = null;
 
 		public ProxyBridge(string baseUrl)
 		{
 			_baseUrl = baseUrl;
 		}
 
-		public AddInProxy AddInService
+		public AddInWebService AddInService
         {
             get
             {
 				if (_addInService == null)
                 {
-					_addInService = new AddInProxy();
+					_addInService = new AddInWebService();
 					_addInService.Credentials = CredentialCache.DefaultCredentials;
 					_addInService.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", _baseUrl);
                 }
@@ -32,13 +32,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             }
         }
 
-		public WebsProxy WebsService
+		public WebsWebService WebsService
 		{
 			get
 			{
 				if (_websService == null)
 				{
-					_websService = new WebsProxy();
+					_websService = new WebsWebService();
 					_websService.Credentials = CredentialCache.DefaultCredentials;
 					_websService.Url = string.Format("{0}/_vti_bin/Webs.asmx", _baseUrl);
 				}

@@ -27,7 +27,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.Lists
 	[System.Diagnostics.DebuggerStepThroughAttribute()]
 	[System.ComponentModel.DesignerCategoryAttribute("code")]
 	[System.Web.Services.WebServiceBindingAttribute(Name = "ListsSoap", Namespace = "http://schemas.microsoft.com/sharepoint/soap/")]
-	public partial class ListsProxy : System.Web.Services.Protocols.SoapHttpClientProtocol
+	public partial class ListsWebService : System.Web.Services.Protocols.SoapHttpClientProtocol
 	{
 
 		private System.Threading.SendOrPostCallback GetListOperationCompleted;
@@ -87,7 +87,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.Lists
 		private System.Threading.SendOrPostCallback ApplyContentTypeToListOperationCompleted;
 
 		/// <remarks/>
-		public ListsProxy()
+		public ListsWebService()
 		{
 			this.Url = "http://wa1devnint01/_vti_bin/Lists.asmx";
 		}

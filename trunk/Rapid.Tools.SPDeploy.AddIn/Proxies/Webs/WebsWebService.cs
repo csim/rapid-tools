@@ -27,7 +27,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.Webs
 	[System.Diagnostics.DebuggerStepThroughAttribute()]
 	[System.ComponentModel.DesignerCategoryAttribute("code")]
 	[System.Web.Services.WebServiceBindingAttribute(Name = "WebsSoap", Namespace = "http://schemas.microsoft.com/sharepoint/soap/")]
-	public partial class WebsProxy : System.Web.Services.Protocols.SoapHttpClientProtocol
+	public partial class WebsWebService : System.Web.Services.Protocols.SoapHttpClientProtocol
 	{
 
 		private System.Threading.SendOrPostCallback GetWebCollectionOperationCompleted;
@@ -71,7 +71,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.Webs
 		private System.Threading.SendOrPostCallback GetActivatedFeaturesOperationCompleted;
 
 		/// <remarks/>
-		public WebsProxy()
+		public WebsWebService()
 		{
 		}
 

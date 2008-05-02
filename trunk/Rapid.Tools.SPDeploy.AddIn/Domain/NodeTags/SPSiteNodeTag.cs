@@ -17,9 +17,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 		private Guid _siteID;
 
 
-		private AddInProxy _addInService;
-		private WebsProxy _websService;
-		private ListsProxy _listsService;
+		private AddInWebService _addInService;
+		private WebsWebService _websService;
+		private ListsWebService _listsService;
 		
 		private FileWatcher _watcher;
 
@@ -45,13 +45,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			}
 		}
 
-		public AddInProxy AddInService
+		public AddInWebService AddInService
 		{
 			get
 			{
 				if (_addInService == null)
 				{
-					_addInService = new AddInProxy();
+					_addInService = new AddInWebService();
 					_addInService.Credentials = CredentialCache.DefaultCredentials;
 					_addInService.Url = string.Format("{0}/_layouts/RapidTools/Services/AddIn.asmx", Url);
 				}
@@ -68,13 +68,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
         }
 
 
-		public WebsProxy WebsService
+		public WebsWebService WebsService
 		{
 			get
 			{
 				if (_websService == null)
 				{
-					_websService = new WebsProxy();
+					_websService = new WebsWebService();
 					_websService.Credentials = CredentialCache.DefaultCredentials;
 					_websService.Url = string.Format("{0}/_vti_bin/webs.asmx", Url);
 				}
@@ -82,13 +82,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			}
 		}
 
-		public ListsProxy ListsService
+		public ListsWebService ListsService
 		{
 			get
 			{
 				if (_listsService == null)
 				{
-					_listsService = new ListsProxy();
+					_listsService = new ListsWebService();
 					_listsService.Credentials = CredentialCache.DefaultCredentials;
 					_listsService.Url = string.Format("{0}/_vti_bin/lists.asmx", Url);
 				}
