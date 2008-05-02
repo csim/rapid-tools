@@ -10,7 +10,7 @@ using System.IO;
 using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
-{
+{    
     public partial class ActivationDependencyForm : Form
     {
 
@@ -23,7 +23,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         {
             XmlDocument d = new XmlDocument();
             d.Load(folderPath + "\\feature.xml");
-            FeatureManifest fm = new FeatureManifest(d);
+            FeatureManifest fm = new FeatureManifest(d);     
 
 
 
