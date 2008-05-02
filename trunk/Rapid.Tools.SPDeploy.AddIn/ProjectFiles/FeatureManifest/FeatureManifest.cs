@@ -9,18 +9,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
 {
     public class FeatureManifest
     {
+        private string filePath;
 
-        public override bool Equals(object obj)
+        public string FilePath
         {
-            FeatureManifest fm = obj as FeatureManifest;
-            bool b = true;
-            b = b && fm.Id == this.Id;
-            b = b && fm.Description == this.Description;
-            b = b && fm.Scope == this.Scope;
-            b = b && fm.Hidden == this.Hidden;
-            return b;
-
+            get { return filePath; }
+            set { filePath = value; }
         }
+
+        
         bool? _activateOnDefault;
 
         /// <summary>
@@ -288,8 +285,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest
             }
         }
 
+        public void WriteManifest()
+        {
+            CreateManifest(FilePath);
+        }
+
         public void CreateManifest(string fileLocation)
         {
+            FilePath = fileLocation;
+
             using (StreamWriter manifestStream = new StreamWriter(fileLocation))
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
