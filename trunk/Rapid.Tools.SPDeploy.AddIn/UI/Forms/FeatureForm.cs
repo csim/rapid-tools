@@ -112,6 +112,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
                 fm.ActivateOnDefault = cbActivateOnDefault.Checked;
                 fm.ImageUrl = txtImageUrl.Text;
                 fm.CreateManifest(FileLocation);
+                
             }
             Canceled = false;
             this.Close();

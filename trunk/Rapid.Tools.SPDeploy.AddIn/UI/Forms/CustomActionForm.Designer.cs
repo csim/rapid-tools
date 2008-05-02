@@ -222,9 +222,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.panel3.Controls.Add(this.btnCancel);
             this.panel3.Controls.Add(this.btnOk);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 274);
+            this.panel3.Location = new System.Drawing.Point(0, 457);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(438, 33);
+            this.panel3.Size = new System.Drawing.Size(613, 33);
             this.panel3.TabIndex = 109;
             // 
             // pictureBox3
@@ -242,7 +242,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.pictureBox2.Image = global::Rapid.Tools.SPDeploy.AddIn.CommandBar.rapidheader;
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(438, 50);
+            this.pictureBox2.Size = new System.Drawing.Size(613, 50);
             this.pictureBox2.TabIndex = 108;
             this.pictureBox2.TabStop = false;
             // 
@@ -251,7 +251,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(438, 307);
+            this.ClientSize = new System.Drawing.Size(613, 490);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.linkLabel1);
