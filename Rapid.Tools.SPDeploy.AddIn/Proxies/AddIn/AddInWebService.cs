@@ -25,7 +25,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="AddInWebServiceSoap", Namespace="http://ascentium.com/RapidTools")]
-    public partial class AddInProxy : System.Web.Services.Protocols.SoapHttpClientProtocol {
+    public partial class AddInWebService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private System.Threading.SendOrPostCallback GetSolutionsOperationCompleted;
         
@@ -88,7 +88,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         private System.Threading.SendOrPostCallback OpenFileOperationCompleted;
         
         /// <remarks/>
-		public AddInProxy()
+		public AddInWebService()
 		{
         }
         

@@ -27,7 +27,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.SiteData
 	[System.Diagnostics.DebuggerStepThroughAttribute()]
 	[System.ComponentModel.DesignerCategoryAttribute("code")]
 	[System.Web.Services.WebServiceBindingAttribute(Name = "SiteDataSoap", Namespace = "http://schemas.microsoft.com/sharepoint/soap/")]
-	public partial class SiteDataProxy : System.Web.Services.Protocols.SoapHttpClientProtocol
+	public partial class SiteDataWebService : System.Web.Services.Protocols.SoapHttpClientProtocol
 	{
 
 		private System.Threading.SendOrPostCallback GetSiteAndWebOperationCompleted;
@@ -55,7 +55,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.SiteData
 		private System.Threading.SendOrPostCallback GetChangesOperationCompleted;
 
 		/// <remarks/>
-		public SiteDataProxy()
+		public SiteDataWebService()
 		{
 		}
 
