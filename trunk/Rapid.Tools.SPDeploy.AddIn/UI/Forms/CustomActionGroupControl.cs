@@ -13,12 +13,12 @@ using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.ElementManifest;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
-	public partial class CustomActionControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl
+	public partial class CustomActionGroupControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl
 	{
 
 
 		bool isValid = true;
-		public CustomActionControl()
+		public CustomActionGroupControl()
 		{
 			InitializeComponent();
 
