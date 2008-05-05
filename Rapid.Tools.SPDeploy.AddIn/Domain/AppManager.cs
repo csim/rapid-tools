@@ -43,6 +43,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         private Project _activeProject;
         private SPEnvironmentInfo _activeEnvironment = null;
 
+     
+
+
+
         public Project ActiveProject
         {
             get
@@ -96,12 +100,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
         public List<string> GetActivatedFeatures(string web)
         {
-            //string result = ActiveBridge.WebsService.GetActivatedFeatures();
-            //if (string.IsNullOrEmpty(result))
-            //    return null;
+            ProxyBridge pb = new ProxyBridge(web);
+            string result = pb.WebsService.GetActivatedFeatures();
+            if (string.IsNullOrEmpty(result))
+                return null;
 
-            //return new List<string>(result.ToLower().Split(','));
-            return null;
+            return new List<string>(result.ToLower().Split(','));            
         }
 
         public void Execute(string filepath)
