@@ -13,7 +13,7 @@ using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.ElementManifest;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
-    public partial class FeatureReceiverControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl
+    public partial class FeatureReceiverControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.IRapidControl
     {
 
 
@@ -28,9 +28,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
                 bf.ShowDialog();
 
                 if (AppManager.Current.FeatureContext == null)
-                    isValid = false;
+                    FindForm().Close();
                     
-            }           
+            }
+
+            txtTitle.Focus();
         }
 
         #region IRapidControl Members        
@@ -45,11 +47,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             folder = folder.Remove(folder.LastIndexOf("\\"));
             folder = folder.Remove(folder.LastIndexOf("\\")) + "\\Receivers";
 
-            File.WriteAllText(string.Format("{0}\\{1}.cs", folder, txtWebPartFileName.Text), Resources.Features.FeatureReceivers.Files.FeatureReceiver.Replace("[REPLACEPROJECTNAME]", AppManager.Current.ActiveProject.Name).Replace("[REPLACECLASSNAME]", txtWebPartFileName.Text));
+            File.WriteAllText(string.Format("{0}\\{1}.cs", folder, txtTitle.Text), Resources.Features.FeatureReceivers.Files.FeatureReceiver.Replace("[REPLACEPROJECTNAME]", AppManager.Current.ActiveProject.Name).Replace("[REPLACECLASSNAME]", txtTitle.Text));
             AppManager.Current.EnsureProjectFilesAdded(folder);
+            AppManager.Current.OpenFile(string.Format("{0}\\{1}.cs", folder, txtTitle.Text));
 
             man.ReceiverAssembly = AppManager.Current.ActiveProject.Name + ", Version=1.0.0.0, Culture=neutral, PublicKeyToken=4623235946e3a5b5";
-            man.ReceiverClass = string.Format("{0}.Receivers.{1}", AppManager.Current.ActiveProject.Name, txtWebPartFileName.Text);
+            man.ReceiverClass = string.Format("{0}.Receivers.{1}", AppManager.Current.ActiveProject.Name, txtTitle.Text);
             
             man.WriteManifest();
 

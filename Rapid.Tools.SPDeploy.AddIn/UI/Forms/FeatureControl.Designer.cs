@@ -31,12 +31,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.ddlScope = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.txtFeatureDescription = new System.Windows.Forms.TextBox();
-            this.lblFeature = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFeatureTitle = new System.Windows.Forms.TextBox();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblFeature = new System.Windows.Forms.Label();
             this.rbNewFeature = new System.Windows.Forms.RadioButton();
             this.rbExistingFeature = new System.Windows.Forms.RadioButton();
             this.lblNew = new System.Windows.Forms.Label();
@@ -91,30 +91,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.label9.TabIndex = 83;
             this.label9.Text = "Scope";
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(27, 60);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(27, 13);
-            this.lblTitle.TabIndex = 82;
-            this.lblTitle.Text = "Title";
-            // 
             // txtFeatureDescription
             // 
             this.txtFeatureDescription.Location = new System.Drawing.Point(113, 34);
             this.txtFeatureDescription.Name = "txtFeatureDescription";
             this.txtFeatureDescription.Size = new System.Drawing.Size(304, 20);
             this.txtFeatureDescription.TabIndex = 72;
-            // 
-            // lblFeature
-            // 
-            this.lblFeature.AutoSize = true;
-            this.lblFeature.Location = new System.Drawing.Point(24, 11);
-            this.lblFeature.Name = "lblFeature";
-            this.lblFeature.Size = new System.Drawing.Size(43, 13);
-            this.lblFeature.TabIndex = 81;
-            this.lblFeature.Text = "Feature";
             // 
             // label5
             // 
@@ -140,6 +122,24 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.txtFeatureTitle.Name = "txtFeatureTitle";
             this.txtFeatureTitle.Size = new System.Drawing.Size(304, 20);
             this.txtFeatureTitle.TabIndex = 71;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Location = new System.Drawing.Point(27, 60);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(27, 13);
+            this.lblTitle.TabIndex = 82;
+            this.lblTitle.Text = "Title";
+            // 
+            // lblFeature
+            // 
+            this.lblFeature.AutoSize = true;
+            this.lblFeature.Location = new System.Drawing.Point(24, 11);
+            this.lblFeature.Name = "lblFeature";
+            this.lblFeature.Size = new System.Drawing.Size(43, 13);
+            this.lblFeature.TabIndex = 81;
+            this.lblFeature.Text = "Feature";
             // 
             // rbNewFeature
             // 

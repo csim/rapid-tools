@@ -12,7 +12,7 @@ using Rapid.Tools.SPDeploy.AddIn.Domain;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
-    public partial class FeatureControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl
+    public partial class FeatureControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.IRapidControl
     {
 
 
@@ -20,7 +20,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         {
             InitializeComponent();                  
             
-            rbNewFeature.Checked = true;
+            rbNewFeature.Checked = true;           
 
             if (AppManager.Current.FeatureContext != null)
             {
@@ -43,10 +43,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             {
                 cbFeatureTitle.Items.Add(fm);
                 cbFeatureTitle.DisplayMember = "Title";
-                rbNewFeature.Checked = true;
-            }
-
-           
+                rbExistingFeature.Checked = true;
+                cbFeatureTitle.SelectedIndex = 0;
+            }         
         }      
 
 
@@ -54,8 +53,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 
         public void OkClicked()
         {            
-            if (rbExistingFeature.Checked)
-            {                
+            if (rbExistingFeature.Checked && AppManager.Current.FeatureContext == null)
+            {           
                 AppManager.Current.FeatureContext = cbFeatureTitle.SelectedItem as FeatureManifest;
             }
             else
@@ -123,5 +122,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         }
 
         #endregion
+      
     }
 }
