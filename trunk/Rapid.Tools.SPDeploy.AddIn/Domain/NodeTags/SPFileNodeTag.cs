@@ -45,13 +45,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			try
 			{
 
+				contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
+				{
+					Browse();
+				});
+
 				if (!SiteTag.AddInService.IsCheckedOut(WebTag.ID, ID))
 				{
-
-					contextMenu.MenuItems.Add("Browse", delegate(object sender, EventArgs e)
-					{
-						Browse();
-					});
 
 					contextMenu.MenuItems.Add("Check Out", delegate(object sender, EventArgs e)
 					{

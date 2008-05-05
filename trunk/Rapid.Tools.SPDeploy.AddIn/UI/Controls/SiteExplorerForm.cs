@@ -29,7 +29,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 		private OpenMenu _openMenu;
 		private DefaultColorTable _defaultColorTable;
 
-		private XmlDocument _siteStructureDocument;
+		private XmlDocument _structure;
 		private TreeNode _loadingNode;
 
 		private NodeTag _activeNodeTag;
@@ -63,12 +63,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 		}
 
 
-		private TreeNode AddSiteNode()
+		private TreeNode AddSiteNode(TreeNode inode)
 		{
-			XmlElement xsite = (XmlElement)_siteStructureDocument.DocumentElement.SelectSingleNode("/Site");
-			XmlElement xrootweb = (XmlElement)_siteStructureDocument.DocumentElement.SelectSingleNode("/Site/Web");
+			XmlElement xsite = (XmlElement)_structure.DocumentElement.SelectSingleNode("/Site");
+			XmlElement xrootweb = (XmlElement)_structure.DocumentElement.SelectSingleNode("/Site/Web");
 
-			TreeNode inode = _tree.Nodes.Add(string.Format("{0} ({1})", xrootweb.GetAttribute("Title"), xsite.GetAttribute("Url")));
+			inode.Text = string.Format("{0} ({1})", xrootweb.GetAttribute("Title"), xsite.GetAttribute("Url"));
+			inode.EnsureVisible();
 
 			SPSiteNodeTag tag = (SPSiteNodeTag)NodeTagFactory.Create(inode, NodeType.Site);
 			tag.ServerRelativeUrl = xrootweb.Attributes["ServerRelativeUrl"].Value;
@@ -91,40 +92,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 		}
 
-		private void AddChildNodes(TreeNode parentNode, XmlElement parentElement)
-		{
-			AddListNodes(parentNode, parentElement);
-			AddViewNodes(parentNode, parentElement);
-			AddFolderNodes(parentNode, parentElement);
-			AddWebNodes(parentNode, parentElement);
-			AddFileNodes(parentNode, parentElement);
-		}
-
-		private void AddWebNodes(TreeNode parentNode, XmlElement parentElement)
+		
+		private void AddChildWebNodes(TreeNode parentNode, XmlElement parentElement)
         {
 			XmlNodeList nodes = parentElement.SelectNodes("Web");
 
 			foreach (XmlElement ielement in nodes)
 			{
-				TreeNode inode = parentNode.Nodes.Add(ielement.GetAttribute("Title"));
-
-				NodeTag tag = NodeTagFactory.Create(inode, NodeType.Web);
-				tag.ServerRelativeUrl = ielement.Attributes["ServerRelativeUrl"].Value;
-				tag.ID = new Guid(ielement.Attributes["ID"].Value);
-				inode.Tag = tag;
-
-				//  set the node image
-				if (!Convert.ToBoolean(ielement.Attributes["Publishing"].Value))
-					inode.ImageKey = inode.SelectedImageKey = "TeamSiteIcon";
-				else
-					inode.ImageKey = inode.SelectedImageKey = "PublishingSiteIcon";
-
-				AddChildNodes(inode, ielement);
+				TreeNode inode = parentNode.Nodes.Add("");
+				AddWebNode(inode, ielement);
 			}
 
         }
 
-        private void AddFileNodes(TreeNode parentNode, XmlElement parentElement)
+        private void AddChildFileNodes(TreeNode parentNode, XmlElement parentElement)
         {
 			XmlNodeList nodes = parentElement.SelectNodes("File");
 
@@ -143,7 +124,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			}
         }
 
-        private void AddListNodes(TreeNode parentNode, XmlElement parentElement)
+        private void AddChildListNodes(TreeNode parentNode, XmlElement parentElement)
         {
 			XmlNodeList nodes = parentElement.SelectNodes("List");
 
@@ -168,7 +149,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
         }
 
-		private void AddViewNodes(TreeNode parentNode, XmlElement parentElement)
+		private void AddChildViewNodes(TreeNode parentNode, XmlElement parentElement)
 		{
 			XmlNodeList vnodes = parentElement.SelectNodes("View");
 
@@ -192,7 +173,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 		}
 		
-		private void AddFolderNodes(TreeNode parentNode, XmlElement parentElement)
+		private void AddChildFolderNodes(TreeNode parentNode, XmlElement parentElement)
         {
 			XmlNodeList vnodes = parentElement.SelectNodes("Folder");
 
@@ -212,6 +193,37 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			}
 
         }
+
+		private void AddChildNodes(TreeNode parentNode, XmlElement parentElement)
+		{
+			AddChildListNodes(parentNode, parentElement);
+			AddChildViewNodes(parentNode, parentElement);
+			AddChildFolderNodes(parentNode, parentElement);
+			AddChildWebNodes(parentNode, parentElement);
+			AddChildFileNodes(parentNode, parentElement);
+		}
+
+
+		
+		private void AddWebNode(TreeNode node, XmlElement element)
+		{
+			node.Text = element.Attributes["Title"].Value;
+
+			NodeTag tag = NodeTagFactory.Create(node, NodeType.Web);
+			tag.ServerRelativeUrl = element.Attributes["ServerRelativeUrl"].Value;
+			tag.ID = new Guid(element.Attributes["ID"].Value);
+			node.Tag = tag;
+
+			//  set the node image
+			if (!Convert.ToBoolean(element.Attributes["Publishing"].Value))
+				node.ImageKey = node.SelectedImageKey = "TeamSiteIcon";
+			else
+				node.ImageKey = node.SelectedImageKey = "PublishingSiteIcon";
+
+			AddChildNodes(node, element);
+		}
+
+
 
 
         private void NodeClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -271,7 +283,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 				if ((string)menu.Tag == "Refresh")
 				{
-					RefreshCurrentSite();
+					RefreshCurrentWeb();
 				}
 			}
 			catch (Exception ex)
@@ -291,11 +303,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 					Uri url = new Uri(oform.Url);
 
-					StartLoading(url.ToString());
+					TreeNode rootNode = _tree.Nodes.Add("");
+
+					StartLoading(rootNode);
 
 					ProxyBridge bridge = new ProxyBridge(url.ToString());
 					bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(OpenSiteCompleted);
-					bridge.AddInService.GetSiteStructureAsync("Open");
+					bridge.AddInService.GetSiteStructureAsync();
 				}
 			}
 			catch (Exception ex)
@@ -311,14 +325,31 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 			ProxyBridge bridge = new ProxyBridge(_activeNodeTag.SiteTag.Url);
 
-			_tree.Nodes.Remove(_activeNodeTag.SiteTag.Node);
-
-			StartLoading(_activeNodeTag.SiteTag.Url);
+			StartLoading(_activeNodeTag.SiteTag.Node);
 
 			bridge.AddInService.GetSiteStructureCompleted += new GetSiteStructureCompletedEventHandler(RefreshSiteCompleted);
-			bridge.AddInService.GetSiteStructureAsync("Open");
+			bridge.AddInService.GetSiteStructureAsync();
 		}
 
+		private void RefreshCurrentWeb()
+		{
+			if (_activeNodeTag == null) return;
+
+			if (_activeNodeTag.WebTag is SPSiteNodeTag)
+			{
+				RefreshCurrentSite();
+				return;
+			}
+
+			ProxyBridge bridge = new ProxyBridge(_activeNodeTag.SiteTag.Url);
+
+			StartLoading(_activeNodeTag.WebTag.Node);
+
+			bridge.AddInService.GetWebStructureCompleted += new GetWebStructureCompletedEventHandler(RefreshWebCompleted);
+			bridge.AddInService.GetWebStructureAsync(_activeNodeTag.WebTag.ID);
+		}
+
+		
 		private void UpdateActiveTag(NodeTag tag)
 		{
 			_activeNodeTag = tag;
@@ -330,47 +361,79 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 		}
 
+
 		private void OpenSiteCompleted(object sender, GetSiteStructureCompletedEventArgs e)
 		{
 			try
 			{
-				StopLoading();
+				_structure = new XmlDocument();
+				_structure.LoadXml(e.Result.OuterXml);
 
-				_siteStructureDocument = new XmlDocument();
-				_siteStructureDocument.LoadXml(e.Result.OuterXml);
-
-				TreeNode rootNode = AddSiteNode();
+				TreeNode rootNode = AddSiteNode(_loadingNode);
 				rootNode.Expand();
 			}
 			catch (Exception ex)
 			{
 				ExceptionUtil.Handle(ex);
 			}
+			finally
+			{
+				StopLoading();
+			}
 		}
+
 
 		private void RefreshSiteCompleted(object sender, GetSiteStructureCompletedEventArgs e)
 		{
 			try
 			{
-				StopLoading();
+				_structure = new XmlDocument();
+				_structure.LoadXml(e.Result.OuterXml);
 
-				_siteStructureDocument = new XmlDocument();
-				_siteStructureDocument.LoadXml(e.Result.OuterXml);
-
-				TreeNode rootNode = AddSiteNode();
+				TreeNode rootNode = AddSiteNode(_loadingNode);
 				UpdateActiveTag((NodeTag)rootNode.Tag);
 				rootNode.Expand();
+
 			}
 			catch (Exception ex)
 			{
 				ExceptionUtil.Handle(ex);
 			}
+			finally
+			{
+				StopLoading();
+			}
 		}
 
-		private void StartLoading(string url)
+		private void RefreshWebCompleted(object sender, GetWebStructureCompletedEventArgs e)
 		{
-			_loadingNode = _tree.Nodes.Add(string.Format("Loading {0} ...", url));
+			try
+			{
+				_structure = new XmlDocument();
+				_structure.LoadXml(e.Result.OuterXml);
 
+				AddWebNode(_loadingNode, _structure.DocumentElement);
+
+				//AddChildWebNodes(parent, _siteStructureDocument.DocumentElement);
+			}
+			catch (Exception ex)
+			{
+				ExceptionUtil.Handle(ex);
+			}
+			finally
+			{
+				StopLoading();
+			}
+		}
+
+
+		private void StartLoading(TreeNode targetNode)
+		{
+			_loadingNode = targetNode;
+			_loadingNode.Text = "Loading ...";
+
+			_loadingNode.Nodes.Clear();
+			
 			_loadingNode.SelectedImageKey = _loadingNode.ImageKey = "LoadingIcon";
 
 			openMenu.Enabled = false;
@@ -380,11 +443,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 
 		private void StopLoading()
 		{
-			if (_loadingNode != null)
-			{
-				_tree.Nodes.Remove(_loadingNode);
-				_loadingNode = null;
-			}
+			_loadingNode = null;
 
 			openMenu.Enabled = true;
 			refreshMenu.Enabled = true;
