@@ -179,6 +179,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
             }
         }
         
+        internal static System.Drawing.Bitmap IMNUNK {
+            get {
+                object obj = ResourceManager.GetObject("IMNUNK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ITDL {
             get {
                 object obj = ResourceManager.GetObject("ITDL", resourceCulture);
