@@ -130,7 +130,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.txtWebPartTitle.Size = new System.Drawing.Size(328, 20);
             this.txtWebPartTitle.TabIndex = 116;
             // 
-            // ActivationDependencyControl
+            // WebPartControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -138,7 +138,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.panel1);
-            this.Name = "ActivationDependencyControl";
+            this.Name = "WebPartControl";
             this.Size = new System.Drawing.Size(434, 153);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
