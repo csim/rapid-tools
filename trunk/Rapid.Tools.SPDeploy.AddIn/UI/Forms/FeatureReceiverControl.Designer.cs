@@ -28,16 +28,19 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtWebPartFileName = new System.Windows.Forms.TextBox();
+            this.txtTitle = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.txtWebPartFileName);
+            this.panel1.Controls.Add(this.txtTitle);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -45,12 +48,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.panel1.Size = new System.Drawing.Size(428, 60);
             this.panel1.TabIndex = 119;
             // 
-            // txtWebPartFileName
+            // txtTitle
             // 
-            this.txtWebPartFileName.Location = new System.Drawing.Point(105, 26);
-            this.txtWebPartFileName.Name = "txtWebPartFileName";
-            this.txtWebPartFileName.Size = new System.Drawing.Size(305, 20);
-            this.txtWebPartFileName.TabIndex = 127;
+            this.txtTitle.Location = new System.Drawing.Point(105, 26);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.Size = new System.Drawing.Size(305, 20);
+            this.txtTitle.TabIndex = 127;
             // 
             // label9
             // 
@@ -70,6 +73,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.label11.TabIndex = 125;
             this.label11.Text = "Class Name";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // FeatureReceiverControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -82,6 +89,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.Size = new System.Drawing.Size(431, 63);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -89,8 +97,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txtWebPartFileName;
+        private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
