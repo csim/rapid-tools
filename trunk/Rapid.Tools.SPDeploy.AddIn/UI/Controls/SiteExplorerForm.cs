@@ -232,8 +232,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 			{
 				NodeTag tag = null;
 
+
 				if (e.Node.Tag != null && e.Node.Tag is NodeTag)
 					tag = (NodeTag)e.Node.Tag;
+
+				UpdateActiveTag(tag);
 
 				if (tag == null) return;
 
@@ -246,7 +249,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Controls
 					tag.Focus();
 				}
 
-				UpdateActiveTag(tag);
 				_tree.SelectedNode = e.Node;
 			}
 			catch (Exception ex)
