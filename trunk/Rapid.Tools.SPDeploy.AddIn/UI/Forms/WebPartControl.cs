@@ -13,7 +13,7 @@ using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
-    public partial class WebPartControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl
+    public partial class WebPartControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.IRapidControl
     {
 
 
@@ -24,10 +24,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             if (AppManager.Current.FeatureContext == null)
             {
                 BaseForm bf = new BaseForm(BaseForm.RapidFormType.Feature);
-                bf.ShowDialog();               
-            }   
+                bf.ShowDialog();   
+                if (AppManager.Current.FeatureContext == null)
+                    FindForm().Close();
+            }
 
+            this.Paint += new PaintEventHandler(WebPartControl_Paint);           
+            
         }
+
+        void WebPartControl_Paint(object sender, PaintEventArgs e)
+        {
+            txtWebPartTitle.Focus();
+        }
+
+       
 
         #region IRapidControl Members
 
@@ -68,6 +79,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 
             string webPartTitle = txtWebPartTitle.Text;
 
+
             File.WriteAllText(string.Format("{0}\\{1}.webpart", folderPath, txtWebPartFileName.Text), Resources.Features.WebParts.Files.webpartdotwebpart.Replace("[REPLACEPROJECTNAME]", AppManager.Current.ActiveProject.Name).Replace("[REPLACEWEBPARTFILENAME]", txtWebPartFileName.Text).Replace("[REPLACEWEBPARTTITLE]", txtWebPartTitle.Text).Replace("[REPLACEWEBPARTDESCRIPTION]", txtWebPartDescription.Text));
             
             string webPartLocation = folderPath.Remove(folderPath.LastIndexOf("\\"));
@@ -77,6 +89,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             di.CreateSubdirectory("Web\\UI\\WebControls");
             webPartLocation = webPartLocation + "\\Web\\UI\\WebControls\\" + txtWebPartFileName.Text + ".cs";
             File.WriteAllText(webPartLocation, Resources.Features.WebParts.Files.webpartclass.Replace("[REPLACEPROJECTNAME]", AppManager.Current.ActiveProject.Name).Replace("[REPLACEWEBPARTFILENAME]", txtWebPartFileName.Text));
+            AppManager.Current.OpenFile(webPartLocation);
             AppManager.Current.EnsureProjectFilesAdded(webPartLocation);
 
         }
