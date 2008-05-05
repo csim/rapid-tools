@@ -28,12 +28,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.txtImageUrl = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtLocation = new System.Windows.Forms.TextBox();
             this.txtSequence = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtUrl = new System.Windows.Forms.TextBox();
@@ -46,16 +46,19 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ddlLocation = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.ddlLocation);
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.txtImageUrl);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.txtLocation);
             this.panel1.Controls.Add(this.txtSequence);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.txtUrl);
@@ -76,19 +79,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(408, 86);
+            this.linkLabel1.Location = new System.Drawing.Point(390, 114);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(13, 13);
             this.linkLabel1.TabIndex = 124;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "?";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // txtImageUrl
             // 
-            this.txtImageUrl.Location = new System.Drawing.Point(89, 189);
+            this.txtImageUrl.Location = new System.Drawing.Point(71, 189);
             this.txtImageUrl.Name = "txtImageUrl";
             this.txtImageUrl.Size = new System.Drawing.Size(332, 20);
             this.txtImageUrl.TabIndex = 115;
+            this.txtImageUrl.Validating += new System.ComponentModel.CancelEventHandler(this.txtImageUrl_Validating);
             // 
             // label7
             // 
@@ -108,16 +113,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.label6.TabIndex = 122;
             this.label6.Text = "Location";
             // 
-            // txtLocation
-            // 
-            this.txtLocation.Location = new System.Drawing.Point(89, 83);
-            this.txtLocation.Name = "txtLocation";
-            this.txtLocation.Size = new System.Drawing.Size(313, 20);
-            this.txtLocation.TabIndex = 111;
-            // 
             // txtSequence
             // 
-            this.txtSequence.Location = new System.Drawing.Point(89, 163);
+            this.txtSequence.Location = new System.Drawing.Point(71, 163);
             this.txtSequence.Name = "txtSequence";
             this.txtSequence.Size = new System.Drawing.Size(332, 20);
             this.txtSequence.TabIndex = 114;
@@ -133,10 +131,11 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // txtUrl
             // 
-            this.txtUrl.Location = new System.Drawing.Point(89, 137);
+            this.txtUrl.Location = new System.Drawing.Point(71, 137);
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.Size = new System.Drawing.Size(332, 20);
             this.txtUrl.TabIndex = 113;
+            this.txtUrl.Validating += new System.ComponentModel.CancelEventHandler(this.txtUrl_Validating);
             // 
             // label3
             // 
@@ -149,9 +148,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // txtGroup
             // 
-            this.txtGroup.Location = new System.Drawing.Point(89, 111);
+            this.txtGroup.Location = new System.Drawing.Point(71, 111);
             this.txtGroup.Name = "txtGroup";
-            this.txtGroup.Size = new System.Drawing.Size(332, 20);
+            this.txtGroup.Size = new System.Drawing.Size(313, 20);
             this.txtGroup.TabIndex = 112;
             // 
             // label9
@@ -165,14 +164,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(89, 57);
+            this.txtDescription.Location = new System.Drawing.Point(71, 57);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(332, 20);
             this.txtDescription.TabIndex = 110;
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(89, 29);
+            this.txtId.Location = new System.Drawing.Point(71, 29);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(332, 20);
             this.txtId.TabIndex = 109;
@@ -206,10 +205,44 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(89, 3);
+            this.txtTitle.Location = new System.Drawing.Point(71, 3);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(332, 20);
             this.txtTitle.TabIndex = 108;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // ddlLocation
+            // 
+            this.ddlLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlLocation.FormattingEnabled = true;
+            this.ddlLocation.Items.AddRange(new object[] {
+            "DisplayFormToolbar",
+            "EditControlBlock",
+            "EditFormToolbar",
+            "Microsoft.SharePoint.Administration.ApplicationCreated",
+            "Microsoft.SharePoint.Administration.ApplicationManagement",
+            "Microsoft.SharePoint.Administration.Operations",
+            "Microsoft.SharePoint.ContentTypeSettings",
+            "Microsoft.SharePoint.ContentTypeTemplateSettings",
+            "Microsoft.SharePoint.Create",
+            "Microsoft.SharePoint.GroupsPage",
+            "Microsoft.SharePoint.ListEdit",
+            "Microsoft.SharePoint.ListEdit.DocumentLibrary",
+            "Microsoft.SharePoint.PeoplePage",
+            "Microsoft.SharePoint.SiteSettings",
+            "Microsoft.SharePoint.StandardMenu",
+            "Microsoft.SharePoint.User",
+            "Microsoft.SharePoint.Workflows",
+            "NewFormToolbar",
+            "ViewToolbar",
+            ""});
+            this.ddlLocation.Location = new System.Drawing.Point(71, 83);
+            this.ddlLocation.Name = "ddlLocation";
+            this.ddlLocation.Size = new System.Drawing.Size(332, 21);
+            this.ddlLocation.TabIndex = 125;
             // 
             // CustomActionControl
             // 
@@ -223,6 +256,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             this.Size = new System.Drawing.Size(431, 223);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,7 +268,6 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         private System.Windows.Forms.TextBox txtImageUrl;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtLocation;
         private System.Windows.Forms.TextBox txtSequence;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtUrl;
@@ -247,5 +280,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ComboBox ddlLocation;
     }
 }

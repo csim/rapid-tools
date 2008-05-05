@@ -13,7 +13,7 @@ using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.ElementManifest;
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
-    public partial class CustomActionControl : UserControl, Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl
+    public partial class CustomActionControl : UserControl, IRapidControl
     {
 
 
@@ -28,9 +28,16 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
                 bf.ShowDialog();
 
                 if (AppManager.Current.FeatureContext == null)
-                    isValid = false;
+                    FindForm().Close();              
                     
-            }           
+            }
+
+            this.Paint += new PaintEventHandler(CustomActionControl_Paint);
+        }
+
+        void CustomActionControl_Paint(object sender, PaintEventArgs e)
+        {
+            txtTitle.Focus();
         }
 
         #region IRapidControl Members        
@@ -56,7 +63,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             c.Description = txtDescription.Text;
             c.GroupId = txtGroup.Text;
             c.UrlAction = txtUrl.Text;
-            c.Location = txtLocation.Text;
+            c.Location = ddlLocation.SelectedText;
             c.Sequence = Convert.ToInt32(txtSequence.Text);
             c.ImageUrl = txtImageUrl.Text;
 
@@ -117,5 +124,37 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         }
 
         #endregion
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AppManager.Current.OpenBrowser("http://msdn.microsoft.com/en-us/library/bb802730.aspx");
+        }
+
+        private void txtUrl_Validating(object sender, CancelEventArgs e)
+        {
+            Validator v = new Validator();
+            if (txtUrl.Text.Length > 0 && !v.isValidUrl(txtUrl.Text))
+            {
+                errorProvider1.SetError(txtUrl, "Please enter a valid url.");
+                e.Cancel = true;
+            }
+            else
+                errorProvider1.Clear();
+        }
+
+        private void txtImageUrl_Validating(object sender, CancelEventArgs e)
+        {
+            Validator v = new Validator();
+            if (txtImageUrl.Text.Length > 0 && !v.isValidUrl(txtImageUrl.Text))
+            {
+                errorProvider1.SetError(txtImageUrl, "Please enter a valid url.");
+                e.Cancel = true;
+            }
+            else
+                errorProvider1.Clear();
+        }
+
+        
+
     }
 }
