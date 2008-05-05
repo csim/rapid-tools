@@ -169,6 +169,9 @@
   <data name="IMNON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>IMNON.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IMNUNK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>imnunk.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ITDL" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ITDL.GIF;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
