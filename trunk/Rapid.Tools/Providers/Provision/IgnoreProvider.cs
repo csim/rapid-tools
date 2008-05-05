@@ -12,7 +12,7 @@ using Microsoft.SharePoint;
 using Rapid.Tools.Domain;
 using Rapid.Tools.Domain.Provision;
 
-namespace Rapid.Wcm.Providers.Provision
+namespace Rapid.Tools.Providers.Provision
 {
 	public class IgnoreProvider : RapidXmlToolProviderBase
 	{

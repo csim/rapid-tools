@@ -2,7 +2,7 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
 
 	<CustomAction
-		Id="Rapid.Wcm.UrlMappings"
+		Id="Rapid.Rools.UrlMappings"
 		Location="Microsoft.SharePoint.SiteSettings"
 		GroupId="Galleries"
 		Sequence="1000"
