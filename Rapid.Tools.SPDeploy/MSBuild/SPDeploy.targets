@@ -29,8 +29,6 @@
 
 	<ItemGroup>
 
-		<WspOutput Include="$(OutDir)*.wsp" />
-
 		<AssemblyOutput Include="$(OutDir)$(TargetName)$(TargetExt);$(OutDir)$(TargetName).pdb" />
 		<!--<AssemblyOutput Include="$(OutputPath)$(TargetName)$(TargetExt);$(OutputPath)$(TargetName).pdb" />-->
 
@@ -338,11 +336,11 @@
 
 	<Target Name="CoreCreateWebApplication" DependsOnTargets="SPDeployInit">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(CreateWebApplicationCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(CreateWebApplicationCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="C:\" />
 
 		<Stsadm Server="$(WspServerName)" Command="$(CreateWebApplicationCommand)"
 			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
-			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
+			RemoteWorkingDir="C:\"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
 		  	PSExecUsername="$(PSExecUsername)"
@@ -427,12 +425,16 @@
 
 
 	<Target Name="CopyOutput"
-		Inputs="@(WspOutput);@(AssemblyOutput)"
-		Outputs="@(WspOutput->'$(WspRemoteTempDir)\%(Filename)%(Extension)');@(AssemblyOutput->'$(WspRemoteTempDir)\%(Filename)%(Extension)')">
+		Inputs="@(AssemblyOutput)"
+		Outputs="@(AssemblyOutput->'$(WspRemoteTempDir)\%(Filename)%(Extension)')">
 
-		<Copy SourceFiles="@(WspOutput)" DestinationFolder="$(WspRemoteTempDir)" />
+		<CreateProperty Value="$(OutDir)*.wsp">
+			<Output TaskParameter="Value" PropertyName="WspOutput" />
+		</CreateProperty>
 
-		<Copy SourceFiles="@(AssemblyOutput)" DestinationFolder="$(WspRemoteTempDir)" />
+		<Copy SourceFiles="@(WspOutput)" DestinationFolder="$(WspRemoteTempDir)" SkipUnchangedFiles="true" />
+
+		<Copy SourceFiles="@(AssemblyOutput)" DestinationFolder="$(WspRemoteTempDir)" SkipUnchangedFiles="true" />
 
 	</Target>
 
