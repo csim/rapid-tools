@@ -486,8 +486,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Proxies\AddIn\Update-WSDL-georgeo.cmd" />
-    <None Include="Proxies\AddIn\Update-WSDL-clints.cmd" />
+    <None Include="Proxies\AddIn\UpdateWSDL-clints.cmd" />
     <None Include="Proxies\Lists\Lists.wsdl" />
     <None Include="Proxies\SiteData\SiteData.wsdl" />
     <None Include="Proxies\Webs\Webs.wsdl" />
