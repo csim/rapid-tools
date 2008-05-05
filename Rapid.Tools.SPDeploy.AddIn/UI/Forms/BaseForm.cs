@@ -22,13 +22,12 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
           
         }
 
-        private Rapid.Tools.SPDeploy.AddIn.UI.Forms.FormsController.IRapidControl _mainControl = null;
+        private Rapid.Tools.SPDeploy.AddIn.UI.Forms.IRapidControl _mainControl = null;
 
 
 
         public BaseForm(RapidFormType type)
-        {
-
+        {            
             InitializeComponent();
             switch (type)
             {
@@ -62,15 +61,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
                     _mainControl.RemoveControl(_mainControl.GetPanels()[1]);
                 }               
             }
+            this.AcceptButton = btnOk;
+            this.CancelButton = btnCancel;
         }
 
 
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            _mainControl.OkClicked();
-            AppManager.Current.EnsureProjectFilesAdded(AppManager.Current.GetFeatureDirectory().FullName);
-            this.Close();
+            if (_mainControl.FormIsValid())
+            {
+                _mainControl.OkClicked();
+                AppManager.Current.EnsureProjectFilesAdded(AppManager.Current.GetFeatureDirectory().FullName);
+                this.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
