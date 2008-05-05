@@ -10,10 +10,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.Caching;
 
-namespace Rapid.Tools
+namespace Rapid.Tools.Domain
 {
-	public static class RapidToolsConfig
+	public static class RapidConfig
 	{
+		public static string ApplicationVersion
+		{
+			get
+			{
+				return Convert.ToString(WebConfigurationManager.AppSettings["Application.Version"]);
+			}
+		}
+
 		public static class ExceptionDisplay
 		{
 			public static bool PrintStack

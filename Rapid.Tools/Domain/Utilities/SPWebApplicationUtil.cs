@@ -13,7 +13,7 @@ using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
 
-namespace Rapid.Tools.Utilities
+namespace Rapid.Tools.Domain.Utilities
 {
 	public static class SPWebApplicationUtil
 	{

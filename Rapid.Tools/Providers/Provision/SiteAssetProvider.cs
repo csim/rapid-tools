@@ -12,17 +12,18 @@ using System.Security.Principal;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
-using Rapid.Tools.Provision;
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Provision;
 
-namespace Rapid.Tools.Provision.Providers
+namespace Rapid.Wcm.Providers.Provision
 {
-	public class SiteAssetProvider : AssetProviderBase
+	public class SiteAssetProvider : RapidXmlToolProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, ProvisionContext context)
+		public override void Execute(XmlElement contextElement, RapidXmlToolProviderContext context)
 		{
 
-			ProvisionContext icontext = new ProvisionContext();
+			RapidXmlToolProviderContext icontext = new RapidXmlToolProviderContext();
 
 			string url = GetAttribute(contextElement, "Url");
 			string title = GetAttribute(contextElement, "Title");
@@ -72,14 +73,7 @@ namespace Rapid.Tools.Provision.Providers
 				icontext.Web = isite.RootWeb;
 			}
 
-			Manager.ImportChildAssets(contextElement, icontext);
-
-		}
-
-		public override XmlElement Export(XmlElement contextElement, ProvisionContext context)
-		{
-
-			return null;
+			Manager.ExecuteChildren(contextElement, icontext);
 
 		}
 

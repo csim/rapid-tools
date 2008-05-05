@@ -9,7 +9,9 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
-using Rapid.Tools.Utilities;
+
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Utilities;
 
 namespace Rapid.Tools.Layouts
 {
@@ -20,7 +22,7 @@ namespace Rapid.Tools.Layouts
 		{
 			base.OnLoad(e);
 
-			Exception ex = (Exception)Context.Items[RapidToolsConfig.ExceptionDisplay.ContextKey];
+			Exception ex = (Exception)Context.Items[RapidConfig.ExceptionDisplay.ContextKey];
 
 			if (ex != null)
 			{
@@ -28,8 +30,8 @@ namespace Rapid.Tools.Layouts
 
 				litFullException.Text = SPExceptionUtil.Format(ex, true);
 
-				pnlShortException.Visible = !RapidToolsConfig.ExceptionDisplay.PrintStack;
-				litFullException.Visible = RapidToolsConfig.ExceptionDisplay.PrintStack;
+				pnlShortException.Visible = !RapidConfig.ExceptionDisplay.PrintStack;
+				litFullException.Visible = RapidConfig.ExceptionDisplay.PrintStack;
 
 			}
 		}

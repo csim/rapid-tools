@@ -13,7 +13,8 @@ using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Security;
 
-using Rapid.Tools.Utilities;
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Utilities;
 
 namespace Rapid.Tools.Providers
 {
@@ -79,23 +80,23 @@ namespace Rapid.Tools.Providers
 			using (SPSite site = new SPSite(sourceUrl))
 			{
 
-				bool lexists = SPListUtil.ListExists(site.RootWeb, RapidToolsConstants.UrlMapList.Url);
+				bool lexists = SPListUtil.ListExists(site.RootWeb, RapidConstants.UrlMapList.Url);
 				if (!lexists) return null;
 
-				SPList list = SPListUtil.GetList(site.RootWeb, RapidToolsConstants.UrlMapList.Url);
+				SPList list = SPListUtil.GetList(site.RootWeb, RapidConstants.UrlMapList.Url);
 
 				string query = "";
 
-				string contentTypeClause = SPCamlUtil.GetComparison("BeginsWith", RapidToolsConstants.SiteColumns.ContentTypeID.ID, "Text", RapidToolsConstants.ContentTypes.UrlMappingID.ToString());
+				string contentTypeClause = SPCamlUtil.GetComparison("BeginsWith", RapidConstants.SiteColumns.ContentTypeID.ID, "Text", RapidConstants.ContentTypes.UrlMappingID.ToString());
 				query = contentTypeClause;
 
-				string activeClause = SPCamlUtil.GetComparison("Eq", RapidToolsConstants.SiteColumns.RapidToolsActive.ID, "Boolean", "1");
+				string activeClause = SPCamlUtil.GetComparison("Eq", RapidConstants.SiteColumns.RapidToolsActive.ID, "Boolean", "1");
 				query = SPCamlUtil.AppendCondition(query, "And", activeClause);
 
-				string sourceClause = SPCamlUtil.GetComparison("Eq", RapidToolsConstants.SiteColumns.IncomingUrl.ID, "Text", sourceUrl);
+				string sourceClause = SPCamlUtil.GetComparison("Eq", RapidConstants.SiteColumns.IncomingUrl.ID, "Text", sourceUrl);
 				query = SPCamlUtil.AppendCondition(query, "And", sourceClause);
 
-				string orderByClause = string.Format("<OrderBy><FieldRef ID=\"{0}\" Name=\"{1}\" Ascending=\"TRUE\" /></OrderBy>", RapidToolsConstants.SiteColumns.ID.ID, RapidToolsConstants.SiteColumns.ID.Name);
+				string orderByClause = string.Format("<OrderBy><FieldRef ID=\"{0}\" Name=\"{1}\" Ascending=\"TRUE\" /></OrderBy>", RapidConstants.SiteColumns.ID.ID, RapidConstants.SiteColumns.ID.Name);
 
 				query = string.Format("<Where>{0}</Where>{1}", query, orderByClause);
 
@@ -110,7 +111,7 @@ namespace Rapid.Tools.Providers
 				SPListItemCollection items = list.GetItems(q);
 				if (items == null || items.Count == 0) return null;
 
-				string ret = Convert.ToString(items[0][RapidToolsConstants.SiteColumns.ResultUrl.ID]);
+				string ret = Convert.ToString(items[0][RapidConstants.SiteColumns.ResultUrl.ID]);
 				return ret;
 
 			}

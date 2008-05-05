@@ -11,17 +11,18 @@ using System.Web.UI.HtmlControls;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Navigation;
-using Rapid.Tools.Provision;
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Provision;
 
-namespace Rapid.Tools.Provision.Providers
+namespace Rapid.Wcm.Providers.Provision
 {
-	public class WebAssetProvider : AssetProviderBase
+	public class WebAssetProvider : RapidXmlToolProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, ProvisionContext context)
+		public override void Execute(XmlElement contextElement, RapidXmlToolProviderContext context)
 		{
 
-			ProvisionContext icontext = new ProvisionContext();
+			RapidXmlToolProviderContext icontext = new RapidXmlToolProviderContext();
 
 			string url = GetAttribute(contextElement, "Url");
 			string templateID = GetAttribute(contextElement, "TemplateID");
@@ -34,22 +35,15 @@ namespace Rapid.Tools.Provision.Providers
 			SPWeb iweb = pweb.Webs.Add(url, title, "", 1033, templateID, false, false);
 
 			if (!iweb.IsRootWeb) iweb.Navigation.UseShared = true;
-			
-			if (pweb.Navigation != null && pweb.Navigation.TopNavigationBar != null)
-				pweb.Navigation.TopNavigationBar.AddAsLast(new SPNavigationNode(iweb.Title, iweb.ServerRelativeUrl));
+			//pweb.Navigation.TopNavigationBar.AddAsLast(new SPNavigationNode(iweb.Title, iweb.ServerRelativeUrl));
 
 			Manager.WriteMessage(iweb.ServerRelativeUrl);
 
 			icontext.Web = iweb;
 
-			Manager.ImportChildAssets(contextElement, icontext);
+			Manager.ExecuteChildren(contextElement, icontext);
 
 
-		}
-
-		public override XmlElement Export(XmlElement contextElement, ProvisionContext context)
-		{
-			return null;
 		}
 
 

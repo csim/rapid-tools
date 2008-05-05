@@ -13,18 +13,19 @@ using System.Security.Principal;
 
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Administration;
-using Rapid.Tools.Utilities;
-using Rapid.Tools.Provision;
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Utilities;
+using Rapid.Tools.Domain.Provision;
 
-namespace Rapid.Tools.Provision.Providers
+namespace Rapid.Wcm.Providers.Provision
 {
-	public class FileAssetProvider : AssetProviderBase
+	public class FileAssetProvider : RapidXmlToolProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, ProvisionContext context)
+		public override void Execute(XmlElement contextElement, RapidXmlToolProviderContext context)
 		{
 
-			ProvisionContext icontext = new ProvisionContext();
+			RapidXmlToolProviderContext icontext = new RapidXmlToolProviderContext();
 
 			string url = GetAttribute(contextElement, "Url");
 			string title = GetAttribute(contextElement, "Title");
@@ -75,7 +76,7 @@ namespace Rapid.Tools.Provision.Providers
 					icontext.Item = file.Item;
 				}
 
-				Manager.ImportChildAssets(contextElement, icontext);
+				Manager.ExecuteChildren(contextElement, icontext);
 
 				if (file != null)
 				{
@@ -100,19 +101,11 @@ namespace Rapid.Tools.Provision.Providers
 
 			if (file.InDocumentLibrary)
 			{
-				SPFieldUtil.SetFieldValue(file.Item, RapidToolsConstants.SiteColumns.Title.ID, title);
+				SPFieldUtil.SetFieldValue(file.Item, RapidConstants.SiteColumns.Title.ID, title);
 				file.Item.Update();
 			}
 
 			return file;
-		}
-
-
-		public override XmlElement Export(XmlElement contextElement, ProvisionContext context)
-		{
-
-			return null;
-
 		}
 
 	}

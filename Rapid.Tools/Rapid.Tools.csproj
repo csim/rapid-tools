@@ -54,20 +54,21 @@
     <Compile Include="Domain\Commands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\UrlMapModule.cs" />
-    <Compile Include="Provision\Providers\AssetContainer.cs" />
-    <Compile Include="Provision\Providers\AssetProviderBase.cs" />
-    <Compile Include="Provision\Providers\FieldAssetProvider.cs" />
-    <Compile Include="Provision\Providers\FileAssetProvider.cs" />
-    <Compile Include="Provision\Providers\IgnoreProvider.cs" />
-    <Compile Include="Provision\Providers\SiteAssetProvider.cs" />
-    <Compile Include="Provision\Providers\WebAssetProvider.cs" />
-    <Compile Include="Provision\Providers\WebContentProvider.cs" />
-    <Compile Include="Provision\ProvisionContext.cs" />
-    <Compile Include="Provision\ProvisionManager.cs" />
-    <Compile Include="RapidToolsConfig.cs" />
-    <Compile Include="RapidToolsApplication.cs" />
-    <Compile Include="RapidToolsSiteColumnInfo.cs" />
-    <Compile Include="RapidToolsConstants.cs" />
+    <Compile Include="Providers\Provision\AssetContainer.cs" />
+    <Compile Include="Providers\Provision\FieldAssetProvider.cs" />
+    <Compile Include="Providers\Provision\FileAssetProvider.cs" />
+    <Compile Include="Providers\Provision\IgnoreProvider.cs" />
+    <Compile Include="Providers\Provision\SiteAssetProvider.cs" />
+    <Compile Include="Providers\Provision\WebAssetProvider.cs" />
+    <Compile Include="Providers\Provision\WebContentProvider.cs" />
+    <Compile Include="Domain\Provision\RapidProvisionManager.cs" />
+    <Compile Include="Domain\RapidConfig.cs" />
+    <Compile Include="Domain\RapidApplication.cs" />
+    <Compile Include="Domain\RapidToolsSiteColumnInfo.cs" />
+    <Compile Include="Domain\RapidConstants.cs" />
+    <Compile Include="Domain\RapidXmlToolManager.cs" />
+    <Compile Include="Domain\RapidXmlToolProviderBase.cs" />
+    <Compile Include="Domain\RapidXmlToolProviderContext.cs" />
     <Compile Include="Receivers\UrlMapReceiver.cs" />
     <Compile Include="TemplateFiles\Layouts\RapidTools\Error.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -80,19 +81,19 @@
       <SubType>Component</SubType>
       <DependentUpon>AddIn.asmx</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\SPExceptionUtil.cs" />
-    <Compile Include="Utilities\SPCamlUtil.cs" />
-    <Compile Include="Utilities\SPFeatureUtil.cs" />
-    <Compile Include="Utilities\SPFieldUtil.cs" />
-    <Compile Include="Utilities\SPFileUtil.cs" />
-    <Compile Include="Utilities\SPListUtil.cs" />
-    <Compile Include="Utilities\SPWebApplicationUtil.cs" />
-    <Compile Include="Utilities\SPXmlUtil.cs" />
+    <Compile Include="Domain\Utilities\SPExceptionUtil.cs" />
+    <Compile Include="Domain\Utilities\SPCamlUtil.cs" />
+    <Compile Include="Domain\Utilities\SPFeatureUtil.cs" />
+    <Compile Include="Domain\Utilities\SPFieldUtil.cs" />
+    <Compile Include="Domain\Utilities\SPFileUtil.cs" />
+    <Compile Include="Domain\Utilities\SPListUtil.cs" />
+    <Compile Include="Domain\Utilities\SPWebApplicationUtil.cs" />
+    <Compile Include="Domain\Utilities\SPXmlUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="manifest.xml" />
     <Content Include="Properties\SPDeploy.user" />
-    <Content Include="Provision\SampleManifest.xml" />
+    <Content Include="Domain\Provision\SampleManifest.xml" />
     <Content Include="RootFiles\Config\stsadmcommands.rapidtools.xml" />
     <Content Include="TemplateFiles\Features\RapidTools_Lists\feature.xml" />
     <Content Include="TemplateFiles\Features\RapidTools_Lists\lists.xml" />
