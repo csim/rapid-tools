@@ -15,7 +15,7 @@ using System.Security;
 using System.Web.UI.WebControls.WebParts;
 using Rapid.Tools;
 
-namespace Rapid.Tools.Utilities
+namespace Rapid.Tools.Domain.Utilities
 {
 	public static class SPXmlUtil
 	{
@@ -114,7 +114,7 @@ namespace Rapid.Tools.Utilities
 
 			if (item != null)
 			{
-				string title = Convert.ToString(item[RapidToolsConstants.SiteColumns.Title.ID]);
+				string title = Convert.ToString(item[RapidConstants.SiteColumns.Title.ID]);
 				param["PageTitle"] = title;
 			}
 

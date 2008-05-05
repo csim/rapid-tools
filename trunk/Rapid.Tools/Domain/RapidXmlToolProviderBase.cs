@@ -1,26 +1,28 @@
-using System;
+﻿using System;
 using System.Xml;
 using System.Data;
 using System.Configuration;
-using Microsoft.SharePoint;
-using Rapid.Tools.Provision;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
-namespace Rapid.Tools.Provision.Providers
+namespace Rapid.Tools.Domain
 {
-	public abstract class AssetProviderBase
+	public abstract class RapidXmlToolProviderBase
 	{
 
-		private ProvisionManager _manager;
+		private RapidXmlToolManager _manager;
 
-		public ProvisionManager Manager
+		public RapidXmlToolManager Manager
 		{
 			get { return _manager; }
 			set { _manager = value; }
 		}
 
-		public abstract void Import(XmlElement contextElement, ProvisionContext context);
-
-		public abstract XmlElement Export(XmlElement contextElement, ProvisionContext context);
+		public abstract void Execute(XmlElement contextElement, RapidXmlToolProviderContext context);
 
 
 		/***** Utility Functions **********/
@@ -62,6 +64,7 @@ namespace Rapid.Tools.Provision.Providers
 
 			return Convert.ToDateTime(val);
 		}
+
 
 	}
 }

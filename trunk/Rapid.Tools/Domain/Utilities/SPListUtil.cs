@@ -12,7 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
 
-namespace Rapid.Tools.Utilities
+namespace Rapid.Tools.Domain.Utilities
 {
 	public static class SPListUtil
 	{
@@ -167,7 +167,7 @@ namespace Rapid.Tools.Utilities
 
 			if (id.HasValue)
 			{
-				return SPFieldUtil.TrySetFieldValue(item, RapidToolsConstants.SiteColumns.ContentTypeID.ID, id.Value);
+				return SPFieldUtil.TrySetFieldValue(item, RapidConstants.SiteColumns.ContentTypeID.ID, id.Value);
 			}
 			else
 			{

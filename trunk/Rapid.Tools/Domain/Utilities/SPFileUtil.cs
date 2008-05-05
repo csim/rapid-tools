@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.SharePoint;
 
-namespace Rapid.Tools.Utilities
+namespace Rapid.Tools.Domain.Utilities
 {
 	public static class SPFileUtil
 	{
@@ -216,7 +216,7 @@ namespace Rapid.Tools.Utilities
 
 		public static void MirrorDirectory(SPFolder folder, string rootPathOnDisk, bool overwrite)
 		{
-			MirrorDirectory(folder, rootPathOnDisk, RapidToolsConstants.ContentTypes.DocumentID, false);
+			MirrorDirectory(folder, rootPathOnDisk, RapidConstants.ContentTypes.DocumentID, false);
 		}
 
 		public static void MirrorDirectory(SPFolder folder, string rootPathOnDisk, SPContentTypeId contentTypeID, bool overwrite)
@@ -242,7 +242,7 @@ namespace Rapid.Tools.Utilities
 				nfile = SPFileUtil.AddFromDisk(folder, file, nfilename, true, false);
 
 				item = nfile.Item;
-				SPFieldUtil.SetFieldValue(item, RapidToolsConstants.SiteColumns.ContentTypeID.ID, contentTypeID);
+				SPFieldUtil.SetFieldValue(item, RapidConstants.SiteColumns.ContentTypeID.ID, contentTypeID);
 				item.Update();
 
 				CheckIn(nfile);
@@ -256,11 +256,11 @@ namespace Rapid.Tools.Utilities
 			SPFolder subfolder;
 			string leafDirName;
 
-			SPContentTypeId? folderContentTypeID = RapidToolsConstants.ContentTypes.FolderID;
+			SPContentTypeId? folderContentTypeID = RapidConstants.ContentTypes.FolderID;
 
 			if (folder.Item != null && folder.Item.ParentList != null)
 			{
-				folderContentTypeID = SPListUtil.GetListSpecificContentType(folder.Item.ParentList, RapidToolsConstants.ContentTypes.FolderID) ?? RapidToolsConstants.ContentTypes.FolderID;
+				folderContentTypeID = SPListUtil.GetListSpecificContentType(folder.Item.ParentList, RapidConstants.ContentTypes.FolderID) ?? RapidConstants.ContentTypes.FolderID;
 			}
 
 			foreach (string dir in dirs)
@@ -270,7 +270,7 @@ namespace Rapid.Tools.Utilities
 
 				if (subfolder.Item != null)
 				{
-					SPFieldUtil.SetFieldValue(subfolder.Item, RapidToolsConstants.SiteColumns.ContentTypeID.ID, folderContentTypeID);
+					SPFieldUtil.SetFieldValue(subfolder.Item, RapidConstants.SiteColumns.ContentTypeID.ID, folderContentTypeID);
 					subfolder.Item.Update();
 				}
 

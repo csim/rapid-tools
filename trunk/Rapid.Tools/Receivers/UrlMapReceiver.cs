@@ -8,7 +8,9 @@ using System.Diagnostics;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Navigation;
 using Microsoft.SharePoint.WebControls;
-using Rapid.Tools.Utilities;
+
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Utilities;
 
 namespace Rapid.Tools.Receivers
 {
@@ -28,7 +30,7 @@ namespace Rapid.Tools.Receivers
 				SPSite site = (SPSite)properties.Feature.Parent;
 				SPWeb rweb = site.RootWeb;
 
-				SPFeatureUtil.ActivateFeature(site, RapidToolsConstants.Features.ListsID);
+				SPFeatureUtil.ActivateFeature(site, RapidConstants.Features.ListsID);
 
 				SPList urlmappings = EnsureUrlMappingList(site);
 
@@ -56,13 +58,13 @@ namespace Rapid.Tools.Receivers
 
 			SPWeb rweb = site.RootWeb;
 
-			if (SPListUtil.ListExists(rweb, RapidToolsConstants.UrlMapList.Url))
+			if (SPListUtil.ListExists(rweb, RapidConstants.UrlMapList.Url))
 			{
-				return SPListUtil.GetList(rweb, RapidToolsConstants.UrlMapList.Url);
+				return SPListUtil.GetList(rweb, RapidConstants.UrlMapList.Url);
 			}
 
-			Guid listid = rweb.Lists.Add(RapidToolsConstants.UrlMapList.Title, RapidToolsConstants.UrlMapList.Description,
-					RapidToolsConstants.UrlMapList.Url, RapidToolsConstants.UrlMapList.FeatureID.ToString(), RapidToolsConstants.UrlMapList.TemplateID, "", SPListTemplate.QuickLaunchOptions.Off);
+			Guid listid = rweb.Lists.Add(RapidConstants.UrlMapList.Title, RapidConstants.UrlMapList.Description,
+					RapidConstants.UrlMapList.Url, RapidConstants.UrlMapList.FeatureID.ToString(), RapidConstants.UrlMapList.TemplateID, "", SPListTemplate.QuickLaunchOptions.Off);
 
 			SPList lib = null;
 			lib = rweb.Lists[listid];
@@ -73,7 +75,7 @@ namespace Rapid.Tools.Receivers
 			lib.EnableAttachments = false;
 			lib.Update();
 
-			SPListUtil.SetContentTypes(lib, new List<SPContentTypeId>(new SPContentTypeId[] { RapidToolsConstants.ContentTypes.UrlMappingID }));
+			SPListUtil.SetContentTypes(lib, new List<SPContentTypeId>(new SPContentTypeId[] { RapidConstants.ContentTypes.UrlMappingID }));
 
 			return lib;
 

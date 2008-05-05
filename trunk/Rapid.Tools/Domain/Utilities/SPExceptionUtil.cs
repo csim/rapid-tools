@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Rapid.Tools.Utilities
+namespace Rapid.Tools.Domain.Utilities
 {
 	public static class SPExceptionUtil
 	{

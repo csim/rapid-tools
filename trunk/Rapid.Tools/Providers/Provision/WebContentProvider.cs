@@ -10,19 +10,20 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
-using Rapid.Tools.Provision;
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Provision;
 
-namespace Rapid.Tools.Provision.Providers
+namespace Rapid.Wcm.Providers.Provision
 {
-	public class WebContentProvider : AssetProviderBase
+	public class WebContentProvider : RapidXmlToolProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, ProvisionContext context)
+		public override void Execute(XmlElement contextElement, RapidXmlToolProviderContext context)
 		{
 
 			if (context == null || context.Web == null) throw new Exception("Context is invalid.");
 
-			ProvisionContext icontext = new ProvisionContext();
+			RapidXmlToolProviderContext icontext = new RapidXmlToolProviderContext();
 
 			string url = GetAttribute(contextElement, "Url");
 
@@ -48,18 +49,10 @@ namespace Rapid.Tools.Provision.Providers
 					Manager.WriteMessage("{0} Importing...", web.ServerRelativeUrl);
 					icontext.Web = web;
 
-					Manager.ImportChildAssets(contextElement, icontext);
+					Manager.ExecuteChildren(contextElement, icontext);
 				}
 			}
 
-		}
-
-		public override System.Xml.XmlElement Export(XmlElement contextElement, ProvisionContext context)
-		{
-
-			Manager.WriteMessage("Exporting...");
-
-			return null;
 		}
 
 	}

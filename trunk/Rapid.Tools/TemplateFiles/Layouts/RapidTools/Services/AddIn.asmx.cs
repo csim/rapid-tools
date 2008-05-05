@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Xml;
 using System.IO;
 using System.Collections.ObjectModel;
-using Rapid.Tools.Utilities;
+using Rapid.Tools.Domain.Utilities;
 using System.Globalization;
 using System.Reflection;
 

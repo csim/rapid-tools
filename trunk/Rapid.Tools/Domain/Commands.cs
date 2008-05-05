@@ -8,9 +8,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Rapid.Tools.Utilities;
-using Rapid.Tools.Provision;
+using Rapid.Tools.Domain.Utilities;
+using Rapid.Tools.Domain.Provision;
 using Rapid.Tools.Providers;
+
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using Microsoft.SharePoint.StsAdmin;
@@ -151,7 +152,7 @@ namespace Rapid.Tools.Domain
 				Uri uurl = new Uri(url);
 				SPWebApplication webapp = SPWebApplication.Lookup(uurl);
 
-				ProvisionManager manager = new ProvisionManager(webapp, manifest);
+				RapidProvisionManager manager = new RapidProvisionManager(webapp, manifest);
 				manager.Import();
 
 			}
@@ -249,7 +250,7 @@ namespace Rapid.Tools.Domain
 
 			try
 			{
-				Type tglobal = typeof(RapidToolsApplication);
+				Type tglobal = typeof(RapidApplication);
 				string contents = string.Format("<%@ Application Inherits=\"{0}, {1}\" %>", tglobal.FullName, tglobal.Assembly.FullName);
 				File.WriteAllText(globalasax, contents);
 			}
@@ -340,7 +341,7 @@ namespace Rapid.Tools.Domain
 
 					webconfig = string.Format(@"{0}\web.config", root);
 
-					SPFeatureUtil.ActivateFeature(site, RapidToolsConstants.Features.UrlMapID);
+					SPFeatureUtil.ActivateFeature(site, RapidConstants.Features.UrlMapID);
 				}
 			}
 			catch (Exception ex)
@@ -405,7 +406,7 @@ namespace Rapid.Tools.Domain
 
 					webconfig = string.Format(@"{0}\web.config", root);
 					
-					SPFeatureUtil.DeactivateFeature(site, RapidToolsConstants.Features.UrlMapID);
+					SPFeatureUtil.DeactivateFeature(site, RapidConstants.Features.UrlMapID);
 				}
 			}
 			catch (Exception ex)

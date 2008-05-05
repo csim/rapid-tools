@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Web;
 using Microsoft.SharePoint;
 
-namespace Rapid.Tools.Utilities
+namespace Rapid.Tools.Domain.Utilities
 {
 	public static class SPFieldUtil
 	{

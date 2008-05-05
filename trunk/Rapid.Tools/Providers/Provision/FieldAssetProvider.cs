@@ -9,15 +9,16 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Microsoft.SharePoint;
-using Rapid.Tools.Utilities;
-using Rapid.Tools.Provision;
+using Rapid.Tools.Domain;
+using Rapid.Tools.Domain.Utilities;
+using Rapid.Tools.Domain.Provision;
 
-namespace Rapid.Tools.Provision.Providers
+namespace Rapid.Wcm.Providers.Provision
 {
-	public class FieldAssetProvider : AssetProviderBase
+	public class FieldAssetProvider : RapidXmlToolProviderBase
 	{
 
-		public override void Import(XmlElement contextElement, ProvisionContext context)
+		public override void Execute(XmlElement contextElement, RapidXmlToolProviderContext context)
 		{
 			string url = GetAttribute(contextElement, "Url");
 			string name = GetAttribute(contextElement, "Name");
@@ -57,14 +58,6 @@ namespace Rapid.Tools.Provision.Providers
 
 			if (update) item.Update();
 
-		}
-
-		public override System.Xml.XmlElement Export(XmlElement contextElement, ProvisionContext context)
-		{
-
-			Manager.WriteMessage("Exporting...");
-
-			return null;
 		}
 
 	}
