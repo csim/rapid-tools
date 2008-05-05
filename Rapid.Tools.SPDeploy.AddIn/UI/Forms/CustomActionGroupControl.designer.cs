@@ -1,6 +1,6 @@
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 {
-	partial class CustomActionControl
+	partial class CustomActionGroupControl
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -211,7 +211,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 			this.txtTitle.Size = new System.Drawing.Size(332, 20);
 			this.txtTitle.TabIndex = 108;
 			// 
-			// CustomActionControl
+			// CustomActionGroupControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,7 +219,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.Color.Transparent;
 			this.Controls.Add(this.panel1);
-			this.Name = "CustomActionControl";
+			this.Name = "CustomActionGroupControl";
 			this.Size = new System.Drawing.Size(431, 223);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
