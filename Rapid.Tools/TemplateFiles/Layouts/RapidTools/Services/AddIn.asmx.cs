@@ -151,37 +151,67 @@ namespace Rapid.Tools.Layouts.Services
 		[WebMethod]
 		public XmlDocument GetSiteStructure()
 		{
-
-			string _documentString = string.Empty;
+			string output = string.Empty;
 
 			SPSite site = SPContext.Current.Site;
-
-		
 
 			using (MemoryStream ms = new MemoryStream())
 			{
 				using (_structureWriter = new XmlTextWriter(ms, Encoding.UTF8))
 				{
 
-					AddSiteNode(site);
+					AddSiteNode(site, 100);
 
 					_structureWriter.Flush();
 					ms.Position = 0;
 
 					using (StreamReader sr = new StreamReader(ms))
 					{
-						_documentString = sr.ReadToEnd();
+						output = sr.ReadToEnd();
 					}
 
 				}
 			}
 
 			XmlDocument _document = new XmlDocument();
-			_document.LoadXml(_documentString);
+			_document.LoadXml(output);
 
 			return _document;
 		}
 
+		[WebMethod]
+		public XmlDocument GetWebStructure(Guid webid)
+		{
+			string output = string.Empty;
+
+			SPSite site = SPContext.Current.Site;
+
+			using (MemoryStream ms = new MemoryStream())
+			{
+				using (_structureWriter = new XmlTextWriter(ms, Encoding.UTF8))
+				{
+
+					using (SPWeb web = site.AllWebs[webid])
+					{
+						AddWebNode(web, 0, 100);
+					}
+
+					_structureWriter.Flush();
+					ms.Position = 0;
+
+					using (StreamReader sr = new StreamReader(ms))
+					{
+						output = sr.ReadToEnd();
+					}
+
+				}
+			}
+
+			XmlDocument _document = new XmlDocument();
+			_document.LoadXml(output);
+
+			return _document;
+		}
 
 
         [WebMethod]
@@ -718,21 +748,22 @@ namespace Rapid.Tools.Layouts.Services
 			solution.Delete();
 		}
 
-		private void AddSiteNode(SPSite site)
+		private void AddSiteNode(SPSite site, int maxdepth)
 		{
 			_structureWriter.WriteStartDocument();
 			_structureWriter.WriteStartElement("Site");
 			_structureWriter.WriteAttributeString("ID", site.ID.ToString());
 			_structureWriter.WriteAttributeString("Url", site.Url);
 
-			AddWebNode(site.RootWeb);
+			AddWebNode(site.RootWeb, 0, maxdepth);
 
 			_structureWriter.WriteEndDocument();
 
 		}
 
-		private void AddWebNode(SPWeb web)
+		private void AddWebNode(SPWeb web, int currentdepth, int maxdepth)
 		{
+
 			_structureWriter.WriteStartElement("Web");
 			_structureWriter.WriteAttributeString("ID", web.ID.ToString());
 			_structureWriter.WriteAttributeString("Title", web.Title);
@@ -744,15 +775,17 @@ namespace Rapid.Tools.Layouts.Services
 
 			_structureWriter.WriteAttributeString("Publishing", ispubweb.ToString());
 
-			foreach (SPWeb iweb in web.Webs)
-				AddWebNode(iweb);
+			if (currentdepth < maxdepth)
+			{
+				foreach (SPWeb iweb in web.Webs)
+					AddWebNode(iweb, currentdepth + 1, maxdepth);
 
-			foreach (SPFolder folder in web.Folders) 
-				AddFolderNode(folder);
+				foreach (SPFolder folder in web.Folders) 
+					AddFolderNode(folder);
 
-			foreach (SPFile file in web.Files)			
-				AddFileNode(file);
-
+				foreach (SPFile file in web.Files)			
+					AddFileNode(file);
+			}
 
 			_structureWriter.WriteEndElement();
 		}

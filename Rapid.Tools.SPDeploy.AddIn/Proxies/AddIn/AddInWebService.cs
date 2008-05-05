@@ -41,6 +41,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         
         private System.Threading.SendOrPostCallback GetSiteStructureOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetWebStructureOperationCompleted;
+        
         private System.Threading.SendOrPostCallback DeleteFileOperationCompleted;
         
         private System.Threading.SendOrPostCallback AddFileOperationCompleted;
@@ -88,8 +90,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         private System.Threading.SendOrPostCallback OpenFileOperationCompleted;
         
         /// <remarks/>
-		public AddInWebService()
-		{
+        public AddInWebService() {
+            this.Url = "http://mordor.int.ascentium.com:101/_layouts/RapidTools/Services/AddIn.asmx";
         }
         
         /// <remarks/>
@@ -112,6 +114,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         
         /// <remarks/>
         public event GetSiteStructureCompletedEventHandler GetSiteStructureCompleted;
+        
+        /// <remarks/>
+        public event GetWebStructureCompletedEventHandler GetWebStructureCompleted;
         
         /// <remarks/>
         public event DeleteFileCompletedEventHandler DeleteFileCompleted;
@@ -466,6 +471,47 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
             if ((this.GetSiteStructureCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetSiteStructureCompleted(this, new GetSiteStructureCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://ascentium.com/RapidTools/GetWebStructure", RequestNamespace="http://ascentium.com/RapidTools", ResponseNamespace="http://ascentium.com/RapidTools", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public System.Xml.XmlNode GetWebStructure(System.Guid webid) {
+            object[] results = this.Invoke("GetWebStructure", new object[] {
+                        webid});
+            return ((System.Xml.XmlNode)(results[0]));
+        }
+        
+        /// <remarks/>
+        public System.IAsyncResult BeginGetWebStructure(System.Guid webid, System.AsyncCallback callback, object asyncState) {
+            return this.BeginInvoke("GetWebStructure", new object[] {
+                        webid}, callback, asyncState);
+        }
+        
+        /// <remarks/>
+        public System.Xml.XmlNode EndGetWebStructure(System.IAsyncResult asyncResult) {
+            object[] results = this.EndInvoke(asyncResult);
+            return ((System.Xml.XmlNode)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetWebStructureAsync(System.Guid webid) {
+            this.GetWebStructureAsync(webid, null);
+        }
+        
+        /// <remarks/>
+        public void GetWebStructureAsync(System.Guid webid, object userState) {
+            if ((this.GetWebStructureOperationCompleted == null)) {
+                this.GetWebStructureOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetWebStructureOperationCompleted);
+            }
+            this.InvokeAsync("GetWebStructure", new object[] {
+                        webid}, this.GetWebStructureOperationCompleted, userState);
+        }
+        
+        private void OnGetWebStructureOperationCompleted(object arg) {
+            if ((this.GetWebStructureCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetWebStructureCompleted(this, new GetWebStructureCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1739,6 +1785,32 @@ namespace Rapid.Tools.SPDeploy.AddIn.Proxies.AddIn {
         private object[] results;
         
         internal GetSiteStructureCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public System.Xml.XmlNode Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((System.Xml.XmlNode)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
+    public delegate void GetWebStructureCompletedEventHandler(object sender, GetWebStructureCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "2.0.50727.42")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetWebStructureCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetWebStructureCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
