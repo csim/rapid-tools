@@ -29,14 +29,27 @@
 
 	<!-- *********** CCNET Targets ********************** -->
 
-	<target name="ccnet-build" depends="ccnet-init, rebuild, compilewsp, ccnet-afterbuild, ccnet-publishbuild, ccnet-cleansource" />
+	<target name="ccnet-build" depends="init-ccnet-build, pre-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
 
-	<target name="ccnet-init">
+	<target name="init-ccnet-build">
+
+	</target>
+
+	<target name="pre-ccnet-build">
+
+		<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidWCM.config" />
+
+		<attrib readonly="false" file="${config.path}" />
+
+		<xmlpoke
+			file="${config.path}"
+			xpath="/configuration/appSettings/add[@key = 'Application.Version']/@value"
+			value="${ccnet.label}" />
 
 	</target>
 
 
-	<target name="ccnet-afterbuild">
+	<target name="post-ccnet-build">
 
 		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 

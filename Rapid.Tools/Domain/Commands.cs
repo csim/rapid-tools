@@ -39,8 +39,7 @@ namespace Rapid.Tools.Domain
 
 		public void PrintHeader()
 		{
-			Console.WriteLine("Rapid Tools v1.0 (c) Ascentium Corporation");
-			Console.WriteLine("For more information contact Clint Simon (clints@ascentium.com)");
+			Console.WriteLine("Rapid Tools v{0} (c) Ascentium Corporation", RapidConfig.ApplicationVersion);
 		}
 
 		public string PrintHelpMessage(string command)
