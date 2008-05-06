@@ -100,7 +100,7 @@ namespace Rapid.Tools.Domain
 			_manifest.Load(_manifestPath);
 			_manifestDirectory = Path.GetDirectoryName(_manifestPath);
 
-			WriteMessage("Rapid WCM v{0} (c) Ascentium Corporation", RapidConfig.ApplicationVersion);
+			WriteMessage("Rapid Tools v{0} (c) Ascentium Corporation", RapidConfig.ApplicationVersion);
 
 			XmlNodeList xproviders = Manifest.SelectNodes(string.Format("/{0}/Providers/Provider", ManifestRootNodeName));
 
