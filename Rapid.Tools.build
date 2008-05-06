@@ -11,6 +11,11 @@
 
 	<property name="configuration" value="Release" overwrite="false" />
 
+	<if test="${not property::exists('CCNetLabel')}">
+		<fail message="ccnet.label not defined" />
+	</if>
+	<property name="ccnet.label" value="${CCNetLabel}" />
+
 	<property name="gc.project.name" value="rapid-tools" />
 
 	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
@@ -29,11 +34,7 @@
 
 	<!-- *********** CCNET Targets ********************** -->
 
-	<target name="ccnet-build" depends="init-ccnet-build, pre-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
-
-	<target name="init-ccnet-build">
-
-	</target>
+	<target name="ccnet-build" depends="pre-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
 
 	<target name="pre-ccnet-build">
 
