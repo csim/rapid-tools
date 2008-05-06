@@ -38,7 +38,7 @@
 
 	<target name="pre-ccnet-build">
 
-		<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidWCM.config" />
+		<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidTools.config" />
 
 		<attrib readonly="false" file="${config.path}" />
 
