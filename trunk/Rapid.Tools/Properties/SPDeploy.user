@@ -14,11 +14,18 @@
 		<WebApplicationPort>101</WebApplicationPort>
 		<LocalDeployment>True</LocalDeployment>
 	</PropertyGroup>
-  <PropertyGroup Condition="'$(USERNAME)' == 'george.olson'">
-    <WspServerName>wa1devexpsps01</WspServerName>
-    <WebApplicationPort>80</WebApplicationPort>
-    <LocalDeployment>False</LocalDeployment>
-  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(USERNAME)' == 'clints1'">
+		<WspServerName>mtdoom</WspServerName>
+		<WebApplicationPort>81</WebApplicationPort>
+		<LocalDeployment>False</LocalDeployment>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(USERNAME)' == 'george.olson'">
+		<WspServerName>wa1devexpsps01</WspServerName>
+		<WebApplicationPort>80</WebApplicationPort>
+		<LocalDeployment>False</LocalDeployment>
+	</PropertyGroup>
 
 	<!-- ***** Global properties for all Developers ******************** -->
 
