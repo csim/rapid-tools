@@ -89,9 +89,14 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags
 			}
 		}
 
-		protected void Browse() 
+        protected void Browse()
+        {
+            Browse(string.Empty);
+        }
+
+		protected void Browse(string relativeUrl) 
 		{
-			AppManager.Current.OpenBrowser(string.Format("{0}{1}", SiteTag.Url, ServerRelativeUrl));
+			AppManager.Current.OpenBrowser(string.Format("{0}{1}{2}", SiteTag.Url, ServerRelativeUrl, relativeUrl));
 		}
 
 		public abstract void Focus();

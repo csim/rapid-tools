@@ -52,7 +52,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Wizard
         {
             if (!string.IsNullOrEmpty(_machineName))
             {
-                AppManager.Current.SetMachineInfo(txtMachineName.Text, (txtPort.Text == string.Empty) ? "80" : txtPort.Text);               
+                AppManager.Current.SetMachineInfo(txtMachineName.Text);               
             }
             else
             {

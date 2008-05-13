@@ -62,6 +62,7 @@
     <Compile Include="Domain\ProxyBridge.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Proxies\AddIn\AddInProxy.cs" />
     <Compile Include="UI\Controls\OpenMenu.cs" />
     <Compile Include="UI\Controls\DeploymentMenu.cs">
     </Compile>
@@ -84,7 +85,6 @@
     <Compile Include="ProjectFiles\ElementManifest\ManifestItems\WebPart.cs" />
     <Compile Include="ProjectFiles\FeatureManifest\FeatureManifest.cs" />
     <Compile Include="ProjectFiles\Utilities\ManifestUtility.cs" />
-    <Compile Include="Proxies\AddIn\AddInWebService.cs" />
     <Compile Include="Proxies\Lists\ListsWebService.cs" />
     <Compile Include="Proxies\SiteData\SiteDataWebService.cs" />
     <Compile Include="Proxies\Webs\WebsWebService.cs" />
@@ -142,13 +142,17 @@
     <Compile Include="UI\Forms\FeatureControl.Designer.cs">
       <DependentUpon>FeatureControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\FormControls\ValidationTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Validator.cs" />
     <Compile Include="UI\Forms\WebPartControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\Forms\WebPartControl.Designer.cs">
       <DependentUpon>WebPartControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\FormsController.cs" />
+    <Compile Include="UI\Forms\IRapidControl.cs" />
     <Compile Include="UI\Forms\OpenUrlForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,12 +170,6 @@
     </Compile>
     <Compile Include="UI\Forms\ListDefinitionDialog.Designer.cs">
       <DependentUpon>ListDefinitionDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\LoadingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\LoadingForm.Designer.cs">
-      <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ActivationDependencyControl.cs">
       <SubType>UserControl</SubType>
@@ -264,10 +262,13 @@
     <Content Include="Resources\Features\WebParts\HelloScript.js" />
     <Content Include="Resources\Features\WebParts\HelloWebService.asmx" />
     <Content Include="Resources\Features\WebParts\webpartdotwebpart.xml" />
+    <Content Include="Resources\Images\attention16by16.gif" />
     <Content Include="Resources\Images\buttonLess.png" />
     <Content Include="Resources\Images\buttonMore.png" />
     <Content Include="Resources\Images\ewr238l.gif" />
     <Content Include="Resources\Images\IMNAWAY.PNG" />
+    <Content Include="Resources\Images\imnidlebusy.png" />
+    <Content Include="Resources\Images\IMNUNK.PNG" />
     <Content Include="Resources\Images\Loading.bmp" />
     <Content Include="Resources\Images\rapidheader.png" />
     <Content Include="Resources\Images\recurrence.gif" />
@@ -474,10 +475,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\OpenUrlForm.resx">
       <DependentUpon>OpenUrlForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\LoadingForm.resx">
-      <DependentUpon>LoadingForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ActivationDependencyControl.resx">

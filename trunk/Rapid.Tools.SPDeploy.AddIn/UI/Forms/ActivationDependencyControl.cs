@@ -96,11 +96,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
 
 
         public bool FormIsValid()
-        {
-            Validator v = new Validator();
+        {          
             if (rbExternal.Checked)
             {
-                if (!v.IsValidGuid(txtFeatureId.Text) || txtFeatureId.Text.Length < 1)
+                if (!Validator.IsValidGuid(txtFeatureId.Text) || txtFeatureId.Text.Length < 1)
                     return false;
             }
 
@@ -128,9 +127,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         private void txtTitle_Validating(object sender, CancelEventArgs e)
         {
             if (rbExternal.Checked)
-            {
-                Validator v = new Validator();
-                if (!v.IsValidGuid(txtFeatureId.Text) || txtFeatureId.Text.Length < 1)
+            {                
+                if (!Validator.IsValidGuid(txtFeatureId.Text) || txtFeatureId.Text.Length < 1)
                 {
                     errorProvider1.SetError(txtFeatureId, "Please enter a valid guid.");
                     return;

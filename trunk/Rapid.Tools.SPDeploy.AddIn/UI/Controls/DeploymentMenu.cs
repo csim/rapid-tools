@@ -6,6 +6,7 @@ using System.Collections;
 using System.IO;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
 using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
+using System.Threading;
 
 namespace Rapid.Tools.SPDeploy.AddIn
 {
@@ -30,11 +31,22 @@ namespace Rapid.Tools.SPDeploy.AddIn
         private ToolStripMenuItem _upgradeSolutionItem;
         private ToolStripMenuItem _serverUrl;
 
-        public DeploymentMenu(ToolStripMenuItem menuItem, SPSiteNodeTag nodeTag, EventHandler ev)
+        private delegate void VoidDelegate();
+        private void InvokeIfRequired(VoidDelegate method)
         {
-            MachineChanged = ev;
+            if (_solutionItem.Owner.InvokeRequired)
+                _solutionItem.Owner.Invoke(method);
+            else
+                method();
+        }
 
-			_solutionItem = menuItem;
+        EventHandler serverClick;
+        
+        public DeploymentMenu(ToolStripMenuItem menuItem, string siteUrl, EventHandler handler)
+        {
+            serverClick = handler;
+            
+            _solutionItem = menuItem;
             _solutionItem.Image = Resources.Images.Files.IMNUNK;
             _addSolutionItem = new ToolStripMenuItem("Add Solution");
             _deploySolutionItem = new ToolStripMenuItem("Deploy Solution");
@@ -42,19 +54,44 @@ namespace Rapid.Tools.SPDeploy.AddIn
             _deleteSolutionItem = new ToolStripMenuItem("Delete Solution");
             _cycleSolutionItem = new ToolStripMenuItem("Cycle Solution");
             _upgradeSolutionItem = new ToolStripMenuItem("Upgrade Solution");
-			_serverUrl = new ToolStripMenuItem(nodeTag.Url);
+            _serverUrl = new ToolStripMenuItem(siteUrl);
+            _serverUrl.Click += serverClick;
 
-            _solutionItem.DropDownItems.Add(_serverUrl);
-            _solutionItem.DropDownItems.Add(new ToolStripSeparator());
-            _solutionItem.DropDownItems.Add(_retractSolutionItem);
-            _solutionItem.DropDownItems.Add(_deploySolutionItem);
-            _solutionItem.DropDownItems.Add(_deleteSolutionItem);
-            _solutionItem.DropDownItems.Add(_addSolutionItem);
-            _solutionItem.DropDownItems.Add(_cycleSolutionItem);
-            _solutionItem.DropDownItems.Add(_upgradeSolutionItem);
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_serverUrl);
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(new ToolStripSeparator());
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_retractSolutionItem);
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_deploySolutionItem);
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_deleteSolutionItem);
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_addSolutionItem);
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_cycleSolutionItem);
+            });
+            InvokeIfRequired(delegate()
+            {
+                _solutionItem.DropDownItems.Add(_upgradeSolutionItem);
+            });
 
             _serverUrl.Tag = "ServerButton";
-            _serverUrl.Click += ev;
+            //_serverUrl.Click += ev;
             _retractSolutionItem.Click += new EventHandler(retractSolutionItem_Click);
             _deploySolutionItem.Click += new EventHandler(deploySolutionItem_Click);
             _deleteSolutionItem.Click += new EventHandler(deleteSolutionItem_Click);
@@ -64,6 +101,8 @@ namespace Rapid.Tools.SPDeploy.AddIn
 
             hideMenuItems();
         }
+
+       
 
 
 
@@ -103,12 +142,13 @@ namespace Rapid.Tools.SPDeploy.AddIn
         public void SetNodeTag(string url)
         {
             _serverUrl.Text = url;
+            RefreshAsync();
         }
 
         public void PerformAction(Action action)
         {
-			try
-			{
+            try
+            {
                 RapidOutputWindow.Instance.Activate();
                 RapidOutputWindow.Instance.Clear();
 
@@ -116,7 +156,8 @@ namespace Rapid.Tools.SPDeploy.AddIn
                 string projectname = AppManager.Current.ActiveProject.Name;
                 string wspname = AppManager.Current.ActiveProject.Name + ".wsp";
 
-                ProxyBridge bridge = new ProxyBridge(_serverUrl.Text);
+                ProxyBridge bridge = AppManager.Current.ProxyBridge;
+
                 byte[] wspcontents;
 
                 switch (action)
@@ -182,11 +223,11 @@ namespace Rapid.Tools.SPDeploy.AddIn
                 AppManager.Current.WriteLine("Completed: " + DateTime.Now);
                 RefreshAsync();
 
-			}
-			catch (Exception ex)
-			{
-				ExceptionUtil.Handle(ex);
-			}
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtil.Handle(ex);
+            }
         }
 
         private byte[] GetWspContents()
@@ -195,7 +236,7 @@ namespace Rapid.Tools.SPDeploy.AddIn
             AppManager.Current.ExecuteMSBuild("CompileWsp");
 
             string projectname = AppManager.Current.ActiveProject.Name;
-            string projectpath = AppManager.Current.ActiveProjectPath.Directory.FullName;            
+            string projectpath = AppManager.Current.ActiveProjectPath.Directory.FullName;
             string wspname = AppManager.Current.ActiveProject.Name + ".wsp";
 
             // TODO: make this sensitive to the output directory based on configuration
@@ -234,7 +275,7 @@ namespace Rapid.Tools.SPDeploy.AddIn
             }
         }
 
-        private delegate void VoidDelegate();
+
 
         private void hideMenuItemsAsync()
         {
@@ -255,42 +296,53 @@ namespace Rapid.Tools.SPDeploy.AddIn
             }
             else
             {
-				RefreshMenuItems();
-			}
-		}
+                new VoidDelegate(RefreshMenuItems).BeginInvoke(null, null);
+            }
+        }
 
-		public void RefreshMenuItems()
-		{
+
+
+        public void RefreshMenuItems()
+        {
             try
             {
+
                 hideMenuItems();
-                _solutionItem.Image = Resources.Images.Files.IMNUNK;                
-                
+                _solutionItem.Image = Resources.Images.Files.IMNUNK;
+
                 Proxies.AddIn.Solution solution = null;
-                
-                ProxyBridge pb = new ProxyBridge(_serverUrl.Text);
-                
+
+                ProxyBridge pb = AppManager.Current.ProxyBridge;
+
                 Proxies.AddIn.Solution[] solutions = pb.AddInService.GetSolutions();
+
+                string wp = AppManager.Current.ActiveProject.Name + ".wsp";
 
                 solution = Array.Find<Proxies.AddIn.Solution>(solutions, delegate(Proxies.AddIn.Solution sol)
                         {
-                            return string.Compare(sol.Name, AppManager.Current.ActiveProject.Name + ".wsp", true) == 0;
+                            return string.Compare(sol.Name, wp, true) == 0;
                         });
 
                 if (solution != null)
                 {
                     if (solution.Deployed)
                     {
-                        _upgradeSolutionItem.Visible =
-                        _cycleSolutionItem.Visible =
-                        _retractSolutionItem.Visible = true;
-                        _solutionItem.Image = Resources.Images.Files.IMNON;
+                        InvokeIfRequired(delegate()
+                        {
+                            _upgradeSolutionItem.Visible =
+                            _cycleSolutionItem.Visible =
+                            _retractSolutionItem.Visible = true;
+                            _solutionItem.Image = Resources.Images.Files.IMNON;
+                        });
                     }
                     else
                     {
-                        _deploySolutionItem.Visible =
-                        _deleteSolutionItem.Visible = true;
-                        _solutionItem.Image = Resources.Images.Files.IMNAWAY;
+                        InvokeIfRequired(delegate()
+                        {
+                            _deploySolutionItem.Visible =
+                            _deleteSolutionItem.Visible = true;
+                            _solutionItem.Image = Resources.Images.Files.IMNAWAY;
+                        });
                     }
                 }
                 else
@@ -298,13 +350,12 @@ namespace Rapid.Tools.SPDeploy.AddIn
                     _addSolutionItem.Visible = true;
                     _solutionItem.Image = Resources.Images.Files.IMNBUSY;
                 }
+
             }
             catch (Exception ex)
             {
                 ExceptionUtil.Handle(ex);
             }
-
         }
-
     }
 }

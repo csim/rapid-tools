@@ -12,6 +12,8 @@ using System.Net;
 
 using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
 using Rapid.Tools.SPDeploy.AddIn.ProjectFiles.FeatureManifest;
+using System.Collections;
+using Rapid.Tools.SPDeploy.AddIn.UI.Controls;
 
 namespace Rapid.Tools.SPDeploy.AddIn.Domain
 {
@@ -39,24 +41,62 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             set { _current = value; }
         }
 
-
-        private Project _activeProject;
-        private SPEnvironmentInfo _activeEnvironment = null;
-
-     
-
-
+        private Project previousProject = null;
 
         public Project ActiveProject
         {
             get
             {
-                if (_activeProject == null)
-                    _activeProject = Application.ActiveDocument.ProjectItem.ContainingProject;
-
-                return _activeProject;
+                if (Application.ActiveDocument == null && !(Application.Solution != null && Application.Solution.Projects.Count > 0))
+                {
+                    ResetActiveProject();
+                    return null;
+                }
+                else
+                {
+                    return CheckProject();
+                }
             }
         }
+
+        private Project CheckProject()
+        {
+            Project p;
+            if (Application.ActiveDocument != null)
+                p = Application.ActiveDocument.ProjectItem.ContainingProject;
+            else
+                p = Application.Solution.Projects.Item(1);
+
+            if (previousProject == null || p.FullName != previousProject.FullName)
+            {
+                ResetActiveProject();
+                _proxyBridge = new ProxyBridge(SPEnvironmentInfo.Parse(p).WebApplicationUrl);
+                previousProject = p;
+            }
+            return p;
+        }
+
+        private ProxyBridge _proxyBridge;
+
+        public ProxyBridge ProxyBridge
+        {
+            get
+            {
+                if (_proxyBridge == null)
+                {
+                    lock (this)
+                    {
+                        if (_proxyBridge == null)
+                        {
+                            _proxyBridge = new ProxyBridge(SPEnvironmentInfo.Parse(ActiveProject).WebApplicationUrl);
+                        }
+                    }
+                }
+                return _proxyBridge;
+            }
+            set { _proxyBridge = value; }
+        }
+
 
         public FileInfo ActiveProjectPath
         {
@@ -66,8 +106,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
         public void ResetActiveProject()
         {
-            _activeProject = null;
-            _activeEnvironment = null;
+            _proxyBridge = null;
+            previousProject = null;
         }
 
 
@@ -98,15 +138,21 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
             ApplicationObject.ItemOperations.OpenFile(item, Constants.vsViewKindTextView);
         }
 
-        public List<string> GetActivatedFeatures(string web)
+        public List<string> GetActivatedFeatures(Guid guid)
         {
-            ProxyBridge pb = new ProxyBridge(web);
-            string result = pb.WebsService.GetActivatedFeatures();
-            if (string.IsNullOrEmpty(result))
-                return null;
-
-            return new List<string>(result.ToLower().Split(','));            
+            ProxyBridge pb = new ProxyBridge(SPEnvironmentInfo.Parse(ActiveProject).WebApplicationUrl);
+            return new List<string>(Array.ConvertAll<Guid, string>(pb.AddInService.GetWebFeatures(guid), new Converter<Guid, string>(delegate(Guid g)
+            {
+                return g.ToString();
+            })));
         }
+
+        public List<Guid> GetActivatedSiteFeatures()
+        {
+            ProxyBridge pb = new ProxyBridge(SPEnvironmentInfo.Parse(ActiveProject).WebApplicationUrl);
+            return new List<Guid>(pb.AddInService.GetActivatedSiteFeatures());
+        }
+
 
         public void Execute(string filepath)
         {
@@ -141,8 +187,10 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
         }
 
-        internal void SetMachineInfo(string machineName, string port)
+        internal void SetMachineInfo(string baseUrl)
         {
+            ProxyBridge pb = new ProxyBridge(baseUrl);
+             
             string path = ActiveProject.FullName;
             path = path.Remove(path.LastIndexOf("\\"));
 
@@ -158,8 +206,25 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
                 if (no.Attributes["Condition"] != null && no.Attributes["Condition"].Value == string.Format("$(USERNAME) == '{0}'", WindowsIdentity.GetCurrent().Name.Split("\\".ToCharArray())[1]))
                     node = no;
             }
-            node.ChildNodes[0].InnerText = machineName;
-            node.ChildNodes[1].InnerText = "http://$(WspServerName):" + port;
+
+
+            XmlNode serverNode = node.SelectSingleNode("n:WspServerName", nm);
+            XmlNode urlNode = node.SelectSingleNode("n:WebApplicationUrl", nm);
+
+            if (serverNode == null)
+            {
+                serverNode = doc.CreateElement("WspServerName");
+                node.AppendChild(serverNode);
+            }
+            if (urlNode == null)
+            {
+                urlNode = doc.CreateElement("WebApplicationUrl");
+                node.AppendChild(urlNode);
+            }          
+
+            serverNode.InnerText = pb.AddInService.GetServerName();          
+            urlNode.InnerText = baseUrl;
+
 
             doc.Save(path + "\\Properties\\SPDeploy.user");
         }
@@ -198,20 +263,20 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
 
                 string line = string.Empty;
 
-				do
-				{
-					line = p.StandardOutput.ReadLine();
-					if (!string.IsNullOrEmpty(line))
-					{
-						RapidOutputWindow.Instance.Write(line + "\r\n");
-					}
-				} while (!p.StandardOutput.EndOfStream);
-			}
-			catch (Exception ex)
-			{
-				ExceptionUtil.Handle(ex);
-			}
-		}
+                do
+                {
+                    line = p.StandardOutput.ReadLine();
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        RapidOutputWindow.Instance.Write(line + "\r\n");
+                    }
+                } while (!p.StandardOutput.EndOfStream);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtil.Handle(ex);
+            }
+        }
 
 
         public string GetRootNamespace()
@@ -318,10 +383,15 @@ namespace Rapid.Tools.SPDeploy.AddIn.Domain
         }
 
 
+        public Hashtable CommandHash = new Hashtable();
 
+        private List<string> _currentUrls = new List<string>();
 
-
-
+        public List<string> CurrentUrls
+        {
+            get { return _currentUrls; }
+            set { _currentUrls = value; }
+        }
 
     }
 
