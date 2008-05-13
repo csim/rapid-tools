@@ -67,6 +67,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
             }
         }
         
+        internal static System.Drawing.Bitmap attention16by16 {
+            get {
+                object obj = ResourceManager.GetObject("attention16by16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap BLANK {
             get {
                 object obj = ResourceManager.GetObject("BLANK", resourceCulture);
@@ -168,6 +175,13 @@ namespace Rapid.Tools.SPDeploy.AddIn.Resources.Images {
         internal static System.Drawing.Bitmap IMNBUSY {
             get {
                 object obj = ResourceManager.GetObject("IMNBUSY", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap imnidlebusy {
+            get {
+                object obj = ResourceManager.GetObject("imnidlebusy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

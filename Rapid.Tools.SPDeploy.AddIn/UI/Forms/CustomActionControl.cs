@@ -63,7 +63,7 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
             c.Description = txtDescription.Text;
             c.GroupId = txtGroup.Text;
             c.UrlAction = txtUrl.Text;
-            c.Location = ddlLocation.SelectedText;
+            c.Location = ddlLocation.SelectedItem.ToString();
             c.Sequence = Convert.ToInt32(txtSequence.Text);
             c.ImageUrl = txtImageUrl.Text;
 
@@ -131,9 +131,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         }
 
         private void txtUrl_Validating(object sender, CancelEventArgs e)
-        {
-            Validator v = new Validator();
-            if (txtUrl.Text.Length > 0 && !v.isValidUrl(txtUrl.Text))
+        {           
+            if (txtUrl.Text.Length > 0 && !Validator.isValidUrl(txtUrl.Text))
             {
                 errorProvider1.SetError(txtUrl, "Please enter a valid url.");
                 e.Cancel = true;
@@ -143,9 +142,8 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Forms
         }
 
         private void txtImageUrl_Validating(object sender, CancelEventArgs e)
-        {
-            Validator v = new Validator();
-            if (txtImageUrl.Text.Length > 0 && !v.isValidUrl(txtImageUrl.Text))
+        {           
+            if (txtImageUrl.Text.Length > 0 && !Validator.isValidUrl(txtImageUrl.Text))
             {
                 errorProvider1.SetError(txtImageUrl, "Please enter a valid url.");
                 e.Cancel = true;

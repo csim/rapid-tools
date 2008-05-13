@@ -8,6 +8,7 @@ using Microsoft.Win32;
 using EnvDTE80;
 using System.Xml;
 using System.Security.Principal;
+using Rapid.Tools.SPDeploy.AddIn.UI.Controls;
 
 
 namespace Rapid.Tools.SPDeploy.AddIn.UI.Wizard
@@ -22,10 +23,9 @@ namespace Rapid.Tools.SPDeploy.AddIn.UI.Wizard
         }
 
         void IWizard.ProjectFinishedGenerating(Project project)
-        {   
-            CreationForm _creationForm = new CreationForm();
-            _creationForm.CurrentProject = project;
-            _creationForm.ShowDialog(); 
+        {
+            OpenUrlForm form = new OpenUrlForm();
+            form.ShowDialog();
         }
 
         void IWizard.ProjectItemFinishedGenerating(ProjectItem projectItem)

@@ -6,6 +6,7 @@ using System.Collections;
 using System.IO;
 using Rapid.Tools.SPDeploy.AddIn.Domain;
 using Rapid.Tools.SPDeploy.AddIn.Domain.NodeTags;
+using EnvDTE;
 
 namespace Rapid.Tools.SPDeploy.AddIn
 {
@@ -29,12 +30,29 @@ namespace Rapid.Tools.SPDeploy.AddIn
 			_menu = menuItem;
 			_openMenuItem = new ToolStripMenuItem("Open Other ...");
 
+            if (AppManager.Current.ActiveProject != null)
+            {
+                foreach (Project p in AppManager.Current.Application.Solution.Projects)
+                {
+                    try
+                    {
+                        ToolStripMenuItem mi = new ToolStripMenuItem(SPEnvironmentInfo.Parse(p).WebApplicationUrl);
+                        mi.Tag = "Url";
+                        mi.Click += parentClick;
+                        _menu.DropDown.Items.Add(mi);
+                    }
+                    catch { }
+                }
+            }
+
+
 			_menu.DropDownItems.Add(new ToolStripSeparator());
 			_menu.DropDownItems.Add(_openMenuItem);
 
 			_openMenuItem.Tag = "Open";
 			_openMenuItem.Click += parentClick;
 
+            
         }
 
     }
