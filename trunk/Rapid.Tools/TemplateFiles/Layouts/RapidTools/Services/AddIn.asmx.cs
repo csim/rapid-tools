@@ -55,6 +55,31 @@ namespace Rapid.Tools.Layouts.Services
 			return sols;
 		}
 
+        [WebMethod]
+        public List<Guid> GetActivatedSiteFeatures()
+        {
+            List<Guid> activatedFeatures = new List<Guid>();
+            SPSite site = SPContext.Current.Site;
+            foreach (SPFeature f in site.Features)
+            {
+                try
+                {
+                    if (f.Definition.Scope == SPFeatureScope.Site)
+                        activatedFeatures.Add(f.DefinitionId);
+                }
+                catch { }
+            }
+            foreach (SPFeature f in site.RootWeb.Features)
+            {
+                try
+                {
+                    if (f.Definition.Scope == SPFeatureScope.Web)
+                        activatedFeatures.Add(f.DefinitionId);
+                }
+                catch { }
+            }
+            return activatedFeatures;
+        }
 
 		[WebMethod]
 		public string AddSolution(string wspName, byte[] wspcontents)
@@ -91,6 +116,40 @@ namespace Rapid.Tools.Layouts.Services
 				return SPExceptionUtil.Format(ex);
 			}
 		}
+
+        [WebMethod]
+        public string AddSiteFeature(Guid featureId)
+        {
+            try
+            {
+                if (SPFarm.Local.FeatureDefinitions[featureId].Scope == SPFeatureScope.Site)
+                    SPContext.Current.Site.Features.Add(featureId);
+                else
+                    SPContext.Current.Site.RootWeb.Features.Add(featureId);
+                return "Feature added successfully.";                
+            }
+            catch (Exception ex)
+            {
+                return SPExceptionUtil.Format(ex);
+            }
+        }
+
+        [WebMethod]
+        public string RemoveSiteFeature(Guid featureId)
+        {
+            try
+            {
+                if (SPFarm.Local.FeatureDefinitions[featureId].Scope == SPFeatureScope.Site)
+                    SPContext.Current.Site.Features.Remove(featureId);
+                else
+                    SPContext.Current.Site.RootWeb.Features.Remove(featureId);
+                return "Feature added removed.";
+            }
+            catch (Exception ex)
+            {
+                return SPExceptionUtil.Format(ex);
+            }
+        }
 
 		[WebMethod]
 		public string UpgradeSolution(string wspName, byte[] wspcontents)
@@ -160,7 +219,7 @@ namespace Rapid.Tools.Layouts.Services
 				using (_structureWriter = new XmlTextWriter(ms, Encoding.UTF8))
 				{
 
-					AddSiteNode(site, 100);
+					AddSiteNode(site, 1);
 
 					_structureWriter.Flush();
 					ms.Position = 0;
@@ -193,7 +252,7 @@ namespace Rapid.Tools.Layouts.Services
 
 					using (SPWeb web = site.AllWebs[webid])
 					{
-						AddWebNode(web, 0, 100);
+						AddWebNode(web, 0, 1);
 					}
 
 					_structureWriter.Flush();
@@ -388,6 +447,22 @@ namespace Rapid.Tools.Layouts.Services
             {
 				return SPExceptionUtil.Format(ex);
             }
+        }
+
+
+        [WebMethod]
+        public Guid[] GetWebFeatures(Guid webGuid)
+        {
+            List<Guid> featureIds = new List<Guid>();
+            SPSite site = SPContext.Current.Site;
+            using (SPWeb web = site.AllWebs[webGuid])
+            {
+                foreach (SPFeature f in web.Features)
+                {
+                    featureIds.Add(f.DefinitionId);
+                }
+            }
+            return featureIds.ToArray();
         }
 
         [WebMethod]
@@ -748,12 +823,37 @@ namespace Rapid.Tools.Layouts.Services
 			solution.Delete();
 		}
 
+        [WebMethod]
+        public string GetServerName()
+        {
+            return Context.Server.MachineName;
+        }
+
 		private void AddSiteNode(SPSite site, int maxdepth)
 		{
 			_structureWriter.WriteStartDocument();
 			_structureWriter.WriteStartElement("Site");
 			_structureWriter.WriteAttributeString("ID", site.ID.ToString());
 			_structureWriter.WriteAttributeString("Url", site.Url);
+
+            foreach (SPFeature feat in site.Features)
+            {
+                try
+                {
+                    if (feat.Definition.Scope == SPFeatureScope.Site)
+                        _structureWriter.WriteElementString("Feature", feat.DefinitionId.ToString());
+                }
+                catch { }
+            }
+            foreach (SPFeature feat in site.RootWeb.Features)
+            {
+                try
+                {
+                    if (feat.Definition.Scope == SPFeatureScope.Web)
+                        _structureWriter.WriteElementString("Feature", feat.DefinitionId.ToString());
+                }
+                catch { }
+            }
 
 			AddWebNode(site.RootWeb, 0, maxdepth);
 
@@ -769,11 +869,19 @@ namespace Rapid.Tools.Layouts.Services
 			_structureWriter.WriteAttributeString("Title", web.Title);
 			_structureWriter.WriteAttributeString("ServerRelativeUrl", web.ServerRelativeUrl);
 
+           
+
 			//PublishingWeb.IsPublishingWeb(web)
 			// TODO: change to MOSS publishing web feature
 			bool ispubweb = SPFeatureUtil.FeatureActivated(web, Guid.Empty);
 
 			_structureWriter.WriteAttributeString("Publishing", ispubweb.ToString());
+
+            foreach (SPFeature feat in web.Features)
+            {
+                _structureWriter.WriteElementString("Feature", feat.DefinitionId.ToString());
+            }
+
 
 			if (currentdepth < maxdepth)
 			{
