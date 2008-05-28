@@ -51,7 +51,9 @@ namespace Rapid.Tools.Domain.Utilities
 
 			if (string.IsNullOrEmpty(serverRelativeUrl)) return null;
 
-			using (SPSite fsite = new SPSite(string.Format("{0}{1}", site.Url, serverRelativeUrl)))
+			string url = string.Format("{0}{1}", site.Url, serverRelativeUrl);
+			
+			using (SPSite fsite = new SPSite(url))
 			{
 				using (SPWeb fweb = fsite.OpenWeb())
 				{
