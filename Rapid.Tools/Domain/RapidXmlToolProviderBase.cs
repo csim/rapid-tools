@@ -34,7 +34,7 @@ namespace Rapid.Tools.Domain
 		protected string GetAttribute(XmlElement element, string attributeName, string defaultValue)
 		{
 			string val = element.GetAttribute(attributeName);
-			if (string.IsNullOrEmpty(val)) return null;
+			if (string.IsNullOrEmpty(val)) return defaultValue;
 
 			return val;
 		}

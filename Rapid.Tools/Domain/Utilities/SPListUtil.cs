@@ -30,6 +30,30 @@ namespace Rapid.Tools.Domain.Utilities
 			}
 		}
 
+		public static SPList GetList(SPSite site, string serverRelativeUrl)
+		{
+
+			if (string.IsNullOrEmpty(serverRelativeUrl)) return null;
+
+			string url = string.Format("{0}{1}", site.Url, serverRelativeUrl);
+
+			using (SPSite fsite = new SPSite(url))
+			{
+				using (SPWeb fweb = fsite.OpenWeb())
+				{
+					try
+					{
+						return fweb.GetList(serverRelativeUrl);
+					}
+					catch (FileNotFoundException)
+					{
+						return null;
+					}
+				}
+			}
+
+		}
+
 		public static SPList GetList(SPWeb web, string webRelativeUrl)
 		{
 			string surl = SPFileUtil.GetServerRelativeUrl(web, webRelativeUrl);
