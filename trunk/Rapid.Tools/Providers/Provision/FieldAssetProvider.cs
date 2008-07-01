@@ -56,7 +56,7 @@ namespace Rapid.Tools.Providers.Provision
 				Manager.WriteMessage("Set {0}", name);
 			}
 
-			if (update) item.Update();
+			//if (update) item.Update();
 
 		}
 

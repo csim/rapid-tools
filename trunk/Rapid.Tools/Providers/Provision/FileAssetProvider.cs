@@ -36,7 +36,7 @@ namespace Rapid.Tools.Providers.Provision
 			bool approve = GetAttributeBoolean(contextElement, "Approve", true);
 
 			string apath = Manager.GetFilePath(path);
-			string filename = Path.GetFileName(apath);
+			string filename = Path.GetFileName(url);
 
 			if (!File.Exists(apath))
 			{

@@ -101,16 +101,16 @@ namespace Rapid.Tools.Domain.Utilities
 		}
 
 
-		public static T GetFieldValue<T>(SPListItem item, string fieldname)
+		public static T GetFieldValue<T>(SPListItem item, Guid fieldID)
 		{
-			return GetFieldValue(item, fieldname, default(T));
+			return GetFieldValue(item, fieldID, default(T));
 		}
 
-		public static T GetFieldValue<T>(SPListItem item, string fieldname, T defaultValue)
+		public static T GetFieldValue<T>(SPListItem item, Guid fieldID, T defaultValue)
 		{
 			try
 			{
-				return (T)item[fieldname];
+				return (T)item[fieldID];
 			}
 			catch { }
 
