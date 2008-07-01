@@ -110,7 +110,24 @@ namespace Rapid.Tools.Domain.Utilities
 		{
 			try
 			{
-				return (T)item[fieldID];
+				return (T)GetFieldValue(item, fieldID);
+			}
+			catch { }
+
+			return defaultValue;
+		}
+
+
+		public static T GetFieldValue<T>(SPListItem item, string fieldName)
+		{
+			return GetFieldValue(item, fieldName, default(T));
+		}
+
+		public static T GetFieldValue<T>(SPListItem item, string fieldName, T defaultValue)
+		{
+			try
+			{
+				return (T)GetFieldValue(item, fieldName);
 			}
 			catch { }
 
