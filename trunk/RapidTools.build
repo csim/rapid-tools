@@ -56,17 +56,17 @@
 		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 
 		<if test="${directory::exists(output.dir)}">
-			<copy todir="${zip.dir}">
+			<copy todir="${zip.dir}" flatten="true">
 				<fileset>
 					<include name="${output.dir}\${project.name}*" />
 					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
 				</fileset>
 			</copy>
 
-			<copy todir="${zip.dir}\SPDeploy-Manual-Install">
-				<fileset basedir="${nant.dir}\${project.name}.SPDeploy">
-					<include name="Bin\*.zip" />
-					<include name="MSBuild\*" />
+			<copy todir="${zip.dir}\SPDeploy-Manual-Install" flatten="true">
+				<fileset basedir="${project.name}.SPDeploy">
+					<include name="Bin\${configuration}\*.zip" />
+					<include name="MSBuild\*.*" />
 				</fileset>
 			</copy>
 
@@ -77,9 +77,9 @@
 			</zip>
 		</if>
 
-		<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}"
+		<!--<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}"
 			targetfilename="${gc.filename}" filename="${zip.path}"
-			summary="${gc.project.name} ${version} binaries" />
+			summary="${gc.project.name} ${version} binaries" />-->
 
 	</target>
 
