@@ -47,8 +47,12 @@
 		<attrib readonly="false" file="${spdeploy.targets.path}" />
 		<xmlpoke
 			file="${spdeploy.targets.path}"
-			xpath="//PropertyGroup/SPDeployVersion"
-			value="${ccnet.label}" />
+			xpath="//msb:PropertyGroup/msb:SPDeployVersion"
+			value="${ccnet.label}">
+			<namespaces>
+				<namespace prefix="msb" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
+			</namespaces>
+		</xmlpoke>
 
 	</target>
 
