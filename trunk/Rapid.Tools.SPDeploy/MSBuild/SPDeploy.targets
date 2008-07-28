@@ -421,6 +421,10 @@
 
 	<Target Name="SPDeployInit">
 
+		<Message Text="SPDeploy v$(SPDeployVersion)" />
+		<Message Text="Ascentium Corporation (GNU General Public License v3)" />
+		<Message Text="Clint Simon (clints@ascentium.com)" />
+		
 		<Error Text="User environment settings could not be found at $(UserSettingsPath)" Condition="!Exists('$(UserSettingsPath)')" />
 
 	</Target>

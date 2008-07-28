@@ -46,8 +46,8 @@
 		<property name="spdeploy.targets.path" value="${source.dir}\Rapid.Tools.SPDeploy\MSBuild\SPDeploy.targets" />
 		<attrib readonly="false" file="${spdeploy.targets.path}" />
 		<xmlpoke
-			file="${config.path}"
-			xpath="/configuration/appSettings/add[@key = 'Application.Version']/@value"
+			file="${spdeploy.targets.path}"
+			xpath="/PropertyGroup/SPDeployVersion"
 			value="${ccnet.label}" />
 
 	</target>
@@ -68,6 +68,7 @@
 			<copy todir="${zip.dir}\SPDeploy-ManualInstall" flatten="true">
 				<fileset basedir="${project.name}.SPDeploy">
 					<include name="bin\${configuration}\SPDeploy\*.*" />
+					<include name="bin\*.zip" />
 				</fileset>
 			</copy>
 
