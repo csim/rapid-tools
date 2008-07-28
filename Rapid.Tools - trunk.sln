@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy", "tru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{59D30ED9-BF80-47F7-B000-2C7F23AD33D9}"
 	ProjectSection(SolutionItems) = preProject
-		trunk\Rapid.Tools.build = trunk\Rapid.Tools.build
+		trunk\RapidTools.build = trunk\RapidTools.build
 	EndProjectSection
 EndProject
 Global
