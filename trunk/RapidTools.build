@@ -47,7 +47,7 @@
 		<attrib readonly="false" file="${spdeploy.targets.path}" />
 		<xmlpoke
 			file="${spdeploy.targets.path}"
-			xpath="/PropertyGroup/SPDeployVersion"
+			xpath="//PropertyGroup/SPDeployVersion"
 			value="${ccnet.label}" />
 
 	</target>
@@ -68,7 +68,7 @@
 			<copy todir="${zip.dir}\SPDeploy-ManualInstall" flatten="true">
 				<fileset basedir="${project.name}.SPDeploy">
 					<include name="bin\${configuration}\SPDeploy\*.*" />
-					<include name="bin\*.zip" />
+					<include name="bin\${configuration}\*.zip" />
 				</fileset>
 			</copy>
 
