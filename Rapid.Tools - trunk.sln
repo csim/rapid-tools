@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_references", "_references", "{B747F8AA-C8A4-46ED-A143-FE3688453DE8}"
+	ProjectSection(SolutionItems) = preProject
+		_references\Microsoft.SharePoint.dll = _references\Microsoft.SharePoint.dll
+		_references\Microsoft.SharePoint.Security.dll = _references\Microsoft.SharePoint.Security.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{7B94E6F2-0EC6-43BA-B168-12A693930DB3}"
+	ProjectSection(SolutionItems) = preProject
+		Rapid.Tools.build = Rapid.Tools.build
+		_etc\RapidTools-Install.cmd = _etc\RapidTools-Install.cmd
+		_etc\RapidTools-Uninstall.cmd = _etc\RapidTools-Uninstall.cmd
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools", "trunk\Rapid.Tools\Rapid.Tools.csproj", "{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy", "trunk\Rapid.Tools.SPDeploy\Rapid.Tools.SPDeploy.csproj", "{F768713D-86A1-4557-ABFC-F843E615C7CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F768713D-86A1-4557-ABFC-F843E615C7CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F768713D-86A1-4557-ABFC-F843E615C7CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F768713D-86A1-4557-ABFC-F843E615C7CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F768713D-86A1-4557-ABFC-F843E615C7CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
