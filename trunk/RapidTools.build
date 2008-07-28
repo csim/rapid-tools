@@ -60,7 +60,7 @@
 				</fileset>
 			</copy>
 
-			<copy todir="${zip.dir}\SPDeploy-Manual-Install" flatten="true">
+			<copy todir="${zip.dir}\SPDeploy-ManualInstall" flatten="true">
 				<fileset basedir="${project.name}.SPDeploy">
 					<include name="Bin\${configuration}\*.zip" />
 					<include name="MSBuild\*.*" />
