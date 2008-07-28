@@ -5,7 +5,7 @@
 <?define Property_UpgradeCode = "6BE372E2-8288-4af6-8416-0D44EB949D77" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="Rapid Tools :: SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation">
+	<Product Id="$(var.Property_ProductCode)" UpgradeCode="$(var.Property_UpgradeCode)" Name="Rapid Tools :: SPDeploy" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Ascentium Corporation (GNU General Public License v3)">
 		<Package InstallerVersion="200" Compressed="yes"/>
 
 		<Upgrade Id="$(var.Property_UpgradeCode)">
@@ -80,11 +80,11 @@
 			<ComponentRef Id="SPDeploy_csharp.zip_VS" />
 			<ComponentRef Id="SPDeploy_MSBuild"/>
 			<ComponentRef Id="SPDeploy_Registry_SafeImports"/>
-			<Feature Id='Rapid.Tools.SPDeploy.AddIn' Title='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Description='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Level='1'>
+			<!--<Feature Id='Rapid.Tools.SPDeploy.AddIn' Title='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Description='Rapid Tools SPDeploy Visual Studio 2005 AddIn' Level='1'>
 				<ComponentRef Id='Rapid.Tools.SPDeploy.AddIn' />
 				<ComponentRef Id='Rapid.Tools.SPDeploy.AddIn.dll' />
-				<!--<ComponentRef Id='Rapid.Tools.SPDeploy.AddInGac' />-->
-			</Feature>
+				--><!--<ComponentRef Id='Rapid.Tools.SPDeploy.AddInGac' />--><!--
+			</Feature>-->
 		</Feature>
 
 		<!-- The InstallExecuteSequence table describes the order that actions will be executed during       -->
@@ -97,9 +97,9 @@
 			<LaunchConditions After="AppSearch"/>
 
 			<!-- This custom action checks to make sure that at least one of the following conditions is met:             -->
-			<!--   1. Visual Studio 2005 is installed and the Visual Basic and/or Visual C# language tools are installed  -->
-			<!--   2. Visual Basic 2005 Express Edition is installed                                                      -->
-			<!--   3. Visual C# 2005 Express Edition is installed                                                         -->
+			<!--   1. Visual Studio 2005/2008 is installed and the Visual Basic and/or Visual C# language tools are installed  -->
+			<!--   2. Visual Basic 2005/2008 Express Edition is installed                                                      -->
+			<!--   3. Visual C# 2005/2008 Express Edition is installed                                                         -->
 			<Custom Action="CA_ErrVisualStudio2005NotInstalled" Before="CostInitialize">
 				<![CDATA[(NOT (VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED) AND NOT Installed)]]>
 			</Custom>
@@ -109,6 +109,16 @@
 			<Custom Action="CA_Devenv_Setup_VS_Uninstall" Before="CA_Devenv_Setup_VS_Install">
 				<![CDATA[VS2005_IDE_INSTALLED AND REMOVE]]>
 			</Custom>
+
+			<Custom Action="CA_ErrVisualStudio2008NotInstalled" Before="CostInitialize">
+				<![CDATA[(NOT (VS2008_INSTALLED AND VS2008_IDE_INSTALLED AND VS2008_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED) AND NOT Installed)]]>
+			</Custom>
+			<Custom Action="CA_Devenv_Setup_VS_Install" Before="InstallFinalize">
+				<![CDATA[VS2008_IDE_INSTALLED AND NOT REMOVE]]>
+			</Custom>
+			<Custom Action="CA_Devenv_Setup_VS_Uninstall" Before="CA_Devenv_Setup_VS_Install">
+				<![CDATA[VS2008_IDE_INSTALLED AND REMOVE]]>
+			</Custom>
 		</InstallExecuteSequence>
 
 		<InstallUISequence>
@@ -117,6 +127,9 @@
 			</Custom>
 			<Custom Action="CA_ErrVisualStudio2005NotInstalled" Before="CostInitialize">
 				<![CDATA[(NOT (VS2005_INSTALLED AND VS2005_IDE_INSTALLED AND VS2005_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED) AND NOT Installed)]]>
+			</Custom>
+			<Custom Action="CA_ErrVisualStudio2008NotInstalled" Before="CostInitialize">
+				<![CDATA[(NOT (VS2008_INSTALLED AND VS2008_IDE_INSTALLED AND VS2008_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED) AND NOT Installed)]]>
 			</Custom>
 		</InstallUISequence>
 
@@ -142,16 +155,32 @@
 
 
 		<!-- VS 2008 Properties -->
-		<!--<Property Id="VS2008_ROOT_FOLDER" Secure="yes">
+		<Property Id="VS2008_ROOT_FOLDER" Secure="yes">
 			<RegistrySearch Id="SearchForVS2008RootPath" Root="HKLM" Key="Software\Microsoft\VisualStudio\SxS\VS7" Name="9.0" Type="raw" />
-		</Property>-->
+		</Property>
+
+		<Property Id="VS2008_INSTALLED" Secure="yes">
+			<ComponentSearch Id="SearchForVsVertIntComponent2008" Guid="03F59C6A-202C-4403-9987-349896B7BC84" Type="file" />
+		</Property>
+
+		<Property Id="VS2008_IDE_INSTALLED" Secure="yes">
+			<ComponentSearch Id="SearchForVsIde2008Component" Guid="29885AD2-50C6-492A-BF3E-E3F1E3884DFC" Type="file">
+				<FileSearch Id="VsIde2008" Name="devenv.exe"/>
+			</ComponentSearch>
+		</Property>
+
+		<Property Id="VS2008_IDE_VCSHARP_PROJECTSYSTEM_INSTALLED" Secure="yes">
+			<RegistrySearch Id="SearchForVCSProjectSystemUnderVSSetup" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\9.0\Projects\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}" Name="DefaultProjectExtension" Type="raw" />
+		</Property>
+
+
 
 
 		<UIRef Id="WixUI_Minimal"/>
 
 		<UI>
-			<ProgressText Action="CA_Devenv_Setup_VS_Install" Template="[1]"><![CDATA[Registering with Visual Studio 2005]]></ProgressText>
-			<ProgressText Action="CA_Devenv_Setup_VS_Uninstall" Template="[1]"><![CDATA[Removing from Visual Studio 2005]]></ProgressText>
+			<ProgressText Action="CA_Devenv_Setup_VS_Install" Template="[1]"><![CDATA[Registering with Visual Studio 2005/2008]]></ProgressText>
+			<ProgressText Action="CA_Devenv_Setup_VS_Uninstall" Template="[1]"><![CDATA[Removing from Visual Studio 2005/2008]]></ProgressText>
 		</UI>
 
 		<!--
