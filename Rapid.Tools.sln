@@ -1,21 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_references", "_references", "{B747F8AA-C8A4-46ED-A143-FE3688453DE8}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		_references\Microsoft.SharePoint.dll = _references\Microsoft.SharePoint.dll
 		_references\Microsoft.SharePoint.Security.dll = _references\Microsoft.SharePoint.Security.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{7B94E6F2-0EC6-43BA-B168-12A693930DB3}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Rapid.Tools.build = Rapid.Tools.build
 		_etc\RapidTools-Install.cmd = _etc\RapidTools-Install.cmd
@@ -23,16 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{7B94E6F2-0
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools", "Rapid.Tools\Rapid.Tools.csproj", "{8F9DC468-B353-485C-9A17-3A6F9D4DCB09}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy", "Rapid.Tools.SPDeploy\Rapid.Tools.SPDeploy.csproj", "{F768713D-86A1-4557-ABFC-F843E615C7CC}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy.AddIn", "Rapid.Tools.SPDeploy.AddIn\Rapid.Tools.SPDeploy.AddIn.csproj", "{AF3988EC-105B-4418-9733-744A912549C6}"
 	ProjectSection(WebsiteProperties) = preProject
