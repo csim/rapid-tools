@@ -107,7 +107,7 @@ namespace Rapid.Tools.SPDeploy.Tasks
 			//pinfo.RedirectStandardError = false;
 			//PSExec -accepteula -s  -w c:\_temp \\dev-clints-wss "C:\Program Files\Common Files\Microsoft Shared\web server extensions\12\BIN\stsadm.exe" -o UpgradeSolution -immediate -allowgacdeployment -allowcaspolicies -name "flex.wsp" -filename "flex.wsp"
 
-            Log.LogMessage(pinfo.Arguments);
+            //Log.LogMessage(pinfo.Arguments);
 
 			Log.LogMessage(string.Format("Executing STSADM {0} on {1}", Command, Server));
             
