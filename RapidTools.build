@@ -1,6 +1,8 @@
 <project name="Rapid.Tools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
 	<property name="nant.settings.currentframework" value="net-3.5" />
 
+	<property name="configuration" value="Release" overwrite="false" />
+
 	<property name="project.name" value="${project::get-name()}" />
 	<property name="nant.dir" value="${nant::get-base-directory()}" />
 
@@ -15,7 +17,6 @@
 	</if>
 	<property name="version" value="${CCNetLabel}" />
 
-	<property name="configuration" value="Release" overwrite="false" />
 
 	<if test="${not property::exists('CCNetLabel')}">
 		<fail message="ccnet.label not defined" />
