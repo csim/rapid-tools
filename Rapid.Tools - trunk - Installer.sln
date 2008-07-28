@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Rapid.Tools.SPDeploy.Installer", "Rapid.Tools.SPDeploy.Installer\Rapid.Tools.SPDeploy.Installer.wixproj", "{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Rapid.Tools.SPDeploy.Installer", "trunk\Rapid.Tools.SPDeploy.Installer\Rapid.Tools.SPDeploy.Installer.wixproj", "{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
