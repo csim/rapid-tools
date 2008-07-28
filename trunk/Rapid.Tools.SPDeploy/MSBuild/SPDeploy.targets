@@ -6,6 +6,8 @@
 
 	<PropertyGroup>
 
+		<SPDeployVersion>1.0.0.[LocalBuild]</SPDeployVersion>
+		
 		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy</SPDeployBaseDir>
 
 		<LocalDeployment>False</LocalDeployment>

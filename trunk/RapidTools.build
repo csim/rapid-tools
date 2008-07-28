@@ -37,9 +37,14 @@
 	<target name="pre-ccnet-build">
 
 		<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidTools.config" />
-
 		<attrib readonly="false" file="${config.path}" />
+		<xmlpoke
+			file="${config.path}"
+			xpath="/configuration/appSettings/add[@key = 'Application.Version']/@value"
+			value="${ccnet.label}" />
 
+		<property name="spdeploy.targets.path" value="${source.dir}\Rapid.Tools.SPDeploy\MSBuild\SPDeploy.targets" />
+		<attrib readonly="false" file="${spdeploy.targets.path}" />
 		<xmlpoke
 			file="${config.path}"
 			xpath="/configuration/appSettings/add[@key = 'Application.Version']/@value"
