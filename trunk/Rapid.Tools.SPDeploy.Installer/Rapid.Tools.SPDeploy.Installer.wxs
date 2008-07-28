@@ -56,7 +56,7 @@
 				<File Id="psexec.exe_file"  Name="psexec.exe" Source="Files\psexec.exe"/>
 				<File Id="Readme.txt_file"  Name="Readme.txt"  Source="Files\Readme.txt"/>
 				<File Id="SPDeploy.targets_file"  Name="SPDeploy.targets"  Source="Files\SPDeploy.targets"/>
-				<File Id="SPDeploy.vssettings_file"  Name="SPDeploy.vssettings"  Source="Files\SPDeploy.vssettings"/>
+				<File Id="SPDeploy_VS8.vssettings_file"  Name="SPDeploy_VS8.vssettings"  Source="Files\SPDeploy_VS8.vssettings"/>
 				<File Id="SPDeploy.Tasks.dll_file"  Name="Rapid.Tools.SPDeploy.Tasks.dll"  Source="Files\Rapid.Tools.SPDeploy.Tasks.dll"/>
 				<File Id="SPDeploy.Tasks.pdb_file"  Name="Rapid.Tools.SPDeploy.Tasks.pdb"  Source="Files\Rapid.Tools.SPDeploy.Tasks.pdb"/>
 			</Component>
