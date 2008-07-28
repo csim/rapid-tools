@@ -4,6 +4,9 @@
 	<property name="project.name" value="${project::get-name()}" />
 	<property name="nant.dir" value="${nant::get-base-directory()}" />
 
+	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
+	<property name="output.dir" value="${project.name}\bin\${configuration}" />
+
 	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
 	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
 
@@ -19,9 +22,6 @@
 	</if>
 	<property name="ccnet.label" value="${CCNetLabel}" />
 
-
-	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
-	<property name="output.dir" value="${project.name}\bin\${configuration}" />
 
 	<property name="zip.dir" value="_zip" />
 	<property name="zip.path" value="${zip.dir}\${gc.project.name}-${version}.zip" />
