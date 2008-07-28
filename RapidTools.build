@@ -20,19 +20,12 @@
 	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
 	<property name="output.dir" value="${project.name}\bin\${configuration}" />
 
-	<property name="gc.project.name" value="rapid-tools" />
-
 	<property name="zip.dir" value="_zip" />
 	<property name="zip.path" value="${zip.dir}\${gc.project.name}-${version}.zip" />
 
-	<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
 	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
-
 	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
 	
-	<loadtasks assembly="${nant.dir}\NantGoogleCode.dll"  />
-
-
 	<!-- *********** CCNET Targets ********************** -->
 
 	<target name="ccnet-build" depends="pre-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
@@ -76,10 +69,6 @@
 				</fileset>
 			</zip>
 		</if>
-
-		<!--<gcupload username="${gc.username}" password="${gc.password}" projectname="${gc.project.name}"
-			targetfilename="${gc.filename}" filename="${zip.path}"
-			summary="${gc.project.name} ${version} binaries" />-->
 
 	</target>
 
