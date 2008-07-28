@@ -56,10 +56,17 @@
 		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 
 		<if test="${directory::exists(output.dir)}">
-			<copy todir="${zip.dir}" flatten="true">
+			<copy todir="${zip.dir}">
 				<fileset>
 					<include name="${output.dir}\${project.name}*" />
 					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
+				</fileset>
+			</copy>
+
+			<copy todir="${zip.dir}\SPDeploy-Manual-Install">
+				<fileset basedir="${nant.dir}\${project.name}.SPDeploy">
+					<include name="Bin\*.zip" />
+					<include name="MSBuild\*" />
 				</fileset>
 			</copy>
 
