@@ -1,4 +1,4 @@
-<project name="Rapid.Tools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
+<project name="RapidTools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
 	<property name="nant.settings.currentframework" value="net-2.0" />
 
 	<property name="project.name" value="${project::get-name()}" />
@@ -99,6 +99,11 @@
 		<msbuild target="Rebuild" project="${project.name}.sln">
 			<arg value="/property:Configuration=${configuration}" />
 		</msbuild>
+
+		<msbuild target="Rebuild" project="${project.name} - Installer.sln">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
+
 	</target>
 	
 
