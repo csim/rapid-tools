@@ -14,11 +14,18 @@
 	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
 	<property name="output.dir" value="${project.name}\bin\${configuration}" />
 
-	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
-	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
-
+	<property name="gc.project.name" value="rapid-tools" />
+	
 	<property name="zip.dir" value="_zip" />
 	<property name="zip.path" value="${zip.dir}\${gc.project.name}-${version}.zip" />
+
+	<property name="gc.filename" value="${path::get-file-name(zip.path)}"/>
+	<property name="gc.username" value="simon.clint" />
+	<property name="gc.password" value="DD7CW6uA2HZ4" />
+
+
+	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
+	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
 
 
 	<if test="${not property::exists('CCNetLabel')}">
