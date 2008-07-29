@@ -68,7 +68,6 @@
 					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.dll" />
 					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.pdb" />
 					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.wsp" />
-					<include name="Rapid.Tools\bin\${configuration}\*.cmd" />
 				</fileset>
 			</copy>
 
