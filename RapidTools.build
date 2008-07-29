@@ -68,7 +68,7 @@
 					<include name="Rapid.Tools.dll" />
 					<include name="Rapid.Tools.pdb" />
 					<include name="Rapid.Tools.wsp" />
-					<include name="*.cmd" />
+					<include name="**.cmd" />
 				</fileset>
 			</copy>
 
