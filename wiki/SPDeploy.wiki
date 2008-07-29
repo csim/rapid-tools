@@ -16,11 +16,12 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 
 ===Installation===
-You must first uninstall any previous versions of SPDeploy. If you installed SPDeploy by way of the MSI installer, simply uninstall via the windows uninstall facility. If you installed a version on SPDeploy prior to the MSI installer, then you will need to delete the following from you system:
-  * the <program files>\MSBuild\SPDeploy directory
-  * and the <My Document>\Visual Studio 2008\Templates\ProjectTemplates\SPDeploy_Template.zip file.
 
-To install the a new version of SPDeploy, download a zip distribution from the [http://code.google.com/p/rapid-tools/downloads/list downloads page]. Then find and execute the Rapid.Tools.SPDeploy.msi file inside the distribution zip file. Distributions marked as "Featured" are stable builds that are known good. Download daily packages at your own risk :)
+  * Download the desired build from the [http://code.google.com/p/rapid-tools/downloads/list dowload page]. Use an features build if you are unsure, using a daily build may add more features at the cost of stability.
+  * Extract the zip file to a temporary folder.
+  * Location the client folder, and the RapidTools-Client-Install.cmd
+  * *Important:* open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS8TemplateFolder and VS9TemplateFolder variables are correct. SPDeploy should point to <Program Files>\MSBuild\SPDeploy\<SPDeploy Version>, VS8TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
+  * Run RapidTools-Client-Install.cmd. You should see several files being copied.
 
 
 ===Creating a Project===
