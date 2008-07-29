@@ -93,7 +93,7 @@
 				</fileset>
 			</zip>
 
-			<!--<call target="gc-upload" />-->
+			<call target="gc-upload" />
 			
 		</if>
 
