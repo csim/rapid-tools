@@ -237,13 +237,13 @@
 
 	<Target Name="CoreUpgradeIncrementalFiles"
 		Inputs="@(WspSourceRootFiles);@(WspSourceTemplateFiles)"
-		Outputs="@(WspSourceRootFiles->'$(WssRootDir)\%(RecursiveDir)%(Filename)%(Extension)');@(WspSourceTemplateFiles->'$(WssTemplateDir)\%(RecursiveDir)%(Filename)%(Extension)')">
+		Outputs="@(WspSourceRootFiles-&gt;'$(WssRootDir)\%(RecursiveDir)%(Filename)%(Extension)');@(WspSourceTemplateFiles-&gt;'$(WssTemplateDir)\%(RecursiveDir)%(Filename)%(Extension)')">
 
-		<Copy SourceFiles="@(WspSourceRootFiles)" DestinationFiles="@(WspSourceRootFiles->'$(WssRootDir)\%(RecursiveDir)%(Filename)%(Extension)')">
+		<Copy SourceFiles="@(WspSourceRootFiles)" DestinationFiles="@(WspSourceRootFiles-&gt;'$(WssRootDir)\%(RecursiveDir)%(Filename)%(Extension)')">
 			<Output TaskParameter="CopiedFiles" ItemName="DestinationWspRootFiles" />
 		</Copy>
 
-		<Copy SourceFiles="@(WspSourceTemplateFiles)" DestinationFiles="@(WspSourceTemplateFiles->'$(WssTemplateDir)\%(RecursiveDir)%(Filename)%(Extension)')">
+		<Copy SourceFiles="@(WspSourceTemplateFiles)" DestinationFiles="@(WspSourceTemplateFiles-&gt;'$(WssTemplateDir)\%(RecursiveDir)%(Filename)%(Extension)')">
 			<Output TaskParameter="CopiedFiles" ItemName="DestinationWspTemplateFiles" />
 		</Copy>
 
