@@ -7,7 +7,7 @@
 	<PropertyGroup>
 
 		<SPDeployVersion>1.0.0.[LocalBuild]</SPDeployVersion>
-		
+
 		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy</SPDeployBaseDir>
 
 		<LocalDeployment>False</LocalDeployment>
@@ -424,7 +424,7 @@
 		<Message Text="Rapid Tools :: SPDeploy v$(SPDeployVersion)" />
 		<Message Text="Ascentium Corporation (GNU General Public License v3)" />
 		<Message Text="Clint Simon (clints@ascentium.com)" />
-		
+
 		<Error Text="User environment settings could not be found at $(UserSettingsPath)" Condition="!Exists('$(UserSettingsPath)')" />
 
 	</Target>

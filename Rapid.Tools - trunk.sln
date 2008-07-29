@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{59D30ED9-B
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Rapid.Tools.SPDeploy.Installer", "trunk\Rapid.Tools.SPDeploy.Installer\Rapid.Tools.SPDeploy.Installer.wixproj", "{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy.AddIn", "trunk\Rapid.Tools.SPDeploy.AddIn\Rapid.Tools.SPDeploy.AddIn.csproj", "{AF3988EC-105B-4418-9733-744A912549C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,16 @@ Global
 		{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}.Release|x86.ActiveCfg = Release|x86
 		{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}.Release|x86.Build.0 = Release|x86
+		{AF3988EC-105B-4418-9733-744A912549C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AF3988EC-105B-4418-9733-744A912549C6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
