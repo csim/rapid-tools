@@ -421,9 +421,9 @@
 
 	<Target Name="SPDeployInit">
 
-		<Message Text="Rapid Tools :: SPDeploy v$(SPDeployVersion)" />
-		<Message Text="Ascentium Corporation (GNU General Public License v3)" />
-		<Message Text="Clint Simon (clints@ascentium.com)" />
+		<Message Text="Rapid Tools :: SPDeploy v$(SPDeployVersion)" Importance="high" />
+		<Message Text="Ascentium Corporation (GNU General Public License v3)" Importance="high" />
+		<Message Text="Clint Simon (clints@ascentium.com)" Importance="high" />
 
 		<Error Text="User environment settings could not be found at $(UserSettingsPath)" Condition="!Exists('$(UserSettingsPath)')" />
 
@@ -432,14 +432,14 @@
 
 	<Target Name="CopyOutput">
 
-		<CreateProperty Value="$(OutDir)*.wsp">
-			<Output TaskParameter="Value" PropertyName="WspOutput" />
-		</CreateProperty>
+		<CreateItem Include="$(OutDir)$(WspFilename)">
+			<Output TaskParameter="Include" ItemName="WspOutput" />
+		</CreateItem>
 
 		<Copy SourceFiles="@(WspOutput)" DestinationFolder="$(WspRemoteTempDir)" SkipUnchangedFiles="true" />
-
+		
 		<Copy SourceFiles="@(AssemblyOutput)" DestinationFolder="$(WspRemoteTempDir)" SkipUnchangedFiles="true" />
-
+		
 	</Target>
 
 
