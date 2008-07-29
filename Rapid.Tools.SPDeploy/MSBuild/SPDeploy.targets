@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
 
 	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.CompileWsp" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
 	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.Stsadm" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
