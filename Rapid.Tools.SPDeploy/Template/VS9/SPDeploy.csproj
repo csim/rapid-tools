@@ -53,7 +53,7 @@
 		<Folder Include="TemplateFiles\XML\" />
 	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-	<Import Project="$(MSBuildExtensionsPath)\SPDeploy\SPDeploy.targets" />
+	<Import Project="$(MSBuildExtensionsPath)\SPDeploy\v2\SPDeploy.targets" />
 	<Target Name="AfterBuild">
 	</Target>
 	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -75,11 +75,11 @@
 				<fileset>
 					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.dll" />
 					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.pdb" />
-					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
+					<!--<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />-->
 				</fileset>
 			</copy>
 
-			<copy todir="${zip.dir}\Client\ManualInstall">
+			<copy todir="${zip.dir}\Client">
 				<fileset basedir="Rapid.Tools.SPDeploy\bin\${configuration}">
 					<include name="**" />
 				</fileset>
