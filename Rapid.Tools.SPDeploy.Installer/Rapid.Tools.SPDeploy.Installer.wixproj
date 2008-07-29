@@ -1,139 +1,136 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<ProductVersion>3.0</ProductVersion>
-		<ProjectGuid>{d809f7ec-c59d-49ea-af5b-75a784efa6c4}</ProjectGuid>
-		<SchemaVersion>2.0</SchemaVersion>
-		<OutputName>Rapid.Tools.SPDeploy</OutputName>
-		<OutputType>Package</OutputType>
-		<WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
-		<SccProjectName>
-		</SccProjectName>
-		<SccProvider>
-		</SccProvider>
-		<SccAuxPath>
-		</SccAuxPath>
-		<SccLocalPath>
-		</SccLocalPath>
-		<Name>Rapid.Tools.SPDeploy.Installer</Name>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-		<OutputPath>bin\Debug\</OutputPath>
-		<IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
-		<DefineConstants>Debug</DefineConstants>
-		<AllowIdenticalRows>False</AllowIdenticalRows>
-		<CabinetCachePath>
-		</CabinetCachePath>
-		<CabinetCreationThreadCount>-1</CabinetCreationThreadCount>
-		<Cultures>en-us</Cultures>
-		<LeaveTemporaryFiles>False</LeaveTemporaryFiles>
-		<LinkerPedantic>False</LinkerPedantic>
-		<ReuseCabinetCache>False</ReuseCabinetCache>
-		<SetMsiAssemblyNameFileVersion>False</SetMsiAssemblyNameFileVersion>
-		<SuppressAclReset>False</SuppressAclReset>
-		<SuppressAssemblies>False</SuppressAssemblies>
-		<SuppressDefaultAdminSequenceActions>False</SuppressDefaultAdminSequenceActions>
-		<SuppressDefaultAdvSequenceActions>False</SuppressDefaultAdvSequenceActions>
-		<SuppressDefaultUISequenceActions>False</SuppressDefaultUISequenceActions>
-		<SuppressDroppingUnrealTables>False</SuppressDroppingUnrealTables>
-		<SuppressFileHashAndInfo>False</SuppressFileHashAndInfo>
-		<SuppressFiles>False</SuppressFiles>
-		<SuppressIces>
-		</SuppressIces>
-		<LinkerSuppressIntermediateFileVersionMatching>False</LinkerSuppressIntermediateFileVersionMatching>
-		<SuppressLayout>False</SuppressLayout>
-		<SuppressMsiAssemblyTableProcessing>False</SuppressMsiAssemblyTableProcessing>
-		<LinkerSuppressSchemaValidation>False</LinkerSuppressSchemaValidation>
-		<LinkerSuppressSpecificWarnings>
-		</LinkerSuppressSpecificWarnings>
-		<SuppressValidation>False</SuppressValidation>
-		<LinkerTreatWarningsAsErrors>False</LinkerTreatWarningsAsErrors>
-		<LinkerVerboseOutput>True</LinkerVerboseOutput>
-		<WixVariables>
-		</WixVariables>
-		<IncludeSearchPaths>
-		</IncludeSearchPaths>
-		<Pedantic>False</Pedantic>
-		<ShowSourceTrace>True</ShowSourceTrace>
-		<SuppressSchemaValidation>False</SuppressSchemaValidation>
-		<SuppressSpecificWarnings>
-		</SuppressSpecificWarnings>
-		<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-		<VerboseOutput>True</VerboseOutput>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<OutputPath>bin\Release\</OutputPath>
-		<IntermediateOutputPath>obj\Release\</IntermediateOutputPath>
-		<AllowIdenticalRows>False</AllowIdenticalRows>
-		<CabinetCachePath>
-		</CabinetCachePath>
-		<CabinetCreationThreadCount>-1</CabinetCreationThreadCount>
-		<Cultures>en-us</Cultures>
-		<LeaveTemporaryFiles>False</LeaveTemporaryFiles>
-		<LinkerPedantic>False</LinkerPedantic>
-		<ReuseCabinetCache>False</ReuseCabinetCache>
-		<SetMsiAssemblyNameFileVersion>False</SetMsiAssemblyNameFileVersion>
-		<SuppressAclReset>False</SuppressAclReset>
-		<SuppressAssemblies>False</SuppressAssemblies>
-		<SuppressDefaultAdminSequenceActions>False</SuppressDefaultAdminSequenceActions>
-		<SuppressDefaultAdvSequenceActions>False</SuppressDefaultAdvSequenceActions>
-		<SuppressDefaultUISequenceActions>False</SuppressDefaultUISequenceActions>
-		<SuppressDroppingUnrealTables>False</SuppressDroppingUnrealTables>
-		<SuppressFileHashAndInfo>False</SuppressFileHashAndInfo>
-		<SuppressFiles>False</SuppressFiles>
-		<SuppressIces>
-		</SuppressIces>
-		<LinkerSuppressIntermediateFileVersionMatching>False</LinkerSuppressIntermediateFileVersionMatching>
-		<SuppressLayout>False</SuppressLayout>
-		<SuppressMsiAssemblyTableProcessing>False</SuppressMsiAssemblyTableProcessing>
-		<LinkerSuppressSchemaValidation>False</LinkerSuppressSchemaValidation>
-		<LinkerSuppressSpecificWarnings>
-		</LinkerSuppressSpecificWarnings>
-		<SuppressValidation>False</SuppressValidation>
-		<LinkerTreatWarningsAsErrors>False</LinkerTreatWarningsAsErrors>
-		<LinkerVerboseOutput>False</LinkerVerboseOutput>
-		<WixVariables>
-		</WixVariables>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Include="Rapid.Tools.SPDeploy.Installer.wxs" />
-		<Compile Include="Rapid.Tools.SPDeploy.AddIn.wxs" />
-	</ItemGroup>
-	<ItemGroup>
-		<WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll" />
-		<WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUtilExtension.dll" />
-		<WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixVSExtension.dll" />
-	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Rapid.Tools.SPDeploy.Installer_en-us.wxl" />
-	</ItemGroup>
-	<Import Project="$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets" />
-	<!--
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProductVersion>3.0</ProductVersion>
+    <ProjectGuid>{d809f7ec-c59d-49ea-af5b-75a784efa6c4}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>Rapid.Tools.SPDeploy</OutputName>
+    <OutputType>Package</OutputType>
+    <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
+    <SccProjectName>
+    </SccProjectName>
+    <SccProvider>
+    </SccProvider>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <Name>Rapid.Tools.SPDeploy.Installer</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+    <AllowIdenticalRows>False</AllowIdenticalRows>
+    <CabinetCachePath>
+    </CabinetCachePath>
+    <CabinetCreationThreadCount>-1</CabinetCreationThreadCount>
+    <Cultures>en-us</Cultures>
+    <LeaveTemporaryFiles>False</LeaveTemporaryFiles>
+    <LinkerPedantic>False</LinkerPedantic>
+    <ReuseCabinetCache>False</ReuseCabinetCache>
+    <SetMsiAssemblyNameFileVersion>False</SetMsiAssemblyNameFileVersion>
+    <SuppressAclReset>False</SuppressAclReset>
+    <SuppressAssemblies>False</SuppressAssemblies>
+    <SuppressDefaultAdminSequenceActions>False</SuppressDefaultAdminSequenceActions>
+    <SuppressDefaultAdvSequenceActions>False</SuppressDefaultAdvSequenceActions>
+    <SuppressDefaultUISequenceActions>False</SuppressDefaultUISequenceActions>
+    <SuppressDroppingUnrealTables>False</SuppressDroppingUnrealTables>
+    <SuppressFileHashAndInfo>False</SuppressFileHashAndInfo>
+    <SuppressFiles>False</SuppressFiles>
+    <SuppressIces>
+    </SuppressIces>
+    <LinkerSuppressIntermediateFileVersionMatching>False</LinkerSuppressIntermediateFileVersionMatching>
+    <SuppressLayout>False</SuppressLayout>
+    <SuppressMsiAssemblyTableProcessing>False</SuppressMsiAssemblyTableProcessing>
+    <LinkerSuppressSchemaValidation>False</LinkerSuppressSchemaValidation>
+    <LinkerSuppressSpecificWarnings>
+    </LinkerSuppressSpecificWarnings>
+    <SuppressValidation>False</SuppressValidation>
+    <LinkerTreatWarningsAsErrors>False</LinkerTreatWarningsAsErrors>
+    <LinkerVerboseOutput>True</LinkerVerboseOutput>
+    <WixVariables>
+    </WixVariables>
+    <IncludeSearchPaths>
+    </IncludeSearchPaths>
+    <Pedantic>False</Pedantic>
+    <ShowSourceTrace>True</ShowSourceTrace>
+    <SuppressSchemaValidation>False</SuppressSchemaValidation>
+    <SuppressSpecificWarnings>
+    </SuppressSpecificWarnings>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <VerboseOutput>True</VerboseOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <IntermediateOutputPath>obj\Release\</IntermediateOutputPath>
+    <AllowIdenticalRows>False</AllowIdenticalRows>
+    <CabinetCachePath>
+    </CabinetCachePath>
+    <CabinetCreationThreadCount>-1</CabinetCreationThreadCount>
+    <Cultures>en-us</Cultures>
+    <LeaveTemporaryFiles>False</LeaveTemporaryFiles>
+    <LinkerPedantic>False</LinkerPedantic>
+    <ReuseCabinetCache>False</ReuseCabinetCache>
+    <SetMsiAssemblyNameFileVersion>False</SetMsiAssemblyNameFileVersion>
+    <SuppressAclReset>False</SuppressAclReset>
+    <SuppressAssemblies>False</SuppressAssemblies>
+    <SuppressDefaultAdminSequenceActions>False</SuppressDefaultAdminSequenceActions>
+    <SuppressDefaultAdvSequenceActions>False</SuppressDefaultAdvSequenceActions>
+    <SuppressDefaultUISequenceActions>False</SuppressDefaultUISequenceActions>
+    <SuppressDroppingUnrealTables>False</SuppressDroppingUnrealTables>
+    <SuppressFileHashAndInfo>False</SuppressFileHashAndInfo>
+    <SuppressFiles>False</SuppressFiles>
+    <SuppressIces>
+    </SuppressIces>
+    <LinkerSuppressIntermediateFileVersionMatching>False</LinkerSuppressIntermediateFileVersionMatching>
+    <SuppressLayout>False</SuppressLayout>
+    <SuppressMsiAssemblyTableProcessing>False</SuppressMsiAssemblyTableProcessing>
+    <LinkerSuppressSchemaValidation>False</LinkerSuppressSchemaValidation>
+    <LinkerSuppressSpecificWarnings>
+    </LinkerSuppressSpecificWarnings>
+    <SuppressValidation>False</SuppressValidation>
+    <LinkerTreatWarningsAsErrors>False</LinkerTreatWarningsAsErrors>
+    <LinkerVerboseOutput>False</LinkerVerboseOutput>
+    <WixVariables>
+    </WixVariables>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Rapid.Tools.SPDeploy.Installer.wxs" />
+    <Compile Include="Rapid.Tools.SPDeploy.AddIn.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll</HintPath>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\WixUtilExtension.dll</HintPath>
+    </WixExtension>
+    <WixExtension Include="WixVSExtension">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\WixVSExtension.dll</HintPath>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Rapid.Tools.SPDeploy.Installer_en-us.wxl" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets" />
+  <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.
 	<Target Name="BeforeBuild">
 	</Target>
 	-->
-
-	<Target Name="BeforeBuild">
-
-		<RemoveDir Directories="Files" Condition="Exists('Files')" />
-
-		<CreateItem Include="..\Rapid.Tools.SPDeploy\bin\$(Configuration)\*.zip;..\Rapid.Tools.SPDeploy\bin\$(Configuration)\SPDeploy\**\*.*" Exclude="**\*svn\**">
-			<Output TaskParameter="Include" ItemName="SPDeployCoreFiles" />
-		</CreateItem>
-		<Copy SourceFiles="@(SPDeployCoreFiles)" DestinationFolder="Files" />
-
-		<CreateItem Include="..\Rapid.Tools.SPDeploy.Addin\bin\*.dll;$(OutputPath)*.pdb;..\Rapid.Tools.SPDeploy.Addin\bin\*.addin" Exclude="**\*svn\**">
-			<Output TaskParameter="Include" ItemName="SPDeployAddInFiles" />
-		</CreateItem>
-		<Copy SourceFiles="@(SPDeployAddInFiles)" DestinationFolder="Files" />
-
-	</Target>
-
-	<Target Name="AfterBuild">
-
-
-	</Target>
-
+  <Target Name="BeforeBuild">
+    <RemoveDir Directories="Files" Condition="Exists('Files')" />
+    <CreateItem Include="..\Rapid.Tools.SPDeploy\bin\$(Configuration)\*.zip;..\Rapid.Tools.SPDeploy\bin\$(Configuration)\SPDeploy\**\*.*" Exclude="**\*svn\**">
+      <Output TaskParameter="Include" ItemName="SPDeployCoreFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(SPDeployCoreFiles)" DestinationFolder="Files" />
+    <CreateItem Include="..\Rapid.Tools.SPDeploy.Addin\bin\*.dll;$(OutputPath)*.pdb;..\Rapid.Tools.SPDeploy.Addin\bin\*.addin" Exclude="**\*svn\**">
+      <Output TaskParameter="Include" ItemName="SPDeployAddInFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(SPDeployAddInFiles)" DestinationFolder="Files" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
 </Project>
