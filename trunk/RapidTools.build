@@ -80,8 +80,8 @@
 			</copy>
 
 			<copy todir="${zip.dir}\Client\ManualInstall">
-				<fileset>
-					<include name="Rapid.Tools.SPDeploy\bin\${configuration}\**" />
+				<fileset basedir="Rapid.Tools.SPDeploy\bin\${configuration}">
+					<include name="**" />
 				</fileset>
 			</copy>
 
