@@ -6,11 +6,12 @@
 SPDeploy is a client side tool that extends MSBuild to include targets that allow you to create a SharePoint solution file (.wsp) from a standard C# class library project inside Visual Studio. In addition, SPDeploy allows you to deploy your compiled wsp file to a remote SharePoint server. This allows you to use your desktop for development but deploy to a remote SharePoint server.
 
 Benefits of wsp compilation and remote deployment:
-*All source code is housed and maintained via source control.* All customization must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from dev to QA to Production.
 
-*Provides single distribution file that can be deployed via standard SharePoint tools (stsadm).* This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
+1. *All source code is housed and maintained via source control.* All customizations must be contained within the wsp file which means they are a part of your C# project which in turn can be committed to source control. This alleviates the need to migrate a SharePoint content database from development to QA to Production environments.
 
-Allows multiple developers to work on a single project* and deploy to a separate and distinct environments avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
+2. *Provides single distribution file that can be deployed via standard SharePoint tools (stsadm).* This makes deploying to QA, Staging and Production trivial. Third party executed deployments are also made very simple.
+
+3. *Allows multiple developers to work on a single project* and deploy to a separate and distinct environments avoiding clashes and breaking changes that typically occur when developers attempt to deploy changes to a single SharePoint development environment. 
 
 For more information on SharePoint Solution files see http://msdn2.microsoft.com/en-us/library/aa543214.aspx
 
