@@ -421,7 +421,7 @@
 
 	<Target Name="SPDeployInit">
 
-		<Message Text="SPDeploy v$(SPDeployVersion)" />
+		<Message Text="Rapid Tools :: SPDeploy v$(SPDeployVersion)" />
 		<Message Text="Ascentium Corporation (GNU General Public License v3)" />
 		<Message Text="Clint Simon (clints@ascentium.com)" />
 		
@@ -430,9 +430,7 @@
 	</Target>
 
 
-	<Target Name="CopyOutput"
-		Inputs="@(AssemblyOutput)"
-		Outputs="@(AssemblyOutput->'$(WspRemoteTempDir)\%(Filename)%(Extension)')">
+	<Target Name="CopyOutput">
 
 		<CreateProperty Value="$(OutDir)*.wsp">
 			<Output TaskParameter="Value" PropertyName="WspOutput" />

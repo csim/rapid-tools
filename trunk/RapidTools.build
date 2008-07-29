@@ -111,10 +111,6 @@
 		<msbuild target="Rebuild" project="${project.name}.sln">
 			<arg value="/property:Configuration=${configuration}" />
 		</msbuild>
-
-		<msbuild target="Rebuild" project="${project.name} - Installer.sln">
-			<arg value="/property:Configuration=${configuration}" />
-		</msbuild>
 	</target>
 	
 
