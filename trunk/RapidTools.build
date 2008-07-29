@@ -65,16 +65,17 @@
 
 			<copy todir="${zip.dir}\Server" flatten="true">
 				<fileset>
-					<include name="Rapid.Tools.SPDeploy\bin\${configuration}\Rapid.Tools.SPDeploy.dll" />
-					<include name="Rapid.Tools.SPDeploy\bin\${configuration}\Rapid.Tools.SPDeploy.pdb" />
+					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.dll" />
+					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.pdb" />
 					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.wsp" />
+					<include name="Rapid.Tools\bin\${configuration}\*.cmd" />
 				</fileset>
 			</copy>
 
 			<copy todir="${zip.dir}\Client" flatten="true">
 				<fileset>
-					<include name="Rapid.Tools.SPDeploy\bin\${configuration}\Rapid.Tools.SPDeploy.dll" />
-					<include name="Rapid.Tools.SPDeploy\bin\${configuration}\Rapid.Tools.SPDeploy.pdb" />
+					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.dll" />
+					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.pdb" />
 					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
 				</fileset>
 			</copy>
