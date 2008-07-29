@@ -64,10 +64,11 @@
 		<if test="${directory::exists(output.dir)}">
 
 			<copy todir="${zip.dir}\Server" flatten="true">
-				<fileset>
-					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.dll" />
-					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.pdb" />
-					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.wsp" />
+				<fileset basedir="Rapid.Tools\bin\${configuration}">
+					<include name="Rapid.Tools.dll" />
+					<include name="Rapid.Tools.pdb" />
+					<include name="Rapid.Tools.wsp" />
+					<include name="*.cmd" />
 				</fileset>
 			</copy>
 
