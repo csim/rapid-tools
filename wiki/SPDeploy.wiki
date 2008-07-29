@@ -17,11 +17,15 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 ===Installation===
 
-» Download the desired build from the [http://code.google.com/p/rapid-tools/downloads/list dowload page]. Use a featured build if you are unsure, using a daily build may add more features at the cost of stability.
-» Extract the zip file to a temporary folder.
-» Locate the client folder, and the RapidTools-Client-Install.cmd file.
-» *Important:* open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS8TemplateFolder and VS9TemplateFolder variables are correct. SPDeploy should point to <Program Files>\MSBuild\SPDeploy\<SPDeploy Version>, VS8TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
-» Run RapidTools-Client-Install.cmd. You should see several files being copied.
+1. Download the desired build from the [http://code.google.com/p/rapid-tools/downloads/list dowload page]. Use a featured build if you are unsure, using a daily build may add more features at the cost of stability.
+
+2. Extract the zip file to a temporary folder.
+
+3. Locate the client folder, and the RapidTools-Client-Install.cmd file.
+
+4. *Important:* open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS8TemplateFolder and VS9TemplateFolder variables are correct. SPDeploy should point to <Program Files>\MSBuild\SPDeploy\<SPDeploy Version>, VS8TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
+
+5. Run RapidTools-Client-Install.cmd. You should see several files being copied.
 
 
 ===Creating a Project===
