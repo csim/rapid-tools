@@ -62,18 +62,26 @@
 		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 
 		<if test="${directory::exists(output.dir)}">
-		
-			<copy todir="${zip.dir}\Client" flatten="true">
+
+			<copy todir="${zip.dir}\Server" flatten="true">
 				<fileset>
-					<include name="${output.dir}\${project.name}*" />
+					<include name="Rapid.Tools.SPDeploy\Rapid.Tools.SPDeploy*" />
 					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
 				</fileset>
 			</copy>
 
-			<copy todir="${zip.dir}\Client\ManualInstall" flatten="true">
-				<fileset basedir="${project.name}.SPDeploy">
-					<include name="bin\${configuration}\SPDeploy\*.*" />
-					<include name="bin\${configuration}\*.zip" />
+			<copy todir="${zip.dir}\Client" flatten="true">
+				<fileset>
+					<include name="Rapid.Tools.SPDeploy\Rapid.Tools.SPDeploy.dll" />
+					<include name="Rapid.Tools.SPDeploy\Rapid.Tools.SPDeploy.pdb" />
+					<include name="${output.dir}\${project.name}*.pdb" />
+					<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />
+				</fileset>
+			</copy>
+
+			<copy todir="${zip.dir}\Client\ManualInstall">
+				<fileset>
+					<include name="Rapid.Tools.SPDeploy\bin\${configuration}\**" />
 				</fileset>
 			</copy>
 
