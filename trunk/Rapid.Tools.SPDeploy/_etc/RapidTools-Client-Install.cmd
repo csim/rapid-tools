@@ -1,10 +1,11 @@
 @ECHO OFF
-SET SPDeployFolder=%ProgramFiles%\msbuild\spdeploy
+SET SPDeployFolder=%ProgramFiles%\MSBuild\SPDeploy\v2
+
 SET VS8TemplateFolder=%USERPROFILE%\Documents\Visual Studio 2005\Templates\ProjectTemplates
 SET VS9TemplateFolder=%USERPROFILE%\Documents\Visual Studio 2008\Templates\ProjectTemplates
 
-SET VS8TemplateFolder=D:\clints\Documents\Visual Studio 2005\Templates\ProjectTemplates
-SET VS9TemplateFolder=D:\clints\Documents\Visual Studio 2008\Templates\ProjectTemplates
+rem SET VS8TemplateFolder=D:\clints\Documents\Visual Studio 2005\Templates\ProjectTemplates
+rem SET VS9TemplateFolder=D:\clints\Documents\Visual Studio 2008\Templates\ProjectTemplates
 
 @ECHO ON
 
