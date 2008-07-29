@@ -11,6 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_etc", "_etc", "{59D30ED9-B
 	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Rapid.Tools.SPDeploy.Installer", "trunk\Rapid.Tools.SPDeploy.Installer\Rapid.Tools.SPDeploy.Installer.wixproj", "{D809F7EC-C59D-49EA-AF5B-75A784EFA6C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F768713D-86A1-4557-ABFC-F843E615C7CC} = {F768713D-86A1-4557-ABFC-F843E615C7CC}
+		{8F9DC468-B353-485C-9A17-3A6F9D4DCB09} = {8F9DC468-B353-485C-9A17-3A6F9D4DCB09}
+		{AF3988EC-105B-4418-9733-744A912549C6} = {AF3988EC-105B-4418-9733-744A912549C6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rapid.Tools.SPDeploy.AddIn", "trunk\Rapid.Tools.SPDeploy.AddIn\Rapid.Tools.SPDeploy.AddIn.csproj", "{AF3988EC-105B-4418-9733-744A912549C6}"
 EndProject
