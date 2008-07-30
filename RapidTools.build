@@ -63,8 +63,8 @@
 
 		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 
-		<delete file="${config.path}" />
-		<delete file="${spdeploy.targets.path}" if="${file::exists(config.path)}" />
+		<delete file="${config.path}" if="${file::exists(config.path)}" />
+		<delete file="${spdeploy.targets.path}" if="${file::exists(spdeploy.targets.path)}" />
 
 		<if test="${directory::exists(output.dir)}">
 			
