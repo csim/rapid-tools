@@ -1,0 +1,44 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+	<TemplateData>
+		<Name>SPDeploy Project</Name>
+		<Description>Compile and remotely deploy a SharePoint Solution File (WSP)</Description>
+		<ProjectType>CSharp</ProjectType>
+		<ProjectSubType>
+		</ProjectSubType>
+		<SortOrder>1000</SortOrder>
+		<CreateNewFolder>true</CreateNewFolder>
+		<DefaultName>SPDeploy</DefaultName>
+		<ProvideDefaultName>true</ProvideDefaultName>
+		<LocationField>Enabled</LocationField>
+		<EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+		<Icon>__TemplateIcon.ico</Icon>
+	</TemplateData>
+	<TemplateContent>
+		<Project TargetFileName="SPDeploy.csproj" File="SPDeploy.csproj" ReplaceParameters="true">
+			<Folder Name="Domain" TargetFolderName="Domain" />
+			<ProjectItem ReplaceParameters="true" TargetFileName="manifest.xml">manifest.xml</ProjectItem>
+			<Folder Name="Properties" TargetFolderName="Properties">
+				<ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+				<ProjectItem ReplaceParameters="true" TargetFileName="SPDeploy.user">SPDeploy.user</ProjectItem>
+			</Folder>
+			<Folder Name="Receivers" TargetFolderName="Receivers" />
+			<Folder Name="RootFiles" TargetFolderName="RootFiles">
+				<Folder Name="Config" TargetFolderName="Config" />
+			</Folder>
+			<Folder Name="TemplateFiles" TargetFolderName="TemplateFiles">
+				<Folder Name="1033" TargetFolderName="1033">
+					<Folder Name="XML" TargetFolderName="XML" />
+				</Folder>
+				<Folder Name="ControlTemplates" TargetFolderName="ControlTemplates" />
+				<Folder Name="Features" TargetFolderName="Features" />
+				<Folder Name="Layouts" TargetFolderName="Layouts" />
+				<Folder Name="SiteTemplates" TargetFolderName="SiteTemplates" />
+				<Folder Name="XML" TargetFolderName="XML" />
+			</Folder>
+		</Project>
+	</TemplateContent>
+	<!--<WizardExtension>
+    <Assembly>Rapid.Tools.SPDeploy.AddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e1843d016e92c6bf</Assembly>
+    <FullClassName>Rapid.Tools.SPDeploy.AddIn.UI.Wizard.SPProjectWizard</FullClassName>
+  </WizardExtension>-->
+</VSTemplate>

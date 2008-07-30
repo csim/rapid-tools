@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Feature Id="0D09DF91-B297-40da-9E63-088E3B6C2AF7" Title="Rapid Tools Url Map" Scope="Site" Hidden="TRUE"  xmlns="http://schemas.microsoft.com/sharepoint/"
+  		ReceiverAssembly="Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8"
+		ReceiverClass="Rapid.Tools.Receivers.UrlMapReceiver">
+
+	<ElementManifests>
+		<ElementManifest Location="actions.xml" />
+		<ElementManifest Location="contenttypes.xml" />
+		<ElementManifest Location="columns.xml" />
+	</ElementManifests>
+	
+</Feature>

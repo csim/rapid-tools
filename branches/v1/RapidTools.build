@@ -1,0 +1,151 @@
+<project name="Rapid.Tools" default="rebuild" basedir="." xmlns="http://nant.sf.net/schemas/nant.xsd">
+	<property name="nant.settings.currentframework" value="net-3.5" />
+
+	<property name="configuration" value="Release" overwrite="false" />
+
+	<property name="project.name" value="${project::get-name()}" />
+	<property name="nant.dir" value="${nant::get-base-directory()}" />
+
+	<if test="${not property::exists('CCNetLabel')}">
+		<fail message="CCNetLabel not defined" />
+	</if>
+	<property name="version" value="${CCNetLabel}" />
+
+	<property name="source.dir" value="${CCNetWorkingDirectory}\source" />
+	<property name="output.dir" value="${project.name}\bin\${configuration}" />
+
+	<property name="gc.project.name" value="rapid-tools" />
+	
+	<property name="zip.dir" value="_zip" />
+	<property name="zip.path" value="${zip.dir}\${gc.project.name}-${version}.zip" />
+
+
+	<property name="gc.include.path" value="${directory::get-parent-directory(source.dir)}\googlecode.build" />
+	<include buildfile="${gc.include.path}" if="${file::exists(gc.include.path)}" />
+
+
+	<if test="${not property::exists('CCNetLabel')}">
+		<fail message="ccnet.label not defined" />
+	</if>
+	<property name="ccnet.label" value="${CCNetLabel}" />
+
+	
+	<!-- *********** CCNET Targets ********************** -->
+
+	<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidTools.config" />
+	<property name="spdeploy.targets.path" value="${source.dir}\Rapid.Tools.SPDeploy\MSBuild\SPDeploy.targets" />
+
+
+	<target name="ccnet-build" depends="pre-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
+
+	<target name="pre-ccnet-build">
+
+		<attrib readonly="false" file="${config.path}" />
+		<xmlpoke
+			file="${config.path}"
+			xpath="/configuration/appSettings/add[@key = 'Application.Version']/@value"
+			value="${ccnet.label}" />
+
+		<attrib readonly="false" file="${spdeploy.targets.path}" />
+		<xmlpoke
+			file="${spdeploy.targets.path}"
+			xpath="//msb:PropertyGroup/msb:SPDeployVersion"
+			value="${ccnet.label}">
+			<namespaces>
+				<namespace prefix="msb" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
+			</namespaces>
+		</xmlpoke>
+
+	</target>
+
+
+	<target name="post-ccnet-build">
+
+		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
+
+		<delete file="${config.path}" if="${file::exists(config.path)}" />
+		<delete file="${spdeploy.targets.path}" if="${file::exists(spdeploy.targets.path)}" />
+
+		<if test="${directory::exists(output.dir)}">
+			
+			<copy todir="${zip.dir}\Server" flatten="true">
+				<fileset basedir="Rapid.Tools\bin\${configuration}">
+					<include name="Rapid.Tools.dll" />
+					<include name="Rapid.Tools.pdb" />
+					<include name="Rapid.Tools.wsp" />
+					<include name="**.cmd" />
+				</fileset>
+			</copy>
+
+			<copy todir="${zip.dir}\Client" flatten="true">
+				<fileset>
+					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.dll" />
+					<include name="Rapid.Tools\bin\${configuration}\Rapid.Tools.pdb" />
+					<!--<include name="Rapid.Tools.SPDeploy.Installer\bin\${configuration}\*.msi" />-->
+				</fileset>
+			</copy>
+
+			<copy todir="${zip.dir}\Client">
+				<fileset basedir="Rapid.Tools.SPDeploy\bin\${configuration}">
+					<include name="**" />
+				</fileset>
+			</copy>
+
+			<zip zipfile="${zip.path}">
+				<fileset basedir="${zip.dir}">
+					<include name="**" />
+				</fileset>
+			</zip>
+
+			<call target="gc-upload" />
+
+		</if>
+
+	</target>
+
+
+	<target name="ccnet-cleansource">
+
+		<delete>
+			<fileset basedir="${source.dir}">
+				<include name="**" />
+			</fileset>
+		</delete>
+
+		<foreach item="Folder" in="${source.dir}" property="idir">
+			<delete dir="${idir}" />
+		</foreach>
+		
+	</target>
+
+
+
+	<!-- *********** Build Targets ********************** -->
+	
+	<target name="rebuild">
+		<msbuild target="Rebuild" project="${project.name}.sln">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
+	</target>
+	
+
+	<target name="compilewsp">
+		<msbuild target="CompileWsp" project="${project.name}\${project.name}.csproj">
+			<arg value="/property:Configuration=${configuration}" />
+		</msbuild>
+	</target>
+
+
+
+	<!-- *********** Utility Targets ********************** -->
+
+	<target name="schema">
+		<foreach item="String" in="C:\Program Files\Microsoft Visual Studio 8\Xml\Schemas\NAnt.xsd,C:\Program Files\Microsoft Visual Studio 9.0\Xml\Schemas\NAnt.xsd" delim="," property="idir">
+			<delete file="${idir}" if="${file::exists(idir)}" />
+			<nantschema output="${idir}" target-ns="http://nant.sf.net/schemas/nant.xsd" />
+		</foreach>
+	</target>
+
+
+
+</project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<commands>
+
+	<command name="rapidtools-Import"
+		class="Rapid.Tools.Domain.Commands, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+
+	<command name="rapidtools-EnableExceptionDisplay"
+		class="Rapid.Tools.Domain.Commands, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+
+	<command name="rapidtools-DisablEexceptionDisplay"
+		class="Rapid.Tools.Domain.Commands, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+
+	<command name="rapidtools-EnableUrlmapping"
+		class="Rapid.Tools.Domain.Commands, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+
+	<command name="rapidtools-DisableUrlmapping"
+		class="Rapid.Tools.Domain.Commands, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+
+</commands>

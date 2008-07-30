@@ -1,0 +1,157 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<LocalDeployment>False</LocalDeployment>
+		<WebApplicationOwnerEmail>$(USERNAME)@nowhere.com</WebApplicationOwnerEmail>
+	</PropertyGroup>
+
+	<!-- *** Add a condition attribute to make this section user specifice. For example:  Condition="$(USERNAME) == 'johnd'" -->
+	<PropertyGroup>
+		<WspServerName></WspServerName>
+		<WebApplicationPort>80</WebApplicationPort>
+
+		<!-- *** The commands below commented out are optional override commmands 
+			  
+			  PSExecUsername - This command is used to pass credentials for 
+					           executing commands remotely. Especially helpful
+							   if you're developing OFF the domain.
+                               This should be in the format "DOMAIN\Username"													
+						
+			  PSExecPassword - Required if you pass in PSExecUsername 
+			  
+			  WebApplicationOwnerLogin - Allows you to specify what account will
+					                     be used in creating a SharePoint web
+										 application as the owner.
+			 
+			  WebApplicationDatabaseName - Allows you to specify the web app
+					                       database name for creating a SharePoint
+										   web application.
+			  
+			  WebApplicationDescription - Allows you to override the name of the 
+					                      SharePoint web application created. 
+			  
+			  WspRemoteTempDir - Allows you to specify the remote temporary directory
+					             on the remote server.
+			  
+			  WspRemoteLocalTempDir - Allows you to specify the local path on the remote
+					                  server for running commands. -->
+
+		<!--
+		<PSExecUsername></PSExecUsername>
+		<PSExecPassword></PSExecPassword>
+		<WebApplicationOwnerLogin></WebApplicationOwnerLogin>
+		<WebApplicationDatabaseName></WebApplicationDatabaseName>
+		<WebApplicationDescription></WebApplicationDescription>
+		-->
+
+	</PropertyGroup>
+
+
+	<!-- *** Global properties for all users  -->
+
+	<Choose>
+		<When Condition="'$(LocalDeployment)' == 'True'">
+			<PropertyGroup>
+				<WspRemoteTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
+				<WspRemoteLocalTempDir>$(WspRemoteTempDir)</WspRemoteLocalTempDir>
+				<WssRootDir>c:\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<WspRemoteTempDir>\\$(WspServerName)\c$\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
+				<WspRemoteLocalTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteLocalTempDir>
+				<WssRootDir>\\$(WspServerName)\c$\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
+
+	<PropertyGroup>
+
+		<IISResetCommand Condition="'$(IISResetCommand)' == ''">iisreset</IISResetCommand>
+
+		<WebApplicationUrl Condition="'$(WebApplicationPort)' == '80'">http://$(WspServerName)</WebApplicationUrl>
+		<WebApplicationUrl Condition="'$(WebApplicationPort)' != '80'">http://$(WspServerName):$(WebApplicationPort)</WebApplicationUrl>
+
+		<WssTemplateDir>$(WssRootDir)\Template</WssTemplateDir>
+
+		<SiteTemplateID>sts#0</SiteTemplateID>
+
+		<WebApplicationOwnerLogin Condition="'$(WebApplicationOwnerLogin)'==''">$(USERDOMAIN)\$(USERNAME)</WebApplicationOwnerLogin>
+		<WebApplicationDatabaseName Condition="'$(WebApplicationDatabaseName)'==''">WSS_$(MSBuildProjectName)_$(USERNAME)</WebApplicationDatabaseName>
+		<WebApplicationDescription Condition="'$(WebApplicationDescription)'==''">$(MSBuildProjectName)</WebApplicationDescription>
+
+		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(WebApplicationDescription)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;$(WebApplicationDatabaseName)&quot; -exclusivelyusentlm</CreateWebApplicationCommand>
+		<DeleteWebApplicationCommand>-o UnextendVS -url &quot;$(WebApplicationUrl)&quot; -deletecontent -deleteiissites</DeleteWebApplicationCommand>
+
+		<CreateSiteCommand>-o CreateSite -url &quot;$(WebApplicationUrl)&quot; -sitetemplate $(SiteTemplateID) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
+		<DeleteSiteCommand>-o DeleteSite -url &quot;$(WebApplicationUrl)&quot;</DeleteSiteCommand>
+
+		<AddWspCommand>-o AddSolution -filename &quot;$(WspFilename)&quot;</AddWspCommand>
+		<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot;</DeployWspCommand>
+		<UpgradeWspCommand>-o UpgradeSolution -immediate -allowgacdeployment -allowcaspolicies -name &quot;$(WspFilename)&quot; -filename &quot;$(WspFilename)&quot;</UpgradeWspCommand>
+		<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot;</RetractWspCommand>
+		<DeleteWspCommand>-o DeleteSolution -name &quot;$(WspFilename)&quot;</DeleteWspCommand>
+
+		<!-- *** Use these commands for wsp files that have web application specific resources
+			<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot; -url $(WebApplicationUrl)</DeployWspCommand>
+			<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot; -url $(WebApplicationUrl)</RetractWspCommand>
+		-->
+
+		<ExecAdminJobsCommand>-o ExecAdmSvcJobs</ExecAdminJobsCommand>
+
+		<InstallAssemblyCommand>&quot;$(GACUtilPath)&quot; /nologo /if &quot;$(TargetName)$(TargetExt)&quot; </InstallAssemblyCommand>
+
+	</PropertyGroup>
+
+
+	<!-- *** Override these targets to perform actions before or after the indicated action
+		
+	<Target Name="BeforeCompileWsp"/>
+	<Target Name="AfterCompileWsp"/>
+
+	<Target Name="BeforeAddWsp" />
+	<Target Name="AfterAddWsp" />
+
+	<Target Name="BeforeDeployWsp" />
+	<Target Name="AfterDeployWsp" />
+
+	<Target Name="BeforeUpgradeWsp" />
+	<Target Name="AfterUpgradeWsp" />
+
+	<Target Name="BeforeUpgradeIncrementalFiles" />
+	<Target Name="AfterUpgradeIncrementalFiles" />
+
+	<Target Name="BeforeUpgradeIncrementalAssembly" />
+	<Target Name="AfterUpgradeIncrementalAssembly" />
+
+	<Target Name="BeforeUpgradeIncremental" />
+	<Target Name="AfterUpgradeIncremental" />
+
+	<Target Name="BeforeRetractWsp" />
+	<Target Name="AfterRetractWsp" />
+
+	<Target Name="BeforeDeleteWsp" />
+	<Target Name="AfterDeleteWsp" />
+
+	<Target Name="BeforeCycleWsp" />
+	<Target Name="AfterCycleWsp" />
+
+	<Target Name="BeforeCreateWebApplication" />
+	<Target Name="AfterCreateWebApplication" />
+
+	<Target Name="BeforeDeleteWebApplication" />
+	<Target Name="AfterDeleteWebApplication" />
+
+	<Target Name="BeforeCreateSite" />
+	<Target Name="AfterCreateSite" />
+
+	<Target Name="BeforeDeleteSite" />
+	<Target Name="AfterDeleteSite" />
+
+	<Target Name="BeforeCycleSite" />
+	<Target Name="AfterCycleSite" />
+	
+	-->
+
+</Project>

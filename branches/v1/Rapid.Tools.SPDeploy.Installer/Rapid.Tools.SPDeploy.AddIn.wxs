@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment Id="AddinFragment">
+		<DirectoryRef Id="TARGETDIR">
+       <!-- Put Addin.dll in the GAC-->
+      <!--<Component Id="Rapid.Tools.SPDeploy.AddInGac" Guid="{A7BE0BE4-E2BE-4b7a-A3CA-E3C5580019E5}">
+        <File Id="Rapid.Tools.SPDeploy.AddInGac" Name="Rapid.Tools.SPDeploy.AddIn.dll" KeyPath="yes"  Assembly=".net" Source="Files\Rapid.Tools.SPDeploy.AddIn.dll" />
+        <RemoveFile Id="Rapid.Tools.SPDeploy.AddInGAC.Rem" Name="Rapid.Tools.SPDeploy.AddInGac.Rem" On="uninstall" />
+      </Component>-->
+
+      <Directory Id="PersonalFolder" Name="MyDocumentsFolders">
+				<Directory Id="VisualStudio2005Directory" Name="Visual Studio 2005">
+					<Directory Id="VS2005AddInFolder" Name="Addins" ></Directory>
+				</Directory>
+			</Directory>
+		</DirectoryRef>
+    
+		<DirectoryRef Id="VS2005AddInFolder">      
+      <Component Id="Rapid.Tools.SPDeploy.AddIn" Guid="{CA16FB64-9C92-4DCE-83AF-19BF90FC0868}">
+				<File Id="Rapid.Tools.SPDeploy.AddIn" Name="Rapid.Tools.SPDeploy.AddIn" KeyPath="no" Source="Files\Rapid.Tools.SPDeploy.AddIn" />       
+				<!-- 
+				  OMG! Why are these Registry keys here? (Hint: Don't delete them)
+				  http://robmensching.com/blog/archive/2007/04/27/How-to-create-an-uninstall-shortcut-and-pass-all-the.aspx
+				-->
+				<RegistryValue Root="HKCU" KeyPath="yes" Key="Software\Ascentium\Rapid.Tools.SPDeploy.AddIn\UnInstall" Name="Rapid.Tools.SPDeploy.AddIn" Value="Rapid.Tools.SPDeploy.AddIn" Type="string" Action="write" />
+				<RemoveFile Id="Rapid.Tools.SPDeploy.AddIn.Rem" Name="Rapid.Tools.SPDeploy.AddIn.Rem" On="uninstall" />
+			</Component>
+		</DirectoryRef>
+		<DirectoryRef Id="VS2005AddInFolder">
+			<Component Id="Rapid.Tools.SPDeploy.AddIn.dll" Guid="{852E63DB-E992-44AC-BB07-65712A01173D}">
+				<File Id="Rapid.Tools.SPDeploy.AddIn.dll" Name="Rapid.Tools.SPDeploy.AddIn.dll" KeyPath="no" Source="Files\Rapid.Tools.SPDeploy.AddIn.dll" />
+				<!-- 
+				  OMG! Why are these Registry keys here? (Hint: Don't delete them)
+				  http://robmensching.com/blog/archive/2007/04/27/How-to-create-an-uninstall-shortcut-and-pass-all-the.aspx
+				-->
+				<RegistryValue Root="HKCU" KeyPath="yes" Key="Software\Ascentium\Rapid.Tools.SPDeploy.AddIn\UnInstall" Name="Rapid.Tools.SPDeploy.AddIn.dll" Value="Rapid.Tools.SPDeploy.AddIn.dll" Type="string" Action="write" />
+				<RemoveFile Id="Rapid.Tools.SPDeploy.AddIn.dll.Rem" Name="Rapid.Tools.SPDeploy.AddIn.dll.Rem" On="uninstall" />
+				<RemoveFolder Directory="VS2005AddInFolder" Id="VS2005AddInFolderRem" On="uninstall"/>
+				<RemoveFolder Directory="VisualStudio2005Directory" Id="VisualStudio2005DirectoryRem" On="uninstall"/>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+</Wix>
+

@@ -1,0 +1,128 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- ***** Global properties for all Developers ******************** -->
+	<PropertyGroup>
+		<LocalDeployment>False</LocalDeployment>
+		<WebApplicationPort>80</WebApplicationPort>
+		<WebApplicationOwnerEmail>$(USERNAME)@ascentium.com</WebApplicationOwnerEmail>
+	</PropertyGroup>
+
+	<!-- ***** Developer specific properties ******************** -->
+
+	<PropertyGroup Condition="'$(USERNAME)' == 'clints1'">
+		<WspServerName>mordor.int.ascentium.com</WspServerName>
+		<WebApplicationPort>101</WebApplicationPort>
+		<LocalDeployment>True</LocalDeployment>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(USERNAME)' == 'clints'">
+		<WspServerName>mtdoom</WspServerName>
+		<WebApplicationPort>81</WebApplicationPort>
+		<LocalDeployment>False</LocalDeployment>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(USERNAME)' == 'george.olson'">
+		<WspServerName>wa1devexpsps01</WspServerName>
+		<WebApplicationPort>80</WebApplicationPort>
+		<LocalDeployment>False</LocalDeployment>
+	</PropertyGroup>
+
+	<!-- ***** Global properties for all Developers ******************** -->
+
+	<Choose>
+		<When Condition="'$(LocalDeployment)' == 'True'">
+			<PropertyGroup>
+				<WspRemoteTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
+				<WspRemoteLocalTempDir>$(WspRemoteTempDir)</WspRemoteLocalTempDir>
+				<WssRootDir>c:\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<WspRemoteTempDir>\\$(WspServerName)\c$\_spdeploy\$(MSBuildProjectName)</WspRemoteTempDir>
+				<WspRemoteLocalTempDir>c:\_spdeploy\$(MSBuildProjectName)</WspRemoteLocalTempDir>
+				<WssRootDir>\\$(WspServerName)\c$\Program Files\Common Files\Microsoft Shared\web server extensions\12</WssRootDir>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
+
+	<PropertyGroup>
+
+		<IISResetCommand Condition="'$(IISResetCommand)' == ''">iisreset</IISResetCommand>
+
+		<WebApplicationUrl Condition="'$(WebApplicationPort)' == '80'">http://$(WspServerName)</WebApplicationUrl>
+		<WebApplicationUrl Condition="'$(WebApplicationPort)' != '80'">http://$(WspServerName):$(WebApplicationPort)</WebApplicationUrl>
+
+		<WssTemplateDir>$(WssRootDir)\Template</WssTemplateDir>
+
+		<WebApplicationOwnerLogin>$(USERDOMAIN)\$(USERNAME)</WebApplicationOwnerLogin>
+
+		<CreateWebApplicationCommand>-o ExtendVS -url &quot;$(WebApplicationUrl)&quot; -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin) -description &quot;$(MSBuildProjectName)&quot; -donotcreatesite -apidname &quot;$(MSBuildProjectName)&quot; -databasename &quot;WSS_$(MSBuildProjectName)_$(USERNAME)&quot; -exclusivelyusentlm -allowanonymous</CreateWebApplicationCommand>
+		<DeleteWebApplicationCommand>-o UnextendVS -url &quot;$(WebApplicationUrl)&quot; -deletecontent -deleteiissites</DeleteWebApplicationCommand>
+
+		<CreateSiteCommand>-o CreateSite -sitetemplate sts#0 -url $(WebApplicationUrl) -owneremail $(WebApplicationOwnerEmail) -ownerlogin $(WebApplicationOwnerLogin)</CreateSiteCommand>
+		<DeleteSiteCommand>-o DeleteSite -url &quot;$(WebApplicationUrl)&quot;</DeleteSiteCommand>
+
+		<AddWspCommand>-o AddSolution -filename &quot;$(WspFilename)&quot;</AddWspCommand>
+		<DeployWspCommand>-o DeploySolution -immediate -allowgacdeployment -allowcaspolicies -force -name &quot;$(WspFilename)&quot;</DeployWspCommand>
+		<UpgradeWspCommand>-o UpgradeSolution -immediate -allowgacdeployment -allowcaspolicies -name &quot;$(WspFilename)&quot; -filename &quot;$(WspFilename)&quot;</UpgradeWspCommand>
+		<RetractWspCommand>-o RetractSolution -immediate -name &quot;$(WspFilename)&quot;</RetractWspCommand>
+		<DeleteWspCommand>-o DeleteSolution -name &quot;$(WspFilename)&quot;</DeleteWspCommand>
+
+		<ExecAdminJobsCommand>-o ExecAdmSvcJobs</ExecAdminJobsCommand>
+
+		<InstallAssemblyCommand>&quot;$(GACUtilPath)&quot; /nologo /if &quot;$(TargetName)$(TargetExt)&quot;</InstallAssemblyCommand>
+
+	</PropertyGroup>
+
+
+	<!-- **** Override these targets to perform actions before or after the indicated action
+		
+	<Target Name="BeforeCompileWsp"/>
+	<Target Name="AfterCompileWsp"/>
+
+	<Target Name="BeforeAddWsp" />
+	<Target Name="AfterAddWsp" />
+
+	<Target Name="BeforeDeployWsp" />
+	<Target Name="AfterDeployWsp" />
+
+	<Target Name="BeforeUpgradeWsp" />
+	<Target Name="AfterUpgradeWsp" />
+
+	<Target Name="BeforeUpgradeIncrementalFiles" />
+	<Target Name="AfterUpgradeIncrementalFiles" />
+
+	<Target Name="BeforeUpgradeIncrementalAssembly" />
+	<Target Name="AfterUpgradeIncrementalAssembly" />
+
+	<Target Name="BeforeUpgradeIncremental" />
+	<Target Name="AfterUpgradeIncremental" />
+
+	<Target Name="BeforeRetractWsp" />
+	<Target Name="AfterRetractWsp" />
+
+	<Target Name="BeforeDeleteWsp" />
+	<Target Name="AfterDeleteWsp" />
+
+	<Target Name="BeforeCycleWsp" />
+	<Target Name="AfterCycleWsp" />
+
+	<Target Name="BeforeCreateWebApplication" />
+	<Target Name="AfterCreateWebApplication" />
+
+	<Target Name="BeforeDeleteWebApplication" />
+	<Target Name="AfterDeleteWebApplication" />
+
+	<Target Name="BeforeCreateSite" />
+	<Target Name="AfterCreateSite" />
+
+	<Target Name="BeforeDeleteSite" />
+	<Target Name="AfterDeleteSite" />
+
+	<Target Name="BeforeCycleSite" />
+	<Target Name="AfterCycleSite" />
+	
+	-->
+
+</Project>

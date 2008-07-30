@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+
+	<ContentType ID="0x01002617A6C1BEB0439b9155104CFB953793"
+			Name="Rapid Url Mapping" Group="Rapid" Sealed="FALSE" Description="">
+		<FieldRefs>
+
+			<RemoveFieldRef ID="{fa564e0f-0c70-4ab9-b863-0177e6ddd247}" Name="Title" />
+
+			<FieldRef ID="{285775BC-0D4A-4562-999C-B3AA435B53C1}" Name="IncomingUrl" DisplayName="Incoming Url" Required="TRUE" />
+			<FieldRef ID="{516C3624-1FA7-4ed7-9C30-CF2E6A5DC14A}" Name="ResultUrl" DisplayName="Result Url" Required="TRUE" />
+
+			<FieldRef ID="{F6D1D72F-51A7-4cc3-8246-FC21A561D884}" Name="RapidToolsDescription" DisplayName="Description" />
+
+			<FieldRef ID="{E3EFF317-DCF8-4916-9ED9-D6BDC57E11F0}" Name="RapidToolsActive" DisplayName="Active" />
+			
+		</FieldRefs>
+	</ContentType>
+
+</Elements>

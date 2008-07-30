@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Solution SolutionId="$guid10$" ResetWebServer="True" xmlns="http://schemas.microsoft.com/sharepoint/">
+
+	<Assemblies>
+		<Assembly DeploymentTarget="GlobalAssemblyCache" Location="$safeprojectname$.dll" />
+	</Assemblies>
+
+</Solution>

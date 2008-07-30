@@ -1,0 +1,514 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProductVersion>8.0.50727</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+		<ProjectGuid>{AF3988EC-105B-4418-9733-744A912549C6}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<StartupObject>
+		</StartupObject>
+		<NoStandardLibraries>false</NoStandardLibraries>
+		<AssemblyName>Rapid.Tools.SPDeploy.AddIn</AssemblyName>
+		<RootNamespace>Rapid.Tools.SPDeploy.AddIn</RootNamespace>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>Rapid.Tools.SPDeploy.Addin.Snk</AssemblyOriginatorKeyFile>
+		<FileUpgradeFlags>
+		</FileUpgradeFlags>
+		<OldToolsVersion>3.5</OldToolsVersion>
+		<UpgradeBackupLocation>
+		</UpgradeBackupLocation>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\</OutputPath>
+		<EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<WarningLevel>4</WarningLevel>
+		<IncrementalBuild>false</IncrementalBuild>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugSymbols>false</DebugSymbols>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\</OutputPath>
+		<EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+		<DefineConstants>TRACE</DefineConstants>
+		<WarningLevel>4</WarningLevel>
+		<IncrementalBuild>false</IncrementalBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+		<Reference Include="Microsoft.VisualStudio.TemplateWizardInterface, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+		<Reference Include="System" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.EnterpriseServices" />
+		<Reference Include="System.Web.Services" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="AssemblyInfo.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="CommandBar.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DesignTime>True</DesignTime>
+			<DependentUpon>CommandBar.resx</DependentUpon>
+		</Compile>
+		<Compile Include="Connect.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Domain\AppManager.cs" />
+		<Compile Include="Domain\DefaultColorTable.cs" />
+		<Compile Include="Domain\ExceptionUtil.cs" />
+		<Compile Include="Domain\NodeTags\SPSiteNodeTag.cs" />
+		<Compile Include="Domain\ProxyBridge.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Include="Proxies\AddIn\AddInProxy.cs" />
+		<Compile Include="UI\Controls\OpenMenu.cs" />
+		<Compile Include="UI\Controls\DeploymentMenu.cs">
+		</Compile>
+		<Compile Include="Domain\NodeTags\SPViewNodeTag.cs" />
+		<Compile Include="Domain\NodeTags\NodeTag.cs" />
+		<Compile Include="Domain\NodeTags\NodeTagFactory.cs" />
+		<Compile Include="Domain\NodeTags\SPFileNodeTag.cs" />
+		<Compile Include="Domain\NodeTags\SPListNodeTag.cs" />
+		<Compile Include="Domain\NodeTags\GenericNodeTag.cs" />
+		<Compile Include="Domain\NodeTags\SPWebNodeTag.cs" />
+		<Compile Include="Domain\RapidOutputWindow.cs" />
+		<Compile Include="Domain\SPEnvironmentInfo.cs" />
+		<Compile Include="Domain\FileWatcher.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ElementManifest.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ManifestItems\Control.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ManifestItems\CustomAction.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ManifestItems\CustomActionGroup.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ManifestItems\HideCustomAction.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ManifestItems\Module.cs" />
+		<Compile Include="ProjectFiles\ElementManifest\ManifestItems\WebPart.cs" />
+		<Compile Include="ProjectFiles\FeatureManifest\FeatureManifest.cs" />
+		<Compile Include="ProjectFiles\Utilities\ManifestUtility.cs" />
+		<Compile Include="Proxies\Lists\ListsWebService.cs" />
+		<Compile Include="Proxies\SiteData\SiteDataWebService.cs" />
+		<Compile Include="Proxies\Webs\WebsWebService.cs" />
+		<Content Include="Resources\Features\Ajaxification\Ajaxification.cs" />
+		<Content Include="Resources\Features\FeatureReceivers\FeatureReceiver.cs" />
+		<Compile Include="Resources\Features\FeatureReceivers\Files.Designer.cs" />
+		<Content Include="Resources\Features\WebParts\Ajaxification.cs" />
+		<Content Include="Resources\Features\WebParts\AjaxWebPart.cs" />
+		<Compile Include="Resources\Features\WebParts\Files.Designer.cs" />
+		<Content Include="Resources\Features\WebParts\HelloWebService.cs">
+			<SubType>Component</SubType>
+		</Content>
+		<Content Include="Resources\Features\WebParts\ResourceDeclarations.cs" />
+		<Content Include="Resources\Features\WebParts\webpartclass.cs" />
+		<Compile Include="Resources\Images\Files.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DesignTime>True</DesignTime>
+			<DependentUpon>Files.resx</DependentUpon>
+		</Compile>
+		<Compile Include="Resources\Project\Files.Designer.cs" />
+		<Compile Include="Resources\ResourceUtility.cs" />
+		<Compile Include="UI\Controls\SiteExplorerForm.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Controls\SiteExplorerForm.Designer.cs">
+			<DependentUpon>SiteExplorerForm.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\BaseForm.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\BaseForm.Designer.cs">
+			<DependentUpon>BaseForm.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\FeatureReceiverControl.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\FeatureReceiverControl.Designer.cs">
+			<DependentUpon>FeatureReceiverControl.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\CustomActionControl.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\CustomActionControl.Designer.cs">
+			<DependentUpon>CustomActionControl.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\CustomActionGroupControl.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\CustomActionGroupControl.Designer.cs">
+			<DependentUpon>CustomActionGroupControl.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\FeatureControl.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\FeatureControl.Designer.cs">
+			<DependentUpon>FeatureControl.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\FormControls\ValidationTextBox.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\Validator.cs" />
+		<Compile Include="UI\Forms\WebPartControl.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\WebPartControl.Designer.cs">
+			<DependentUpon>WebPartControl.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\IRapidControl.cs" />
+		<Compile Include="UI\Forms\OpenUrlForm.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\OpenUrlForm.designer.cs">
+			<DependentUpon>OpenUrlForm.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\HideCustomActionForm.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\HideCustomActionForm.Designer.cs">
+			<DependentUpon>HideCustomActionForm.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\ListDefinitionDialog.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\ListDefinitionDialog.Designer.cs">
+			<DependentUpon>ListDefinitionDialog.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Forms\ActivationDependencyControl.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Include="UI\Forms\ActivationDependencyControl.Designer.cs">
+			<DependentUpon>ActivationDependencyControl.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Wizard\CreationForm.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="UI\Wizard\CreationForm.designer.cs">
+			<DependentUpon>CreationForm.cs</DependentUpon>
+		</Compile>
+		<Compile Include="UI\Wizard\SPProjectWizard.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="CommandBar.resx">
+			<SubType>Designer</SubType>
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>CommandBar.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Resources\Features\FeatureReceivers\Files.resx">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Resources\Features\WebParts\Files.resx">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Resources\Project\Files.resx">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Controls\SiteExplorerForm.resx">
+			<DependentUpon>SiteExplorerForm.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\HideCustomActionForm.resx">
+			<DependentUpon>HideCustomActionForm.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\ListDefinitionDialog.resx">
+			<DependentUpon>ListDefinitionDialog.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Wizard\CreationForm.resx">
+			<DependentUpon>CreationForm.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<COMReference Include="EnvDTE">
+			<Guid>{80CC9F66-E7D8-4DDD-85B6-D9E6CD0E93E2}</Guid>
+			<VersionMajor>8</VersionMajor>
+			<VersionMinor>0</VersionMinor>
+			<Lcid>0</Lcid>
+			<WrapperTool>primary</WrapperTool>
+			<Isolated>False</Isolated>
+		</COMReference>
+		<COMReference Include="EnvDTE80">
+			<Guid>{1A31287A-4D7D-413E-8E32-3B374931BD89}</Guid>
+			<VersionMajor>8</VersionMajor>
+			<VersionMinor>0</VersionMinor>
+			<Lcid>0</Lcid>
+			<WrapperTool>primary</WrapperTool>
+			<Isolated>False</Isolated>
+		</COMReference>
+		<COMReference Include="Microsoft.VisualStudio.CommandBars">
+			<Guid>{1CBA492E-7263-47BB-87FE-639000619B15}</Guid>
+			<VersionMajor>8</VersionMajor>
+			<VersionMinor>0</VersionMinor>
+			<Lcid>0</Lcid>
+			<WrapperTool>primary</WrapperTool>
+			<Isolated>False</Isolated>
+		</COMReference>
+		<COMReference Include="stdole">
+			<Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+			<VersionMajor>2</VersionMajor>
+			<VersionMinor>0</VersionMinor>
+			<Lcid>0</Lcid>
+			<WrapperTool>primary</WrapperTool>
+			<Isolated>False</Isolated>
+		</COMReference>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Rapid.Tools.SPDeploy.AddIn">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\ewr238l.gif" />
+		<Content Include="Resources\Features\Ajaxification\feature.xml" />
+		<Content Include="Resources\Features\WebParts\elements.xml" />
+		<Content Include="Resources\Features\WebParts\feature.xml" />
+		<Content Include="Resources\Features\WebParts\HelloScript.js" />
+		<Content Include="Resources\Features\WebParts\HelloWebService.asmx" />
+		<Content Include="Resources\Features\WebParts\webpartdotwebpart.xml" />
+		<Content Include="Resources\Images\attention16by16.gif" />
+		<Content Include="Resources\Images\buttonLess.png" />
+		<Content Include="Resources\Images\buttonMore.png" />
+		<Content Include="Resources\Images\ewr238l.gif" />
+		<Content Include="Resources\Images\IMNAWAY.PNG" />
+		<Content Include="Resources\Images\imnidlebusy.png" />
+		<Content Include="Resources\Images\IMNUNK.PNG" />
+		<Content Include="Resources\Images\Loading.bmp" />
+		<Content Include="Resources\Images\rapidheader.png" />
+		<Content Include="Resources\Images\recurrence.gif" />
+		<None Include="Resources\Images\ICXML1.GIF" />
+		<None Include="Resources\Images\STSICON1.GIF" />
+		<None Include="Resources\Images\ITGEN1.GIF" />
+		<None Include="Resources\Images\ITDL1.GIF" />
+		<None Include="Resources\Images\IMNON1.PNG" />
+		<None Include="Resources\Images\IMNBUSY1.PNG" />
+		<None Include="Resources\Images\ICGEN1.GIF" />
+		<None Include="Resources\Images\FOLDER1.GIF" />
+		<None Include="Resources\Images\ewr237l1.gif" />
+		<None Include="Resources\Images\ewr236l1.gif" />
+		<None Include="Resources\Images\checkoutoverlay1.gif" />
+		<None Include="Resources\Images\CAT1.GIF" />
+		<None Include="Resources\Images\BLANK1.GIF" />
+		<None Include="Resources\Images\actionssettings1.gif" />
+		<EmbeddedResource Include="Resources\Images\actionssettings.gif" />
+		<EmbeddedResource Include="Resources\Images\BLANK.GIF" />
+		<EmbeddedResource Include="Resources\Images\CAT.GIF" />
+		<EmbeddedResource Include="Resources\Images\checkoutoverlay.gif" />
+		<EmbeddedResource Include="Resources\Images\CRIT_16.GIF" />
+		<EmbeddedResource Include="Resources\Images\ewr236l.gif" />
+		<EmbeddedResource Include="Resources\Images\ewr237l.gif" />
+		<EmbeddedResource Include="Resources\Images\Files.resx">
+			<SubType>Designer</SubType>
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Files.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Resources\Images\FOLDER.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICACCDB.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICACCDC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICACCDE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICASAX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICASCX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICASMX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICASP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICASPX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICBMP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICC16.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICCAT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICCHANGE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICCHM.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICCONFIG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICCSS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDB.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDIB.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDISC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDOC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDOCP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDOCX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDOT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDOTX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDVD.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICDWP.GIF" />
+		<EmbeddedResource Include="Resources\Images\icdwt.gif" />
+		<EmbeddedResource Include="Resources\Images\ICEML.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICEST.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICFWP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICGEN.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICGIF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHLP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTA.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTM.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTMDOC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTMFP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTMPPT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTMPUB.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTMXLS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICHTT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICINF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICINI.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICJFIF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICJPE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICJPEG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICJPG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICJS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICJSE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICLOG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICM16.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMANAGE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMASTER.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMHT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMHTML.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMHTPUB.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMPD.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMPP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMPS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMPT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMPW.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMPX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMSG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMSI.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICMSP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICNPIE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICO16.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICOCX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICODC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICODCC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICODCD.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICODCT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICONE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICONGO.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICONGO01.GIF" />
+		<EmbeddedResource Include="Resources\Images\icongo01rtl.gif" />
+		<EmbeddedResource Include="Resources\Images\ICONGO02.GIF" />
+		<EmbeddedResource Include="Resources\Images\icongo02rtl.gif" />
+		<EmbeddedResource Include="Resources\Images\ICONGO03.GIF" />
+		<EmbeddedResource Include="Resources\Images\icongo03rtl.gif" />
+		<EmbeddedResource Include="Resources\Images\ICONP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICONT.GIF" />
+		<EmbeddedResource Include="Resources\Images\icon_contactlist.gif" />
+		<EmbeddedResource Include="Resources\Images\icon_customlist.gif" />
+		<EmbeddedResource Include="Resources\Images\icon_document.gif" />
+		<EmbeddedResource Include="Resources\Images\icon_photoalbum.gif" />
+		<EmbeddedResource Include="Resources\Images\icon_survey.gif" />
+		<EmbeddedResource Include="Resources\Images\icon_tasklist.gif" />
+		<EmbeddedResource Include="Resources\Images\ICPINNED.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPNG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPOT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPOTX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPPS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPPT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPPTP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPPTX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPROP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPSP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPTM.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPTT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICPUB.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICREVIEW.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICRTF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICSMRTPG.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICSPGEN.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICSPWEB.GIF" />
+		<EmbeddedResource Include="Resources\Images\icstorage.gif" />
+		<EmbeddedResource Include="Resources\Images\ICSTP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICSTT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICTIF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICTIFF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICTXT.GIF" />
+		<EmbeddedResource Include="Resources\Images\icunpinned.gif" />
+		<EmbeddedResource Include="Resources\Images\ICVBE.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVBS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVDX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVSD.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVSL.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVSS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVST.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVSU.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVSW.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVSX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICVTX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWM.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMA.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMD.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMV.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWMZ.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICWSF.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXDDOC.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXLS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXLSP.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXLSX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXLT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXLTX.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXML.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXPS.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXSD.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXSL.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXSLT.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICXSN.GIF" />
+		<EmbeddedResource Include="Resources\Images\ICZIP.GIF" />
+		<EmbeddedResource Include="Resources\Images\IMNBUSY.PNG" />
+		<EmbeddedResource Include="Resources\Images\IMNON.PNG" />
+		<EmbeddedResource Include="Resources\Images\ITDL.GIF" />
+		<EmbeddedResource Include="Resources\Images\ITGEN.GIF" />
+		<EmbeddedResource Include="Resources\Images\STSICON.GIF" />
+		<EmbeddedResource Include="UI\Forms\BaseForm.resx">
+			<SubType>Designer</SubType>
+			<DependentUpon>BaseForm.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\FeatureReceiverControl.resx">
+			<DependentUpon>FeatureReceiverControl.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\CustomActionControl.resx">
+			<DependentUpon>CustomActionControl.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\CustomActionGroupControl.resx">
+			<DependentUpon>CustomActionGroupControl.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\FeatureControl.resx">
+			<DependentUpon>FeatureControl.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\WebPartControl.resx">
+			<DependentUpon>WebPartControl.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\OpenUrlForm.resx">
+			<DependentUpon>OpenUrlForm.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+		<EmbeddedResource Include="UI\Forms\ActivationDependencyControl.resx">
+			<SubType>Designer</SubType>
+			<DependentUpon>ActivationDependencyControl.cs</DependentUpon>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="Proxies\AddIn\UpdateWSDL-clints.cmd" />
+		<None Include="Proxies\Lists\Lists.wsdl" />
+		<None Include="Proxies\SiteData\SiteData.wsdl" />
+		<None Include="Proxies\Webs\Webs.wsdl" />
+		<None Include="Rapid.Tools.SPDeploy.Addin.Snk" />
+		<None Include="Resources\Project\key.snk" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
+	<Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+	<PropertyGroup>
+		<PreBuildEvent>
+		</PreBuildEvent>
+		<PostBuildEvent>
+		</PostBuildEvent>
+	</PropertyGroup>
+	<ProjectExtensions>
+		<VisualStudio>
+		</VisualStudio>
+	</ProjectExtensions>
+	<Target Name="AfterBuild">
+	</Target>
+</Project>

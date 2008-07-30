@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+
+	<ListTemplate
+		Name="RapidToolsUrlMap"
+		Category="Custom Lists"
+		Type="802"
+		BaseType="0"
+		OnQuickLaunch="FALSE"
+		SecurityBits="11"
+		DisplayName="Rapid Url Mappings"
+		Hidden="TRUE"
+		HiddenList="TRUE"
+		Unique="TRUE"
+		RootWebOnly="TRUE"
+		DisallowContentTypes="FALSE"
+		DontSaveInTemplate="FALSE"
+		EnableModeration="False"
+		FolderCreation="TRUE"
+		VersioningEnabled="FALSE"
+		DisableAttachments="TRUE"
+		SetupPath="RapidToolsUrlMap" />
+
+
+</Elements>
