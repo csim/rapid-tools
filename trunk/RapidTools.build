@@ -32,18 +32,20 @@
 	
 	<!-- *********** CCNET Targets ********************** -->
 
+	<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidTools.config" />
+	<property name="spdeploy.targets.path" value="${source.dir}\Rapid.Tools.SPDeploy\MSBuild\SPDeploy.targets" />
+
+
 	<target name="ccnet-build" depends="pre-ccnet-build, rebuild, compilewsp, post-ccnet-build" />
 
 	<target name="pre-ccnet-build">
 
-		<property name="config.path" value="${source.dir}/Rapid.Tools/TemplateFiles/Layouts/RapidTools/RapidTools.config" />
 		<attrib readonly="false" file="${config.path}" />
 		<xmlpoke
 			file="${config.path}"
 			xpath="/configuration/appSettings/add[@key = 'Application.Version']/@value"
 			value="${ccnet.label}" />
 
-		<property name="spdeploy.targets.path" value="${source.dir}\Rapid.Tools.SPDeploy\MSBuild\SPDeploy.targets" />
 		<attrib readonly="false" file="${spdeploy.targets.path}" />
 		<xmlpoke
 			file="${spdeploy.targets.path}"
@@ -61,8 +63,11 @@
 
 		<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
 
-		<if test="${directory::exists(output.dir)}">
+		<delete file="${config.path}" />
+		<delete file="${spdeploy.targets.path}" if="${file::exists(config.path)}" />
 
+		<if test="${directory::exists(output.dir)}">
+			
 			<copy todir="${zip.dir}\Server" flatten="true">
 				<fileset basedir="Rapid.Tools\bin\${configuration}">
 					<include name="Rapid.Tools.dll" />
@@ -93,7 +98,7 @@
 			</zip>
 
 			<call target="gc-upload" />
-			
+
 		</if>
 
 	</target>
