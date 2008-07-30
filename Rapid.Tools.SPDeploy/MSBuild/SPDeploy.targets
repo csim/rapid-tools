@@ -8,7 +8,7 @@
 
 		<SPDeployVersion>2.0.0.[LocalBuild]</SPDeployVersion>
 
-		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy</SPDeployBaseDir>
+		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy\v2</SPDeployBaseDir>
 
 		<LocalDeployment>False</LocalDeployment>
 		<StsadmPath>C:\Program Files\Common Files\Microsoft Shared\web server extensions\12\BIN\stsadm.exe</StsadmPath>
