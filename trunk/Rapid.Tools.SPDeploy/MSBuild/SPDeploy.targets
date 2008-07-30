@@ -18,7 +18,7 @@
 		<WspWorkingPath>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)</WspWorkingPath>
 		<WspIntermediateOutputPath>$(WspWorkingPath)$(WspFilename)</WspIntermediateOutputPath>
 
-		<PSExecPath>$(MSBuildExtensionsPath)\SPDeploy\\psexec.exe</PSExecPath>
+		<PSExecPath>$(SPDeployBaseDir)\psexec.exe</PSExecPath>
 		<GACUtilPath>C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\gacutil.exe</GACUtilPath>
 
 		<BaseRootFilesDir>$(MSBuildProjectDirectory)\RootFiles</BaseRootFilesDir>
