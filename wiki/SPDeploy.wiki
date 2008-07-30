@@ -82,7 +82,7 @@ Where <target name> is the msbuild target such as AddWsp or DeployWsp and <proje
 
 To add visual studio support for launching these targets import the included SPDeploy.vssettings file into visual studio by going to tools -> import/export settings. This will add external tools items that are located under the tools menu in visual studio. You can also customize this further by creating a toolbar or menubar for these tool items. 
 
-WARNING: Importing these settings with override all external tools settings inside visual studio.
+*WARNING: Importing these settings with override all external tools settings inside visual studio.*
 
 
 ===Remote Debugging===
@@ -100,11 +100,15 @@ In the modules window you should now see that the symbols for your assembly are 
 
 
 ===NOTES===
-  * References to your project are compiled into WSP when the "Copy Local" attribute is turned on for the reference. To change this attribute, right click on your reference in visual studio and select properties. Then change the value of the "Copy Local" attribute.
-  * Your development machine must be on the same domain as your SharePoint server.
-  * makecab.exe must be in your DOS path for the wsp compilation to work. To make sure that makecab is in your path, open a command prompt and type makecab.exe
-  * When loading an SPDeploy extended project you may receive a security warning stating that the project file has been customized. Choose "Load Project Normally". This is an issue that I am actively trying to resolve.
-  * The SPDeploy project template is based on the ASP.net web application project type. You will need to have Visual Studio 2005 SP1 install so that this project type is available.
+» References to your project are compiled into WSP when the "Copy Local" attribute is turned on for the reference. To change this attribute, right click on your reference in visual studio and select properties. Then change the value of the "Copy Local" attribute.
+
+» Your development machine must be on the same domain as your SharePoint server.
+
+» makecab.exe must be in your DOS path for the wsp compilation to work. To make sure that makecab is in your path, open a command prompt and type makecab.exe
+
+» When loading an SPDeploy extended project you may receive a security warning stating that the project file has been customized. Choose "Load Project Normally". This is an issue that I am actively trying to resolve.
+
+» The SPDeploy project template is based on the ASP.net web application project type. You will need to have Visual Studio 2005 SP1 install so that this project type is available.
 
 
 ===Feedback===
