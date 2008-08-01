@@ -2,14 +2,14 @@
 <ProvisionManifest>
 
 	<AssetProviders>
-		<Provider Name="Assets" Type="Rapid.Tools.Providers.Provision.AssetContainer, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
-		<Provider Name="Webs" Type="Rapid.Tools.Providers.Provision.AssetContainer, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="Assets" Type="Rapid.Tools.Providers.Provision.AssetContainer, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="Webs" Type="Rapid.Tools.Providers.Provision.AssetContainer, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
 
-		<Provider Name="Site" Type="Rapid.Tools.Providers.Provision.SiteAssetProvider, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
-		<Provider Name="Web" Type="Rapid.Tools.Providers.Provision.WebAssetProvider, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
-		<Provider Name="WebContent" Type="Rapid.Tools.Providers.Provision.WebContentProvider, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
-		<Provider Name="File" Type="Rapid.Tools.Providers.Provision.FileAssetProvider, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
-		<Provider Name="Field" Type="Rapid.Tools.Providers.Provision.FieldAssetProvider, Rapid.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="Site" Type="Rapid.Tools.Providers.Provision.SiteAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="Web" Type="Rapid.Tools.Providers.Provision.WebAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="WebContent" Type="Rapid.Tools.Providers.Provision.WebContentProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="File" Type="Rapid.Tools.Providers.Provision.FileAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+		<Provider Name="Field" Type="Rapid.Tools.Providers.Provision.FieldAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
 	</AssetProviders>
 
 	<Assets>
