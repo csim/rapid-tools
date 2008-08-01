@@ -46,7 +46,7 @@ For windows xp this path is usually c:\documents and settings\<your username>\my
 =Creating a Project=
 1.* Inside Visual Studio, click file -> new -> project -> visual c# -> SPDeploy.*
 
-2. *Add user specific settings to SPDeploy.user.* Open SPDeploy.user under the properties directory. Setup the WspServerName, WebApplicationUrl and WebApplicationOwnerEmail property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
+2. *Add user specific settings to SPDeploy.user.* Open SPDeploy.user under the properties directory. Setup the WspServerName and WebApplicationPort property values. These properties should contain the server name where the wsp is to be deployed and the url of your deployment web application.
 
 3. *Setup manifest.xml GUID.* Open the manifest.xml in the root directory of the project, and add a GUID to the SolutionId attribute. To create a guid go to tools -> create guid -> copy, then paste into the SolutionId attribute.
 
@@ -118,10 +118,10 @@ In the modules window you should now see that the symbols for your assembly are 
 
 » makecab.exe must be in your DOS path for the wsp compilation to work. To make sure that makecab is in your path, open a command prompt and type makecab.exe
 
-» When loading an SPDeploy extended project you may receive a security warning stating that the project file has been customized. Choose "Load Project Normally". This is an issue that I am actively trying to resolve.
+» When loading an SPDeploy extended project you may receive a security warning stating that the project file has been customized. Choose "Load Project Normally".
 
 » The SPDeploy project template is based on the ASP.net web application project type. You will need to have Visual Studio 2005 SP1 install so that this project type is available.
 
 
 =Feedback=
-If you have comments, suggestions or requests please email me at [mailto:clints@ascentium.com clints@ascentium.com]
+If you have any feedback, please add a comment below or me at [mailto:clints@ascentium.com clints@ascentium.com]
