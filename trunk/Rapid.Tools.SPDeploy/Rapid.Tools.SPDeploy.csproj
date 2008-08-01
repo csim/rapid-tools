@@ -63,7 +63,7 @@
     </Content>
     <Content Include="MSBuild\Readme.txt">
     </Content>
-    <Content Include="MSBuild\SPDeploy_VS8.vssettings">
+    <Content Include="MSBuild\SPDeploy_VS2005.vssettings">
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -71,7 +71,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MSBuild\SPDeploy_VS9.vssettings" />
+    <Content Include="MSBuild\SPDeploy_VS2008.vssettings" />
     <Content Include="Template\VS2005\manifest.xml">
     </Content>
     <Content Include="Template\VS2005\MyTemplate.vstemplate">
@@ -98,14 +98,14 @@
       <Output TaskParameter="Include" ItemName="EtcFiles" />
     </CreateItem>
     <Copy SourceFiles="@(EtcFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-    <CreateItem Include="Template\VS8\**" Exclude="**\*svn\**">
-      <Output TaskParameter="Include" ItemName="VS8TemplateFiles" />
+    <CreateItem Include="Template\VS2005\**" Exclude="**\*svn\**">
+      <Output TaskParameter="Include" ItemName="VS2005TemplateFiles" />
     </CreateItem>
-    <Zip Files="@(VS8TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS8_Template.zip" WorkingDirectory="Template\VS8" />
-    <CreateItem Include="Template\VS9\**" Exclude="**\*svn\**">
-      <Output TaskParameter="Include" ItemName="VS9TemplateFiles" />
+    <Zip Files="@(VS2005TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS2005_Template.zip" WorkingDirectory="Template\VS2005" />
+    <CreateItem Include="Template\VS2008\**" Exclude="**\*svn\**">
+      <Output TaskParameter="Include" ItemName="VS2008TemplateFiles" />
     </CreateItem>
-    <Zip Files="@(VS9TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS9_Template.zip" WorkingDirectory="Template\VS9" />
+    <Zip Files="@(VS2008TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS2008_Template.zip" WorkingDirectory="Template\VS2008" />
     <CreateItem Include="MSBuild\**" Exclude="**\*svn\**">
       <Output TaskParameter="Include" ItemName="MSBuildFiles" />
     </CreateItem>
