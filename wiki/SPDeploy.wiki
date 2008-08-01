@@ -73,15 +73,13 @@ For example:
 
 {{{
 <PropertyGroup Condition="$(USERNAME) == 'clints'">
-    <WspServerName>dev-clints-wss</WspServerName>
-    <WebApplicationUrl>http://$(WspServerName):88</WebApplicationUrl>
-    <WebApplicationOwnerEmail>clints@ascentium.com</WebApplicationOwnerEmail>
+	<WspServerName>dev-clints-wss</WspServerName>
+	<WebApplicationPort>88</WebApplicationPort>
 </PropertyGroup>
 
 <PropertyGroup Condition="$(USERNAME) == 'johnl'">
     <WspServerName>dev-johnl-wss</WspServerName>
-    <WebApplicationUrl>http://$(WspServerName):81</WebApplicationUrl>
-    <WebApplicationOwnerEmail>johnl@ascentium.com</WebApplicationOwnerEmail>
+	<WebApplicationPort>82</WebApplicationPort>
 </PropertyGroup>
 }}}
 
