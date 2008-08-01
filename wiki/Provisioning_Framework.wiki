@@ -1,1 +1,85 @@
 #labels Featured
+[Home] | [http://code.google.com/p/rapid-tools/w/list Index]
+
+
+=Overview=
+
+=Installation=
+
+1. *Download the desired build from the [http://code.google.com/p/rapid-tools/downloads/list dowload page].* Use a featured build if you are unsure, using a daily build may add more features at the cost of stability.
+
+2. *Extract the zip file to a temporary folder on your SharePoint server.*
+
+3. *Locate the server folder, and the RapidTools-Server-Install.cmd file.*
+
+5. *Run RapidTools-Client-Install.cmd.* You should see the Rapid.Tools.wsp file being added and deployed to your SharePoint farm.
+
+*Note:* To reference framework components inside a Visual Studio project you will need to copy the Rapid.Tools.dll assembly to your project and create a file reference by browsing to the assembly.
+
+
+=Anatomy of a Provision Manifest=
+
+
+
+=Providers=
+By default rapid tools comes with a set of providers that cover the most common needs. In addition you can also create your own providers that can perform project specific operations. Here's a list of providers included with Rapid Tools.
+
+*SiteAssetProvider* - 
+
+*WebAssetProvider*
+
+*FileAssetProvider*
+
+*WebContentProvider*
+
+*WebContentProvider*
+
+
+=Examples=
+{{{
+<Site Title="Home" Url="/" TemplateID="sts#0" AnonymousState="On" Overwrite="True">
+
+	<Webs>
+		<Web Title="Web 1-1" Url="Web1" TemplateID="sts#0">
+			<Web Title="Web 2-1" Url="Web2-1" TemplateID="sts#0">
+				<Web Title="Web 3-1" Url="Web3-1" TemplateID="sts#0" />
+				<Web Title="Web 3-2" Url="Web3-2" TemplateID="sts#0" />
+				<Web Title="Web 3-3" Url="Web3-3" TemplateID="sts#0" />
+			</Web>
+			<Web Title="Web 2-2" Url="Web2-2" TemplateID="sts#0" />
+			<Web Title="Web 2-3" Url="Web2-3" TemplateID="sts#0" />
+		</Web>
+	</Webs>
+
+	<WebContent Url="/">
+
+		<File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True">
+			<Field Name="ContentTypeId" Type="Text"  Value="" />
+			<Field Name="Summary" Type="Text">
+				<![CDATA[asdf asf asfd]]>
+			</Field>
+		</File>
+
+		<File Url="Shared Documents/File2.txt" Path="Files\File2.txt" Title="file 1" Overwrite="True">
+			<Field Name="Title" Type="Text">
+				<![CDATA[
+					<test>
+						<t1></t1>
+					</test>
+				]]>
+			</Field>
+		</File>
+
+	</WebContent>
+
+	<WebContent Url="/web/web2-1/web3-1">
+
+		<File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True" />
+
+	</WebContent>
+
+</Site>
+}}}
+
+
+=Notes=
