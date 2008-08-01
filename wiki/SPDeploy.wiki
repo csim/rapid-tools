@@ -24,20 +24,20 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 3. *Locate the client folder, and the RapidTools-Client-Install.cmd file.*
 
-4. *Important: open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS8TemplateFolder and VS9TemplateFolder variables are correct.* SPDeploy should point to <Program Files>\MSBuild\SPDeploy\v<SPDeploy Version>, VS8TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
+4. *Important: open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS2005TemplateFolder and VS2008TemplateFolder variables are correct.* SPDeploy should point to <Program Files>\MSBuild\SPDeploy\v<SPDeploy Major Version>, VS2005TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
 
 5. *Run RapidTools-Client-Install.cmd.* You should see several files being copied.
 
 
 *Note: The end result of the installation should be:*
 
-» All files in the client folder are located at <program files>\msbuild\spdeploy\v<SPDeploy Version> -- usually this path is c:\program files\msbuild\spdeploy\v<SPDeploy Version>
+» All files in the client folder are located at <program files>\msbuild\spdeploy\v<SPDeploy Major Version> -- usually this path is c:\program files\msbuild\spdeploy\v<SPDeploy Major Version>
 
-» The SPDeploy_VS8_Template.zip should be located at <my documents>\Visual Studio 2005\Templates\ProjectTemplates
+» The SPDeploy_VS2005_Template.zip should be located at <my documents>\Visual Studio 2005\Templates\ProjectTemplates
 For windows vista this path is usually c:\users\<your username>\documents\Visual Studio 2005\Templates\ProjectTemplates
 For windows xp this path is usually c:\documents and settings\<your username>\my documents\Visual Studio 2005\Templates\ProjectTemplates
 
-» The SPDeploy_VS9_Template.zip should be located at <my documents>\Visual Studio 2008\Templates\ProjectTemplates
+» The SPDeploy_VS2008_Template.zip should be located at <my documents>\Visual Studio 2008\Templates\ProjectTemplates
 For windows vista this path is usually c:\users\<your username>\documents\Visual Studio 2008\Templates\ProjectTemplates
 For windows xp this path is usually c:\documents and settings\<your username>\my documents\Visual Studio 2008\Templates\ProjectTemplates
 
@@ -94,7 +94,7 @@ msbuild /target:<target name> <project name>.csproj
 
 Where <target name> is the msbuild target such as AddWsp or DeployWsp and <project name> is your project's name.
 
-To add visual studio support for launching these targets import the included SPDeploy.vssettings file into visual studio by going to tools -> import/export settings. This will add external tools items that are located under the tools menu in visual studio. You can also customize this further by creating a toolbar or menubar for these tool items. 
+To add visual studio support for launching these targets import the included SPDeploy_VS2005.vssettings or SPDeploy_VS2008.vssettings file into visual studio by going to tools -> import/export settings. This will add external tools items that are located under the tools menu in visual studio. You can also customize this further by creating a toolbar or menubar for these tool items. 
 
 *WARNING: Importing these settings with override all external tools settings inside visual studio.*
 
