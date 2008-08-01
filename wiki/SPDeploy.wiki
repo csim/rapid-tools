@@ -24,18 +24,23 @@ For more information on SharePoint Solution files see http://msdn2.microsoft.com
 
 3. *Locate the client folder, and the RapidTools-Client-Install.cmd file.*
 
-4. *Important: open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS8TemplateFolder and VS9TemplateFolder variables are correct.* SPDeploy should point to <Program Files>\MSBuild\SPDeploy\<SPDeploy Version>, VS8TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
+4. *Important: open the RapidTools-Client-Install.cmd file in notepad and verify that SPDeployFolder, VS8TemplateFolder and VS9TemplateFolder variables are correct.* SPDeploy should point to <Program Files>\MSBuild\SPDeploy\v<SPDeploy Version>, VS8TemplateFolder and VS9TemplateFolder should point to your Visual Studio 2005 and Visual Studio 2008 project template folders, respectively.
 
 5. *Run RapidTools-Client-Install.cmd.* You should see several files being copied.
 
 
 *Note: The end result of the installation should be:*
 
-» All files in the client folder are located at <program files>\msbuild\spdeploy\v2 -- usually this path is c:\program files\msbuild\spdeploy\v2
+» All files in the client folder are located at <program files>\msbuild\spdeploy\v<SPDeploy Version> -- usually this path is c:\program files\msbuild\spdeploy\v<SPDeploy Version>
 
-» The SPDeploy_VS8_Template.zip should be located at <my documents>\Visual Studio 2005\Templates\ProjectTemplates -- for windows vista this path is usually c:\users\<your username>\documents\Visual Studio 2005\Templates\ProjectTemplates, for windows xp this path is usually c:\documents and settings\<your username>\my documents\Visual Studio 2005\Templates\ProjectTemplates
+» The SPDeploy_VS8_Template.zip should be located at <my documents>\Visual Studio 2005\Templates\ProjectTemplates
+For windows vista this path is usually c:\users\<your username>\documents\Visual Studio 2005\Templates\ProjectTemplates
+For windows xp this path is usually c:\documents and settings\<your username>\my documents\Visual Studio 2005\Templates\ProjectTemplates
 
-» The SPDeploy_VS9_Template.zip should be located at <my documents>\Visual Studio 2008\Templates\ProjectTemplates -- for windows vista this path is usually c:\users\<your username>\documents\Visual Studio 2008\Templates\ProjectTemplates, for windows xp this path is usually c:\documents and settings\<your username>\my documents\Visual Studio 2008\Templates\ProjectTemplates
+» The SPDeploy_VS9_Template.zip should be located at <my documents>\Visual Studio 2008\Templates\ProjectTemplates
+For windows vista this path is usually c:\users\<your username>\documents\Visual Studio 2008\Templates\ProjectTemplates
+For windows xp this path is usually c:\documents and settings\<your username>\my documents\Visual Studio 2008\Templates\ProjectTemplates
+
 
 
 ==Creating a Project==
