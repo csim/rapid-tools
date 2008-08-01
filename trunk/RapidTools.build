@@ -99,6 +99,8 @@
 
 			<call target="gc-upload" />
 
+			<delete dir="${zip.dir}" if="${directory::exists(zip.dir)}" />
+
 		</if>
 
 	</target>
