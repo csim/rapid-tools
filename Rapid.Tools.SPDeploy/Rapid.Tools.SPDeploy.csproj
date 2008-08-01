@@ -55,7 +55,7 @@
     <Compile Include="Tasks\PSExec.cs" />
     <Compile Include="Tasks\Stsadm.cs" />
     <Compile Include="Tasks\TranslateTokens.cs" />
-    <Content Include="Template\VS9\Properties\AssemblyInfo.cs" />
+    <Content Include="Template\VS2008\Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MSBuild\pdh.dll" />
@@ -72,36 +72,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MSBuild\SPDeploy_VS9.vssettings" />
-    <Content Include="Template\VS8\manifest.xml">
+    <Content Include="Template\VS2005\manifest.xml">
     </Content>
-    <Content Include="Template\VS8\MyTemplate.vstemplate">
+    <Content Include="Template\VS2005\MyTemplate.vstemplate">
     </Content>
-    <Content Include="Template\VS8\Properties\AssemblyInfo.cs">
+    <Content Include="Template\VS2005\Properties\AssemblyInfo.cs">
     </Content>
-    <Content Include="Template\VS8\Properties\SPDeploy.user" />
-    <Content Include="Template\VS8\SPDeploy.csproj">
+    <Content Include="Template\VS2005\Properties\SPDeploy.user" />
+    <Content Include="Template\VS2005\SPDeploy.csproj">
     </Content>
-    <Content Include="Template\VS8\__TemplateIcon.ico" />
-    <Content Include="Template\VS9\manifest.xml" />
-    <Content Include="Template\VS9\MyTemplate.vstemplate" />
-    <Content Include="Template\VS9\Properties\SPDeploy.user" />
-    <Content Include="Template\VS9\SPDeploy.csproj" />
-    <Content Include="Template\VS9\__TemplateIcon.ico" />
+    <Content Include="Template\VS2005\__TemplateIcon.ico" />
+    <Content Include="Template\VS2008\manifest.xml" />
+    <Content Include="Template\VS2008\MyTemplate.vstemplate" />
+    <Content Include="Template\VS2008\Properties\SPDeploy.user" />
+    <Content Include="Template\VS2008\SPDeploy.csproj" />
+    <Content Include="Template\VS2008\__TemplateIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_etc\RapidTools-Client-Install.cmd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-
-	<Target Name="AfterBuild">
-
-		<CreateItem Include="_etc\*.txt;_etc\*.cmd;_etc\*.wsp">
-			<Output TaskParameter="Include" ItemName="EtcFiles" />
-		</CreateItem>
-		<Copy SourceFiles="@(EtcFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-
-		<CreateItem Include="Template\VS8\**" Exclude="**\*svn\**">
+  <Target Name="AfterBuild">
+    <CreateItem Include="_etc\*.txt;_etc\*.cmd;_etc\*.wsp">
+      <Output TaskParameter="Include" ItemName="EtcFiles" />
+    </CreateItem>
+    <Copy SourceFiles="@(EtcFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <CreateItem Include="Template\VS8\**" Exclude="**\*svn\**">
       <Output TaskParameter="Include" ItemName="VS8TemplateFiles" />
     </CreateItem>
     <Zip Files="@(VS8TemplateFiles)" ZipFileName="$(OutputPath)SPDeploy_VS8_Template.zip" WorkingDirectory="Template\VS8" />
