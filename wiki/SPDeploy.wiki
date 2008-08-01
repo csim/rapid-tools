@@ -126,4 +126,4 @@ In the modules window you should now see that the symbols for your assembly are 
 
 
 ==Feedback==
-If you have comments, suggestions or requests please email me at clints@ascentium.com
+If you have comments, suggestions or requests please email me at [mailto:clints@ascentium.com clints@ascentium.com]
