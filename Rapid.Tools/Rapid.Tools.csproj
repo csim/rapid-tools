@@ -112,6 +112,7 @@
     <None Include="Properties\key.snk" />
     <None Include="_etc\RapidTools-Server-Uninstall.cmd" />
     <None Include="_etc\RapidTools-Server-Install.cmd" />
+    <Content Include="Domain\Provision\SampleProvisionManifest2.xml" />
     <Content Include="Domain\Provision\SampleProvisionManifest.xml" />
     <Content Include="TemplateFiles\Layouts\RapidTools\RapidTools.config" />
     <Content Include="TemplateFiles\Layouts\RapidTools\Services\AddIn.asmx" />

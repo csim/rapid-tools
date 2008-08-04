@@ -24,8 +24,6 @@ namespace Rapid.Tools.Domain.Provision
 			EnsureInitialize();
 		}
 
-
-
 		public void Import()
 		{
 			WriteMessage("Begin import from");
@@ -33,10 +31,6 @@ namespace Rapid.Tools.Domain.Provision
 
 			ExecuteChildren(Manifest.DocumentElement);
 		}
-
-		//public void Export()
-		//{
-		//}
 
 	}
 
