@@ -9,13 +9,13 @@
 
 	<!-- ***** Developer specific properties ******************** -->
 
-	<PropertyGroup Condition="'$(USERNAME)' == 'clints1'">
+	<PropertyGroup Condition="'$(USERNAME)' == 'clints'">
 		<WspServerName>mordor.int.ascentium.com</WspServerName>
 		<WebApplicationPort>101</WebApplicationPort>
 		<LocalDeployment>True</LocalDeployment>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(USERNAME)' == 'clints'">
+	<PropertyGroup Condition="'$(USERNAME)' == 'clints1'">
 		<WspServerName>mtdoom</WspServerName>
 		<WebApplicationPort>81</WebApplicationPort>
 		<LocalDeployment>False</LocalDeployment>
