@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.CompileWsp" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
 	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.Stsadm" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
@@ -12,6 +12,9 @@
 
 		<LocalDeployment>False</LocalDeployment>
 		<StsadmPath>C:\Program Files\Common Files\Microsoft Shared\web server extensions\12\BIN\stsadm.exe</StsadmPath>
+
+		<AssemblyBinDeployment>False</AssemblyBinDeployment>
+		<WebApplicationRootDirectory></WebApplicationRootDirectory>
 
 		<WspFilename>$(TargetName).wsp</WspFilename>
 		<WspManifestPath>$(MSBuildProjectDirectory)\manifest.xml</WspManifestPath>
@@ -107,14 +110,59 @@
 	<Target Name="BeforeCycleSite" />
 	<Target Name="AfterCycleSite" />
 
+	<Target Name="BeforeCopyOutput" />
+	<Target Name="AfterCopyOutput" />
+	
+
 
 	<Import Project="$(UserSettingsPath)" Condition="Exists('$(UserSettingsPath)')" />
 
 
-	<!-- ************************ CompileWsp *********************************** -->
+	<!-- ************************ Initalize Dependancies *********************************** -->
+	<PropertyGroup Condition="$(LocalDeployment) == 'True'">
+		<AddWspDependsOn>SPDeployInit; BeforeAddWsp; CompileWsp; CopyOutput; CoreAddWspLocal; AfterAddWsp</AddWspDependsOn>
+		<DeployWspDependsOn>SPDeployInit; BeforeDeployWsp; CopyOutput; CoreDeployWspLocal; AfterDeployWsp</DeployWspDependsOn>
+		<UpgradeWspDependsOn>SPDeployInit; BeforeUpgradeWsp; CompileWsp; CopyOutput; CoreUpgradeWspLocal; AfterUpgradeWsp</UpgradeWspDependsOn>
+		<RetractWspDependsOn>SPDeployInit; BeforeRetractWsp; CoreRetractWspLocal; AfterRetractWsp</RetractWspDependsOn>
+		<DeleteWspDependsOn>SPDeployInit; BeforeDeleteWsp; CoreDeleteWspLocal; AfterDeleteWsp</DeleteWspDependsOn>
+
+		<CreateWebApplicationDependsOn>SPDeployInit; BeforeCreateWebApplication; CoreCreateWebApplicationLocal; AfterCreateWebApplication</CreateWebApplicationDependsOn>
+		<DeleteWebApplicationDependsOn>SPDeployInit; BeforeDeleteWebApplication; CoreDeleteWebApplicationLocal; AfterDeleteWebApplication</DeleteWebApplicationDependsOn>
+
+		<CreateSiteDependsOn>SPDeployInit; BeforeCreateSite; CoreCreateSiteLocal; AfterCreateSite</CreateSiteDependsOn>
+		<DeleteSiteDependsOn>SPDeployInit; BeforeDeleteSite; CoreDeleteSiteLocal; AfterDeleteSite</DeleteSiteDependsOn>
+
+		<UpgradeIncrementalAssemblyDependsOn>SPDeployInit; Build; BeforeUpgradeIncrementalAssembly; CopyOutput; CoreUpgradeIncrementalAssemblyLocal; AfterUpgradeIncrementalAssembly</UpgradeIncrementalAssemblyDependsOn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''">
+		<AddWspDependsOn>SPDeployInit; BeforeAddWsp; CompileWsp; CopyOutput; CoreAddWsp; AfterAddWsp</AddWspDependsOn>
+		<DeployWspDependsOn>SPDeployInit; BeforeDeployWsp; CopyOutput; CoreDeployWsp; AfterDeployWsp</DeployWspDependsOn>
+		<UpgradeWspDependsOn>SPDeployInit; BeforeUpgradeWsp; CompileWsp; CopyOutput; CoreUpgradeWsp; AfterUpgradeWsp</UpgradeWspDependsOn>
+		<RetractWspDependsOn>SPDeployInit; BeforeRetractWsp; CoreRetractWsp; AfterRetractWsp</RetractWspDependsOn>
+		<DeleteWspDependsOn>SPDeployInit; BeforeDeleteWsp; CoreDeleteWsp; AfterDeleteWsp</DeleteWspDependsOn>
+
+		<CreateWebApplicationDependsOn>SPDeployInit; BeforeCreateWebApplication; CoreCreateWebApplication; AfterCreateWebApplication</CreateWebApplicationDependsOn>
+		<DeleteWebApplicationDependsOn>SPDeployInit; BeforeDeleteWebApplication; CoreDeleteWebApplication; AfterDeleteWebApplication</DeleteWebApplicationDependsOn>
+
+		<CreateSiteDependsOn>SPDeployInit; BeforeCreateSite; CoreCreateSite; AfterCreateSite</CreateSiteDependsOn>
+		<DeleteSiteDependsOn>SPDeployInit; BeforeDeleteSite; CoreDeleteSite; AfterDeleteSite</DeleteSiteDependsOn>
+
+	</PropertyGroup>
+
 	<PropertyGroup>
 		<CompileWspDependsOn>SPDeployInit; Build; BeforeCompileWsp; CoreCompileWsp; AfterCompileWsp</CompileWspDependsOn>
+		<UpgradeIncrementalFilesDependsOn>SPDeployInit; BeforeUpgradeIncrementalFiles; CoreUpgradeIncrementalFiles; AfterUpgradeIncrementalFiles</UpgradeIncrementalFilesDependsOn>
+		<UpgradeIncrementalAssemblyDependsOn>SPDeployInit; Build; BeforeUpgradeIncrementalAssembly; CopyOutput; CoreUpgradeIncrementalAssembly; AfterUpgradeIncrementalAssembly</UpgradeIncrementalAssemblyDependsOn>
+		<CopyOutputdependsOn>BeforeCopyOutput; CopyOutputCore; AfterCopyOutput</CopyOutputdependsOn>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="$(AssemblyBinDeployment) == 'True'">
+		<UpgradeIncrementalAssemblyDependsOn>SPDeployInit; Build; BeforeUpgradeIncrementalAssembly; CopyOutput; CoreUpgradeIncrementalAssemblyBin; AfterUpgradeIncrementalAssembly</UpgradeIncrementalAssemblyDependsOn>
+	</PropertyGroup>
+
+
+	<!-- ************************ CompileWsp *********************************** -->
 
 	<Target Name="CompileWsp" DependsOnTargets="$(CompileWspDependsOn)" />
 
@@ -154,14 +202,15 @@
 
 
 	<!-- ************************ AddWsp *********************************** -->
-	<Target Name="AddWsp" DependsOnTargets="SPDeployInit; BeforeAddWsp; CompileWsp; CopyOutput; CoreAddWsp; AfterAddWsp" />
+	<Target Name="AddWsp" DependsOnTargets="$(AddWspDependsOn)" />
+
+	<Target Name="CoreAddWspLocal">
+		<Message Text="stsadm $(AddWspCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(AddWspCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+	</Target>
 
 	<Target Name="CoreAddWsp">
-
-		<Exec Command="&quot;$(StsadmPath)&quot; $(AddWspCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-
 		<Stsadm Server="$(WspServerName)" Command="$(AddWspCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -175,15 +224,21 @@
 
 
 	<!-- ************************ DeployWsp *********************************** -->
-	<Target Name="DeployWsp" DependsOnTargets="SPDeployInit; BeforeDeployWsp; CopyOutput; CoreDeployWsp; AfterDeployWsp" />
+	<Target Name="DeployWsp" DependsOnTargets="$(DeployWspDependsOn)" />
+
+	<Target Name="CoreDeployWspLocal">
+
+		<Message Text="stsadm $(DeployWspCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(DeployWspCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(ExecAdminJobsCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(ExecAdminJobsCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
 
 	<Target Name="CoreDeployWsp">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(DeployWspCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-		<Exec Command="&quot;$(StsadmPath)&quot; $(ExecAdminJobsCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
 
 		<Stsadm Server="$(WspServerName)" Command="$(DeployWspCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -191,7 +246,6 @@
 		  	PSExecPassword="$(PSExecPassword)" />
 
 		<Stsadm Server="$(WspServerName)" Command="$(ExecAdminJobsCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -203,15 +257,20 @@
 
 
 	<!-- ************************ UpgradeWsp *********************************** -->
-	<Target Name="UpgradeWsp" DependsOnTargets="SPDeployInit; BeforeUpgradeWsp; CompileWsp; CopyOutput; CoreUpgradeWsp; AfterUpgradeWsp" />
+	<Target Name="UpgradeWsp" DependsOnTargets="$(UpgradeWspDependsOn)" />
+
+	<Target Name="CoreUpgradeWspLocal">
+
+		<Message Text="stsadm $(UpgradeWspCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(UpgradeWspCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(ExecAdminJobsCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(ExecAdminJobsCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
 
 	<Target Name="CoreUpgradeWsp">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(UpgradeWspCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-		<Exec Command="&quot;$(StsadmPath)&quot; $(ExecAdminJobsCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-
 		<Stsadm Server="$(WspServerName)" Command="$(UpgradeWspCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -219,7 +278,6 @@
 		  	PSExecPassword="$(PSExecPassword)" />
 
 		<Stsadm Server="$(WspServerName)" Command="$(ExecAdminJobsCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -233,7 +291,7 @@
 
 
 	<!-- ************************ UpgradeIncrementalFiles *********************************** -->
-	<Target Name="UpgradeIncrementalFiles" DependsOnTargets="SPDeployInit; BeforeUpgradeIncrementalFiles; CoreUpgradeIncrementalFiles; AfterUpgradeIncrementalFiles" />
+	<Target Name="UpgradeIncrementalFiles" DependsOnTargets="$(UpgradeIncrementalFilesDependsOn)" />
 
 	<Target Name="CoreUpgradeIncrementalFiles"
 		Inputs="@(WspSourceRootFiles);@(WspSourceTemplateFiles)"
@@ -251,22 +309,32 @@
 
 
 	<!-- ************************ UpgradeIncrementalAssembly *********************************** -->
-	<Target Name="UpgradeIncrementalAssembly" DependsOnTargets="SPDeployInit; Build; BeforeUpgradeIncrementalAssembly; CopyOutput; CoreUpgradeIncrementalAssembly; AfterUpgradeIncrementalAssembly" />
+	<Target Name="UpgradeIncrementalAssembly" DependsOnTargets="$(UpgradeIncrementalAssemblyDependsOn)" />
+
+	<Target Name="CoreUpgradeIncrementalAssemblyLocal">
+
+		<Message Text="$(InstallAssemblyCommand)" />
+		<Exec Command="$(InstallAssemblyCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="$(IISResetCommand)" />
+		<Exec Command="$(IISResetCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
+
+	<Target Name="CoreUpgradeIncrementalAssemblyBin">
+
+		<Copy SourceFiles="@(AssemblyOutput)" DestinationFolder="$(WebApplicationRootDirectory)Bin" SkipUnchangedFiles="true" />
+
+	</Target>
 
 	<Target Name="CoreUpgradeIncrementalAssembly">
 
-		<Exec Command="$(InstallAssemblyCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-		<Exec Command="$(IISResetCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-
 		<PSExec Server="$(WspServerName)" Command="$(InstallAssemblyCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 		  	PSExecUsername="$(PSExecUsername)"
 		  	PSExecPassword="$(PSExecPassword)" />
 
 		<PSExec Server="$(WspServerName)" Command="$(IISResetCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 		  	PSExecUsername="$(PSExecUsername)"
@@ -275,26 +343,28 @@
 	</Target>
 
 
-
 	<!-- ************************ RetractWsp *********************************** -->
-	<Target Name="RetractWsp" DependsOnTargets="SPDeployInit; BeforeRetractWsp; CoreRetractWsp; AfterRetractWsp" />
+	<Target Name="RetractWsp" DependsOnTargets="$(RetractWspDependsOn)" />
+
+	<Target Name="CoreRetractWspLocal">
+
+		<Message Text="stsadm $(RetractWspCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(RetractWspCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(ExecAdminJobsCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(ExecAdminJobsCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
 
 	<Target Name="CoreRetractWsp">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(RetractWspCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-		<Exec Command="&quot;$(StsadmPath)&quot; $(ExecAdminJobsCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
-
 		<Stsadm Server="$(WspServerName)" Command="$(RetractWspCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
 		  	PSExecUsername="$(PSExecUsername)"
 		  	PSExecPassword="$(PSExecPassword)" />
 
-
 		<Stsadm Server="$(WspServerName)" Command="$(ExecAdminJobsCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -307,14 +377,18 @@
 
 
 	<!-- ************************ DeleteWsp *********************************** -->
-	<Target Name="DeleteWsp" DependsOnTargets="SPDeployInit; BeforeDeleteWsp; CoreDeleteWsp; AfterDeleteWsp" />
+	<Target Name="DeleteWsp" DependsOnTargets="$(DeleteWspDependsOn)" />
 
-	<Target Name="CoreDeleteWsp" DependsOnTargets="SPDeployInit">
+	<Target Name="CoreDeleteWspLocal">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(DeleteWspCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(DeleteWspCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(DeleteWspCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
+
+	<Target Name="CoreDeleteWsp">
 
 		<Stsadm Server="$(WspServerName)" Command="$(DeleteWspCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -334,14 +408,19 @@
 
 
 	<!-- ************************ CreateWebApplication *********************************** -->
-	<Target Name="CreateWebApplication" DependsOnTargets="SPDeployInit; BeforeCreateWebApplication; CoreCreateWebApplication; AfterCreateWebApplication" />
+	<Target Name="CreateWebApplication" DependsOnTargets="$(CreateWebApplicationDependsOn)" />
 
-	<Target Name="CoreCreateWebApplication" DependsOnTargets="SPDeployInit">
+	<Target Name="CoreCreateWebApplicationLocal">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(CreateWebApplicationCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="C:\" />
+		<Message Text="stsadm $(CreateWebApplicationCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(CreateWebApplicationCommand)" WorkingDirectory="C:\" />
+
+	</Target>
+
+	<Target Name="CoreCreateWebApplication">
+
 
 		<Stsadm Server="$(WspServerName)" Command="$(CreateWebApplicationCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="C:\"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -354,14 +433,19 @@
 
 
 	<!-- ************************ DeleteWebApplication *********************************** -->
-	<Target Name="DeleteWebApplication" DependsOnTargets="SPDeployInit; BeforeDeleteWebApplication; CoreDeleteWebApplication; AfterDeleteWebApplication" />
+	<Target Name="DeleteWebApplication" DependsOnTargets="$(DeleteWebApplicationDependsOn)" />
 
-	<Target Name="CoreDeleteWebApplication" DependsOnTargets="SPDeployInit">
+	<Target Name="CoreDeleteWebApplicationLocal">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(DeleteWebApplicationCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(DeleteWebApplicationCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(DeleteWebApplicationCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
+
+	<Target Name="CoreDeleteWebApplication">
+
 
 		<Stsadm Server="$(WspServerName)" Command="$(DeleteWebApplicationCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -373,14 +457,18 @@
 
 
 	<!-- ************************ CreateSite *********************************** -->
-	<Target Name="CreateSite" DependsOnTargets="SPDeployInit; BeforeCreateSite; CoreCreateSite; AfterCreateSite" />
+	<Target Name="CreateSite" DependsOnTargets="$(CreateSiteDependsOn)" />
 
-	<Target Name="CoreCreateSite" DependsOnTargets="SPDeployInit">
+	<Target Name="CoreCreateSiteLocal">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(CreateSiteCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(CreateSiteCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(CreateSiteCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
+
+	<Target Name="CoreCreateSite">
 
 		<Stsadm Server="$(WspServerName)" Command="$(CreateSiteCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -392,14 +480,19 @@
 
 
 	<!-- ************************ DeleteSite *********************************** -->
-	<Target Name="DeleteSite" DependsOnTargets="SPDeployInit; BeforeDeleteSite; CoreDeleteSite; AfterDeleteSite" />
+	<Target Name="DeleteSite" DependsOnTargets="$(DeleteSiteDependsOn)" />
 
-	<Target Name="CoreDeleteSite" DependsOnTargets="SPDeployInit">
+	<Target Name="CoreDeleteSiteLocal">
 
-		<Exec Command="&quot;$(StsadmPath)&quot; $(DeleteSiteCommand)" Condition="$(LocalDeployment) == 'True'" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+		<Message Text="stsadm $(DeleteSiteCommand)" />
+		<Exec Command="&quot;$(StsadmPath)&quot; $(DeleteSiteCommand)" WorkingDirectory="$(WspRemoteLocalTempDir)" />
+
+	</Target>
+
+	<Target Name="CoreDeleteSite">
+
 
 		<Stsadm Server="$(WspServerName)" Command="$(DeleteSiteCommand)"
-			Condition="$(LocalDeployment) == 'False' or $(LocalDeployment) == ''"
 			RemoteWorkingDir="$(WspRemoteLocalTempDir)"
 			PSExecExePath="$(PSExecPath)"
 			StsadmExePath="$(StsadmPath)"
@@ -430,16 +523,18 @@
 	</Target>
 
 
-	<Target Name="CopyOutput">
+	<Target Name="CopyOutput" DependsOnTargets="$(CopyOutputdependsOn)" />
+	
+	<Target Name="CopyOutputCore" DependsOnTargets="">
 
 		<CreateItem Include="$(OutDir)$(WspFilename)">
 			<Output TaskParameter="Include" ItemName="WspOutput" />
 		</CreateItem>
 
 		<Copy SourceFiles="@(WspOutput)" DestinationFolder="$(WspRemoteTempDir)" SkipUnchangedFiles="true" />
-		
+
 		<Copy SourceFiles="@(AssemblyOutput)" DestinationFolder="$(WspRemoteTempDir)" SkipUnchangedFiles="true" />
-		
+
 	</Target>
 
 
