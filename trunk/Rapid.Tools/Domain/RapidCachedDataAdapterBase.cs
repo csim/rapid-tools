@@ -33,7 +33,7 @@ namespace Rapid.Tools.Domain
 		{
 			get
 			{
-				return string.Format("Rapid.{0}.Data", GetType().Name);
+				return string.Format("RapidTools.{0}.Data", GetType().Name);
 			}
 		}
 
