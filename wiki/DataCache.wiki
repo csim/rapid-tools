@@ -32,7 +32,6 @@ public abstract class RapidCachedDataAdapterBase<TData>	where TData : class
 	protected T DeserializeInternal<T>(string data);
 
 	public virtual void InvalidateCache();
-
 }
 }}}
 
@@ -54,7 +53,7 @@ Notes:
 Here's a sample subclass:
 {{{
 public class FaqDataAdapter : RapidCachedDataAdapterBase<DataTable>
-	{
+{
 	public FaqDataAdapter()    : base(SPContext.Current.Site.ID)
 	{
 	}
@@ -69,18 +68,18 @@ public class FaqDataAdapter : RapidCachedDataAdapterBase<DataTable>
 
 	protected override DataTable GetNativeData()
 	{
-	DataTable table = null;
+		DataTable table = null;
 
-	SPSecurity.RunWithElevatedPrivileges(() =>
-	{
-		using (SPSite esite = new SPSite(SiteID))
+		SPSecurity.RunWithElevatedPrivileges(() =>
 		{
-			SPList list = esite.RootWeb.GetList("faq");
-			table = list.Items.GetDataTable();
-		}
-	});
+			using (SPSite esite = new SPSite(SiteID))
+			{
+				SPList list = esite.RootWeb.GetList("faq");
+				table = list.Items.GetDataTable();
+			}
+		});
 
-	return table;
+		return table;
 	}
 
 	protected override string Serialize(DataTable data)
@@ -100,6 +99,7 @@ public class FaqDataAdapter : RapidCachedDataAdapterBase<DataTable>
 
 		var ds = DeserializeInternal<DataSet>(data);
 		return ds.Tables[0];
+		
     }
 }
 }}}
