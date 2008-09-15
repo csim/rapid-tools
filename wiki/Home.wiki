@@ -10,3 +10,5 @@ Traditionally using the SDL with the SharePoint platform has been a painful and 
 *[Provisioning_Framework Provisioning Framework]* is set of APIs that allow you provision a SharePoint assets including Site Collections, Sites, Pages and Files.
 
 *[Exception_Display Exception Display]* is a component allows you to control the SharePoint's unhandled exception behavior.
+
+*[DataCache Data Cache]* allows you to cache data inside the SharePoint content database. This provides high performance data caching in web applications and also non-web applications, including SPtimer Jobs, stsadm command, WinForms applications and console applications.
