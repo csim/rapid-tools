@@ -100,7 +100,7 @@ public class FaqDataAdapter : RapidCachedDataAdapterBase<DataTable>
 		var ds = DeserializeInternal<DataSet>(data);
 		return ds.Tables[0];
 		
-    }
+	}
 }
 }}}
 
