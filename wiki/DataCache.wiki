@@ -1,3 +1,4 @@
+#labels Featured
 [Home] | [http://code.google.com/p/rapid-tools/w/list Index]
 
 Data caching is a core concept in the web dominated world that we live in. The premise is that we should not have to go back to retrieve data from a data store for every single web request when the data is unchanged, thereby sharing data across web requests. This offers huge performance advantages because all latency related to data fetching, query processing and transmission is eliminated for requests that use the same data. In the SharePoint world this can be a very valuable technique when querying MOSS page libraries or any data stored in the content database. For high traffic sites, the performance of the SPQuery or SPSiteDataQuery api is not acceptable when executing queries for each request.
