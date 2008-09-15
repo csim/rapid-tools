@@ -54,10 +54,6 @@ Here's a sample subclass:
 {{{
 public class FaqDataAdapter : RapidCachedDataAdapterBase<DataTable>
 {
-	public FaqDataAdapter()    : base(SPContext.Current.Site.ID)
-	{
-	}
-
 	public FaqDataAdapter(Guid siteID) : base(siteID)
 	{
 	}
