@@ -44,7 +44,7 @@ Notes:
 
 *The CacheTimeoutMinutes property determines how long the cached data will live.* An automatic refresh will be triggered when the timeout period expires. The timeout period is set to 20 minutes by default but you can override this in your subclass.
 
-		*You need to handle cache invalidation when native data changes.* Cache invalidation is supported by the base class, but it is only called automatically if the cache expires due to a cache timeout. You will need to identify the cases where you would like to invalidate the cache and call InvalidateCache() at the appropriated time. Usually you would invalidate the cache when you detect that data has changed, such as when a user changes a list item. In this case you would need to have a feature receiver to detect the change and call InvalidateCache().
+*You need to handle cache invalidation when native data changes.* Cache invalidation is supported by the base class, but it is only called automatically if the cache expires due to a cache timeout. You will need to identify the cases where you would like to invalidate the cache and call InvalidateCache() at the appropriated time. Usually you would invalidate the cache when you detect that data has changed, such as when a user changes a list item. In this case you would need to have a feature receiver to detect the change and call InvalidateCache().
 
 *The CachedData property used for data access.* The CachedData property will either load the cache or retrieve the cache depending on the situation. You can use the CachedData property as the single access for data.
 
