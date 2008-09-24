@@ -61,7 +61,8 @@ namespace Rapid.Tools.Providers.Provision
 				else
 				{
 					create = false;
-					Manager.WriteMessage("Site", string.Format("Site at \"{0}\" already exists.", url));
+					icontext.Web = site.RootWeb;
+					Manager.WriteMessage("Site at \"{0}\" already exists.", url);
 				}
 			}
 
@@ -82,7 +83,6 @@ namespace Rapid.Tools.Providers.Provision
 											SPWeb.WebAnonymousState anonymousState, string ownerlogin, string ownername, string owneremail)
 		{
 			SPSite newsite;
-
 
 			newsite = webapp.Sites.Add(url, title, description, 1033, templateID, ownerlogin, ownername, owneremail);
 			newsite.RootWeb.AnonymousState = anonymousState;
