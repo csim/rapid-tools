@@ -171,8 +171,10 @@ namespace Rapid.Tools.Domain
 				if (node is XmlElement && node.Name != "Providers")
 				{
 					element = (XmlElement)node;
+					string olabel = MessageLabel;
 					MessageLabel = element.Name;
 					Execute(element, context);
+					MessageLabel = olabel;
 				}
 			}
 		}
