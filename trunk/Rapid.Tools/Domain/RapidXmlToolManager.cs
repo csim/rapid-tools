@@ -165,18 +165,18 @@ namespace Rapid.Tools.Domain
 		{
 			EnsureInitialize();
 			XmlElement element;
+			string olabel = MessageLabel;
 
 			foreach (XmlNode node in contextElement.ChildNodes)
 			{
 				if (node is XmlElement && node.Name != "Providers")
 				{
 					element = (XmlElement)node;
-					string olabel = MessageLabel;
-					MessageLabel = element.Name;
 					Execute(element, context);
-					MessageLabel = olabel;
 				}
 			}
+
+			MessageLabel = olabel;
 		}
 
 
@@ -198,6 +198,7 @@ namespace Rapid.Tools.Domain
 
 			try
 			{
+				MessageLabel = element.Name;
 				provider.Execute(element, context);
 			}
 			catch (Exception ex)
