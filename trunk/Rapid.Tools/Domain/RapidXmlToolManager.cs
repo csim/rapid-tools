@@ -165,7 +165,7 @@ namespace Rapid.Tools.Domain
 		{
 			EnsureInitialize();
 			XmlElement element;
-			string olabel = MessageLabel;
+			
 
 			foreach (XmlNode node in contextElement.ChildNodes)
 			{
@@ -176,7 +176,7 @@ namespace Rapid.Tools.Domain
 				}
 			}
 
-			MessageLabel = olabel;
+			
 		}
 
 
@@ -189,6 +189,10 @@ namespace Rapid.Tools.Domain
 		public virtual void Execute(XmlElement element, RapidXmlToolProviderContext context)
 		{
 			EnsureInitialize();
+			
+			string olabel = MessageLabel;
+			MessageLabel = element.Name;
+
 			if (element == null) throw new ArgumentException("element cannot be null.");
 
 			RapidXmlToolProviderBase provider = GetProvider(element.Name);
@@ -198,13 +202,14 @@ namespace Rapid.Tools.Domain
 
 			try
 			{
-				MessageLabel = element.Name;
 				provider.Execute(element, context);
 			}
 			catch (Exception ex)
 			{
 				WriteError(ex);
 			}
+
+			MessageLabel = olabel;
 		}
 
 
