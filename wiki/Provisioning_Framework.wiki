@@ -37,48 +37,65 @@ By default rapid tools comes with a set of providers that cover the most common 
 
 =Examples=
 {{{
-<Site Title="Home" Url="/" TemplateID="sts#0" AnonymousState="On" Overwrite="True">
+<ProvisionManifest>
 
-	<Webs>
-		<Web Title="Web 1-1" Url="Web1" TemplateID="sts#0">
-			<Web Title="Web 2-1" Url="Web2-1" TemplateID="sts#0">
-				<Web Title="Web 3-1" Url="Web3-1" TemplateID="sts#0" />
-				<Web Title="Web 3-2" Url="Web3-2" TemplateID="sts#0" />
-				<Web Title="Web 3-3" Url="Web3-3" TemplateID="sts#0" />
-			</Web>
-			<Web Title="Web 2-2" Url="Web2-2" TemplateID="sts#0" />
-			<Web Title="Web 2-3" Url="Web2-3" TemplateID="sts#0" />
-		</Web>
-	</Webs>
+    <Providers>
+        <Provider Name="Assets" Type="Rapid.Tools.Providers.Provision.AssetContainer, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+        <Provider Name="Webs" Type="Rapid.Tools.Providers.Provision.AssetContainer, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
 
-	<WebContent Url="/">
+        <Provider Name="Site" Type="Rapid.Tools.Providers.Provision.SiteAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+        <Provider Name="Web" Type="Rapid.Tools.Providers.Provision.WebAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
 
-		<File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True">
-			<Field Name="ContentTypeId" Type="Text"  Value="" />
-			<Field Name="Summary" Type="Text">
-				<![CDATA[asdf asf asfd]]>
-			</Field>
-		</File>
+        <Provider Name="WebContent" Type="Rapid.Tools.Providers.Provision.WebContentProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+        <Provider Name="File" Type="Rapid.Tools.Providers.Provision.FileAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
+        <Provider Name="Field" Type="Rapid.Tools.Providers.Provision.FieldAssetProvider, Rapid.Tools, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e77eaa598d0ab3d8" />
 
-		<File Url="Shared Documents/File2.txt" Path="Files\File2.txt" Title="file 1" Overwrite="True">
-			<Field Name="Title" Type="Text">
-				<![CDATA[
+        <Provider Name="RapidPage" Type="Rapid.Wcm.Providers.Provision.RapidPageProvider, Rapid.Wcm, Version=4.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+        <Provider Name="RapidBlog" Type="Rapid.Wcm.Providers.Provision.RapidBlogProvider, Rapid.Wcm, Version=4.0.0.0, Culture=neutral, PublicKeyToken=a1df43608d33992f" />
+    </Providers>
+    <Site Title="Home" Url="/" TemplateID="sts#0" AnonymousState="On" Overwrite="True">
+
+        <Webs>
+            <Web Title="Web 1-1" Url="Web1" TemplateID="sts#0">
+                <Web Title="Web 2-1" Url="Web2-1" TemplateID="sts#0">
+                    <Web Title="Web 3-1" Url="Web3-1" TemplateID="sts#0" />
+                    <Web Title="Web 3-2" Url="Web3-2" TemplateID="sts#0" />
+                    <Web Title="Web 3-3" Url="Web3-3" TemplateID="sts#0" />
+                </Web>
+                <Web Title="Web 2-2" Url="Web2-2" TemplateID="sts#0" />
+                <Web Title="Web 2-3" Url="Web2-3" TemplateID="sts#0" />
+            </Web>
+        </Webs>
+
+        <WebContent Url="/">
+
+            <File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True">
+                <Field Name="ContentTypeId" Type="Text"  Value="" />
+                <Field Name="Summary" Type="Text">
+                    <![CDATA[asdf asf asfd]]>
+                </Field>
+            </File>
+
+            <File Url="Shared Documents/File2.txt" Path="Files\File2.txt" Title="file 1" Overwrite="True">
+                <Field Name="Title" Type="Text">
+                    <![CDATA[
 					<test>
 						<t1></t1>
 					</test>
 				]]>
-			</Field>
-		</File>
+                </Field>
+            </File>
 
-	</WebContent>
+        </WebContent>
 
-	<WebContent Url="/web/web2-1/web3-1">
+        <WebContent Url="/web/web2-1/web3-1">
 
-		<File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True" />
+            <File Url="Shared Documents/File1.txt" Path="Files\File1.txt" Title="file 1"  Overwrite="True" />
 
-	</WebContent>
+        </WebContent>
 
-</Site>
+    </Site>
+</ProvisionManifest>
 }}}
 
 
