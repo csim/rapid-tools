@@ -19,8 +19,6 @@ By default rapid tools comes with a set of providers that cover the most common 
 
 *WebContentProvider*
 
-*WebContentProvider*
-
 
 =Examples=
 {{{
