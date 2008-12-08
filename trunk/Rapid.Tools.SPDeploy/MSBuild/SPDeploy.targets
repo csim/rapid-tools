@@ -115,9 +115,6 @@
 	
 
 
-	<Import Project="$(UserSettingsPath)" Condition="Exists('$(UserSettingsPath)')" />
-
-
 	<!-- ************************ Initalize Dependancies *********************************** -->
 	<PropertyGroup>
 		<AddWspDependsOn>SPDeployInit; BeforeAddWsp; CompileWsp; CopyOutput; CoreAddWsp; AfterAddWsp</AddWspDependsOn>
@@ -140,6 +137,9 @@
 	</PropertyGroup>
 
 
+	<Import Project="$(UserSettingsPath)" Condition="Exists('$(UserSettingsPath)')" />
+
+	
 	<!-- ************************ CompileWsp *********************************** -->
 
 	<Target Name="CompileWsp" DependsOnTargets="$(CompileWspDependsOn)" />

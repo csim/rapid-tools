@@ -46,7 +46,12 @@
 
 	</PropertyGroup>
 
+	<Target Name="AfterBuild">
+		<!-- If this is a Team Build, then compile the WSP -->
+		<CallTarget Targets="BeforeCompileWsp; CoreCompileWsp; AfterCompileWsp" Condition="$(BuildDefinition) != ''" />
+	</Target>
 
+	
 	<!-- *** Global properties for all users  -->
 
 	<Choose>
