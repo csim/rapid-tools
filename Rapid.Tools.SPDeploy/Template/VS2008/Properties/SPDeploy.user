@@ -104,7 +104,12 @@
 
 	</PropertyGroup>
 
+	<Target Name="AfterBuild">
+		<!-- If this is a Team Build, then compile the WSP -->
+		<CallTarget Targets="BeforeCompileWsp; CoreCompileWsp; AfterCompileWsp" Condition="$(BuildDefinition) != ''" />
+	</Target>
 
+	
 	<!-- *** Override these targets to perform actions before or after the indicated action
 		
 	<Target Name="BeforeCompileWsp"/>
