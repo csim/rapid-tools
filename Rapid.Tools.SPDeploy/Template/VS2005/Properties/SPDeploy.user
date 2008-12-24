@@ -1,4 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
 
 	<PropertyGroup>
 		<LocalDeployment>False</LocalDeployment>
@@ -47,11 +48,26 @@
 	</PropertyGroup>
 
 	<Target Name="AfterBuild">
+		<CallTarget Targets="CopyExtras" />
 		<!-- If this is a Team Build, then compile the WSP -->
 		<CallTarget Targets="BeforeCompileWsp; CoreCompileWsp; AfterCompileWsp" Condition="$(BuildDefinition) != ''" />
 	</Target>
 
-	
+	<Target Name="CopyExtras">
+		<CreateItem Include="..\_etc\**;..\_references\**" Exclude="..\**\*svn\**;..\**\Microsoft.SharePoint*;..\**\Microsoft.Office*">
+			<Output TaskParameter="Include" ItemName="Extras" />
+		</CreateItem>
+		<Copy SourceFiles="@(Extras)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+	</Target>
+
+	<Target Name="TeamBuildByChangeSet">
+		<Prompt Text="Change Set? (ie. C50654)">
+			<Output TaskParameter="UserInput" PropertyName="ChangeSet" />
+		</Prompt>
+		<Exec Command="&quot;c:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\TFSBuild.exe&quot; start source.ascentium.com &quot;Frontier Bank&quot; trunk /queue /getOption:Custom /customGetVersion:$(ChangeSet)"/>
+	</Target>
+
+
 	<!-- *** Global properties for all users  -->
 
 	<Choose>

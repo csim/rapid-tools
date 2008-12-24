@@ -61,12 +61,14 @@ namespace Rapid.Tools.Domain
 				break;
 
 			case CommandNames.EnableExceptionDisplay:
+				help.AppendLine(" -url <SiteUrl>");
 				help.AppendLine("[-printstack]");
 				help.AppendLine("\t[-endresponse]");
 				//help.AppendLine("\t[-log] (Application pool identity needs write access to the event log)");
 				break;
 
 			case CommandNames.DisableExceptionDisplay:
+				help.AppendLine(" -url <SiteUrl>");
 				break;
 
 			}
