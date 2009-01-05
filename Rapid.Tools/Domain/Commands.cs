@@ -228,7 +228,7 @@ namespace Rapid.Tools.Domain
 
 			//XmlElement xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.SourceName", "key");
 			//xsetting.SetAttribute("value", sourcename);
-
+			
 			//xsetting = EnsureAddElement(xappsettings, "Rapid.Tools.ExceptionDisplay.LogName", "key");
 			//xsetting.SetAttribute("value", logname);
 
