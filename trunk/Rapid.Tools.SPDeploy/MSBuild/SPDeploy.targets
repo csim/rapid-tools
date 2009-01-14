@@ -4,9 +4,8 @@
 	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.Stsadm" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
 	<UsingTask TaskName="Rapid.Tools.SPDeploy.Tasks.PSExec" AssemblyFile="$(SPDeployBaseDir)\Rapid.Tools.SPDeploy.Tasks.dll" />
 
+	<!-- overridable properties, items and targets -->
 	<PropertyGroup>
-
-		<SPDeployVersion>2.0.0.[LocalBuild]</SPDeployVersion>
 
 		<SPDeployBaseDir>$(MSBuildExtensionsPath)\SPDeploy\v2</SPDeployBaseDir>
 
@@ -116,7 +115,9 @@
 
 
 	<!-- ************************ Initalize Dependancies *********************************** -->
+	
 	<PropertyGroup>
+		<WspFilename>$(TargetName).wsp</WspFilename>
 		<AddWspDependsOn>SPDeployInit; BeforeAddWsp; CompileWsp; CopyOutput; CoreAddWsp; AfterAddWsp</AddWspDependsOn>
 		<DeployWspDependsOn>SPDeployInit; BeforeDeployWsp; CopyOutput; CoreDeployWsp; AfterDeployWsp</DeployWspDependsOn>
 		<UpgradeWspDependsOn>SPDeployInit; BeforeUpgradeWsp; CompileWsp; CopyOutput; CoreUpgradeWsp; AfterUpgradeWsp</UpgradeWspDependsOn>
@@ -139,6 +140,11 @@
 
 	<Import Project="$(UserSettingsPath)" Condition="Exists('$(UserSettingsPath)')" />
 
+	<!-- Non-overridable properties, items and targets -->
+	<PropertyGroup>
+		<SPDeployVersion>2.0.0.[LocalBuild]</SPDeployVersion>
+		<WspIntermediateOutputPath>$(WspWorkingPath)$(WspFilename)</WspIntermediateOutputPath>
+	</PropertyGroup>
 	
 	<!-- ************************ CompileWsp *********************************** -->
 
