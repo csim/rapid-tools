@@ -49,7 +49,7 @@
 		</WspSourceTemplateFiles>
 
 		<WspSourceTemplateFeatureFiles
-				Include="$(BaseTemplateFilesDir)\Features\**\*.xml"
+				Include="$(BaseTemplateFilesDir)\Features\**\*.xml;$(BaseTemplateFilesDir)\Features\**\*.xsn"
 				Exclude="$(BaseTemplateFilesDir)\Features\**\feature.xml;$(BaseTemplateFilesDir)\Features\**\*svn\**;$(BaseTemplateFilesDir)\Features\**\*.tmp">
 			<BaseDir>$(BaseTemplateFilesDir)\Features</BaseDir>
 			<IncludeInManifest>False</IncludeInManifest>
